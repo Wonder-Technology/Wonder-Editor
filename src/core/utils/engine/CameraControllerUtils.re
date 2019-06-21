@@ -37,6 +37,21 @@ let loopBodyWhenCameraChangeDirection = (editorState, engineState) => {
   };
 };
 
+let bindCameraControllerEventByType = (gameObject, engineState) =>
+  switch (getCameraControllerType(gameObject, engineState)) {
+  | Some(FlyCameraController) =>
+    engineState
+    |> FlyCameraControllerLogicService.bindGameViewActiveCameraFlyCameraControllerEvent(
+         gameObject,
+       )
+  | Some(ArcballCameraController) =>
+    engineState
+    |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent(
+         gameObject,
+       )
+  | None => engineState
+  };
+
 let bindGameViewActiveCameraControllerEvent = engineState =>
   switch (
     GameViewEditorService.getActivedBasicCameraView(
@@ -51,17 +66,22 @@ let bindGameViewActiveCameraControllerEvent = engineState =>
         engineState,
       );
 
-    switch (getCameraControllerType(gameObject, engineState)) {
-    | Some(FlyCameraController) =>
-      engineState
-      |> FlyCameraControllerLogicService.bindGameViewActiveCameraFlyCameraControllerEvent(
-           gameObject,
-         )
-    | Some(ArcballCameraController) =>
-      engineState
-      |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent
-    | None => engineState
-    };
+    bindCameraControllerEventByType(gameObject, engineState);
+  };
+
+let unbindCameraControllerEventByType = (gameObject, engineState) =>
+  switch (getCameraControllerType(gameObject, engineState)) {
+  | Some(FlyCameraController) =>
+    engineState
+    |> FlyCameraControllerLogicService.unbindGameViewActiveCameraFlyCameraControllerEvent(
+         gameObject,
+       )
+  | Some(ArcballCameraController) =>
+    engineState
+    |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent(
+         gameObject,
+       )
+  | None => engineState
   };
 
 let unbindGameViewActiveCameraControllerEvent = engineState =>
@@ -77,16 +97,5 @@ let unbindGameViewActiveCameraControllerEvent = engineState =>
         activeBasicCameraView,
         engineState,
       );
-
-    switch (getCameraControllerType(gameObject, engineState)) {
-    | Some(FlyCameraController) =>
-      engineState
-      |> FlyCameraControllerLogicService.unbindGameViewActiveCameraFlyCameraControllerEvent(
-           gameObject,
-         )
-    | Some(ArcballCameraController) =>
-      engineState
-      |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent
-    | None => engineState
-    };
+    unbindCameraControllerEventByType(gameObject, engineState);
   };

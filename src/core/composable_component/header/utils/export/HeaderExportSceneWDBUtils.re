@@ -9,7 +9,7 @@ let generateWDB =
     isRun ?
       engineState :
       engineState
-      |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
+      |> CameraControllerUtils.bindGameViewActiveCameraControllerEvent;
 
   let engineState =
     engineState
@@ -25,7 +25,7 @@ let generateWDB =
     isRun ?
       engineState :
       engineState
-      |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent;
+      |> CameraControllerUtils.unbindGameViewActiveCameraControllerEvent;
 
   (engineState, wdbArrayBuffer);
 };
