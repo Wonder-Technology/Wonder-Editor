@@ -305,7 +305,7 @@ let _ =
         });
 
         describe("else", () =>
-          describe("if key affect flyCameraController", () => {
+          describe("if key affect flyCameraController", () =>
             test("prevent default", () => {
               let (cameraController, moveSpeed, (posX, posY, posZ)) =
                 _prepareMouseEvent(~sandbox, ());
@@ -322,29 +322,8 @@ let _ =
               );
 
               preventDefaultFunc |> expect |> toCalled;
-            });
-
-            describe("loop when stop", () => {
-              test("if key is a, loop when stop", () => {
-                let (cameraController, moveSpeed, (posX, posY, posZ)) =
-                  _prepareMouseEvent(~sandbox, ());
-
-                _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=65, ());
-
-                let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> toCalled;
-              });
-              test("if key is z, not loop", () => {
-                let (cameraController, moveSpeed, (posX, posY, posZ)) =
-                  _prepareMouseEvent(~sandbox, ());
-
-                _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=90, ());
-
-                let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
-              });
-            });
-          })
+            })
+          )
         );
 
         describe("test set target", () => {

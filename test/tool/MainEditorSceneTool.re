@@ -178,6 +178,17 @@ let createDefaultSceneAndNotInit = sandbox => {
   prepareGl(sandbox);
 };
 
+let createDefaultSceneWithArcballCamera = sandbox => {
+  InitEditorJobTool.initEditorWithArcballCamera(
+    [||],
+    StateEngineService.unsafeGetState(),
+  )
+  |> StateEngineService.setState
+  |> ignore;
+
+  prepareGl(sandbox);
+};
+
 let createDefaultScene = (sandbox, initFunc) => {
   createDefaultSceneAndNotInit(sandbox);
 
