@@ -23,10 +23,10 @@ let _updateFlyCameraDirection = (editCamera, engineState) => {
     flyCameraController,
     engineState,
   ) ?
-    engineState |> StateLogicService.renderWhenStop : engineState;
+    engineState |> StateLogicService.loopBodyWhenStop : engineState;
 };
 
-let renderWhenCameraChangeDirection = (editorState, engineState) => {
+let loopBodyWhenCameraChangeDirection = (editorState, engineState) => {
   let editCamera = editorState |> SceneViewEditorService.unsafeGetEditCamera;
 
   switch (getCameraControllerType(editCamera, engineState)) {
