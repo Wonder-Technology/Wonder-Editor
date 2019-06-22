@@ -2,14 +2,6 @@ open Wonderjs;
 
 let _getFixedDistance = () => 3.;
 
-let _isFixedDistance = distance => distance === _getFixedDistance();
-
-let _calcMoveSpeed = distance => distance /. 100.;
-
-let _calcWheelSpeed = distance =>
-  _isFixedDistance(distance) ? 0.5 : distance /. 50.;
-
-/* TODO test copy */
 let _calcPosition = (transform, (target, distance), engineState) =>
   engineState
   |> TransformEngineService.getLocalToWorldMatrixTypeArray(transform)
@@ -18,30 +10,6 @@ let _calcPosition = (transform, (target, distance), engineState) =>
 
 let _setFlyCameraControllerFocusRelatedAttribute =
     (camera, (distance, (posX, posY, posZ) as centerPosition), engineState) => {
-  WonderLog.Contract.requireCheck(
-    () =>
-      WonderLog.(
-        Contract.(
-          Operators.(
-            test(
-              Log.buildAssertMessage(
-                ~expect=
-                  {j|the editor camera should has flyCameraController component|j},
-                ~actual={j|not|j},
-              ),
-              () =>
-              GameObjectComponentEngineService.hasFlyCameraControllerComponent(
-                camera,
-                engineState,
-              )
-              |> assertTrue
-            )
-          )
-        )
-      ),
-    StateEditorService.getStateIsDebug(),
-  );
-
   let cameraTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       camera,
@@ -51,63 +19,6 @@ let _setFlyCameraControllerFocusRelatedAttribute =
   engineState
   |> _calcPosition(cameraTransform, (centerPosition, distance))
   |> TransformEngineService.setLocalPosition(_, cameraTransform, engineState);
-};
-
-let _setArcballCameraControllerFocusRelatedAttribute =
-    (camera, (distance, target), engineState) => {
-  WonderLog.Contract.requireCheck(
-    () =>
-      WonderLog.(
-        Contract.(
-          Operators.(
-            test(
-              Log.buildAssertMessage(
-                ~expect=
-                  {j|the editor camera should has arcballCameraController component|j},
-                ~actual={j|not|j},
-              ),
-              () =>
-              GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                camera,
-                engineState,
-              )
-              |> assertTrue
-            )
-          )
-        )
-      ),
-    StateEditorService.getStateIsDebug(),
-  );
-
-  let arcballCameraController =
-    GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-      camera,
-      engineState,
-    );
-  let moveSpeed = _calcMoveSpeed(distance);
-  let wheelSpeed = _calcWheelSpeed(distance);
-
-  engineState
-  |> ArcballCameraEngineService.setArcballCameraControllerTarget(
-       arcballCameraController,
-       target,
-     )
-  |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-       distance,
-       arcballCameraController,
-     )
-  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
-       arcballCameraController,
-       moveSpeed,
-     )
-  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
-       arcballCameraController,
-       moveSpeed,
-     )
-  |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
-       arcballCameraController,
-       wheelSpeed,
-     );
 };
 
 let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
@@ -172,11 +83,18 @@ let setCameraFocusTargetGameObject =
          (distance, center),
        )
   | Some(ArcballCameraController) =>
-    engineState
-    |> _setArcballCameraControllerFocusRelatedAttribute(
-         camera,
-         (distance, center),
-       )
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="setCameraFocusTargetGameObject",
+        ~description=
+          {j|the editCamera shouldn't has arcballCameraController|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    );
+
+    engineState;
   | None => engineState
   };
 };
