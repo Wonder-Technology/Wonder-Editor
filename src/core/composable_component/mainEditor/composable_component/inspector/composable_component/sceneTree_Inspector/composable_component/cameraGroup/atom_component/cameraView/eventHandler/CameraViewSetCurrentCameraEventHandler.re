@@ -4,16 +4,14 @@ module CustomEventHandler = {
   type dataTuple = int;
   type return = unit;
 
-  let _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode =
-      (camera, engineState) =>
+  let _unbindAllCameraControllerEventInRunMode = (camera, engineState) =>
     StateEditorService.getIsRun() ?
-      CameraControllerUtils.unbindCameraControllerEventByType(
-        camera,
-        engineState,
-      ) :
+      engineState
+      |> ArcballCameraEngineService.unbindAllArcballCameraControllerEvent
+      |> FlyCameraEngineService.unbindAllFlyCameraControllerEvent :
       engineState;
 
-  let _bindTargetEventIfHasComponentAndInRunMode = (camera, engineState) =>
+  let _bindTargetEventByCameraControllerTypeInRunMode = (camera, engineState) =>
     StateEditorService.getIsRun() ?
       CameraControllerUtils.bindCameraControllerEventByType(
         camera,
@@ -35,10 +33,8 @@ module CustomEventHandler = {
          );
 
     engineState
-    |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode(
-         currentActiveCamera,
-       )
-    |> _bindTargetEventIfHasComponentAndInRunMode(currentActiveCamera)
+    |> _unbindAllCameraControllerEventInRunMode(currentActiveCamera)
+    |> _bindTargetEventByCameraControllerTypeInRunMode(currentActiveCamera)
     |> StateEngineService.setState;
 
     StateLogicService.getAndRefreshEngineState();

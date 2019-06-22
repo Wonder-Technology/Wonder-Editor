@@ -167,7 +167,7 @@ let _ =
             |> expect
             == Some(
                  engineState
-                 |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                 |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                       camera1,
                     ),
                );
@@ -327,7 +327,7 @@ let _ =
             |> expect
             == Some(
                  engineState
-                 |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+                 |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                       camera1,
                     ),
                );

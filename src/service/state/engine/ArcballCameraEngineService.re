@@ -63,3 +63,21 @@ let unbindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.u
 let isBindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;
 
 let isTriggerKeydownEventHandler = EventArcballCameraControllerMainService.isTriggerKeydownEventHandler;
+
+let unbindAllArcballCameraControllerEvent = engineState =>
+  GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
+    engineState,
+  )
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, arcballCameraController) =>
+         isBindArcballCameraControllerEventForGameView(
+           arcballCameraController,
+           engineState,
+         ) ?
+           unbindArcballCameraControllerEventForGameView(
+             arcballCameraController,
+             engineState,
+           ) :
+           engineState,
+       engineState,
+     );

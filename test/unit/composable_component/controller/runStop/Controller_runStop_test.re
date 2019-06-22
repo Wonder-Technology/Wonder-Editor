@@ -39,8 +39,7 @@ let _ =
         request |> expect |> toCalledOnce;
       });
 
-      describe(
-        "bind game view active camera->arcball camera controller event", () =>
+      describe("bind game view active camera->fly camera controller event", () =>
         test("test", () => {
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -51,9 +50,10 @@ let _ =
             transform,
             (cameraController, basicCameraView, perspectiveCameraProjection),
           ) =
-            ArcballCameraControllerToolEngine.createGameObject(
+            FlyCameraControllerToolEngine.createGameObject(
               StateEngineService.unsafeGetState(),
             );
+
           GameViewEditorService.setActivedBasicCameraView(basicCameraView)
           |> StateLogicService.getAndSetEditorState;
           engineState |> StateEngineService.setState |> ignore;
@@ -61,7 +61,7 @@ let _ =
           ControllerTool.run();
 
           let engineState = StateEngineService.unsafeGetState();
-          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+          FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
             cameraController,
             engineState,
           )
@@ -110,7 +110,7 @@ let _ =
       });
 
       describe(
-        "unbind game view active camera->arcball camera controller event", () =>
+        "unbind game view active camera->fly camera controller event", () =>
         test("test", () => {
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -124,7 +124,7 @@ let _ =
             transform,
             (cameraController, basicCameraView, perspectiveCameraProjection),
           ) =
-            ArcballCameraControllerToolEngine.createGameObject(
+            FlyCameraControllerToolEngine.createGameObject(
               StateEngineService.unsafeGetState(),
             );
           GameViewEditorService.setActivedBasicCameraView(basicCameraView)
@@ -135,7 +135,7 @@ let _ =
           ControllerTool.stop();
 
           let engineState = StateEngineService.unsafeGetState();
-          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+          FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
             cameraController,
             engineState,
           )
