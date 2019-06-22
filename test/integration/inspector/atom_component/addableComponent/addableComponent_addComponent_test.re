@@ -250,6 +250,41 @@ let _ =
           });
         });
       });
+      describe("test add flyCamera component", () => {
+        describe("test snapshot", () =>
+          test("test click add flyCamera, should add into inspector", () => {
+            MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+
+        describe("test logic", () => {
+          test(
+            "test if not add flyCamera component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add flyCamera component, should add into engine", () => {
+            MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
+
+            GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
       describe("test add arcballCamera component", () => {
         describe("test snapshot", () =>
           test("test click add arcballCamera, should add into inspector", () => {

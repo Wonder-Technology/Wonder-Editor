@@ -15,7 +15,7 @@ module CustomEventHandler = {
 
   let _bindTargetEventIfHasComponentAndInRunMode = (camera, engineState) =>
     StateEditorService.getIsRun() ?
-      CameraControllerUtils.bindCameraControllerEventByType (
+      CameraControllerUtils.bindCameraControllerEventByType(
         camera,
         engineState,
       ) :
@@ -26,16 +26,20 @@ module CustomEventHandler = {
     |> GameViewEditorService.setActivedBasicCameraView(targetBasicCameraView)
     |> StateEditorService.setState;
 
-    let engineState = 
-    StateEngineService.unsafeGetState();
+    let engineState = StateEngineService.unsafeGetState();
 
-    let currentActiveCamera = 
+    let currentActiveCamera =
+      engineState
+      |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+           targetBasicCameraView,
+         );
+
+    /* TODO add test */
+
     engineState
-    |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-      targetBasicCameraView );
-
-engineState
-    |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode(currentActiveCamera)
+    |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode(
+         currentActiveCamera,
+       )
     |> _bindTargetEventIfHasComponentAndInRunMode(currentActiveCamera)
     |> StateEngineService.setState;
 

@@ -54,11 +54,13 @@ let _ =
             (),
           );
 
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-            currentGameObjectArcballCamera,
+          (
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+              currentGameObjectArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
           )
-          |> StateLogicService.getEngineStateToGetData
-          |. FloatService.truncateFloatValue(5)
+          ->(FloatService.truncateFloatValue(5))
           |> expect == value;
         });
 
@@ -168,11 +170,13 @@ let _ =
             (),
           );
 
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
-            currentGameObjectArcballCamera,
+          (
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
+              currentGameObjectArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
           )
-          |> StateLogicService.getEngineStateToGetData
-          |. FloatService.truncateFloatValue(5)
+          ->(FloatService.truncateFloatValue(5))
           |> expect == value;
         })
       );
@@ -190,11 +194,13 @@ let _ =
             (),
           );
 
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
-            currentGameObjectArcballCamera,
+          (
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+              currentGameObjectArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
           )
-          |> StateLogicService.getEngineStateToGetData
-          |. FloatService.truncateFloatValue(5)
+          ->(FloatService.truncateFloatValue(5))
           |> expect == value;
         })
       );
@@ -212,11 +218,13 @@ let _ =
             (),
           );
 
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
-            currentGameObjectArcballCamera,
+          (
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
+              currentGameObjectArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
           )
-          |> StateLogicService.getEngineStateToGetData
-          |. FloatService.truncateFloatValue(5)
+          ->(FloatService.truncateFloatValue(5))
           |> expect == value;
         })
       );
