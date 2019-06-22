@@ -65,20 +65,12 @@ let bindFlyCameraControllerEventIfHasComponentForGameView =
 let isTriggerKeydownEventHandler = EventFlyCameraControllerMainService.isTriggerKeydownEventHandler;
 
 let setFlyCameraLocalEulerAngle =
-    (transformComponent, (x, y, z), engineState) => {
+    (transformComponent, targetEulerAngle, engineState) => {
   ...engineState,
   flyCameraControllerRecord:
     engineState.flyCameraControllerRecord
-    |> OperateFlyCameraControllerService.setLocalEulerAngleX(
+    |> OperateFlyCameraControllerService.setLocalEulerAngle(
          transformComponent,
-         x,
-       )
-    |> OperateFlyCameraControllerService.setLocalEulerAngleY(
-         transformComponent,
-         y,
-       )
-    |> OperateFlyCameraControllerService.setLocalEulerAngleZ(
-         transformComponent,
-         z,
+         targetEulerAngle,
        ),
 };
