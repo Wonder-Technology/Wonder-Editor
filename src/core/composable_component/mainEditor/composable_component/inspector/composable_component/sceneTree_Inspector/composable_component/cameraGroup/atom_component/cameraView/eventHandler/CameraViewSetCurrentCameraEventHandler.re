@@ -34,8 +34,6 @@ module CustomEventHandler = {
            targetBasicCameraView,
          );
 
-    /* TODO add test */
-
     engineState
     |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode(
          currentActiveCamera,
