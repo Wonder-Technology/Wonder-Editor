@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+exports[`redo_undo: flyCameraController moveSpeed  test change and blur moveSpeed test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -314,9 +314,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             </article>
           </div>
         </article>
-        <div
-          className="transform-shade"
-        />
       </article>
     </article>
     <article
@@ -547,9 +544,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
         <div
           className="header-title"
-          title="arcball camera controller"
+          title="fly camera controller"
         >
-          ArcballCameraController
+          FlyCameraController
         </div>
         <div
           className="header-close"
@@ -561,7 +558,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
       </div>
       <article
-        className="wonder-inspector-arcballCameraController"
+        className="wonder-inspector-flyCameraController"
       >
         <article
           className="inspector-item wonder-float-input"
@@ -573,7 +570,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseUp={[Function]}
             title="distance between camera and target"
           >
-            Distance
+            Move Speed
           </div>
           <div
             className="item-content"
@@ -595,9 +592,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="min distance between camera and target"
+            title="distance between camera and target"
           >
-            Min Distance
+            Rotate Speed
           </div>
           <div
             className="item-content"
@@ -607,117 +604,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0.05"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-three-float-input"
-        >
-          <div
-            className="item-header"
-            title="target"
-          >
-            Target
-          </div>
-          <div
-            className="item-content"
-          >
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                X
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Y
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Z
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-            title="horizontal radian"
-          >
-            Phi
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1.5708"
+              value="100"
             />
           </div>
         </article>
@@ -729,9 +616,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="vertical radian"
+            title="distance between camera and target"
           >
-            Theta
+            Wheel Speed
           </div>
           <div
             className="item-content"
@@ -741,7 +628,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="2.5"
             />
           </div>
         </article>
@@ -769,7 +656,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+exports[`redo_undo: flyCameraController moveSpeed  test change and blur moveSpeed test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1083,9 +970,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             </article>
           </div>
         </article>
-        <div
-          className="transform-shade"
-        />
       </article>
     </article>
     <article
@@ -1316,9 +1200,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
         <div
           className="header-title"
-          title="arcball camera controller"
+          title="fly camera controller"
         >
-          ArcballCameraController
+          FlyCameraController
         </div>
         <div
           className="header-close"
@@ -1330,7 +1214,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
       </div>
       <article
-        className="wonder-inspector-arcballCameraController"
+        className="wonder-inspector-flyCameraController"
       >
         <article
           className="inspector-item wonder-float-input"
@@ -1342,31 +1226,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseUp={[Function]}
             title="distance between camera and target"
           >
-            Distance
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="23.11"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-            title="min distance between camera and target"
-          >
-            Min Distance
+            Move Speed
           </div>
           <div
             className="item-content"
@@ -1381,92 +1241,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
           </div>
         </article>
         <article
-          className="inspector-item wonder-three-float-input"
-        >
-          <div
-            className="item-header"
-            title="target"
-          >
-            Target
-          </div>
-          <div
-            className="item-content"
-          >
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                X
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Y
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Z
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-          </div>
-        </article>
-        <article
           className="inspector-item wonder-float-input"
         >
           <div
@@ -1474,9 +1248,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="horizontal radian"
+            title="distance between camera and target"
           >
-            Phi
+            Rotate Speed
           </div>
           <div
             className="item-content"
@@ -1486,7 +1260,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="100"
             />
           </div>
         </article>
@@ -1498,9 +1272,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="vertical radian"
+            title="distance between camera and target"
           >
-            Theta
+            Wheel Speed
           </div>
           <div
             className="item-content"
@@ -1510,7 +1284,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="2.5"
             />
           </div>
         </article>
@@ -1538,7 +1312,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test not undo 1`] = `
+exports[`redo_undo: flyCameraController moveSpeed  test change and blur moveSpeed test undo operate test not undo 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1852,9 +1626,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             </article>
           </div>
         </article>
-        <div
-          className="transform-shade"
-        />
       </article>
     </article>
     <article
@@ -2085,9 +1856,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
         <div
           className="header-title"
-          title="arcball camera controller"
+          title="fly camera controller"
         >
-          ArcballCameraController
+          FlyCameraController
         </div>
         <div
           className="header-close"
@@ -2099,7 +1870,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
       </div>
       <article
-        className="wonder-inspector-arcballCameraController"
+        className="wonder-inspector-flyCameraController"
       >
         <article
           className="inspector-item wonder-float-input"
@@ -2111,31 +1882,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseUp={[Function]}
             title="distance between camera and target"
           >
-            Distance
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="23.11"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-            title="min distance between camera and target"
-          >
-            Min Distance
+            Move Speed
           </div>
           <div
             className="item-content"
@@ -2150,92 +1897,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
           </div>
         </article>
         <article
-          className="inspector-item wonder-three-float-input"
-        >
-          <div
-            className="item-header"
-            title="target"
-          >
-            Target
-          </div>
-          <div
-            className="item-content"
-          >
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                X
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Y
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Z
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-          </div>
-        </article>
-        <article
           className="inspector-item wonder-float-input"
         >
           <div
@@ -2243,9 +1904,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="horizontal radian"
+            title="distance between camera and target"
           >
-            Phi
+            Rotate Speed
           </div>
           <div
             className="item-content"
@@ -2255,7 +1916,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="100"
             />
           </div>
         </article>
@@ -2267,9 +1928,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="vertical radian"
+            title="distance between camera and target"
           >
-            Theta
+            Wheel Speed
           </div>
           <div
             className="item-content"
@@ -2279,7 +1940,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="2.5"
             />
           </div>
         </article>
@@ -2307,7 +1968,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test undo one step step which from second to first 1`] = `
+exports[`redo_undo: flyCameraController moveSpeed  test change and blur moveSpeed test undo operate test undo one step step which from second to first 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2621,9 +2282,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             </article>
           </div>
         </article>
-        <div
-          className="transform-shade"
-        />
       </article>
     </article>
     <article
@@ -2854,9 +2512,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
         <div
           className="header-title"
-          title="arcball camera controller"
+          title="fly camera controller"
         >
-          ArcballCameraController
+          FlyCameraController
         </div>
         <div
           className="header-close"
@@ -2868,7 +2526,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
       </div>
       <article
-        className="wonder-inspector-arcballCameraController"
+        className="wonder-inspector-flyCameraController"
       >
         <article
           className="inspector-item wonder-float-input"
@@ -2880,7 +2538,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseUp={[Function]}
             title="distance between camera and target"
           >
-            Distance
+            Move Speed
           </div>
           <div
             className="item-content"
@@ -2902,9 +2560,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="min distance between camera and target"
+            title="distance between camera and target"
           >
-            Min Distance
+            Rotate Speed
           </div>
           <div
             className="item-content"
@@ -2914,117 +2572,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0.05"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-three-float-input"
-        >
-          <div
-            className="item-header"
-            title="target"
-          >
-            Target
-          </div>
-          <div
-            className="item-content"
-          >
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                X
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Y
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Z
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-            title="horizontal radian"
-          >
-            Phi
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1.5708"
+              value="100"
             />
           </div>
         </article>
@@ -3036,9 +2584,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="vertical radian"
+            title="distance between camera and target"
           >
-            Theta
+            Wheel Speed
           </div>
           <div
             className="item-content"
@@ -3048,7 +2596,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="2.5"
             />
           </div>
         </article>
@@ -3076,7 +2624,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: flyCameraController moveSpeed  test change and blur moveSpeed test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -3390,9 +2938,6 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             </article>
           </div>
         </article>
-        <div
-          className="transform-shade"
-        />
       </article>
     </article>
     <article
@@ -3623,9 +3168,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
         <div
           className="header-title"
-          title="arcball camera controller"
+          title="fly camera controller"
         >
-          ArcballCameraController
+          FlyCameraController
         </div>
         <div
           className="header-close"
@@ -3637,7 +3182,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
         </div>
       </div>
       <article
-        className="wonder-inspector-arcballCameraController"
+        className="wonder-inspector-flyCameraController"
       >
         <article
           className="inspector-item wonder-float-input"
@@ -3649,7 +3194,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseUp={[Function]}
             title="distance between camera and target"
           >
-            Distance
+            Move Speed
           </div>
           <div
             className="item-content"
@@ -3659,7 +3204,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="10"
+              value="0.5"
             />
           </div>
         </article>
@@ -3671,9 +3216,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="min distance between camera and target"
+            title="distance between camera and target"
           >
-            Min Distance
+            Rotate Speed
           </div>
           <div
             className="item-content"
@@ -3683,117 +3228,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0.05"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-three-float-input"
-        >
-          <div
-            className="item-header"
-            title="target"
-          >
-            Target
-          </div>
-          <div
-            className="item-content"
-          >
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                X
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Y
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-            <article
-              className="inspector-item wonder-float-input"
-            >
-              <div
-                className="item-header component-label"
-                onMouseDown={[Function]}
-                onMouseMove={[Function]}
-                onMouseUp={[Function]}
-                title=""
-              >
-                Z
-              </div>
-              <div
-                className="item-content"
-              >
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0"
-                />
-              </div>
-            </article>
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-            title="horizontal radian"
-          >
-            Phi
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1.5708"
+              value="100"
             />
           </div>
         </article>
@@ -3805,9 +3240,9 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
-            title="vertical radian"
+            title="distance between camera and target"
           >
-            Theta
+            Wheel Speed
           </div>
           <div
             className="item-content"
@@ -3817,7 +3252,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance test change
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1.5708"
+              value="2.5"
             />
           </div>
         </article>

@@ -57,6 +57,19 @@ let removeRenderGroupComponent =
     InspectorComponentType.RenderGroup,
   );
 
+let removeFlyCameraControllerComponent =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      (),
+    ) =>
+  _removeComponent(
+    (uiState, dispatchFunc),
+    gameObject,
+    InspectorComponentType.FlyCameraController,
+  );
+
 let removeArcballCameraControllerComponent =
     (
       ~uiState=TestTool.buildEmptyAppState(),

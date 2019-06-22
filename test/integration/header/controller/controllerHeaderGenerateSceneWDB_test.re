@@ -91,25 +91,6 @@ let _ =
              )
           |> Js.Array.length;
 
-        let _generateSceneWDB =
-            (
-              ~isSceneRoot=false,
-              ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
-              ~imageUint8ArrayMap=Js.Nullable.return(
-                                    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
-                                      StateEditorService.getState(),
-                                    ),
-                                  ),
-              ~engineState=StateEngineService.unsafeGetState(),
-              (),
-            ) =>
-          HeaderExportSceneWDBUtils.generateSceneWDB(
-            isSceneRoot,
-            generateWDBFunc,
-            imageUint8ArrayMap,
-            engineState,
-          );
-
         let _test = controlFunc => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
@@ -140,8 +121,7 @@ let _ =
           |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)
-                 |> JudgeTool.isEqual(_, 0)
-                 |> (!);
+                 |> JudgeTool.isNotEqual(_, 0);
 
                ();
              })
@@ -152,7 +132,7 @@ let _ =
         testPromise("test run", () => _test(() => ControllerTool.run()));
 
         describe("test stop", () => {
-          testPromise("test bind", () =>
+          testPromise("should bind", () =>
             _test(() => {
               ControllerTool.run();
               ControllerTool.stop();
@@ -228,8 +208,7 @@ let _ =
           |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)
-                 |> JudgeTool.isEqual(_, 0)
-                 |> (!);
+                 |> JudgeTool.isNotEqual(_, 0);
 
                ();
              })
@@ -240,7 +219,7 @@ let _ =
         testPromise("test run", () => _test(() => ControllerTool.run()));
 
         describe("test stop", () => {
-          testPromise("test bind", () =>
+          testPromise("should bind", () =>
             _test(() => {
               ControllerTool.run();
               ControllerTool.stop();

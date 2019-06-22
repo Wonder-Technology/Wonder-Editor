@@ -769,6 +769,662 @@ exports[`AddableComponent add component test camera add component test add arcba
 </article>
 `;
 
+exports[`AddableComponent add component test camera add component test add flyCamera component test snapshot test click add flyCamera, should add into inspector 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div
+      className="sceneTree-name"
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="gameObject's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="Camera"
+          />
+        </div>
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="component-header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Transform"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="position in local coordinate system"
+          >
+            Position
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="4"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="euler angle in local coordinate system"
+          >
+            Rotation
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="scale in local coordinate system"
+          >
+            Scale
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="component-header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Camera Group set the gameObject's camera related components"
+        >
+          Camera Group
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className="inspector-component"
+        >
+          <div
+            className="component-title"
+            title="CameraView"
+          >
+            CameraView
+          </div>
+          <hr />
+          <div
+            className="component-content"
+          >
+            <article
+              className="wonder-camera-view"
+            >
+              <article
+                className="inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="type"
+                >
+                  Type
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <select
+                    onChange={[Function]}
+                    value="0"
+                  >
+                    <option
+                      value="0"
+                    >
+                      basic_cameraView
+                    </option>
+                  </select>
+                </div>
+              </article>
+              <div
+                className="inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
+                >
+                  CurrentCamera
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    defaultChecked={true}
+                    disabled={true}
+                    onClick={[Function]}
+                    type="checkbox"
+                  />
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div
+          className="inspector-component"
+        >
+          <div
+            className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
+          >
+            Projection
+          </div>
+          <hr />
+          <div
+            className="component-content"
+          >
+            <article
+              className="wonder-camera-projection"
+            >
+              <article
+                className="inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="perspective matrix's type"
+                >
+                  Type
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <select
+                    onChange={[Function]}
+                    value="0"
+                  >
+                    <option
+                      value="0"
+                    >
+                      perspective
+                    </option>
+                  </select>
+                </div>
+              </article>
+              <article
+                className="inspector-item wonder-float-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="up near-plane distance"
+                >
+                  Near
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="0.01"
+                  />
+                </div>
+              </article>
+              <article
+                className="inspector-item wonder-float-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="up far-plane distance"
+                >
+                  Far
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="50000"
+                  />
+                </div>
+              </article>
+              <article
+                className="inspector-item wonder-float-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
+                >
+                  Fovy
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="60"
+                  />
+                </div>
+              </article>
+            </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="component-header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="fly camera controller"
+        >
+          FlyCameraController
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-flyCameraController"
+      >
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="distance between camera and target"
+          >
+            Move Speed
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0.5"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="distance between camera and target"
+          >
+            Rotate Speed
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="100"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="distance between camera and target"
+          >
+            Wheel Speed
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="2.5"
+            />
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <div
+          className="content-btn"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add Component
+          </button>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`AddableComponent add component test camera add component test add geometry component test snapshot test click add geometry, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"

@@ -13,6 +13,8 @@ let run = uiState => {
        StateHistoryService.getStateForHistory(),
      );
 
+  /* TODO add test */
+
   StateEngineService.unsafeGetState()
   |> CameraControllerUtils.bindGameViewActiveCameraControllerEvent
   |> _runInitScriptJob

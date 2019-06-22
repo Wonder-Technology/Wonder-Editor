@@ -124,6 +124,7 @@ let testRedoUndoTwoStep =
                   })
                 );
               });
+
               describe("test redo operate", () => {
                 describe("test redo one step", () =>
                   test(
