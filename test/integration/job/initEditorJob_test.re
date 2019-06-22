@@ -53,13 +53,30 @@ let _ =
     );
 
     describe("add specific gameObjects for scene view", () => {
-      test("add editCamera as current camera", () =>
-        MainEditorCameraTool.getCurrentCameraGameObject(
-          StateEngineService.unsafeGetState(),
-        )
-        |> expect
-        == SceneViewEditorService.getEditCamera(StateEditorService.getState())
-      );
+      describe("add editCamera gameObject", () => {
+        test("the editCamera has flyCameraController", () => {
+          let engineState = StateEngineService.unsafeGetState();
+          let editorState = StateEditorService.getState();
+
+          editorState
+          |> SceneViewEditorService.getEditCamera
+          |> OptionService.unsafeGet
+          |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+               _,
+               engineState,
+             )
+          |> expect == true;
+        });
+        test("set the editCamera as current camera", () =>
+          MainEditorCameraTool.getCurrentCameraGameObject(
+            StateEngineService.unsafeGetState(),
+          )
+          |> expect
+          == SceneViewEditorService.getEditCamera(
+               StateEditorService.getState(),
+             )
+        );
+      });
 
       describe("add grid plane gameObject", () =>
         describe("test components", () => {
