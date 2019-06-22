@@ -32,36 +32,6 @@ let unbindFlyCameraControllerEventForGameView = FlyCameraControllerAPI.unbindFly
 
 let isBindFlyCameraControllerEventForGameView = FlyCameraControllerAPI.isBindFlyCameraControllerEvent;
 
-let unbindFlyCameraControllerEventIfHasComponentForGameView =
-    (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
-       gameObject,
-     ) ?
-    (
-      engineState
-      |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
-           gameObject,
-         )
-    )
-    ->(unbindFlyCameraControllerEventForGameView(engineState)) :
-    engineState;
-
-let bindFlyCameraControllerEventIfHasComponentForGameView =
-    (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
-       gameObject,
-     ) ?
-    (
-      engineState
-      |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
-           gameObject,
-         )
-    )
-    ->(bindFlyCameraControllerEventForGameView(engineState)) :
-    engineState;
-
 let isTriggerKeydownEventHandler = EventFlyCameraControllerMainService.isTriggerKeydownEventHandler;
 
 let setFlyCameraLocalEulerAngle =
@@ -74,3 +44,21 @@ let setFlyCameraLocalEulerAngle =
          targetEulerAngle,
        ),
 };
+
+let unbindAllFlyCameraControllerEvent = engineState =>
+  GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
+    engineState,
+  )
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, arcballCameraController) =>
+         isBindFlyCameraControllerEventForGameView(
+           arcballCameraController,
+           engineState,
+         ) ?
+           unbindFlyCameraControllerEventForGameView(
+             arcballCameraController,
+             engineState,
+           ) :
+           engineState,
+       engineState,
+     );
