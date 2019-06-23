@@ -129,7 +129,6 @@ let bindGameViewActiveCameraControllerEvent = engineState => {
 
     bindCameraControllerEventByType(gameObject, engineState);
   };
-  /* TODO add require check: should has no binded camera controller(include fly,arc)  */
 };
 
 let unbindCameraControllerEventByType = (gameObject, engineState) =>
