@@ -69,8 +69,7 @@ let _ =
       MouseEventTool.setPointerLocked(.);
     };
 
-    let _prepareMouseEventForTestKeyboardEvent =
-        (~sandbox, ~bindEventFunc, ()) => {
+    let _prepareEvent = (~sandbox, ~bindEventFunc, ()) => {
       _prepareMouseEvent(~sandbox, ());
       MouseEventTool.prepareForPointerLock(~sandbox, ());
 
@@ -129,23 +128,20 @@ let _ =
           (),
         ),
       );
-      EventTool.restore();
     };
 
     beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+
+      EventTool.restore();
+    });
 
     describe("test add flyCameraController into editCamera", () =>
       describe("eventTarget is scene view", () =>
-        describe("bind keydown event", () => {
-          let _prepareMouseEvent = (~sandbox, ()) =>
-            _prepareMouseEventForTestKeyboardEvent(
-              ~sandbox,
-              ~bindEventFunc=FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView,
-              (),
-            );
-
-          describe("trigger keyDown event when stop", () => {
+        describe("bind keydown event", () =>
+          /* TODO add test when run */
+          describe("trigger keydown event when stop", () => {
             beforeEach(() => ControllerTool.setIsRun(false));
 
             test("if key is a, should update editCamera transform", () => {
@@ -155,7 +151,11 @@ let _ =
                 moveSpeed,
                 (posX, posY, posZ),
               ) =
-                _prepareMouseEvent(~sandbox, ());
+                _prepareEvent(
+                  ~sandbox,
+                  ~bindEventFunc=FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView,
+                  (),
+                );
 
               _execKeydownEvent(
                 ~pageX=10,
@@ -167,7 +167,7 @@ let _ =
 
               let engineState =
                 StateEngineService.unsafeGetState()
-                |> MainEditorLoopTool.startLoop;
+                |> MainEditorLoopTool.startLoopForCameraChangeDirection;
 
               engineState
               |> TransformEngineService.getLocalPosition(transform)
@@ -178,8 +178,8 @@ let _ =
                    |> WonderEditor.Vector3Service.truncate(1)
                  );
             });
-          });
-        })
+          })
+        )
       )
     );
   });

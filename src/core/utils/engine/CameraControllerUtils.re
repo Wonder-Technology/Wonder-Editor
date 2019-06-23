@@ -23,19 +23,35 @@ let _updateFlyCameraDirection = (editCamera, engineState) => {
     flyCameraController,
     engineState,
   ) ?
-    engineState |> StateLogicService.loopBodyWhenStop : engineState;
+    engineState |> StateLogicService.renderEngineStateAndReturnEngineState :
+    engineState;
 };
 
-let loopBodyWhenCameraChangeDirection = (editorState, engineState) => {
-  let editCamera = editorState |> SceneViewEditorService.unsafeGetEditCamera;
+let loopBodyWhenCameraChangeDirectionAndStop = (editorState, engineState) =>
+  StateEditorService.getIsRun() ?
+    engineState :
+    {
+      let editCamera =
+        editorState |> SceneViewEditorService.unsafeGetEditCamera;
 
-  switch (getCameraControllerType(editCamera, engineState)) {
-  | Some(FlyCameraController) =>
-    engineState |> _updateFlyCameraDirection(editCamera)
-  | Some(ArcballCameraController) => engineState
-  | None => engineState
-  };
-};
+      switch (getCameraControllerType(editCamera, engineState)) {
+      | Some(FlyCameraController) =>
+        engineState |> _updateFlyCameraDirection(editCamera)
+      | Some(ArcballCameraController) =>
+        WonderLog.Log.error(
+          WonderLog.Log.buildErrorMessage(
+            ~title="loopBodyWhenCameraChangeDirectionAndStop",
+            ~description=
+              {j|the editCamera shouldn't has arcballCameraController|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        );
+        engineState;
+      | None => engineState
+      };
+    };
 
 let bindCameraControllerEventByType = (gameObject, engineState) =>
   switch (getCameraControllerType(gameObject, engineState)) {
@@ -53,6 +69,7 @@ let bindCameraControllerEventByType = (gameObject, engineState) =>
   };
 
 let bindGameViewActiveCameraControllerEvent = engineState =>
+  /* TODO add require check: should has no binded camera controller(include fly,arc)  */
   switch (
     GameViewEditorService.getActivedBasicCameraView(
       StateEditorService.getState(),
@@ -85,6 +102,7 @@ let unbindCameraControllerEventByType = (gameObject, engineState) =>
   };
 
 let unbindGameViewActiveCameraControllerEvent = engineState =>
+  /* TODO add require check: only has one binded camera controller(include fly,arc)  */
   switch (
     GameViewEditorService.getActivedBasicCameraView(
       StateEditorService.getState(),

@@ -1,5 +1,5 @@
-let startLoop = engineState =>
+let startLoopForCameraChangeDirection = engineState =>
   engineState
-  |> CameraControllerUtils.loopBodyWhenCameraChangeDirection(
+  |> CameraControllerUtils.loopBodyWhenCameraChangeDirectionAndStop(
        StateEditorService.getState(),
      );
