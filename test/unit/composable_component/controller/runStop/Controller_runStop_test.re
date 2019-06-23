@@ -68,6 +68,37 @@ let _ =
           |> expect == true;
         })
       );
+
+      describe(
+        "bind game view active camera->arcball camera controller event", () =>
+        test("test", () => {
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          let (
+            engineState,
+            gameObject,
+            transform,
+            (cameraController, basicCameraView, perspectiveCameraProjection),
+          ) =
+            ArcballCameraControllerToolEngine.createGameObject(
+              StateEngineService.unsafeGetState(),
+            );
+
+          GameViewEditorService.setActivedBasicCameraView(basicCameraView)
+          |> StateLogicService.getAndSetEditorState;
+          engineState |> StateEngineService.setState |> ignore;
+
+          ControllerTool.run();
+
+          let engineState = StateEngineService.unsafeGetState();
+          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+            cameraController,
+            engineState,
+          )
+          |> expect == true;
+        })
+      );
     });
 
     describe("test stop", () => {
@@ -79,6 +110,7 @@ let _ =
           ControllerTool.stop();
           cancel |> expect |> toCalledOnce;
         });
+
         describe("cancelAnimationFrame should called with current loopId", () => {
           test("test run once", () => {
             let loopId = 10;
@@ -136,6 +168,40 @@ let _ =
 
           let engineState = StateEngineService.unsafeGetState();
           FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+            cameraController,
+            engineState,
+          )
+          |> expect == false;
+        })
+      );
+
+      describe(
+        "unbind game view active camera->arcball camera controller event", () =>
+        test("test", () => {
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.stubCancelAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          let (
+            engineState,
+            gameObject,
+            transform,
+            (cameraController, basicCameraView, perspectiveCameraProjection),
+          ) =
+            ArcballCameraControllerToolEngine.createGameObject(
+              StateEngineService.unsafeGetState(),
+            );
+          GameViewEditorService.setActivedBasicCameraView(basicCameraView)
+          |> StateLogicService.getAndSetEditorState;
+          engineState |> StateEngineService.setState |> ignore;
+
+          ControllerTool.run();
+          ControllerTool.stop();
+
+          let engineState = StateEngineService.unsafeGetState();
+          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
             cameraController,
             engineState,
           )
