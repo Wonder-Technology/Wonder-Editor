@@ -68,6 +68,20 @@ let bindCameraControllerEventByType = (gameObject, engineState) =>
   | None => engineState
   };
 
+let _getAllCameraControllerCount = engineState =>
+  (
+    GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
+      engineState,
+    )
+    |> Js.Array.length
+  )
+  + (
+    GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
+      engineState,
+    )
+    |> Js.Array.length
+  );
+
 let bindGameViewActiveCameraControllerEvent = engineState =>
   /* TODO add require check: should has no binded camera controller(include fly,arc)  */
   switch (
@@ -101,8 +115,26 @@ let unbindCameraControllerEventByType = (gameObject, engineState) =>
   | None => engineState
   };
 
-let unbindGameViewActiveCameraControllerEvent = engineState =>
-  /* TODO add require check: only has one binded camera controller(include fly,arc)  */
+let unbindGameViewActiveCameraControllerEvent = engineState => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|only has one binded camera controller|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              _getAllCameraControllerCount(engineState) == 1
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   switch (
     GameViewEditorService.getActivedBasicCameraView(
       StateEditorService.getState(),
@@ -117,3 +149,4 @@ let unbindGameViewActiveCameraControllerEvent = engineState =>
       );
     unbindCameraControllerEventByType(gameObject, engineState);
   };
+};
