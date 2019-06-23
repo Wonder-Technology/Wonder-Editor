@@ -139,8 +139,7 @@ let _ =
 
     describe("test add flyCameraController into editCamera", () =>
       describe("eventTarget is scene view", () =>
-        describe("bind keydown event", () =>
-          /* TODO add test when run */
+        describe("bind keydown event", () => {
           describe("trigger keydown event when stop", () => {
             beforeEach(() => ControllerTool.setIsRun(false));
 
@@ -178,8 +177,43 @@ let _ =
                    |> WonderEditor.Vector3Service.truncate(1)
                  );
             });
-          })
-        )
+          });
+
+          describe("trigger keydown event when run", () => {
+            beforeEach(() => ControllerTool.setIsRun(true));
+
+            test("if key is a, shouldn't update editCamera transform", () => {
+              let (
+                cameraController,
+                transform,
+                moveSpeed,
+                (posX, posY, posZ) as pos,
+              ) =
+                _prepareEvent(
+                  ~sandbox,
+                  ~bindEventFunc=FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView,
+                  (),
+                );
+
+              _execKeydownEvent(
+                ~pageX=10,
+                ~pageY=20,
+                ~ctrlKey=false,
+                ~keyCode=65,
+                (),
+              );
+
+              let engineState =
+                StateEngineService.unsafeGetState()
+                |> MainEditorLoopTool.startLoopForCameraChangeDirection;
+
+              engineState
+              |> TransformEngineService.getLocalPosition(transform)
+              |> WonderEditor.Vector3Service.truncate(1)
+              |> expect == (pos |> WonderEditor.Vector3Service.truncate(1));
+            });
+          });
+        })
       )
     );
   });
