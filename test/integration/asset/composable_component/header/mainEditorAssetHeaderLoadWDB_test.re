@@ -23,7 +23,7 @@ let _ =
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {
