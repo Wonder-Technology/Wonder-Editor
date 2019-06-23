@@ -3,7 +3,7 @@ open WonderBsMost;
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
-  let rec startLoop = (time: float, state): int => {
+  let rec startLoopForCameraChangeDirection = (time: float, state): int => {
     StateEngineService.setState(state);
 
     AnimationFrame.requestAnimationFrame((time: float) =>
@@ -12,7 +12,7 @@ module Method = {
            StateEditorService.getState(),
          )
       |> StateEngineService.setState
-      |> startLoop(time)
+      |> startLoopForCameraChangeDirection(time)
       |> ignore
     );
   };
@@ -163,7 +163,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
            )
            |> StateLogicService.getAndSetEditorState;
 
-           StateEngineService.unsafeGetState() |> Method.startLoop(0.);
+           StateEngineService.unsafeGetState()
+           |> Method.startLoopForCameraChangeDirection(0.);
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })
