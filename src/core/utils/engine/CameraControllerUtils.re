@@ -68,22 +68,52 @@ let bindCameraControllerEventByType = (gameObject, engineState) =>
   | None => engineState
   };
 
-let _getAllCameraControllerCount = engineState =>
+let _getAllCameraControllerBindEventCount = engineState =>
   (
     GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
       engineState,
     )
+    |> Js.Array.filter(flyCameraController =>
+         FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+           flyCameraController,
+           engineState,
+         )
+       )
     |> Js.Array.length
   )
   + (
     GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
       engineState,
     )
+    |> Js.Array.filter(arcballCameraController =>
+         ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+           arcballCameraController,
+           engineState,
+         )
+       )
     |> Js.Array.length
   );
 
-let bindGameViewActiveCameraControllerEvent = engineState =>
-  /* TODO add require check: should has no binded camera controller(include fly,arc)  */
+let bindGameViewActiveCameraControllerEvent = engineState => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|only has one binded camera controller|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              _getAllCameraControllerBindEventCount(engineState) == 0
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   switch (
     GameViewEditorService.getActivedBasicCameraView(
       StateEditorService.getState(),
@@ -99,6 +129,8 @@ let bindGameViewActiveCameraControllerEvent = engineState =>
 
     bindCameraControllerEventByType(gameObject, engineState);
   };
+  /* TODO add require check: should has no binded camera controller(include fly,arc)  */
+};
 
 let unbindCameraControllerEventByType = (gameObject, engineState) =>
   switch (getCameraControllerType(gameObject, engineState)) {
@@ -127,7 +159,7 @@ let unbindGameViewActiveCameraControllerEvent = engineState => {
                 ~actual={j|not|j},
               ),
               () =>
-              _getAllCameraControllerCount(engineState) == 1
+              _getAllCameraControllerBindEventCount(engineState) == 1
             )
           )
         )
