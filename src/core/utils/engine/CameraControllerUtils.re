@@ -32,7 +32,8 @@ let loopBodyWhenCameraChangeDirection = (editorState, engineState) => {
   switch (getCameraControllerType(editCamera, engineState)) {
   | Some(FlyCameraController) =>
     engineState |> _updateFlyCameraDirection(editCamera)
-  | _ => engineState
+  | Some(ArcballCameraController) => engineState
+  | None => engineState
   };
 };
 

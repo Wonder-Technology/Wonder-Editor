@@ -42,7 +42,7 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {

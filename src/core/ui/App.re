@@ -7,7 +7,6 @@ module Method = {
        /* todo use extension names instead of the name */
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
-
   let showComponent =
       (
         uiState: AppStore.appState,
@@ -32,7 +31,6 @@ module Method = {
                }
            )
          } */
-
 
         <div className="wonder-app-message" id="appMessage" />
         {
