@@ -70,9 +70,11 @@ let bindCameraControllerEventByType = (gameObject, engineState) =>
 
 let _getAllCameraControllerBindEventCount = engineState =>
   (
-    GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      SceneEngineService.getSceneGameObject(engineState),
       engineState,
     )
+    |> GameObjectEngineService.getAllFlyCameraControllers(_, engineState)
     |> Js.Array.filter(flyCameraController =>
          FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
            flyCameraController,
@@ -82,9 +84,11 @@ let _getAllCameraControllerBindEventCount = engineState =>
     |> Js.Array.length
   )
   + (
-    GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      SceneEngineService.getSceneGameObject(engineState),
       engineState,
     )
+    |> GameObjectEngineService.getAllArcballCameraControllers(_, engineState)
     |> Js.Array.filter(arcballCameraController =>
          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
            arcballCameraController,
@@ -102,7 +106,7 @@ let bindGameViewActiveCameraControllerEvent = engineState => {
           Operators.(
             test(
               Log.buildAssertMessage(
-                ~expect={j|only has one binded camera controller|j},
+                ~expect={j|should has no camera controller binded event|j},
                 ~actual={j|not|j},
               ),
               () =>
@@ -158,7 +162,7 @@ let unbindGameViewActiveCameraControllerEvent = engineState => {
                 ~actual={j|not|j},
               ),
               () =>
-              _getAllCameraControllerBindEventCount(engineState) == 1
+              _getAllCameraControllerBindEventCount(engineState) <= 1
             )
           )
         )

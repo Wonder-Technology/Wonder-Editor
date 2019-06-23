@@ -44,21 +44,3 @@ let setFlyCameraLocalEulerAngle =
          targetEulerAngle,
        ),
 };
-
-let unbindAllFlyCameraControllerEvent = engineState =>
-  GameObjectComponentEngineService.getAllFlyCameraControllerComponents(
-    engineState,
-  )
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineState, arcballCameraController) =>
-         isBindFlyCameraControllerEventForGameView(
-           arcballCameraController,
-           engineState,
-         ) ?
-           unbindFlyCameraControllerEventForGameView(
-             arcballCameraController,
-             engineState,
-           ) :
-           engineState,
-       engineState,
-     );
