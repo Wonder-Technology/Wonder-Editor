@@ -7,8 +7,8 @@ module CustomEventHandler = {
   let _unbindAllCameraControllerEventInRunMode = (camera, engineState) =>
     StateEditorService.getIsRun() ?
       engineState
-      |> ArcballCameraEngineService.unbindAllArcballCameraControllerEvent
-      |> FlyCameraEngineService.unbindAllFlyCameraControllerEvent :
+      |> ArcballCameraControllerLogicService.unbindAllSceneChildrenArcballCameraControllerEvent
+      |> FlyCameraControllerLogicService.unbindAllSceneChildrenFlyCameraControllerEvent :
       engineState;
 
   let _bindTargetEventByCameraControllerTypeInRunMode = (camera, engineState) =>

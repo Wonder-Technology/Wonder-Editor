@@ -17,7 +17,7 @@ let _handleEventFuncForSceneView = (event, handleFunc, engineState) =>
     ) :
     (engineState, event);
 
-let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
+let _isKeyAffectedFlyCameraController = ({key}: EventType.keyboardEvent) =>
   switch (key) {
   | "a"
   | "s"
@@ -29,7 +29,7 @@ let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
   };
 
 let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
-  _isKeyAffectedArballCameraController(event)
+  _isKeyAffectedFlyCameraController(event)
   && FlyCameraEngineService.isTriggerKeydownEventHandler(event) ?
     {
       HandleDomEventEngineService.preventDefault(
@@ -37,14 +37,12 @@ let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
       )
       |> ignore;
 
-       keydownHandleFunc(. event, engineState);
+      keydownHandleFunc(. event, engineState);
     } :
     engineState;
 
-let _handleKeyUpForSceneView = (event, keyupHandleFunc, engineState) => {
-   keyupHandleFunc(. event, engineState);
-
-};
+let _handleKeyUpForSceneView = (event, keyupHandleFunc, engineState) =>
+  keyupHandleFunc(. event, engineState);
 
 let _bindFlyCameraControllerEvent =
     (
@@ -174,11 +172,9 @@ let _checkSceneAllFlyCameraControllersNotBindEvent = engineState =>
             SceneEngineService.getSceneGameObject(engineState),
             engineState,
           )
-          |> Js.Array.filter(gameObject =>
-               GameObjectComponentEngineService.hasFlyCameraControllerComponent(
-                 gameObject,
-                 engineState,
-               )
+          |> GameObjectEngineService.getAllFlyCameraControllers(
+               _,
+               engineState,
              )
           |> Js.Array.filter(flyCameraController =>
                FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
@@ -223,4 +219,24 @@ let unbindGameViewActiveCameraFlyCameraControllerEvent =
        engineState =>
          _checkSceneAllFlyCameraControllersNotBindEvent(engineState),
        StateEditorService.getStateIsDebug(),
+     );
+
+let unbindAllSceneChildrenFlyCameraControllerEvent = engineState =>
+  HierarchyGameObjectEngineService.getAllGameObjects(
+    SceneEngineService.getSceneGameObject(engineState),
+    engineState,
+  )
+  |> GameObjectEngineService.getAllFlyCameraControllers(_, engineState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, flyCameraController) =>
+         FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+           flyCameraController,
+           engineState,
+         ) ?
+           FlyCameraEngineService.unbindFlyCameraControllerEventForGameView(
+             flyCameraController,
+             engineState,
+           ) :
+           engineState,
+       engineState,
      );

@@ -184,15 +184,13 @@ let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>
             SceneEngineService.getSceneGameObject(engineState),
             engineState,
           )
-          |> Js.Array.filter(gameObject =>
-               GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                 gameObject,
-                 engineState,
-               )
+          |> GameObjectEngineService.getAllFlyCameraControllers(
+               _,
+               engineState,
              )
-          |> Js.Array.filter(arcballCameraController =>
-               ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                 arcballCameraController,
+          |> Js.Array.filter(flyCameraController =>
+               FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+                 flyCameraController,
                  engineState,
                )
              )
@@ -233,4 +231,24 @@ let unbindGameViewActiveCameraArcballCameraControllerEvent =
        engineState =>
          _checkSceneAllArcballCameraControllersNotBindEvent(engineState),
        StateEditorService.getStateIsDebug(),
+     );
+
+let unbindAllSceneChildrenArcballCameraControllerEvent = engineState =>
+  HierarchyGameObjectEngineService.getAllGameObjects(
+    SceneEngineService.getSceneGameObject(engineState),
+    engineState,
+  )
+  |> GameObjectEngineService.getAllArcballCameraControllers(_, engineState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, arcballCameraController) =>
+         ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+           arcballCameraController,
+           engineState,
+         ) ?
+           ArcballCameraEngineService.unbindArcballCameraControllerEventForGameView(
+             arcballCameraController,
+             engineState,
+           ) :
+           engineState,
+       engineState,
      );
