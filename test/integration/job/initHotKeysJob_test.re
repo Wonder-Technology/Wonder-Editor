@@ -255,6 +255,16 @@ let _ =
                    )
                 |> TransformEngineService.getLocalPosition(_, engineState);
 
+              let _getEditCameraTransformLocalEulerAngles =
+                  ((editorState, engineState)) =>
+                editorState
+                |> SceneViewEditorService.unsafeGetEditCamera
+                |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                     _,
+                     engineState,
+                   )
+                |> TransformEngineService.getLocalEulerAngles(_, engineState);
+
               test("test the currentSceneTreeNode is scene gameObject", () => {
                 let engineState = StateEngineService.unsafeGetState();
 
@@ -290,7 +300,28 @@ let _ =
                 |> Vector3Service.truncate(2)
                 |> expect == (2., 0., 4.15);
               });
-              /* TODO add case: flyCamera transform rotation shouldn't change */
+              test("test editCamera transform rotation shouldn't change", () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                _prepareSceneGameObject(
+                  () =>
+                    MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode(),
+                  MainEditorSceneTool.getFirstCube(engineState),
+                  engineState,
+                );
+
+                let oldLocalEulerAngles =
+                  _getEditCameraTransformLocalEulerAngles
+                  |> StateLogicService.getStateToGetData
+                  |> Vector3Service.truncate(2);
+
+                triggerFocusHotKeyEvent();
+
+                _getEditCameraTransformLocalEulerAngles
+                |> StateLogicService.getStateToGetData
+                |> Vector3Service.truncate(2)
+                |> expect == oldLocalEulerAngles;
+              });
 
               describe("fix bug", () =>
                 test("calcPosition should not change origin position", () => {
