@@ -50,9 +50,6 @@ let _ =
 
         MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
-        ArcballCameraControllerToolEngine.clearDirtyArray
-        |> StateLogicService.getAndSetEngineState;
-
         let pos = (0., 0., 0.);
         TransformGameObjectEngineService.setLocalPosition(
           GameObjectTool.getCurrentSceneTreeNodeTransform(),

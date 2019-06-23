@@ -212,6 +212,34 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "fly-cameraController-describe",
+    language: {
+      zh: {j|自由相机组件|j},
+      en: "fly camera controller",
+    },
+  },
+  {
+    title: "fly-move-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
+    title: "fly-rotate-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
+    title: "fly-wheel-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
     title: "arcball-cameraController-describe",
     language: {
       zh: {j|轨道相机组件|j},

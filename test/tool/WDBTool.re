@@ -184,7 +184,8 @@ let generateDirectionPointLightsAndCubeWDB = () =>
     (rootGameObject, (editorState, engineState));
   });
 
-let generateSceneWDB = () =>
+let _generateWDBWithCameraType =
+    (createCameraControllerFunc, bindEventFunc, addCameraControllerFunc) =>
   generateWDB((editorState, engineState) => {
     let engineState =
       ManageIMGUIEngineService.setIMGUIFunc(
@@ -222,8 +223,8 @@ let generateSceneWDB = () =>
       CameraLogicService.createCamera(editorState, engineState);
     let (editorState, engineState, camera2) =
       CameraLogicService.createCamera(editorState, engineState);
-    let (engineState, arcballCameraController) =
-      ArcballCameraEngineService.create(engineState);
+    let (engineState, cameraController) =
+      createCameraControllerFunc(engineState);
 
     let basicCameraViewComponent =
       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -240,37 +241,17 @@ let generateSceneWDB = () =>
              engineState,
            ),
          )
-      /* |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-              200.,
-              arcballCameraController,
-            )
-         |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
-              arcballCameraController,
-              8.,
-            )
-         |> ArcballCameraEngineService.setArcballCameraControllerTheta(
-              arcballCameraController,
-              Js.Math._PI /. 5.,
-            ) */
-      |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView(
-           arcballCameraController,
-         )
+      |> bindEventFunc(cameraController)
       |> BasicCameraViewEngineService.activeBasicCameraView(
            basicCameraViewComponent,
          );
 
     let (editorState, engineState) =
       (editorState, engineState)
-      |> GameObjectLogicService.addArcballCameraController(
-           camera,
-           arcballCameraController,
-         );
+      |> addCameraControllerFunc(camera, cameraController);
 
     let (editorState, engineState, directionLight) =
       PrimitiveLogicService.createDirectionLight(editorState, engineState);
-
-    /* let (editorState, engineState, pointLight) =
-       _createPointLight(editorState, engineState); */
 
     let (engineState, rootGameObject) =
       GameObjectEngineService.create(engineState);
@@ -287,6 +268,20 @@ let generateSceneWDB = () =>
 
     (rootGameObject, (editorState, engineState));
   });
+
+let generateSceneWDBWithArcballCameraController = () =>
+  _generateWDBWithCameraType(
+    ArcballCameraEngineService.create,
+    ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+    GameObjectLogicService.addArcballCameraController,
+  );
+
+let generateSceneWDBWithFlyCameraController = () =>
+  _generateWDBWithCameraType(
+    FlyCameraEngineService.create,
+    FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView,
+    GameObjectLogicService.addFlyCameraController,
+  );
 
 module ScriptEventFunction = {
   let getScriptGameObjectName = () => "ScriptGameObject";

@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test add arcballCameraController", () => {
+  describe("test add flyCameraController", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -27,10 +27,11 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("if is run", () => {
+      beforeEach(() => ControllerTool.setIsRun(true));
+
       describe(
         "if gameObject has basicCameraView and basicCameraView is active ", () =>
-        test("bind arcballCameraController event for game view", () => {
-          ControllerTool.setIsRun(true);
+        test("bind flyCameraController event for game view", () => {
           let currentBasicCameraView =
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -44,17 +45,17 @@ let _ =
             );
           engineState |> StateEngineService.setState |> ignore;
 
-          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
 
           let engineState = StateEngineService.unsafeGetState();
-          let currentArcballCameraController =
+          let currentFlyCameraController =
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
-            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+            |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
                  _,
                  StateEngineService.unsafeGetState(),
                );
-          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-            currentArcballCameraController,
+          FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+            currentFlyCameraController,
             engineState,
           )
           |> expect == true;
@@ -63,19 +64,19 @@ let _ =
 
       describe("else", () =>
         test("not bind event for game view", () => {
-          ControllerTool.setIsRun(true);
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
-
-          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
 
           let engineState = StateEngineService.unsafeGetState();
           let currentSceneTreeNode =
             GameObjectTool.unsafeGetCurrentSceneTreeNode();
+
           engineState
-          |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+          |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
                currentSceneTreeNode,
              )
-          |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+          |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+               _,
                engineState,
              )
           |> expect == false;

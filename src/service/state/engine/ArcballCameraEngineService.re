@@ -62,34 +62,22 @@ let unbindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.u
 
 let isBindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;
 
-let unbindArcballCameraControllerEventIfHasComponentForGameView =
-    (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-       gameObject,
-     ) ?
-    (
-      engineState
-      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-           gameObject,
-         )
-    )
-    ->(unbindArcballCameraControllerEventForGameView(engineState)) :
-    engineState;
-
-let bindArcballCameraControllerEventIfHasComponentForGameView =
-    (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-       gameObject,
-     ) ?
-    (
-      engineState
-      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-           gameObject,
-         )
-    )
-    ->(bindArcballCameraControllerEventForGameView(engineState)) :
-    engineState;
-
 let isTriggerKeydownEventHandler = EventArcballCameraControllerMainService.isTriggerKeydownEventHandler;
+
+let unbindAllArcballCameraControllerEvent = engineState =>
+  GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
+    engineState,
+  )
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, arcballCameraController) =>
+         isBindArcballCameraControllerEventForGameView(
+           arcballCameraController,
+           engineState,
+         ) ?
+           unbindArcballCameraControllerEventForGameView(
+             arcballCameraController,
+             engineState,
+           ) :
+           engineState,
+       engineState,
+     );

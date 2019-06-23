@@ -8,6 +8,7 @@ let getInspectorComponentType = (type_, editorState) =>
   | "RenderGroup" => RenderGroup
   | "CameraGroup" => CameraGroup
   | "ArcballCameraController" => ArcballCameraController
+  | "FlyCameraController" => FlyCameraController
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(

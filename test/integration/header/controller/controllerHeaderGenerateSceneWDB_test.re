@@ -16,6 +16,25 @@ let _ =
   describe("controller header generate scene wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let _generateSceneWDB =
+        (
+          ~isSceneRoot=false,
+          ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
+          ~imageUint8ArrayMap=Js.Nullable.return(
+                                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                                  StateEditorService.getState(),
+                                ),
+                              ),
+          ~engineState=StateEngineService.unsafeGetState(),
+          (),
+        ) =>
+      HeaderExportSceneWDBUtils.generateSceneWDB(
+        isSceneRoot,
+        generateWDBFunc,
+        imageUint8ArrayMap,
+        engineState,
+      );
+
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -72,25 +91,6 @@ let _ =
              )
           |> Js.Array.length;
 
-        let _generateSceneWDB =
-            (
-              ~isSceneRoot=false,
-              ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
-              ~imageUint8ArrayMap=Js.Nullable.return(
-                                    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
-                                      StateEditorService.getState(),
-                                    ),
-                                  ),
-              ~engineState=StateEngineService.unsafeGetState(),
-              (),
-            ) =>
-          HeaderExportSceneWDBUtils.generateSceneWDB(
-            isSceneRoot,
-            generateWDBFunc,
-            imageUint8ArrayMap,
-            engineState,
-          );
-
         let _test = controlFunc => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
@@ -121,8 +121,7 @@ let _ =
           |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)
-                 |> JudgeTool.isEqual(_, 0)
-                 |> (!);
+                 |> JudgeTool.isNotEqual(_, 0);
 
                ();
              })
@@ -133,7 +132,7 @@ let _ =
         testPromise("test run", () => _test(() => ControllerTool.run()));
 
         describe("test stop", () => {
-          testPromise("test bind", () =>
+          testPromise("should bind", () =>
             _test(() => {
               ControllerTool.run();
               ControllerTool.stop();
@@ -141,6 +140,93 @@ let _ =
           );
           test("should unbind after package", () => {
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+            let basicCameraView =
+              GameObjectTool.getCurrentSceneTreeNodeBasicCameraView();
+            BasicCameraViewEngineService.activeBasicCameraView(
+              basicCameraView,
+            )
+            |> StateLogicService.getAndSetEngineState;
+            ControllerTool.run();
+            ControllerTool.stop();
+
+            let (engineState, wdb) = _generateSceneWDB();
+
+            _getIsBindLength(
+              SceneEngineService.getSceneGameObject(engineState),
+              engineState,
+            )
+            |> expect == 0;
+          });
+        });
+      },
+    );
+
+    describe(
+      "fix bind flyCameraController event bug: package should bind event if any basicCameraView is active",
+      () => {
+        let _getIsBindLength = (gameObject, engineState) =>
+          HierarchyGameObjectEngineService.getAllGameObjects(
+            gameObject,
+            engineState,
+          )
+          |> GameObjectEngineService.getAllFlyCameraControllers(
+               _,
+               engineState,
+             )
+          |> Js.Array.filter(flyCameraController =>
+               FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+                 flyCameraController,
+                 engineState,
+               )
+             )
+          |> Js.Array.length;
+
+        let _test = controlFunc => {
+          MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
+
+          let basicCameraView =
+            GameObjectTool.getCurrentSceneTreeNodeBasicCameraView();
+
+          BasicCameraViewEngineService.activeBasicCameraView(basicCameraView)
+          |> StateLogicService.getAndSetEngineState;
+
+          controlFunc();
+
+          let (engineState, wdb) = _generateSceneWDB();
+
+          let isBind = ref(false);
+
+          engineState
+          |> AssembleWDBEngineService.assembleWDB(
+               wdb,
+               true,
+               true,
+               true,
+               true,
+               true,
+             )
+          |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
+               isBind :=
+                 _getIsBindLength(gameObject, engineState)
+                 |> JudgeTool.isNotEqual(_, 0);
+
+               ();
+             })
+          |> WonderBsMost.Most.drain
+          |> then_(() => isBind^ |> expect == true |> resolve);
+        };
+
+        testPromise("test run", () => _test(() => ControllerTool.run()));
+
+        describe("test stop", () => {
+          testPromise("should bind", () =>
+            _test(() => {
+              ControllerTool.run();
+              ControllerTool.stop();
+            })
+          );
+          test("should unbind after package", () => {
+            MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
             let basicCameraView =
               GameObjectTool.getCurrentSceneTreeNodeBasicCameraView();
             BasicCameraViewEngineService.activeBasicCameraView(

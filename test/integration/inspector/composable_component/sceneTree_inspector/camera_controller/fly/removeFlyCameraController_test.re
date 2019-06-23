@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test remove arcball camera controller", () => {
+  describe("test remove fly camera controller", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -45,29 +45,30 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("if is run", () =>
-      test("unbind arcballCameraController event for game view", () => {
-        ControllerTool.setIsRun(true);
-        MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+    describe("if is run", () => {
+      beforeEach(() => ControllerTool.setIsRun(true));
+
+      test("unbind flyCameraController event for game view", () => {
+        MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
         let cameraController =
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+          |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
                _,
                StateEngineService.unsafeGetState(),
              );
-        ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+        FlyCameraEngineService.bindFlyCameraControllerEventForGameView(
           cameraController,
         )
         |> StateLogicService.getAndSetEngineState;
 
-        MainEditorInspectorRemoveComponentTool.removeArcballCameraControllerComponent();
+        MainEditorInspectorRemoveComponentTool.removeFlyCameraControllerComponent();
 
         let engineState = StateEngineService.unsafeGetState();
-        ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+        FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
           cameraController,
           engineState,
         )
         |> expect == false;
-      })
-    );
+      });
+    });
   });

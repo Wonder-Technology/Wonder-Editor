@@ -1,37 +1,3 @@
-/* let _markLastSceneCameraToBeActive =
-     (gameObject, targetRemoveBasicCameraView, editorState, engineState) =>
-   switch (
-     engineState
-     |> SceneEngineService.getSceneAllBasicCameraViews
-     |> Js.Array.filter(component => component != targetRemoveBasicCameraView)
-     |> ArrayService.getLast
-   ) {
-   | None => (
-       GameViewEditorService.removeActivedBasicCameraView(editorState),
-       engineState,
-     )
-   | Some(lastBasicCameraView) =>
-     let engineState =
-       StateEditorService.getIsRun() ?
-         ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
-           lastBasicCameraView
-           |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-                _,
-                engineState,
-              ),
-           engineState,
-         ) :
-         engineState;
-
-     (
-       GameViewEditorService.setActivedBasicCameraView(
-         lastBasicCameraView,
-         editorState,
-       ),
-       engineState,
-     );
-   }; */
-
 let createCamera = (editorState, engineState) => {
   let (editorState, (engineState, gameObject)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
@@ -51,36 +17,40 @@ let createCamera = (editorState, engineState) => {
 
   (editorState, engineState, gameObject);
 };
-let unbindArcballCameraControllerEventIfHasComponentForGameView =
-    (gameObject, editorState, engineState) => {
-  let targetRemoveBasicCameraView =
+let unbindCameraControllerEventIfHasComponentGameView =
+    (camera, (editorState, engineState)) => {
+  let removeCameraBasicCameraView =
     engineState
     |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-         gameObject,
+         camera,
        );
 
   GameViewEditorService.isActiveBasicCameraView(
-    targetRemoveBasicCameraView,
+    removeCameraBasicCameraView,
     editorState,
   ) ?
     {
       let engineState =
         StateEditorService.getIsRun() ?
-          ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
-            gameObject,
-            engineState,
-          ) :
+          switch (
+            CameraControllerUtils.getCameraControllerType(camera, engineState)
+          ) {
+          | Some(FlyCameraController) =>
+            engineState
+            |> FlyCameraControllerLogicService.unbindGameViewActiveCameraFlyCameraControllerEvent(
+                 camera,
+               )
+          | Some(ArcballCameraController) =>
+            engineState
+            |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent(
+                 camera,
+               )
+          | None => engineState
+          } :
           engineState;
 
       let editorState =
         GameViewEditorService.removeActivedBasicCameraView(editorState);
-
-      /* _markLastSceneCameraToBeActive(
-           gameObject,
-           targetRemoveBasicCameraView,
-           editorState,
-           engineState,
-         ); */
 
       (editorState, engineState);
     } :

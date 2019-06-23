@@ -10,7 +10,8 @@ let gameObject_all_component = {|
             "type":"Camera",
             "components":[
                 { "type" : "CameraGroup" },
-                { "type" : "ArcballCameraController" }
+                { "type" : "ArcballCameraController" },
+                { "type" : "FlyCameraController" }
             ]
        },
        {

@@ -5,6 +5,7 @@ type componentType =
   | RenderGroup
   | Geometry
   | ArcballCameraController
+  | FlyCameraController
   | CameraGroup
   | Light
   | SourceInstance

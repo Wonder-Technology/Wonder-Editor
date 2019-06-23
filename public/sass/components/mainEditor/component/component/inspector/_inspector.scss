@@ -23,6 +23,7 @@
         @import "sceneTree/inspectorLight";
 
         @include inspectorItem("wonder-inspector-arcballCameraController");
+        @include inspectorItem("wonder-inspector-flyCameraController");
 
         @import "sceneTree/inspectorAddableComponent";
 

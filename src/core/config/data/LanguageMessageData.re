@@ -37,6 +37,13 @@ let message_language_array = [|
     },
   },
   {
+    title: "add-component-camera-duplicate",
+    language: {
+      zh: {j|该GameObject已经拥有类似相机控制器！|j},
+      en: "the game object already have the camera controller!",
+    },
+  },
+  {
     title: "asset-rename-node",
     language: {
       zh: {j|资产名称不能重复 ！|j},

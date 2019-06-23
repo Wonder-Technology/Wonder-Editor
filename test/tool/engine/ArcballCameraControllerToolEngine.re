@@ -56,8 +56,3 @@ let addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerE
 
   (engineState, gameObject, cameraController);
 };
-
-let clearDirtyArray = engineState =>
-  Wonderjs.UpdateArcballCameraControllerMainService._clearDirtyArray(
-    engineState,
-  );

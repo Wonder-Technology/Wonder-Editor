@@ -14,6 +14,10 @@ let buildAllComponentArray = () => [|
     hasComponentFunc: GameObjectComponentEngineService.hasGeometryComponent,
   },
   {
+    componentType: FlyCameraController,
+    hasComponentFunc: GameObjectComponentEngineService.hasFlyCameraControllerComponent,
+  },
+  {
     componentType: ArcballCameraController,
     hasComponentFunc: GameObjectComponentEngineService.hasArcballCameraControllerComponent,
   },

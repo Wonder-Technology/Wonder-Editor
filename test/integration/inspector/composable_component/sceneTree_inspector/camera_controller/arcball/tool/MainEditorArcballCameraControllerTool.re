@@ -26,12 +26,18 @@ let changeDistanceAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
+  let oldValue =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
   changeDistance(cameraController, value);
   blurArcballCameraDistance(
     ~uiState,
     ~dispatchFunc,
     ~cameraController,
-    ~value,
+    ~value=oldValue,
     (),
   );
 };
@@ -97,12 +103,18 @@ let changeMinDistanceAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
+  let oldValue =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
   changeMinDistance(cameraController, value);
   blurArcballCameraMinDistance(
     ~uiState,
     ~dispatchFunc,
     ~cameraController,
-    ~value,
+    ~value=oldValue,
     (),
   );
 };
@@ -132,12 +144,18 @@ let changePhiAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
+  let oldValue =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
   changePhi(cameraController, value);
   blurArcballCameraPhi(
     ~uiState,
     ~dispatchFunc,
     ~cameraController,
-    ~value,
+    ~value=oldValue,
     (),
   );
 };
@@ -170,12 +188,18 @@ let changeThetaAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
+  let oldValue =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
   changeTheta(cameraController, value);
   blurArcballCameraTheta(
     ~uiState,
     ~dispatchFunc,
     ~cameraController,
-    ~value,
+    ~value=oldValue,
     (),
   );
 };

@@ -17,7 +17,7 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithFlyCameraController();
     });
 
     beforeEach(() => {
@@ -81,9 +81,7 @@ let _ =
           (),
         )
         |> then_(_ =>
-             BuildComponentTool.buildSceneTree(
-               TestTool.buildEmptyAppState(),
-             )
+             BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
              |> ReactTestTool.createSnapshotAndMatch
              |> resolve
            );
@@ -188,15 +186,15 @@ let _ =
                        editorState,
                      ),
                    )
-                   |>
-                   expect == (
-                               {|function(param,apiJsObj,engineState){
+                   |> expect
+                   == (
+                        {|function(param,apiJsObj,engineState){
         var label = apiJsObj.label;
         return label(/*tuple*/[100,30,300,200], "imgui", 0, engineState);
                                }|}
-                               |> StringTool.removeNewLinesAndSpaces,
-                               Obj.magic(Js.Nullable.null),
-                             )
+                        |> StringTool.removeNewLinesAndSpaces,
+                        Obj.magic(Js.Nullable.null),
+                      )
                    |> resolve;
                  });
             })
@@ -239,9 +237,9 @@ let _ =
         })
       );
 
-      describe("test bind arcball event", () =>
+      describe("test bind fly event", () =>
         testPromise(
-          "should not bind scene wdb->arcball cameraControllers(instead bind editCamera->arcball cameraController)",
+          "should not bind scene wdb->fly cameraControllers event(instead bind editCamera->fly cameraController)",
           () => {
             let fileName = "Scene";
 
@@ -254,12 +252,12 @@ let _ =
                  let engineState = StateEngineService.unsafeGetState();
 
                  (
-                   GameObjectToolEngine.getAllArcballCameraControllers(
+                   GameObjectToolEngine.getAllFlyCameraControllers(
                      SceneEngineService.getSceneGameObject(engineState),
                      engineState,
                    )
                    |> Js.Array.filter(cameraController =>
-                        ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                        FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
                           cameraController,
                           engineState,
                         )
@@ -268,11 +266,11 @@ let _ =
                    SceneViewEditorService.unsafeGetEditCamera(
                      StateEditorService.getState(),
                    )
-                   |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                   |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
                         _,
                         engineState,
                       )
-                   |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                   |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
                         _,
                         engineState,
                       ),
@@ -314,14 +312,14 @@ let _ =
                let editorState = StateEditorService.getState();
 
                GameViewEditorService.getActivedBasicCameraView(editorState)
-               |>
-               expect == Some(
-                           GameObjectEngineService.getGameObjectActiveBasicCameraView(
-                             MainEditorSceneTool.unsafeGetScene(),
-                             StateEngineService.unsafeGetState(),
-                           )
-                           |> OptionService.unsafeGet,
-                         )
+               |> expect
+               == Some(
+                    GameObjectEngineService.getGameObjectActiveBasicCameraView(
+                      MainEditorSceneTool.unsafeGetScene(),
+                      StateEngineService.unsafeGetState(),
+                    )
+                    |> OptionService.unsafeGet,
+                  )
                |> resolve;
              });
         });

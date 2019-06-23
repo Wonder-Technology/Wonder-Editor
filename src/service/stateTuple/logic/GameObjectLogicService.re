@@ -103,6 +103,20 @@ let addScript = (gameObject, component, (editorState, engineState)) => (
   ),
 );
 
+let addFlyCameraController =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.FlyCameraController,
+     ),
+  GameObjectComponentEngineService.addFlyCameraControllerComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
 let addArcballCameraController =
     (gameObject, component, (editorState, engineState)) => (
   editorState
@@ -181,6 +195,20 @@ let disposePointLight = (gameObject, component, (editorState, engineState)) => (
        InspectorComponentType.Light,
      ),
   GameObjectComponentEngineService.disposePointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let disposeFlyCameraController =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.FlyCameraController,
+     ),
+  GameObjectComponentEngineService.disposeFlyCameraControllerComponent(
     gameObject,
     component,
     engineState,
