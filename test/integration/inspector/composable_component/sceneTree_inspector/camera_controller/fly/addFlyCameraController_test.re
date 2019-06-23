@@ -27,10 +27,11 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("if is run", () => {
+      beforeEach(() => ControllerTool.setIsRun(true));
+
       describe(
         "if gameObject has basicCameraView and basicCameraView is active ", () =>
         test("bind flyCameraController event for game view", () => {
-          ControllerTool.setIsRun(true);
           let currentBasicCameraView =
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -63,7 +64,6 @@ let _ =
 
       describe("else", () =>
         test("not bind event for game view", () => {
-          ControllerTool.setIsRun(true);
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
           MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
 

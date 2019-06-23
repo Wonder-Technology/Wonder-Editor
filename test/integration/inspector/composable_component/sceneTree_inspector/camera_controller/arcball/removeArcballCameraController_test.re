@@ -45,9 +45,10 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("if is run", () =>
+    describe("if is run", () => {
+      beforeEach(() => ControllerTool.setIsRun(true));
+
       test("unbind arcballCameraController event for game view", () => {
-        ControllerTool.setIsRun(true);
         MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
         let cameraController =
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
@@ -68,6 +69,6 @@ let _ =
           engineState,
         )
         |> expect == false;
-      })
-    );
+      });
+    });
   });

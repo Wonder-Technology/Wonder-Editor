@@ -30,24 +30,63 @@ let _ =
             createEmptyStubWithJsObjSandbox(sandbox),
           );
         });
-        test(
-          "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
-          () => {
+
+        describe("if is run", () => {
+          beforeEach(() => ControllerTool.setIsRun(true));
+
+          test(
+            "set the current camera should unbind the other ones' event and bind the current one's event",
+            () => {
+              let (camera1, camera2) =
+                MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
+                  sandbox,
+                );
+
+              MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
+              MainEditorCameraViewTool.setCurrentCamera(
+                ~cameraView=
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
+                (),
+              );
+
+              ControllerTool.run();
+
+              let engineState = StateEngineService.unsafeGetState();
+              (
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                     camera1,
+                   )
+                |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                     _,
+                     engineState,
+                   ),
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                     camera2,
+                   )
+                |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                     _,
+                     engineState,
+                   ),
+              )
+              |> expect == (false, true);
+            },
+          );
+        });
+
+        describe("else if is stop", () => {
+          beforeEach(() => ControllerTool.setIsRun(false));
+
+          test(
+            "set the current camera shouldn't bind the current one's event", () => {
             let (camera1, camera2) =
               MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
 
-            MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
-            MainEditorCameraViewTool.setCurrentCamera(
-              ~cameraView=
-                GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
-              (),
-            );
-
-            ControllerTool.run();
-
             let engineState = StateEngineService.unsafeGetState();
+
             (
               engineState
               |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
@@ -66,44 +105,11 @@ let _ =
                    engineState,
                  ),
             )
-            |> expect == (false, true);
-          },
-        );
-        test(
-          "test click stop, the two camera arcballCameraController shouldn't bind event",
-          () => {
-          let (camera1, camera2) =
-            MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
-              sandbox,
-            );
-
-          ControllerTool.run();
-          ControllerTool.stop();
-
-          let engineState = StateEngineService.unsafeGetState();
-
-          (
-            engineState
-            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                 camera1,
-               )
-            |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                 _,
-                 engineState,
-               ),
-            engineState
-            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                 camera2,
-               )
-            |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                 _,
-                 engineState,
-               ),
-          )
-          |> expect == (false, false);
+            |> expect == (false, false);
+          });
         });
 
-        describe("test click run and change current camera", () => {
+        describe("test change current camera when run", () => {
           let _prepareAndExec = () => {
             let (camera1, camera2) =
               MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
@@ -120,7 +126,6 @@ let _ =
             |> StateEngineService.setState
             |> ignore;
 
-            ControllerTool.run();
             MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
             MainEditorCameraViewTool.setCurrentCamera(
               ~cameraView=
@@ -130,6 +135,8 @@ let _ =
 
             (camera1, camera2);
           };
+
+          beforeEach(() => ControllerTool.run());
 
           test(
             "the target camera should bind event, and the source camera shouldn't bind event",
@@ -188,9 +195,54 @@ let _ =
             createEmptyStubWithJsObjSandbox(sandbox),
           );
         });
-        test(
-          "test click run, the current camera flyCameraController should bind event, the other camera shouldn't bind event",
-          () => {
+
+        describe("if is run", () => {
+          beforeEach(() => ControllerTool.setIsRun(true));
+
+          test(
+            "set the current camera should unbind the other ones' event and bind the current one's event",
+            () => {
+              let (camera1, camera2) =
+                MainEditorInspectorAddComponentTool.buildTwoAddedFlyCameraControllerCamera(
+                  sandbox,
+                );
+
+              MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
+              MainEditorCameraViewTool.setCurrentCamera(
+                ~cameraView=
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
+                (),
+              );
+
+              let engineState = StateEngineService.unsafeGetState();
+              (
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+                     camera1,
+                   )
+                |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+                     _,
+                     engineState,
+                   ),
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+                     camera2,
+                   )
+                |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
+                     _,
+                     engineState,
+                   ),
+              )
+              |> expect == (false, true);
+            },
+          );
+        });
+
+        describe("else if is stop", () => {
+          beforeEach(() => ControllerTool.setIsRun(false));
+
+          test(
+            "set the current camera shouldn't bind the current one's event", () => {
             let (camera1, camera2) =
               MainEditorInspectorAddComponentTool.buildTwoAddedFlyCameraControllerCamera(
                 sandbox,
@@ -203,52 +255,7 @@ let _ =
               (),
             );
 
-            ControllerTool.run();
-
             let engineState = StateEngineService.unsafeGetState();
-            (
-              engineState
-              |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
-                   camera1,
-                 )
-              |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
-                   _,
-                   engineState,
-                 ),
-              engineState
-              |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
-                   camera2,
-                 )
-              |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
-                   _,
-                   engineState,
-                 ),
-            )
-            |> expect == (false, true);
-          },
-        );
-        test(
-          "test click stop, the two camera flyCameraController shouldn't bind event",
-          () => {
-          let (camera1, camera2) =
-            MainEditorInspectorAddComponentTool.buildTwoAddedFlyCameraControllerCamera(
-              sandbox,
-            );
-
-          ControllerTool.run();
-          ControllerTool.stop();
-
-          let engineState = StateEngineService.unsafeGetState();
-
-          (
-            engineState
-            |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
-                 camera1,
-               )
-            |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
-                 _,
-                 engineState,
-               ),
             engineState
             |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
                  camera2,
@@ -256,12 +263,12 @@ let _ =
             |> FlyCameraEngineService.isBindFlyCameraControllerEventForGameView(
                  _,
                  engineState,
-               ),
-          )
-          |> expect == (false, false);
+               )
+            |> expect == false;
+          });
         });
 
-        describe("test click run and change current camera", () => {
+        describe("test change current camera when run", () => {
           let _prepareAndExec = () => {
             let (camera1, camera2) =
               MainEditorInspectorAddComponentTool.buildTwoAddedFlyCameraControllerCamera(
@@ -278,8 +285,6 @@ let _ =
             |> StateEngineService.setState
             |> ignore;
 
-            ControllerTool.run();
-
             MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
             MainEditorCameraViewTool.setCurrentCamera(
               ~cameraView=
@@ -289,6 +294,8 @@ let _ =
 
             (camera1, camera2);
           };
+
+          beforeEach(() => ControllerTool.run());
 
           test(
             "the target camera should bind event, and the source camera shouldn't bind event",
