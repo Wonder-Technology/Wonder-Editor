@@ -50,6 +50,14 @@ let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
     } :
     engineState;
 
+let _handleKeyUpForSceneView = (event, keydownHandleFunc, engineState) => {
+  let engineState = keydownHandleFunc(. event, engineState);
+
+  let engineState = StateLogicService.renderWhenStop(engineState);
+
+  engineState;
+};
+
 let _bindArcballCameraControllerEvent =
     (
       cameraController,
@@ -68,6 +76,7 @@ let _bindArcballCameraControllerEvent =
     pointDragOverHandleFunc,
     pointScaleHandleFunc,
     keydownHandleFunc,
+    keyupHandleFunc,
   ) =
     ArcballCameraEngineService.prepareBindEvent(
       cameraController,
@@ -104,12 +113,15 @@ let _bindArcballCameraControllerEvent =
       (),
     );
 
-  (engineState, (pointScaleHandleFunc, keydownHandleFunc));
+  (engineState, (pointScaleHandleFunc, keydownHandleFunc, keyupHandleFunc));
 };
 
 let bindArcballCameraControllerEventForSceneView =
     (cameraController, mainEngineState) => {
-  let (mainEngineState, (pointScaleHandleFunc, keydownHandleFunc)) =
+  let (
+    mainEngineState,
+    (pointScaleHandleFunc, keydownHandleFunc, keyupHandleFunc),
+  ) =
     _bindArcballCameraControllerEvent(
       cameraController,
       (
@@ -145,6 +157,16 @@ let bindArcballCameraControllerEventForSceneView =
             keydownHandleFunc,
             mainEngineState,
           ),
+      ~state=mainEngineState,
+      (),
+    );
+
+  let mainEngineState =
+    ManageEventEngineService.onKeyboardEvent(
+      ~eventName=EventType.KeyUp_SceneView |> Obj.magic,
+      ~handleFunc=
+        (. event: EventType.keyboardEvent, mainEngineState) =>
+          _handleKeyUpForSceneView(event, keyupHandleFunc, mainEngineState),
       ~state=mainEngineState,
       (),
     );
