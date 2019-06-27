@@ -41,6 +41,14 @@ let _setFlyCameraControllerFocusRelatedAttribute =
     StateEditorService.getStateIsDebug(),
   );
 
+  let flyCameraController =
+    GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+      camera,
+      engineState,
+    );
+  let moveSpeed = _calcMoveSpeed(distance);
+  let wheelSpeed = _calcWheelSpeed(distance);
+
   let cameraTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       camera,
@@ -49,7 +57,15 @@ let _setFlyCameraControllerFocusRelatedAttribute =
 
   engineState
   |> _calcPosition(cameraTransform, (centerPosition, distance))
-  |> TransformEngineService.setLocalPosition(_, cameraTransform, engineState);
+  |> TransformEngineService.setLocalPosition(_, cameraTransform, engineState)
+  |> FlyCameraEngineService.setFlyCameraControllerMoveSpeed(
+       flyCameraController,
+       moveSpeed,
+     )
+  |> FlyCameraEngineService.setFlyCameraControllerWheelSpeed(
+       flyCameraController,
+       wheelSpeed,
+     );
 };
 
 let _setArcballCameraControllerFocusRelatedAttribute =
