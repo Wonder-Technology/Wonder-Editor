@@ -656,7 +656,11 @@ let buildWDBData =
        |> then_(
             (
               (
-                (allGameObjects, _wdbImageUint8ArrayDataMap),
+                (
+                  allGameObjects,
+                  wdbBasicSourceTextureImageUint8ArrayDataMap,
+                  wdbCubemapTextureImageUint8ArrayDataMap,
+                ),
                 (editorState, engineState),
               ),
             ) => {
@@ -667,13 +671,19 @@ let buildWDBData =
                     Operators.(
                       test(
                         Log.buildAssertMessage(
-                          ~expect={j|wdbImageUint8ArrayDataMap be empty|j},
+                          ~expect=
+                            {j|wdbBasicSourceTextureImageUint8ArrayDataMap, wdbCubemapTextureImageUint8ArrayDataMap be empty|j},
                           ~actual={j|not|j},
                         ),
-                        () =>
-                        _wdbImageUint8ArrayDataMap
-                        |> WonderCommonlib.ImmutableSparseMapService.length
-                        == 0
+                        () => {
+                          wdbBasicSourceTextureImageUint8ArrayDataMap
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0;
+
+                          wdbCubemapTextureImageUint8ArrayDataMap
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0;
+                        },
                       )
                     )
                   )

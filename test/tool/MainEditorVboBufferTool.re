@@ -2,7 +2,7 @@ open Wonderjs;
 
 let passBufferShouldExistCheckWhenDisposeGeometry =
     (geometryIndex, state: StateDataMainType.state) => {
-  open VboBufferType;
+  open AllVboBufferType;
   let {geometryVertexBufferMap, geometryElementArrayBufferMap} =
     state.vboBufferRecord;
   WonderCommonlib.ImmutableSparseMapService.set(

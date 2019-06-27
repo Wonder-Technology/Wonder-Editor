@@ -29,9 +29,10 @@ module Method = {
           | "geometry" => Some("./public/img/geo.png")
           | "scriptEventFunction" => Some("./public/img/selectJsFunc.png")
           | "scriptAttribute" => Some("./public/img/scriptAttribute.png")
-          | "texture" =>
-            let {imageDataIndex}: HeaderAssetBundleType.textureData =
-              value |> HeaderAssetBundleType.convertValueToTextureData;
+          | "basicSourceTexture" =>
+            let {imageDataIndex}: HeaderAssetBundleType.basicSourceTextureData =
+              value
+              |> HeaderAssetBundleType.convertValueToBasicSourceTextureData;
 
             ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)->Some;
           | _ => None
@@ -68,7 +69,7 @@ module Method = {
                     {
                       textureComponent: textureNodeData.textureComponent,
                       imageDataIndex: textureNodeData.imageDataIndex,
-                    }: HeaderAssetBundleType.textureData,
+                    }: HeaderAssetBundleType.basicSourceTextureData,
                   )
              } :
              textures,
@@ -140,13 +141,13 @@ module Method = {
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
                   )
-                | "texture" => (
+                | "basicSourceTexture" => (
                     basicMaterials,
                     lightMaterials,
                     _addResourceData(
                       textures,
                       value,
-                      HeaderAssetBundleType.convertValueToTextureData,
+                      HeaderAssetBundleType.convertValueToBasicSourceTextureData,
                     ),
                     geometrys,
                     scriptEventFunctionDataArr,
@@ -254,7 +255,9 @@ module Method = {
       lightMaterials |> WonderCommonlib.ArrayService.removeDuplicateItems,
       textures
       |> ArrayService.removeDuplicateItems(
-           (. {textureComponent}: HeaderAssetBundleType.textureData) =>
+           (.
+             {textureComponent}: HeaderAssetBundleType.basicSourceTextureData,
+           ) =>
            textureComponent |> string_of_int
          ),
       geometrys |> WonderCommonlib.ArrayService.removeDuplicateItems,
@@ -277,7 +280,7 @@ module Method = {
     let (
       basicMaterials,
       lightMaterials,
-      textures,
+      basicSourceTextures,
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
@@ -288,12 +291,16 @@ module Method = {
         (editorState, engineState),
       );
 
+    /* TODO cubemapTextures */
+    let cubemapTextures = [||];
+
     let rab =
       GenerateAssetBundleEngineService.generateSingleRAB(
         GenerateAssetBundleEngineService.buildResourceData(
           basicMaterials,
           lightMaterials,
-          textures,
+          basicSourceTextures,
+          cubemapTextures,
           geometrys,
           scriptEventFunctionDataArr,
           scriptAttributeDataArr,

@@ -29,10 +29,16 @@ let handleAssetWDBType =
   |> then_(
        (
          (
-           (allGameObjects, imageUint8ArrayDataMap),
+           (
+             allGameObjects,
+             basicSourceTextureImageUint8ArrayDataMap,
+             cubemapTextureImageUint8ArrayDataMap,
+           ),
            (editorState, engineState),
          ),
        ) => {
+       /* TODO use cubemapTextureImageUint8ArrayDataMap */
+
        let (
          (
            extractedMaterialAssetDataArr,
@@ -44,7 +50,7 @@ let handleAssetWDBType =
        ) =
          ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
            allGameObjects,
-           imageUint8ArrayDataMap,
+           basicSourceTextureImageUint8ArrayDataMap,
            (editorState, engineState),
          );
 

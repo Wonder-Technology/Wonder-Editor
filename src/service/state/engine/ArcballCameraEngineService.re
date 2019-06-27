@@ -6,6 +6,8 @@ let unsafeGetArcballCameraControllerGameObject = ArcballCameraControllerAPI.unsa
 
 let unsafeGetArcballCameraControllerDistance = ArcballCameraControllerAPI.unsafeGetArcballCameraControllerDistance;
 
+let unsafeGetArcballCameraControllerDirectionArray = ArcballCameraControllerAPI.unsafeGetArcballCameraControllerDirectionArray;
+
 let setArcballCameraControllerDistance = (value, component, state) =>
   ArcballCameraControllerAPI.setArcballCameraControllerDistance(
     component,

@@ -381,7 +381,7 @@ let _ =
 
         testPromise("test format", () =>
           _test(
-            Wonderjs.SourceTextureType.Luminance,
+            Wonderjs.TextureType.Luminance,
             (
               BasicSourceTextureEngineService.getFormat,
               BasicSourceTextureEngineService.setFormat,

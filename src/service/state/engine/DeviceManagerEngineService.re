@@ -20,7 +20,7 @@ let setScissorTest = (test, engineState) =>
 let setDepthTest = (test, engineState) => {
   ...engineState,
   deviceManagerRecord:
-    DeviceManagerService.setDepthTest(
+    AllDeviceManagerService.setDepthTest(
       unsafeGetGl(engineState),
       test,
       engineState.deviceManagerRecord,
@@ -30,7 +30,7 @@ let setDepthTest = (test, engineState) => {
 let setDepthWrite = (writeDepth: bool, engineState) => {
   ...engineState,
   deviceManagerRecord:
-    DeviceManagerService.setDepthWrite(
+    AllDeviceManagerService.setDepthWrite(
       unsafeGetGl(engineState),
       writeDepth,
       engineState.deviceManagerRecord,

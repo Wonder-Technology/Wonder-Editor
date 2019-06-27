@@ -68,8 +68,8 @@ let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
   OperateBasicSourceTextureMainService.setIsNeedUpdate(
     texture,
     isNeedUpdate ?
-      BufferSourceTextureService.getNeedUpdate() :
-      BufferSourceTextureService.getNotNeedUpdate(),
+      BufferTextureService.getNeedUpdate() :
+      BufferTextureService.getNotNeedUpdate(),
     engineState,
   );
 

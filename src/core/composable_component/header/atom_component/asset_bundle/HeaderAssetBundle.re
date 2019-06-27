@@ -142,16 +142,16 @@ module Method = {
               (currentSelectTreeNodeId, folderTreeMap, selectTree),
               (
                 assetNode,
-                "texture",
+                "basicSourceTexture",
                 (
                   {
                     textureComponent:
                       TextureNodeAssetService.getTextureComponent(assetNode),
                     imageDataIndex:
                       TextureNodeAssetService.getImageDataIndex(assetNode),
-                  }: textureData
+                  }: basicSourceTextureData
                 )
-                |> convertTextureDataToValue,
+                |> convertBasicSourceTextureDataToValue,
               ),
               engineState,
             );

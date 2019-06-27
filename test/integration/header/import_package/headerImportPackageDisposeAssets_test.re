@@ -234,39 +234,8 @@ let _ =
     describe("dispose material assets", () => {
       beforeEach(() => {
         MainEditorSceneTool.initState(~sandbox, ());
-        MainEditorSceneTool.initInspectorEngineState(
-          ~sandbox,
-          ~isInitJob=false,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-              ~initPipelines=
-                {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-              ~initJobs=
-                {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-              (),
-            ),
-          (),
-        );
 
-        StateInspectorEngineService.unsafeGetState()
-        |> MainUtils._handleInspectorEngineState
-        |> StateInspectorEngineService.setState
-        |> ignore;
-
-        CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+        MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
         MainEditorSceneTool.prepareScene(sandbox);
 
@@ -577,39 +546,7 @@ let _ =
     testPromise("clear imageData map", () => {
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
       MainEditorSceneTool.prepareScene(sandbox);
 
@@ -665,6 +602,8 @@ let _ =
               ),
             (),
           );
+
+          MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
           MainEditorSceneTool.prepareScene(sandbox);
 

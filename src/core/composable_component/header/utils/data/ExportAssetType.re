@@ -30,11 +30,11 @@ type image = {
   mimeType: string,
 };
 
-/* type magFilter = Wonderjs.SourceTextureType.filter;
+/* type magFilter = Wonderjs.TextureType.filter;
 
-   type minFilter = Wonderjs.SourceTextureType.filter;
+   type minFilter = Wonderjs.TextureType.filter;
 
-   type wrap = Wonderjs.SourceTextureType.wrap; */
+   type wrap = Wonderjs.TextureType.wrap; */
 
 /* type buffer = {byteLength: int}; */
 

@@ -204,7 +204,7 @@ let _ =
                    ),
                    inspectorEngineState,
                  )
-                 |> expect == Wonderjs.SourceTextureType.Repeat
+                 |> expect == Wonderjs.TextureType.Repeat
                  |> resolve;
                });
           },
