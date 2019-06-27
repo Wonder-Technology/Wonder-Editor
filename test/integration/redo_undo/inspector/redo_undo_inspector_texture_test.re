@@ -70,8 +70,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
 
@@ -107,8 +107,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
     });
@@ -165,8 +165,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
 
@@ -202,8 +202,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
     });
@@ -263,8 +263,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
 
@@ -299,8 +299,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
     });
@@ -360,8 +360,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
 
@@ -396,8 +396,8 @@ let _ =
           |> BasicSourceTextureEngineService.getIsNeedUpdate(
                textureComponent,
              )
-          |> Wonderjs.SourceTextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.SourceTextureType.NeedUpdate;
+          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
+          |> expect == Wonderjs.TextureType.NeedUpdate;
         });
       });
     });

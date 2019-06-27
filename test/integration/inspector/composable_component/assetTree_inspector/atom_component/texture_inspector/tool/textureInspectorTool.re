@@ -1,24 +1,24 @@
 open NodeAssetType;
 
 let getWrapClampType = () =>
-  Wonderjs.SourceTextureType.Clamp_to_edge |> TextureTypeUtils.convertWrapToInt;
+  Wonderjs.TextureType.Clamp_to_edge |> TextureTypeUtils.convertWrapToInt;
 
 let getWrapRepeatType = () =>
-  Wonderjs.SourceTextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
+  Wonderjs.TextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
 
 let getWrapMirroredRepeatType = () =>
-  Wonderjs.SourceTextureType.Mirrored_repeat
+  Wonderjs.TextureType.Mirrored_repeat
   |> TextureTypeUtils.convertWrapToInt;
 
 let getFilterLinearMipmapLinearType = () =>
-  Wonderjs.SourceTextureType.Linear_mipmap_linear
+  Wonderjs.TextureType.Linear_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
 let getFilterNearestType = () =>
-  Wonderjs.SourceTextureType.Nearest |> TextureTypeUtils.convertFilterToInt;
+  Wonderjs.TextureType.Nearest |> TextureTypeUtils.convertFilterToInt;
 
 let getFilterNearestMipmapLinearType = () =>
-  Wonderjs.SourceTextureType.Nearest_mipmap_linear
+  Wonderjs.TextureType.Nearest_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
 let getTextureComponentFromCurrentNodeData = () => {

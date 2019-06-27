@@ -166,11 +166,7 @@ let _ =
     };
 
     let _testKeydownEvent =
-        (
-          sandbox,
-          (pageX, pageY),
-          (getResultTargetFunc, prepareMouseEventFunc),
-        ) => {
+        (sandbox, (pageX, pageY), prepareMouseEventFunc, directionArray) => {
       let (cameraController, (moveSpeedX, moveSpeedY), (posX, posY, posZ)) =
         prepareMouseEventFunc(~sandbox, ());
 
@@ -178,11 +174,10 @@ let _ =
 
       let engineState = StateEngineService.unsafeGetState();
       engineState
-      |> ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+      |> ArcballCameraEngineService.unsafeGetArcballCameraControllerDirectionArray(
            cameraController,
          )
-      |> expect
-      == getResultTargetFunc((moveSpeedX, moveSpeedY), (posX, posY, posZ));
+      |> expect == directionArray;
     };
 
     beforeEach(() => sandbox := createSandbox());
@@ -231,31 +226,14 @@ let _ =
 
         describe("test set target", () => {
           test("if eventTarget is scene view, not move", () =>
-            _testKeydownEvent(
-              sandbox,
-              (10, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
-            )
+            _testKeydownEvent(sandbox, (10, 20), _prepareMouseEvent, [||])
           );
           test("if eventTarget is game view, move", () =>
             _testKeydownEvent(
               sandbox,
               (60, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX -. moveSpeedX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
+              _prepareMouseEvent,
+              [|Wonderjs.ArcballCameraControllerType.Left|],
             )
           );
         });

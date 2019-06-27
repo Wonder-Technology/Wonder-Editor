@@ -81,13 +81,13 @@ let _ =
         };
 
         testPromise("set jpg texture to rgb format", () =>
-          _test("1.jpg", Wonderjs.SourceTextureType.Rgb)
+          _test("1.jpg", Wonderjs.TextureType.Rgb)
         );
         testPromise("set jpeg texture to rgb format", () =>
-          _test("1.jpeg", Wonderjs.SourceTextureType.Rgb)
+          _test("1.jpeg", Wonderjs.TextureType.Rgb)
         );
         testPromise("set png texture to rgba format", () =>
-          _test("1.png", Wonderjs.SourceTextureType.Rgba)
+          _test("1.png", Wonderjs.TextureType.Rgba)
         );
       });
     });

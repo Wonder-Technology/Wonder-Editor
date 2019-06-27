@@ -92,7 +92,9 @@ let importAssetWDB =
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
-  let imageUint8ArrayDataMapRef =
+  let basicSourceTextureImageUint8ArrayDataMapRef =
+    ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
+  let cubemapTextureImageUint8ArrayDataMapRef =
     ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
 
   engineState
@@ -105,7 +107,19 @@ let importAssetWDB =
        isLoadImage,
      )
   |> WonderBsMost.Most.tap(
-       ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
+       (
+         (
+           engineState,
+           (
+             (
+               basicSourceTextureImageUint8ArrayDataMap,
+               cubemapTextureImageUint8ArrayDataMap,
+             ),
+             _,
+           ),
+           gameObject,
+         ),
+       ) => {
        let allGameObjects =
          HierarchyGameObjectEngineService.getAllGameObjects(
            gameObject,
@@ -127,12 +141,19 @@ let importAssetWDB =
        |> ignore;
 
        allGameObjectsRef := allGameObjects;
-       imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
+       basicSourceTextureImageUint8ArrayDataMapRef :=
+         basicSourceTextureImageUint8ArrayDataMap;
+       cubemapTextureImageUint8ArrayDataMapRef :=
+         cubemapTextureImageUint8ArrayDataMap;
      })
   |> WonderBsMost.Most.drain
   |> then_(_ =>
        resolve((
-         (allGameObjectsRef^, imageUint8ArrayDataMapRef^),
+         (
+           allGameObjectsRef^,
+           basicSourceTextureImageUint8ArrayDataMapRef^,
+           cubemapTextureImageUint8ArrayDataMapRef^,
+         ),
          (StateEditorService.getState(), StateEngineService.unsafeGetState()),
        ))
      );

@@ -10,7 +10,7 @@ let prepareTranslationPlaneGlState = engineState => {
   engineState
   |> DeviceManagerEngineService.setDepthWrite(false)
   |> DeviceManagerEngineService.setDepthTest(false)
-  |> DeviceManagerEngineService.setSide(Wonderjs.DeviceManagerType.BOTH)
+  |> DeviceManagerEngineService.setSide(Wonderjs.AllDeviceManagerType.BOTH)
   |> DeviceManagerEngineService.setBlend(true)
   |> DeviceManagerEngineService.setBlendFunc(
        Gl.getSrcAlpha(gl),
@@ -24,7 +24,7 @@ let restoreTranslationPlaneGlState = engineState => {
   engineState
   |> DeviceManagerEngineService.setDepthWrite(true)
   |> DeviceManagerEngineService.setDepthTest(true)
-  |> DeviceManagerEngineService.setSide(Wonderjs.DeviceManagerType.FRONT)
+  |> DeviceManagerEngineService.setSide(Wonderjs.AllDeviceManagerType.FRONT)
   |> DeviceManagerEngineService.setBlend(false);
 };
 

@@ -68,7 +68,7 @@ let bindCameraControllerEventByType = (gameObject, engineState) =>
   | None => engineState
   };
 
-let _getAllCameraControllerBindEventCount = engineState =>
+let _getAllSceneChildrenCameraControllerBindEventCount = engineState =>
   (
     HierarchyGameObjectEngineService.getAllGameObjects(
       SceneEngineService.getSceneGameObject(engineState),
@@ -106,11 +106,12 @@ let bindGameViewActiveCameraControllerEvent = engineState => {
           Operators.(
             test(
               Log.buildAssertMessage(
-                ~expect={j|should has no camera controller binded event|j},
+                ~expect={j|has one camera controller binded event at most|j},
                 ~actual={j|not|j},
               ),
               () =>
-              _getAllCameraControllerBindEventCount(engineState) == 0
+              _getAllSceneChildrenCameraControllerBindEventCount(engineState)
+              <= 1
             )
           )
         )
@@ -158,11 +159,12 @@ let unbindGameViewActiveCameraControllerEvent = engineState => {
           Operators.(
             test(
               Log.buildAssertMessage(
-                ~expect={j|only has one binded camera controller|j},
+                ~expect={j|has one camera controller binded event at most|j},
                 ~actual={j|not|j},
               ),
               () =>
-              _getAllCameraControllerBindEventCount(engineState) <= 1
+              _getAllSceneChildrenCameraControllerBindEventCount(engineState)
+              <= 1
             )
           )
         )

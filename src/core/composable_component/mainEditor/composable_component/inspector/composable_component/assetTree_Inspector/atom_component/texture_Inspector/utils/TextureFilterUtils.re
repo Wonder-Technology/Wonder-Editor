@@ -1,6 +1,6 @@
 open Wonderjs;
 
-open SourceTextureType;
+open TextureType;
 
 open SelectType;
 

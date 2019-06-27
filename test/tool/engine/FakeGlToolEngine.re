@@ -252,11 +252,11 @@ let setFakeGl = (fakeGlObj, state: StateDataMainType.state) => {
   ...state,
   deviceManagerRecord:
     state.deviceManagerRecord
-    |> DeviceManagerService.setGl(fakeGlObj |> Obj.magic),
+    |> AllDeviceManagerService.setGl(fakeGlObj |> Obj.magic),
 };
 
 let getGl = state =>
-  DeviceManagerService.unsafeGetGl(. state.deviceManagerRecord) |> Obj.magic;
+  AllDeviceManagerService.unsafeGetGl(. state.deviceManagerRecord) |> Obj.magic;
 
 let getEngineStateGl = () => getGl(StateEngineService.unsafeGetState());
 

@@ -316,7 +316,15 @@ let _import = result => {
        MostUtils.callStreamFunc(() =>
          SceneWDBUtils.importSceneWDB(sceneWDB)
          |> WonderBsMost.Most.map(
-              ((sceneGameObject, _sceneGameObjectImageUint8ArrayDataMap)) => {
+              (
+                (
+                  sceneGameObject,
+                  (
+                    sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap,
+                    sceneGameObjectCubemapTextureImageUint8ArrayDataMap,
+                  ),
+                ),
+              ) => {
               WonderLog.Contract.requireCheck(
                 () =>
                   WonderLog.(
@@ -325,13 +333,18 @@ let _import = result => {
                         test(
                           Log.buildAssertMessage(
                             ~expect=
-                              {j|sceneGameObjectImageUint8ArrayDataMap be empty|j},
+                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap,sceneGameObjectCubemapTextureImageUint8ArrayDataMap  be empty|j},
                             ~actual={j|not|j},
                           ),
-                          () =>
-                          _sceneGameObjectImageUint8ArrayDataMap
-                          |> WonderCommonlib.ImmutableSparseMapService.length
-                          == 0
+                          () => {
+                            sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+
+                            sceneGameObjectCubemapTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+                          },
                         )
                       )
                     )

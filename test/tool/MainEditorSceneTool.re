@@ -159,6 +159,8 @@ let initInspectorEngineState =
   SettingToolEngine.setFakeCanvasToInspectorEngineState();
 
   StateInspectorEngineService.unsafeGetState()
+  |> GPUDetectToolEngine.setMaxTextureUnit(16)
+  |> RenderToolEngine.createActivableTextureUnitArray
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateInspectorEngineService.setState
   |> ignore;

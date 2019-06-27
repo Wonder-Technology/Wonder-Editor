@@ -3,8 +3,8 @@ open NodeAssetType;
 let _getFormat = extName =>
   switch (extName) {
   | ".jpg"
-  | ".jpeg" => Wonderjs.SourceTextureType.Rgb
-  | ".png" => Wonderjs.SourceTextureType.Rgba
+  | ".jpeg" => Wonderjs.TextureType.Rgb
+  | ".png" => Wonderjs.TextureType.Rgba
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
