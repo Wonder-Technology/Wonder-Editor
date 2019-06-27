@@ -161,7 +161,64 @@ let _ =
               },
             );
           });
+
+          describe("set speed", () => {
+            let _unsafeGetEditCameraFlyCameraController =
+                ((editorState, engineState)) =>
+              (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+              ->(
+                  GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+                    engineState,
+                  )
+                );
+
+            test("set edit camera->fly move speed", () => {
+              let engineState = StateEngineService.unsafeGetState();
+
+              _prepareSceneGameObject(
+                () =>
+                  MainEditorSceneTool.unsafeGetScene()
+                  |> GameObjectTool.setCurrentSceneTreeNode,
+                MainEditorSceneTool.unsafeGetScene(),
+                engineState,
+              );
+
+              triggerFocusHotKeyEvent();
+
+              let cameraController =
+                _unsafeGetEditCameraFlyCameraController
+                |> StateLogicService.getStateToGetData;
+              FlyCameraEngineService.unsafeGetFlyCameraControllerMoveSpeed(
+                cameraController,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> FloatTool.truncateFloatValue
+              |> expect == 0.226;
+            });
+            test("set edit camera->fly wheel speed", () => {
+              let engineState = StateEngineService.unsafeGetState();
+
+              _prepareSceneGameObject(
+                () =>
+                  MainEditorSceneTool.unsafeGetScene()
+                  |> GameObjectTool.setCurrentSceneTreeNode,
+                MainEditorSceneTool.unsafeGetScene(),
+                engineState,
+              );
+
+              triggerFocusHotKeyEvent();
+
+              FlyCameraEngineService.unsafeGetFlyCameraControllerWheelSpeed(
+                _unsafeGetEditCameraFlyCameraController
+                |> StateLogicService.getStateToGetData,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> FloatTool.truncateFloatValue
+              |> expect == 0.451;
+            });
+          });
         });
+
         describe("test editCamera has arcballCameraController", () => {
           let _unsafeGetEditCameraArcballCameraController =
               ((editorState, engineState)) =>
