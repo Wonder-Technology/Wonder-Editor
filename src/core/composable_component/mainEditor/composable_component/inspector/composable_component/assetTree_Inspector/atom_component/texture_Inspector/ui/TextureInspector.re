@@ -105,7 +105,7 @@ let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article key="TextureInspector" className="wonder-texture-assetTree">
+  <article key="TextureInspector" className="wonder-texture-inspector">
     <h1> {DomHelper.textEl("Texture")} </h1>
     <hr />
     <StringInput

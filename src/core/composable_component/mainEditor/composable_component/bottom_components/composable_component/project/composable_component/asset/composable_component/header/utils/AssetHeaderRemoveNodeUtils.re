@@ -5,7 +5,7 @@ open NodeAssetType;
 let getUseTextureMaterialArray = (currentNode, engineState) =>
   TextureNodeAssetService.isTextureNode(currentNode) ?
     {
-      let {textureComponent} =
+      let {textureComponent}: NodeAssetType.textureNodeData =
         TextureNodeAssetService.getNodeData(currentNode);
 
       Some(

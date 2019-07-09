@@ -8,6 +8,11 @@ let rec cata =
                                ~nodeId,
                                ~nodeData,
                              ),
+          ~cubemapNodeFunc=(nodeId, nodeData) =>
+                             CubemapNodeAssetService.buildNodeByNodeData(
+                               ~nodeId,
+                               ~nodeData,
+                             ),
           ~materialNodeFunc=(nodeId, nodeData) =>
                               MaterialNodeAssetService.buildNodeByNodeData(
                                 ~nodeId,
@@ -45,6 +50,7 @@ let rec cata =
   let recurse =
     cata(
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -60,6 +66,8 @@ let rec cata =
     scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
@@ -82,6 +90,7 @@ let rec fold =
           ~tree,
           ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
           ~textureNodeFunc=(acc, _, _) => acc,
+          ~cubemapNodeFunc=(acc, _, _) => acc,
           ~materialNodeFunc=(acc, _, _) => acc,
           ~scriptEventFunctionNodeFunc=(acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(acc, _, _) => acc,
@@ -96,6 +105,7 @@ let rec fold =
       ~tree=child,
       ~seqFoldFunc,
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -112,6 +122,8 @@ let rec fold =
     scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(acc, nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(acc, nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
@@ -131,6 +143,7 @@ let rec foldWithParentFolderNode =
           ~tree,
           ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
           ~textureNodeFunc=(_, acc, _, _) => acc,
+          ~cubemapNodeFunc=(_, acc, _, _) => acc,
           ~materialNodeFunc=(_, acc, _, _) => acc,
           ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
@@ -145,6 +158,7 @@ let rec foldWithParentFolderNode =
       ~acc,
       ~tree=child,
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -172,6 +186,8 @@ let rec foldWithParentFolderNode =
     )
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(parentFolderNode, acc, nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(parentFolderNode, acc, nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) =>
@@ -206,6 +222,7 @@ let rec foldWithParentFolderNodeWithoutRootNode =
           ~tree,
           ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
           ~textureNodeFunc=(_, acc, _, _) => acc,
+          ~cubemapNodeFunc=(_, acc, _, _) => acc,
           ~materialNodeFunc=(_, acc, _, _) => acc,
           ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
@@ -220,6 +237,7 @@ let rec foldWithParentFolderNodeWithoutRootNode =
       ~acc,
       ~tree=child,
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -247,6 +265,8 @@ let rec foldWithParentFolderNodeWithoutRootNode =
     )
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(parentFolderNode, acc, nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(parentFolderNode, acc, nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) =>
@@ -286,6 +306,7 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
           ~acc,
           ~tree,
           ~textureNodeFunc,
+          ~cubemapNodeFunc,
           ~materialNodeFunc,
           ~scriptEventFunctionNodeFunc,
           ~scriptAttributeNodeFunc,
@@ -303,6 +324,7 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
       ~acc,
       ~tree=child,
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -322,6 +344,8 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
     scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(acc, nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(acc, nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
@@ -343,6 +367,7 @@ let filter =
       ~acc,
       ~pushNodeFunc,
       ~predTextureNodeFunc=node => false,
+      ~predCubemapNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
@@ -359,6 +384,12 @@ let filter =
       acc,
       TextureNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
       predTextureNodeFunc,
+    );
+  let _cubemapNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      CubemapNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predCubemapNodeFunc,
     );
   let _materialNodeFunc = (acc, nodeId, nodeData) =>
     _nodeFunc(
@@ -408,6 +439,7 @@ let filter =
     ~acc,
     ~tree,
     ~textureNodeFunc=_textureNodeFunc,
+    ~cubemapNodeFunc=_cubemapNodeFunc,
     ~materialNodeFunc=_materialNodeFunc,
     ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
@@ -422,6 +454,7 @@ let find =
     (
       ~tree,
       ~predTextureNodeFunc=node => false,
+      ~predCubemapNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
@@ -437,6 +470,7 @@ let find =
       ~pushNodeFunc=(node, acc) => [node, ...acc],
       ~tree,
       ~predTextureNodeFunc,
+      ~predCubemapNodeFunc,
       ~predMaterialNodeFunc,
       ~predScriptEventFunctionNodeFunc,
       ~predScriptAttributeNodeFunc,
@@ -454,6 +488,7 @@ let findOne =
     (
       ~tree,
       ~predTextureNodeFunc=node => false,
+      ~predCubemapNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
@@ -466,6 +501,7 @@ let findOne =
   find(
     ~tree,
     ~predTextureNodeFunc,
+    ~predCubemapNodeFunc,
     ~predMaterialNodeFunc,
     ~predScriptEventFunctionNodeFunc,
     ~predScriptAttributeNodeFunc,
@@ -481,6 +517,7 @@ let rec map =
           ~tree,
           ~folderNodeFunc,
           ~textureNodeFunc=(_, nodeData) => nodeData,
+          ~cubemapNodeFunc=(_, nodeData) => nodeData,
           ~materialNodeFunc=(_, nodeData) => nodeData,
           ~scriptEventFunctionNodeFunc=(_, nodeData) => nodeData,
           ~scriptAttributeNodeFunc=(_, nodeData) => nodeData,
@@ -492,6 +529,7 @@ let rec map =
   let recurse =
     map(
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -514,6 +552,8 @@ let rec map =
     )
   | TextureNode(nodeId, textureNodeData) =>
     TextureNode(nodeId, textureNodeFunc(nodeId, textureNodeData))
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    CubemapNode(nodeId, cubemapNodeFunc(nodeId, cubemapNodeData))
   | MaterialNode(nodeId, materialNodeData) =>
     MaterialNode(nodeId, materialNodeFunc(nodeId, materialNodeData))
   | WDBNode(nodeId, wdbNodeData) =>

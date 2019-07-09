@@ -9,6 +9,9 @@ let getWDBNodeName = node =>
 let getTextureNodeName = (~texture, ~engineState) =>
   OperateTextureLogicService.getName(~texture, ~engineState);
 
+let getCubemapNodeName = (~texture, ~engineState) =>
+  OperateCubemapLogicService.getName(~texture, ~engineState);
+
 let getMaterialNodeName = (~material, ~type_, ~engineState) =>
   OperateMaterialLogicService.getName(~material, ~type_, ~engineState);
 
@@ -16,6 +19,7 @@ let getNodeName = (node, engineState) =>
   NodeNameAssetService.getNodeName(
     ~node,
     ~getTextureNameFunc=getTextureNodeName(~engineState),
+    ~getCubemapNameFunc=getCubemapNodeName(~engineState),
     ~getMaterialNameFunc=getMaterialNodeName(~engineState),
   );
 
@@ -24,6 +28,7 @@ let isNodeEqualByName = (~sourceNode, ~targetNode, ~engineState) =>
     ~sourceNode,
     ~targetNode,
     ~getTextureNameFunc=getTextureNodeName(~engineState),
+    ~getCubemapNameFunc=getCubemapNodeName(~engineState),
     ~getMaterialNameFunc=getMaterialNodeName(~engineState),
   );
 
@@ -32,6 +37,7 @@ let isTargetNameNode = (~node, ~name, ~engineState) =>
     ~node,
     ~name,
     ~getTextureNameFunc=getTextureNodeName(~engineState),
+    ~getCubemapNameFunc=getCubemapNodeName(~engineState),
     ~getMaterialNameFunc=getMaterialNodeName(~engineState),
   );
 
@@ -41,6 +47,15 @@ let updateNodeName = (node, name, engineState) =>
     ~textureNodeFunc=
       (nodeId, {textureComponent}: NodeAssetType.textureNodeData) => (
         OperateTextureLogicService.setName(
+          ~texture=textureComponent,
+          ~name,
+          ~engineState,
+        ),
+        node,
+      ),
+    ~cubemapNodeFunc=
+      (nodeId, {textureComponent}: NodeAssetType.cubemapNodeData) => (
+        OperateCubemapLogicService.setName(
           ~texture=textureComponent,
           ~name,
           ~engineState,

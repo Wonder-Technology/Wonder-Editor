@@ -62,6 +62,35 @@ let _textureNodeFunc =
     } :
     (result, tree, engineState);
 
+let _cubemapNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      {textureComponent}: NodeAssetType.cubemapNodeData,
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, engineState) =
+        switch (_checkParentNode(parentFolderNode, name, engineState)) {
+        | Success () as result => (
+            result,
+            OperateCubemapLogicService.setName(
+              ~texture=textureComponent,
+              ~name,
+              ~engineState,
+            ),
+          )
+        | Fail(msg) as result => (result, engineState)
+        };
+
+      (result, tree, engineState);
+    } :
+    (result, tree, engineState);
+
 let _renameMaterialNode =
     (
       (targetNodeId, name),
@@ -340,6 +369,7 @@ let renameNode =
     IterateTreeAssetService.foldWithParentFolderNode(
       ~acc=(Result.RelationResult.success(), tree, engineState),
       ~textureNodeFunc=_textureNodeFunc((targetNodeId, name)),
+      ~cubemapNodeFunc=_cubemapNodeFunc((targetNodeId, name)),
       ~materialNodeFunc=_materialNodeFunc((targetNodeId, name)),
       ~scriptEventFunctionNodeFunc=
         _scriptEventFunctionNodeFunc((targetNodeId, name)),

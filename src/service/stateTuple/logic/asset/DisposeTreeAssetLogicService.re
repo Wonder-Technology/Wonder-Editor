@@ -26,7 +26,7 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
 
 let _disposeTextureNodeEditorDataBeforeRemoveNode =
     (
-      {imageDataIndex, textureComponent}: textureNodeData,
+      {imageDataIndex, textureComponent}: NodeAssetType.textureNodeData,
       engineState,
       editorState,
     ) => {
@@ -73,6 +73,7 @@ let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
           engineState,
           editorState,
         ),
+    ~cubemapNodeFunc=(_, _) => editorState,
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEditorDataBeforeRemoveNode(nodeData, editorState),
@@ -128,8 +129,25 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
        engineState,
      );
 
-let _disposeTextureNodeEngineData = ({textureComponent}, engineState) =>
+let _disposeTextureNodeEngineData =
+    ({textureComponent}: NodeAssetType.textureNodeData, engineState) =>
   engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
+
+/* TODO test */
+let _disposeCubemapFromSceneSkybox = (textureComponent, engineState) =>
+  switch (SceneEngineService.getCubemapTexture(engineState)) {
+  | Some(skyboxCubemapTexture) when skyboxCubemapTexture === textureComponent =>
+    CubemapTextureEngineService.disposeCubemapTexture(
+      textureComponent,
+      false,
+      engineState,
+    )
+  | _ => engineState
+  };
+
+let _disposeCubemapNodeEngineData =
+    ({textureComponent}: NodeAssetType.cubemapNodeData, engineState) =>
+  engineState |> _disposeCubemapFromSceneSkybox(textureComponent);
 
 let _disposeMaterialNodeEngineData =
     ({materialComponent, type_}, (editorState, engineState)) => {
@@ -175,6 +193,8 @@ let _disposeNodeEngineData = (node, editorState, engineState) =>
     ~node,
     ~textureNodeFunc=
       (_, nodeData) => _disposeTextureNodeEngineData(nodeData, engineState),
+    ~cubemapNodeFunc=
+      (_, nodeData) => _disposeCubemapNodeEngineData(nodeData, engineState),
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
@@ -226,6 +246,9 @@ let _disposeTreeEngineData = (editorState, engineState) =>
     ~textureNodeFunc=
       (engineState, _, nodeData) =>
         _disposeTextureNodeEngineData(nodeData, engineState),
+    ~cubemapNodeFunc=
+      (engineState, _, nodeData) =>
+        _disposeCubemapNodeEngineData(nodeData, engineState),
     ~materialNodeFunc=
       (engineState, _, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),

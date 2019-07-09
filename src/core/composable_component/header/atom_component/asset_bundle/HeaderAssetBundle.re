@@ -156,6 +156,45 @@ module Method = {
               engineState,
             );
           },
+        ~cubemapNodeFunc=
+          (
+            parentFolderNode,
+            (currentSelectTreeNodeId, folderTreeMap, selectTree),
+            nodeId,
+            nodeData,
+          ) => {
+            let assetNode =
+              CubemapNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
+
+            SelectTreeUtils.handleFoldAssetNode(
+              parentFolderNode,
+              (currentSelectTreeNodeId, folderTreeMap, selectTree),
+              (
+                assetNode,
+                "cubemapTexture",
+                (
+                  {
+                    textureComponent:
+                      CubemapNodeAssetService.getTextureComponent(assetNode),
+                    pxImageDataIndex:
+                      CubemapNodeAssetService.getPXImageDataIndex(assetNode),
+                    nxImageDataIndex:
+                      CubemapNodeAssetService.getNXImageDataIndex(assetNode),
+                    pyImageDataIndex:
+                      CubemapNodeAssetService.getPYImageDataIndex(assetNode),
+                    nyImageDataIndex:
+                      CubemapNodeAssetService.getNYImageDataIndex(assetNode),
+                    pzImageDataIndex:
+                      CubemapNodeAssetService.getPZImageDataIndex(assetNode),
+                    nzImageDataIndex:
+                      CubemapNodeAssetService.getNZImageDataIndex(assetNode),
+                  }: cubemapTextureData
+                )
+                |> convertCubemapTextureDataToValue,
+              ),
+              engineState,
+            );
+          },
         ~assetBundleNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
         ~materialNodeFunc=
           (

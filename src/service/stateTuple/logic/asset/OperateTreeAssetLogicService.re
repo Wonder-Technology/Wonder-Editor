@@ -43,6 +43,7 @@ let _isTargetNodeHasSameNameChild = (sourceNode, targetNode, engineState) =>
 let _canFindOne =
     (
       predTextureNodeFunc,
+      predCubemapNodeFunc,
       predMaterialNodeFunc,
       predWDBNodeFunc,
       predScriptEventFunctionNodeFunc,
@@ -56,6 +57,7 @@ let _canFindOne =
     ~pushNodeFunc=(node, acc) => [node, ...acc],
     ~tree,
     ~predTextureNodeFunc,
+    ~predCubemapNodeFunc,
     ~predMaterialNodeFunc,
     ~predWDBNodeFunc,
     ~predScriptEventFunctionNodeFunc,
@@ -73,6 +75,7 @@ let _isSourceNodeBeOneOfAllParentsOfTargetNode = (sourceNode, targetNode) =>
         NodeAssetService.isNodeEqualById(~sourceNode=node, ~targetNode);
 
       _canFindOne(
+        _nodeFunc,
         _nodeFunc,
         _nodeFunc,
         _nodeFunc,
@@ -215,6 +218,7 @@ let findNodeByName = (targetNodeName, (editorState, engineState)) => {
     ~predScriptEventFunctionNodeFunc=predNodeFunc,
     ~predScriptAttributeNodeFunc=predNodeFunc,
     ~predTextureNodeFunc=predNodeFunc,
+    ~predCubemapNodeFunc=predNodeFunc,
     ~predMaterialNodeFunc=predNodeFunc,
     ~predWDBNodeFunc=predNodeFunc,
     ~predAssetBundleNodeFunc=predNodeFunc,
@@ -240,6 +244,7 @@ let findNodesByName = (targetNodeName, (editorState, engineState)) => {
     ~predScriptEventFunctionNodeFunc=predNodeFunc,
     ~predScriptAttributeNodeFunc=predNodeFunc,
     ~predTextureNodeFunc=predNodeFunc,
+    ~predCubemapNodeFunc=predNodeFunc,
     ~predMaterialNodeFunc=predNodeFunc,
     ~predWDBNodeFunc=predNodeFunc,
     ~predAssetBundleNodeFunc=predNodeFunc,

@@ -15,6 +15,7 @@ let loadOneTexture =
     WonderBsJszip.Zip.create,
     BaseEventTool.buildOneTextureFileEvent(~imgName, ~imgSrc, ()),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => uploadedTextureNodeId |> resolve);
 };
 
@@ -33,6 +34,7 @@ let loadOneWDB =
     WonderBsJszip.Zip.create,
     BaseEventTool.buildWDBFileEvent(fileName, arrayBuffer),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
 
@@ -51,6 +53,7 @@ let loadOneGLB =
     WonderBsJszip.Zip.create,
     BaseEventTool.buildGLBFileEvent(fileName, arrayBuffer),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
 
@@ -70,11 +73,10 @@ let loadOneGLTFZip =
 
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
     (uiState, dispatchFunc),
-    /* WonderBsJszip.Zip.create, */
-    /* () => obj, */
     createJsZipFunc,
     BaseEventTool.buildGLTFZipFileEvent(fileName),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
 
@@ -86,14 +88,14 @@ let loadOneAssetBundleZip =
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="AssetBundleZip",
       (),
-    ) => {
+    ) =>
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
     (uiState, dispatchFunc),
     createJsZipFunc,
     BaseEventTool.buildAssetBundleZipFileEvent(fileName),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => () |> resolve);
-};
 
 let loadOneAssetBundle =
     (
@@ -110,5 +112,6 @@ let loadOneAssetBundle =
     WonderBsJszip.Zip.create,
     BaseEventTool.buildAssetBundleFileEvent(fileName, assetBundle),
   )
+  |> WonderBsMost.Most.drain
   |> then_(() => uploadedWDBNodeId |> resolve);
 };

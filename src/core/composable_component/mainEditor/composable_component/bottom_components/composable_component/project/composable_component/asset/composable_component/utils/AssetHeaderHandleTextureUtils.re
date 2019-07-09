@@ -47,7 +47,7 @@ let _handleImage =
 
 let handleTextureType =
     (
-      fileResult: nodeResultType,
+      fileResult: uploadAssetFileResultType,
       (selectedFolderNodeInAssetTree, assetNodeId),
       (editorState, engineState),
     ) => {

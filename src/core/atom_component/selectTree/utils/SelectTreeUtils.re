@@ -116,6 +116,7 @@ let buildSelectTreeForAssetBundle =
       ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
       ~folderNodeFunc=handleFoldFolderAssetNode,
       ~textureNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~cubemapNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
       ~assetBundleNodeFunc=
         (
           parentFolderNode,

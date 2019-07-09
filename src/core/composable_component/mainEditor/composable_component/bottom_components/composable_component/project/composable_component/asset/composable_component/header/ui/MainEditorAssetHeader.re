@@ -145,6 +145,7 @@ let render =
                 WonderBsJszip.Zip.create,
                 e,
               )
+              |> WonderBsMost.Most.drain
               |> ignore
           }
         />

@@ -7,6 +7,8 @@ type materialData = {
 
 type basicSourceTextureData = Wonderjs.RABType.basicSourceTextureData;
 
+type cubemapTextureData = Wonderjs.RABType.cubemapTextureData;
+
 type scriptEventFunctionData = Wonderjs.RABType.scriptEventFunctionData;
 
 type scriptAttributeData = Wonderjs.RABType.scriptAttributeData;
@@ -29,9 +31,17 @@ external convertGeometryComponentToValue: int => value = "%identity";
 
 external convertValueToGeometryComponent: value => int = "%identity";
 
-external convertBasicSourceTextureDataToValue: basicSourceTextureData => value = "%identity";
+external convertBasicSourceTextureDataToValue: basicSourceTextureData => value =
+  "%identity";
 
-external convertValueToBasicSourceTextureData: value => basicSourceTextureData = "%identity";
+external convertValueToBasicSourceTextureData: value => basicSourceTextureData =
+  "%identity";
+
+external convertCubemapTextureDataToValue: cubemapTextureData => value =
+  "%identity";
+
+external convertValueToCubemapTextureData: value => cubemapTextureData =
+  "%identity";
 
 external convertScriptEventFunctionDataToValue:
   scriptEventFunctionData => value =

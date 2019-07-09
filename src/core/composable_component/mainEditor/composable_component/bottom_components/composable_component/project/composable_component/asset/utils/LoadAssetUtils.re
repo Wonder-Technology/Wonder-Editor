@@ -16,11 +16,11 @@ let getUploadAssetType = name => {
   | ".wab" => LoadAssetBundle
   | ".zip" => LoadZip
   | _ =>
-    ConsoleUtils.error(
+    LoadError(
       LogUtils.buildErrorMessage(
         ~description=
           LanguageUtils.getMessageLanguageDataByType(
-            "load-asset-file",
+            "load-asset-file-error",
             LanguageEditorService.unsafeGetType
             |> StateLogicService.getEditorState,
           ),
@@ -29,42 +29,8 @@ let getUploadAssetType = name => {
         ~params={j||j},
       ),
     )
-    |> StateLogicService.getEditorState;
-
-    LoadError;
   };
 };
-
-let getUploadPackageType = name => {
-  let extname = FileNameService.getExtName(name);
-
-  switch (extname) {
-  | ".wpk" => LoadWPK
-  | _ =>
-    ConsoleUtils.error(
-      LogUtils.buildErrorMessage(
-        ~description=
-          LanguageUtils.getMessageLanguageDataByType(
-            "load-asset-package",
-            LanguageEditorService.unsafeGetType
-            |> StateLogicService.getEditorState,
-          ),
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
-    |> StateLogicService.getEditorState;
-
-    LoadError;
-  };
-};
-
-let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
-  switch (type_) {
-  | LoadWPK => handleWPKFunc()
-  | LoadError => ()
-  };
 
 let _handleAssetSpecificFuncByTypeSync =
     (
@@ -83,14 +49,7 @@ let _handleAssetSpecificFuncByTypeSync =
   | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
   | LoadZip => handleZipFunc()
-  | LoadError => ()
   };
-
-let readPakckageByTypeSync = (reader, fileInfo: fileInfoType) =>
-  _handlePackageSpecificFuncByTypeSync(
-    getUploadPackageType(fileInfo.name), () =>
-    FileReader.readAsArrayBuffer(reader, fileInfo.file)
-  );
 
 let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
   _handleAssetSpecificFuncByTypeSync(

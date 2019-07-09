@@ -32,7 +32,8 @@
     .wonder-inspector-assetTree {
         @import "../../../../ui/attributeBox";
         @include inspectorItem("inspector-asset-folder");
-        @include inspectorItem("wonder-texture-assetTree");
+        @include inspectorItem("wonder-texture-inspector");
+        @include inspectorItem("wonder-cubemap-assetTree");
         @include inspectorItem("inspector-asset-wdb");
         @include inspectorItem("wonder-material-inspector");
         @include inspectorItem("wonder-scriptEventFunction-inspector");

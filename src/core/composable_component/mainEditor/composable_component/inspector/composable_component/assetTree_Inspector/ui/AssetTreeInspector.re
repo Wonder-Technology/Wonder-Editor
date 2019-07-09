@@ -75,6 +75,23 @@ module Method = {
       }
     />;
 
+  let buildCubemapComponent =
+      (
+        (uiState, dispatchFunc),
+        state,
+        currentNodeId,
+        {textureComponent}: NodeAssetType.cubemapNodeData,
+      ) =>
+    <CubemapInspector
+      uiState
+      dispatchFunc
+      name={state.inputValue}
+      textureComponent
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
   let buildMaterialComponent =
       (
         (uiState, dispatchFunc),
@@ -131,14 +148,19 @@ module Method = {
     />;
 
   let buildWDBComponent =
-      ((uiState, dispatchFunc), (state, send), currentNodeId, {name, wdbGameObject}) =>
+      (
+        (uiState, dispatchFunc),
+        (state, send),
+        currentNodeId,
+        {name, wdbGameObject},
+      ) =>
     <WDBInspector
       name={state.inputValue}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
       wdbGameObject
       currentNodeId
-dispatchFunc
+      dispatchFunc
     />;
 
   let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
@@ -159,6 +181,7 @@ dispatchFunc
     NodeAssetService.handleNode(
       ~node=currentNode,
       ~textureNodeFunc=buildTextureComponent(reduxTuple, state),
+      ~cubemapNodeFunc=buildCubemapComponent(reduxTuple, state),
       ~materialNodeFunc=buildMaterialComponent(reduxTuple, state),
       ~scriptEventFunctionNodeFunc=
         buildScriptEventFunctionComponent(reduxTuple, state),
@@ -175,9 +198,21 @@ dispatchFunc
     {inputValue: folderName, originalName: folderName};
   };
 
-  let initTextureName = (engineState, _, {textureComponent}) => {
+  let initTextureName =
+      (engineState, _, {textureComponent}: NodeAssetType.textureNodeData) => {
     let baseName =
       NodeNameAssetLogicService.getTextureNodeName(
+        ~texture=textureComponent,
+        ~engineState,
+      );
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initCubemapName =
+      (engineState, _, {textureComponent}: NodeAssetType.cubemapNodeData) => {
+    let baseName =
+      NodeNameAssetLogicService.getCubemapNodeName(
         ~texture=textureComponent,
         ~engineState,
       );
@@ -282,6 +317,7 @@ let make =
     NodeAssetService.handleNode(
       ~node=currentNode,
       ~textureNodeFunc=Method.initTextureName(engineState),
+      ~cubemapNodeFunc=Method.initCubemapName(engineState),
       ~materialNodeFunc=Method.initMaterialName(engineState),
       ~scriptEventFunctionNodeFunc=
         Method.initScriptEventFunctionNodeName(engineState),
