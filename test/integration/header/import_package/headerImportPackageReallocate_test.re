@@ -20,12 +20,9 @@ let _ =
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
-    let _prepareFakeCanvas = sandbox =>
-      ImportPackageTool.prepareFakeCanvas(sandbox);
-
-    beforeAll(() => {
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-    });
+    beforeAll(() =>
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+    );
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -66,7 +63,9 @@ let _ =
 
         MainEditorSceneTool.prepareScene(sandbox);
 
-        _prepareFakeCanvas(sandbox) |> ignore;
+        InspectorCanvasTool.prepareInspectorEngineState(sandbox);
+
+        CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
       });
 
       testPromise(

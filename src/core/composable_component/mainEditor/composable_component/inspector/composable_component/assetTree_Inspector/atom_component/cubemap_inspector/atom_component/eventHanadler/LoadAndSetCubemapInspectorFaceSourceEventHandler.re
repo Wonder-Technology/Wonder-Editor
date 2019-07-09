@@ -37,10 +37,34 @@ module CustomEventHandler = {
     };
   };
 
-  let _readFileByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
+  let _readFileByTypeSync = (reader, fileInfo: FileType.fileInfoType, type_) => {
+    WonderLog.Contract.requireCheck(
+      () =>
+        WonderLog.(
+          Contract.(
+            Operators.(
+              test(
+                Log.buildAssertMessage(
+                  ~expect={j|type_ not be LoadError|j},
+                  ~actual={j|be|j},
+                ),
+                () => {
+                  switch (type_) {
+                  | CubemapInspectorType.LoadError(_) => assertFail()
+                  | _ => assertPass()
+                  };
+                },
+              )
+            )
+          )
+        ),
+      StateEditorService.getStateIsDebug(),
+    );
+
     switch (_getUploadSourceType(fileInfo.name)) {
-    | LoadSource => FileReader.readAsDataURL(reader, fileInfo.file)
+    | CubemapInspectorType.LoadSource => FileReader.readAsDataURL(reader, fileInfo.file)
     };
+  };
 
   let _loadImageFromBase64 =
       (fileResult: CubemapInspectorType.uploadFaceSourceFileResultType) =>
@@ -83,7 +107,7 @@ module CustomEventHandler = {
           switch (_getUploadSourceType(fileInfo.name)) {
           | CubemapInspectorType.LoadError(msg) =>
             reject(. CubemapInspectorType.LoadFaceSourceException(msg))
-          | _ => _readFileByTypeSync(reader, fileInfo)
+          | type_ => _readFileByTypeSync(reader, fileInfo, type_)
           };
         }),
       )

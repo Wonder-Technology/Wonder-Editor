@@ -87,7 +87,7 @@ let handleFileByTypeAsync =
      });
 };
 
-let fileLoad = ((uiState), createJsZipFunc, event) => {
+let fileLoad = (uiState, createJsZipFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   EventHelper.preventDefault(e);
 
@@ -112,7 +112,7 @@ let fileLoad = ((uiState), createJsZipFunc, event) => {
 
         switch (LoadAssetUtils.getUploadAssetType(fileInfo.name)) {
         | LoadError(msg) => reject(. LoadAssetException(msg))
-        | _ => LoadAssetUtils.readAssetByTypeSync(reader, fileInfo)
+        | type_ => LoadAssetUtils.readAssetByTypeSync(reader, fileInfo, type_)
         };
       }),
     )
@@ -121,27 +121,8 @@ let fileLoad = ((uiState), createJsZipFunc, event) => {
            handleFileByTypeAsync(fileResult, createJsZipFunc),
          )
        )
-    /* |> WonderBsMost.Most.drain
-       |> then_(() => {
-            FileReader.makeSureCanLoadSameNameFileAgain(target);
-
-            dispatchFunc(
-              AppStore.UpdateAction(
-                Update([|UpdateStore.Inspector, UpdateStore.Project|]),
-              ),
-            );
-
-            resolve();
-          }); */
     |> WonderBsMost.Most.tap(_ =>
-         FileReader.makeSureCanLoadSameNameFileAgain(
-           target,
-           /* dispatchFunc(
-                AppStore.UpdateAction(
-                  Update([|UpdateStore.Inspector, UpdateStore.Project|]),
-                ),
-              ); */
-         )
+         FileReader.makeSureCanLoadSameNameFileAgain(target)
        );
   };
 };

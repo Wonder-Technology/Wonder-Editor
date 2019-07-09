@@ -42,7 +42,29 @@ let _handleAssetSpecificFuncByTypeSync =
         handleGLBFunc,
         handleZipFunc,
       ),
-    ) =>
+    ) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|type_ not be LoadError|j},
+                ~actual={j|be|j},
+              ),
+              () =>
+              switch (type_) {
+              | LoadError(_) => assertFail()
+              | _ => assertPass()
+              }
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   switch (type_) {
   | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
@@ -50,10 +72,11 @@ let _handleAssetSpecificFuncByTypeSync =
   | LoadGLB => handleGLBFunc()
   | LoadZip => handleZipFunc()
   };
+};
 
-let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
+let readAssetByTypeSync = (reader, fileInfo: fileInfoType, type_) =>
   _handleAssetSpecificFuncByTypeSync(
-    getUploadAssetType(fileInfo.name),
+    type_,
     (
       () => FileReader.readAsDataURL(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),

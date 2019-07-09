@@ -255,18 +255,16 @@ let _ =
         let _getErrorTypeFile = () =>
           LoadAssetUtils.getUploadAssetType("aaa.bb");
 
-        test("if upload error file type, should error", () => {
-          ConsoleTool.notShowMessage();
-          let component = BuildComponentTool.buildConsole();
-          let errorStub =
-            createMethodStub(sandbox^, ConsoleTool.console, "error");
+        test("if upload error file type, should contract error", () => {
+          TestTool.openContractCheck();
 
-          LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
-            _getErrorTypeFile(),
-            (() => (), () => (), () => (), () => (), () => ()),
-          );
-
-          ConsoleTool.judgeError("type is error", errorStub);
+          expect(() =>
+            LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
+              _getErrorTypeFile(),
+              (() => (), () => (), () => (), () => (), () => ()),
+            )
+          )
+          |> toThrowMessage("expect type_ not be LoadError");
         });
       });
     });
