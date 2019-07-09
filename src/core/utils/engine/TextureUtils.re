@@ -1,6 +1,6 @@
 open NodeAssetType;
 
-let _getFormat = extName =>
+let getFormat = extName =>
   switch (extName) {
   | ".jpg"
   | ".jpeg" => Wonderjs.TextureType.Rgb
@@ -27,7 +27,7 @@ let createAndInitTexture = (textureName, extName, engineState) => {
          texture,
        )
     |> BasicSourceTextureEngineService.setFormat(
-         _getFormat(extName),
+         getFormat(extName),
          texture,
        )
     |> BasicSourceTextureEngineService.initTexture(texture);

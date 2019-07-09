@@ -77,6 +77,15 @@ let removeWDBNode =
     ) =>
   removeNode(~dispatchFunc, ~uiState, ~nodeId=wdbNodeId, ());
 
+let removeCubemapNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~cubemapNodeId,
+      (),
+    ) =>
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=cubemapNodeId, ());
+
 let addFolder =
     (
       ~uiState=TestTool.buildEmptyAppState(),
@@ -116,3 +125,11 @@ let addScriptAttribute =
     (),
     (),
   );
+
+let addCubemap =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addCubemap((uiState, dispatchFunc), (), ());

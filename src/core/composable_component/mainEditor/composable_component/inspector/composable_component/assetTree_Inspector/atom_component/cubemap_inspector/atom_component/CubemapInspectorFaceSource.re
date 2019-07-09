@@ -12,7 +12,12 @@ module Method = {
 let component = ReasonReact.statelessComponent("CubemapInspectorFaceSource");
 
 let _renderSourceImage =
-    ((uiState, dispatchFunc), cubemapTexture, currentSource, setSourceFunc) =>
+    (
+      (uiState, dispatchFunc),
+      cubemapTexture,
+      currentSource,
+      (setSourceFunc, setFormatFunc),
+    ) =>
   <div className="texture-img">
     {Method.showSource(currentSource)}
     <input
@@ -23,7 +28,7 @@ let _renderSourceImage =
         e =>
           Method.loadAndSetSource(
             (uiState, dispatchFunc),
-            (cubemapTexture, setSourceFunc),
+            (cubemapTexture, setSourceFunc, setFormatFunc),
             e,
           )
           |> WonderBsMost.Most.drain
@@ -36,7 +41,7 @@ let render =
     (
       (uiState, dispatchFunc),
       (cubemapTexture, label, title, currentSource),
-      setSourceFunc,
+      (setSourceFunc, setFormatFunc),
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
@@ -58,7 +63,7 @@ let render =
           (uiState, dispatchFunc),
           cubemapTexture,
           currentSource,
-          setSourceFunc,
+          (setSourceFunc, setFormatFunc),
         )
       }
     </div>
@@ -73,6 +78,7 @@ let make =
       ~label,
       ~currentSource,
       ~setSourceFunc,
+      ~setFormatFunc,
       ~title: option(string)=?,
       _children,
     ) => {
@@ -81,6 +87,6 @@ let make =
     render(
       (uiState, dispatchFunc),
       (cubemapTexture, label, title, currentSource),
-      setSourceFunc,
+      (setSourceFunc, setFormatFunc),
     ),
 };

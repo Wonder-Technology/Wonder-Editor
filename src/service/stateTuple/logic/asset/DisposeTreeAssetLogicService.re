@@ -133,15 +133,15 @@ let _disposeTextureNodeEngineData =
     ({textureComponent}: NodeAssetType.textureNodeData, engineState) =>
   engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
 
-/* TODO test */
 let _disposeCubemapFromSceneSkybox = (textureComponent, engineState) =>
   switch (SceneEngineService.getCubemapTexture(engineState)) {
   | Some(skyboxCubemapTexture) when skyboxCubemapTexture === textureComponent =>
-    CubemapTextureEngineService.disposeCubemapTexture(
-      textureComponent,
-      false,
-      engineState,
-    )
+    engineState
+    |> SceneEngineService.removeCubemapTexture
+    |> CubemapTextureEngineService.disposeCubemapTexture(
+         textureComponent,
+         false,
+       )
   | _ => engineState
   };
 

@@ -160,3 +160,27 @@ let insertFolderNode =
      ),
   engineState,
 );
+
+let insertCubemapNode =
+    (
+      nodeId,
+      parentFolderNodeId,
+      textureComponent,
+      (editorState, engineState),
+    ) => (
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       parentFolderNodeId,
+       CubemapNodeAssetService.buildNode(
+         ~nodeId,
+         ~textureComponent,
+         ~pxImageDataIndex=None,
+         ~nxImageDataIndex=None,
+         ~pyImageDataIndex=None,
+         ~nyImageDataIndex=None,
+         ~pzImageDataIndex=None,
+         ~nzImageDataIndex=None,
+       ),
+     ),
+  engineState,
+);

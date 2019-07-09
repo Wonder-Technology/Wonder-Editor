@@ -25,6 +25,7 @@ let findNodeById = (targetNodeId, tree) => {
   IterateTreeAssetService.findOne(
     ~tree,
     ~predTextureNodeFunc=predNodeFunc,
+    ~predCubemapNodeFunc=predNodeFunc,
     ~predMaterialNodeFunc=predNodeFunc,
     ~predScriptEventFunctionNodeFunc=predNodeFunc,
     ~predScriptAttributeNodeFunc=predNodeFunc,
