@@ -20,6 +20,8 @@ module Method = {
   let addScriptEventFunction = AssetHeaderAddScriptEventFunctionEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let addScriptAttribute = AssetHeaderAddScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addCubemap = AssetHeaderAddCubemapEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorAssetHeader");
@@ -68,6 +70,11 @@ let _renderSelectNav =
       <div className="section-header">
         {DomHelper.textEl("Script Attribute")}
       </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={_e => Method.addCubemap((uiState, dispatchFunc), (), ())}>
+      <div className="section-header"> {DomHelper.textEl("Cubemap")} </div>
     </div>
   </div>;
 

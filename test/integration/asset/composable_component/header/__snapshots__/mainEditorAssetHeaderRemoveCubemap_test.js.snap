@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->remove cubemap 
+        select cubemap;
+        click remove-button;
+             should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+/>
+`;

@@ -179,6 +179,48 @@ module BuildAssetTree = {
       scriptAttributeNodeIdArr |> ArrayService.unsafeGetFirst;
   };
 
+  module Cubemap = {
+    type assetTreeData = {
+      root: int,
+      cubemapNodeIdArr: array(int),
+    };
+
+    let buildOneCubemapAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
+      let engineState = StateEngineService.unsafeGetState();
+
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
+
+      let (engineState, newCubemap) =
+        CubemapTextureEngineService.create(engineState);
+
+      let engineState =
+        engineState
+        |> CubemapTextureEngineService.setCubemapTextureName(
+             "cubemap1",
+             newCubemap,
+           );
+
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertCubemapNode(
+           id1,
+           rootId,
+           newCubemap,
+         )
+      |> StateLogicService.setState;
+
+      {root: rootId, cubemapNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstCubemapNodeId = ({root, cubemapNodeIdArr}) =>
+      cubemapNodeIdArr |> ArrayService.unsafeGetFirst;
+  };
+
   module WDB = {
     type assetTreeData = {
       root: int,

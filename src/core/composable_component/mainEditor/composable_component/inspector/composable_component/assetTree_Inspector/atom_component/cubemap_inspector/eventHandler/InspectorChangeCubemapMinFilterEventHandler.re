@@ -6,7 +6,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       ((uiState, dispatchFunc), (), (textureComponent, value)) => {
-    TextureFilterUtils.changeMinFilter(textureComponent, value);
+    CubemapFilterUtils.changeMinFilter(textureComponent, value);
 
     ();
   };

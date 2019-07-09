@@ -84,11 +84,17 @@ let getPXImageDataIndex = node => {
   pxImageDataIndex;
 };
 
+let unsafeGetPXImageDataIndex = node =>
+  getPXImageDataIndex(node) |> OptionService.unsafeGet;
+
 let getNXImageDataIndex = node => {
   let {nxImageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
 
   nxImageDataIndex;
 };
+
+let unsafeGetNXImageDataIndex = node =>
+  getNXImageDataIndex(node) |> OptionService.unsafeGet;
 
 let getPYImageDataIndex = node => {
   let {pyImageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
@@ -96,11 +102,17 @@ let getPYImageDataIndex = node => {
   pyImageDataIndex;
 };
 
+let unsafeGetPYImageDataIndex = node =>
+  getPYImageDataIndex(node) |> OptionService.unsafeGet;
+
 let getNYImageDataIndex = node => {
   let {nyImageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
 
   nyImageDataIndex;
 };
+
+let unsafeGetNYImageDataIndex = node =>
+  getNYImageDataIndex(node) |> OptionService.unsafeGet;
 
 let getPZImageDataIndex = node => {
   let {pzImageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
@@ -108,8 +120,14 @@ let getPZImageDataIndex = node => {
   pzImageDataIndex;
 };
 
+let unsafeGetPZImageDataIndex = node =>
+  getPZImageDataIndex(node) |> OptionService.unsafeGet;
+
 let getNZImageDataIndex = node => {
   let {nzImageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
 
   nzImageDataIndex;
 };
+
+let unsafeGetNZImageDataIndex = node =>
+  getNZImageDataIndex(node) |> OptionService.unsafeGet;

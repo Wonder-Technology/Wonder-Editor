@@ -6,7 +6,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       ((uiState, dispatchFunc), (), (textureComponent, value)) => {
-    TextureWrapUtils.changeWrapS(textureComponent, value);
+    CubemapWrapUtils.changeWrapS(textureComponent, value);
 
     ();
   };

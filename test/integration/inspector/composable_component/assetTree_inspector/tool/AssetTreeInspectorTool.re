@@ -6,6 +6,16 @@ module Rename = {
       name,
     );
 
+  let renameAssetCubemapNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
   let renameAssetScriptAttributeNode =
       (
         ~uiState=TestTool.buildEmptyAppState(),

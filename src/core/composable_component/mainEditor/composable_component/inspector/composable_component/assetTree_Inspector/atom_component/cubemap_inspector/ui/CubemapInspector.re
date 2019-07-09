@@ -151,108 +151,98 @@ let render =
         |> StateLogicService.getEngineStateToGetData
       }
       setSourceFunc=CubemapTextureEngineService.setPXSource
+      setFormatFunc=CubemapTextureEngineService.setPXFormat
     />
-    /* TODO add more face source */
-    /* <CubemapInspectorFaceSource
-         uiState
-         dispatchFunc
-         cubemapTexture=textureComponent
-         label="Left(- X)"
-         title={
-           LanguageUtils.getInspectorLanguageDataByType(
-             "cubemap-left-describe",
-             languageType,
-           )
-         }
-         getSourceFunc=CubemapTextureEngineService.getNXSource
-         onDropFunc={
-           Method.setFaceSource(
-             textureComponent,
-             CubemapTextureEngineService.setNXSource,
-           )
-         }
-         isShowTextureGroup=false
-       />
-       <CubemapInspectorFaceSource
-         uiState
-         dispatchFunc
-         cubemapTexture=textureComponent
-         label="Top(+ Y)"
-         title={
-           LanguageUtils.getInspectorLanguageDataByType(
-             "cubemap-top-describe",
-             languageType,
-           )
-         }
-         getSourceFunc=CubemapTextureEngineService.getPYSource
-         onDropFunc={
-           Method.setFaceSource(
-             textureComponent,
-             CubemapTextureEngineService.setPYSource,
-           )
-         }
-         isShowTextureGroup=false
-       />
-       <CubemapInspectorFaceSource
-         uiState
-         dispatchFunc
-         cubemapTexture=textureComponent
-         label="Bottom(- Y)"
-         title={
-           LanguageUtils.getInspectorLanguageDataByType(
-             "cubemap-bottom-describe",
-             languageType,
-           )
-         }
-         getSourceFunc=CubemapTextureEngineService.getNYSource
-         onDropFunc={
-           Method.setFaceSource(
-             textureComponent,
-             CubemapTextureEngineService.setNYSource,
-           )
-         }
-         isShowTextureGroup=false
-       />
-       <CubemapInspectorFaceSource
-         uiState
-         dispatchFunc
-         cubemapTexture=textureComponent
-         label="Front(+ Z)"
-         title={
-           LanguageUtils.getInspectorLanguageDataByType(
-             "cubemap-front-describe",
-             languageType,
-           )
-         }
-         getSourceFunc=CubemapTextureEngineService.getPZSource
-         onDropFunc={
-           Method.setFaceSource(
-             textureComponent,
-             CubemapTextureEngineService.setPZSource,
-           )
-         }
-         isShowTextureGroup=false
-       />
-       <CubemapInspectorFaceSource
-         uiState
-         dispatchFunc
-         cubemapTexture=textureComponent
-         label="Back(- Z)"
-         title={
-           LanguageUtils.getInspectorLanguageDataByType(
-             "cubemap-back-describe",
-             languageType,
-           )
-         }
-         getSourceFunc=CubemapTextureEngineService.getNZSource
-         onDropFunc={
-           Method.setFaceSource(
-             textureComponent,
-             CubemapTextureEngineService.setNZSource,
-           )
-         }
-         isShowTextureGroup=false
-       /> */
+    <CubemapInspectorFaceSource
+      uiState
+      dispatchFunc
+      cubemapTexture=textureComponent
+      label="Left(- X)"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "cubemap-left-describe",
+          languageType,
+        )
+      }
+      currentSource={
+        CubemapTextureEngineService.getNXSource(textureComponent)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      setSourceFunc=CubemapTextureEngineService.setNXSource
+      setFormatFunc=CubemapTextureEngineService.setNXFormat
+    />
+    <CubemapInspectorFaceSource
+      uiState
+      dispatchFunc
+      cubemapTexture=textureComponent
+      label="Top(+ Y)"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "cubemap-top-describe",
+          languageType,
+        )
+      }
+      currentSource={
+        CubemapTextureEngineService.getPYSource(textureComponent)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      setSourceFunc=CubemapTextureEngineService.setPYSource
+      setFormatFunc=CubemapTextureEngineService.setPYFormat
+    />
+    <CubemapInspectorFaceSource
+      uiState
+      dispatchFunc
+      cubemapTexture=textureComponent
+      label="Bottom(- Y)"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "cubemap-bottom-describe",
+          languageType,
+        )
+      }
+      currentSource={
+        CubemapTextureEngineService.getNYSource(textureComponent)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      setSourceFunc=CubemapTextureEngineService.setNYSource
+      setFormatFunc=CubemapTextureEngineService.setNYFormat
+    />
+    <CubemapInspectorFaceSource
+      uiState
+      dispatchFunc
+      cubemapTexture=textureComponent
+      label="Front(+ Z)"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "cubemap-front-describe",
+          languageType,
+        )
+      }
+      currentSource={
+        CubemapTextureEngineService.getPZSource(textureComponent)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      setSourceFunc=CubemapTextureEngineService.setPZSource
+      setFormatFunc=CubemapTextureEngineService.setPZFormat
+    />
+    <CubemapInspectorFaceSource
+      uiState
+      dispatchFunc
+      cubemapTexture=textureComponent
+      label="Back(- Z)"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "cubemap-back-describe",
+          languageType,
+        )
+      }
+      currentSource={
+        CubemapTextureEngineService.getNZSource(textureComponent)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      setSourceFunc=CubemapTextureEngineService.setNZSource
+      setFormatFunc=CubemapTextureEngineService.setNZFormat
+    />
     {Method.renderWrapSSelect(dispatchFunc, textureComponent, languageType)}
     {Method.renderWrapTSelect(dispatchFunc, textureComponent, languageType)}
     {

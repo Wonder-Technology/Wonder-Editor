@@ -112,6 +112,21 @@ let buildOneTextureFileEvent =
   }
   |> Obj.magic;
 
+let buildFaceSourceFileEvent =
+    (~imgName="loadImg.png", ~imgSrc="newImgBase64", ()) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: imgName,
+          file: imgSrc,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 let buildAssetBundleFileEvent = (fullFileName, arrayBuffer) =>
   {
     "target": {
