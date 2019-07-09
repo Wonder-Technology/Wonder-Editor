@@ -20,7 +20,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
     className="wonder-inspector-assetTree"
   >
     <article
-      className="wonder-texture-assetTree"
+      className="wonder-texture-inspector"
     >
       <h1>
         Texture

@@ -427,9 +427,8 @@ let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
   | LoadWPK => handleWPKFunc()
   };
 
-let _readPakckageByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
-  _handlePackageSpecificFuncByTypeSync(
-    _getUploadPackageType(fileInfo.name), () =>
+let _readPakckageByTypeSync = (reader, fileInfo: FileType.fileInfoType, type_) =>
+  _handlePackageSpecificFuncByTypeSync(type_, () =>
     FileReader.readAsArrayBuffer(reader, fileInfo.file)
   );
 
@@ -448,10 +447,8 @@ let _readFile = (fileInfo: FileType.fileInfoType, (resolve, reject)) => {
 
   switch (_getUploadPackageType(fileInfo.name)) {
   | LoadError(msg) => reject(. LoadPackageException(msg))
-  | _ => LoadAssetUtils.readAssetByTypeSync(reader, fileInfo)
+  | type_ => _readPakckageByTypeSync(reader, fileInfo, type_)
   };
-
-  _readPakckageByTypeSync(reader, fileInfo);
 };
 
 let _dispatch = dispatchFunc =>

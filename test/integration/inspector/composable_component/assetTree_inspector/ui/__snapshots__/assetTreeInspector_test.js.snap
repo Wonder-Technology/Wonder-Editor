@@ -48,7 +48,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
     className="wonder-inspector-assetTree"
   >
     <article
-      className="wonder-texture-assetTree"
+      className="wonder-texture-inspector"
     >
       <h1>
         Texture
@@ -445,7 +445,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
     className="wonder-inspector-assetTree"
   >
     <article
-      className="wonder-texture-assetTree"
+      className="wonder-texture-inspector"
     >
       <h1>
         Texture

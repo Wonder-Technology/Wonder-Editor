@@ -8,7 +8,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
     className="wonder-inspector-assetTree"
   >
     <article
-      className="wonder-texture-assetTree"
+      className="wonder-texture-inspector"
     >
       <h1>
         Texture
