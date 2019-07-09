@@ -122,6 +122,8 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
       newTreeNode : buildNodeByNodeDataFunc(~nodeId, ~nodeData);
   let _textureNodeFunc = (nodeId, nodeData) =>
     _nodeFunc(nodeId, nodeData, TextureNodeAssetService.buildNodeByNodeData);
+  let _cubemapNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(nodeId, nodeData, CubemapNodeAssetService.buildNodeByNodeData);
   let _materialNodeFunc = (nodeId, nodeData) =>
     _nodeFunc(nodeId, nodeData, MaterialNodeAssetService.buildNodeByNodeData);
   let _scriptEventFunctionNodeFunc = (nodeId, nodeData) =>
@@ -154,6 +156,7 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
   IterateTreeAssetService.cata(
     ~tree,
     ~textureNodeFunc=_textureNodeFunc,
+    ~cubemapNodeFunc=_cubemapNodeFunc,
     ~materialNodeFunc=_materialNodeFunc,
     ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,

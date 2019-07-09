@@ -51,6 +51,7 @@ let getNodeId = (~node) =>
   | ScriptEventFunctionNode(nodeId, _) => nodeId
   | ScriptAttributeNode(nodeId, _) => nodeId
   | TextureNode(nodeId, _) => nodeId
+  | CubemapNode(nodeId, _) => nodeId
   | MaterialNode(nodeId, _) => nodeId
   | WDBNode(nodeId, _) => nodeId
   | AssetBundleNode(nodeId, _) => nodeId
@@ -64,6 +65,7 @@ let handleNode =
     (
       ~node,
       ~textureNodeFunc,
+      ~cubemapNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
@@ -78,6 +80,8 @@ let handleNode =
     scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(nodeId, cubemapNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)

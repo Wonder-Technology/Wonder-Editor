@@ -170,6 +170,39 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             ~cubemapNodeFunc=
+               (
+                 nodeId,
+                 {
+                   textureComponent,
+                   pxImageDataIndex,
+                   nxImageDataIndex,
+                   pyImageDataIndex,
+                   nyImageDataIndex,
+                   pzImageDataIndex,
+                   nzImageDataIndex,
+                 },
+               ) => {
+                 let fileName =
+                   NodeNameAssetLogicService.getCubemapNodeName(
+                     ~texture=textureComponent,
+                     ~engineState,
+                   );
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/cubemap.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
              ~materialNodeFunc=
                (nodeId, {materialComponent, type_, imageDataIndex}) => {
                  let fileName =

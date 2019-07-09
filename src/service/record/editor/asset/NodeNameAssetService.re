@@ -2,7 +2,8 @@ open NodeAssetType;
 
 open TreeAssetType;
 
-let getNodeName = (~node, ~getTextureNameFunc, ~getMaterialNameFunc) =>
+let getNodeName =
+    (~node, ~getTextureNameFunc, ~getCubemapNameFunc, ~getMaterialNameFunc) =>
   switch (node) {
   | ScriptEventFunctionNode(_, scriptEventFunctionNodeData) =>
     ScriptEventFunctionNodeAssetService.getNodeNameByData(
@@ -12,6 +13,8 @@ let getNodeName = (~node, ~getTextureNameFunc, ~getMaterialNameFunc) =>
     ScriptAttributeNodeAssetService.getNodeNameByData(scriptAttributeNodeData)
   | TextureNode(_, nodeData) =>
     TextureNodeAssetService.getNodeName(nodeData, getTextureNameFunc)
+  | CubemapNode(_, nodeData) =>
+    CubemapNodeAssetService.getNodeName(nodeData, getCubemapNameFunc)
   | MaterialNode(_, nodeData) =>
     MaterialNodeAssetService.getNodeName(nodeData, getMaterialNameFunc)
   | WDBNode(_, nodeData) => WDBNodeAssetService.getNodeName(nodeData)
@@ -22,16 +25,38 @@ let getNodeName = (~node, ~getTextureNameFunc, ~getMaterialNameFunc) =>
   };
 
 let isNodeEqualByName =
-    (~sourceNode, ~targetNode, ~getTextureNameFunc, ~getMaterialNameFunc) =>
+    (
+      ~sourceNode,
+      ~targetNode,
+      ~getTextureNameFunc,
+      ~getCubemapNameFunc,
+      ~getMaterialNameFunc,
+    ) =>
   NodeAssetService.isNodeEqual(
     (
       NodeAssetService.isEqual,
-      getNodeName(~getTextureNameFunc, ~getMaterialNameFunc),
+      getNodeName(
+        ~getTextureNameFunc,
+        ~getCubemapNameFunc,
+        ~getMaterialNameFunc,
+      ),
     ),
     sourceNode,
     targetNode,
   );
 
 let isTargetNameNode =
-    (~node, ~name, ~getTextureNameFunc, ~getMaterialNameFunc) =>
-  getNodeName(~node, ~getTextureNameFunc, ~getMaterialNameFunc) == name;
+    (
+      ~node,
+      ~name,
+      ~getTextureNameFunc,
+      ~getCubemapNameFunc,
+      ~getMaterialNameFunc,
+    ) =>
+  getNodeName(
+    ~node,
+    ~getTextureNameFunc,
+    ~getCubemapNameFunc,
+    ~getMaterialNameFunc,
+  )
+  == name;

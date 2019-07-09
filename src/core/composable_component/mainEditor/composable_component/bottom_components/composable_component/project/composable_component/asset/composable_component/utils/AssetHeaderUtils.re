@@ -19,11 +19,10 @@ let _handleSpecificFuncByTypeAsync =
   | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
   | LoadZip => handleZipFunc()
-  | LoadError =>
-    make((~resolve, ~reject) => reject(. LoadException("load asset error")))
   };
 
-let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
+let handleFileByTypeAsync =
+    (fileResult: uploadAssetFileResultType, createJsZipFunc) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId |> StateLogicService.getEditorState;
   let engineState = StateEngineService.unsafeGetState();
@@ -88,14 +87,14 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
      });
 };
 
-let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
+let fileLoad = ((uiState), createJsZipFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   EventHelper.preventDefault(e);
 
   let target = e##target;
 
   switch (target##files |> Js.Dict.values |> ArrayService.getFirst) {
-  | None => resolve()
+  | None => WonderBsMost.Most.empty()
   | Some(file) =>
     let fileInfo = FileReader.convertFileJsObjectToFileInfoRecord(file);
 
@@ -111,25 +110,38 @@ let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
           })
         );
 
-        LoadAssetUtils.readAssetByTypeSync(reader, fileInfo);
+        switch (LoadAssetUtils.getUploadAssetType(fileInfo.name)) {
+        | LoadError(msg) => reject(. LoadAssetException(msg))
+        | _ => LoadAssetUtils.readAssetByTypeSync(reader, fileInfo)
+        };
       }),
     )
-    |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
+    |> WonderBsMost.Most.flatMap((fileResult: uploadAssetFileResultType) =>
          WonderBsMost.Most.fromPromise(
            handleFileByTypeAsync(fileResult, createJsZipFunc),
          )
        )
-    |> WonderBsMost.Most.drain
-    |> then_(() => {
-         FileReader.makeSureCanLoadSameNameFileAgain(target);
+    /* |> WonderBsMost.Most.drain
+       |> then_(() => {
+            FileReader.makeSureCanLoadSameNameFileAgain(target);
 
-         dispatchFunc(
-           AppStore.UpdateAction(
-             Update([|UpdateStore.Inspector, UpdateStore.Project|]),
-           ),
-         );
+            dispatchFunc(
+              AppStore.UpdateAction(
+                Update([|UpdateStore.Inspector, UpdateStore.Project|]),
+              ),
+            );
 
-         resolve();
-       });
+            resolve();
+          }); */
+    |> WonderBsMost.Most.tap(_ =>
+         FileReader.makeSureCanLoadSameNameFileAgain(
+           target,
+           /* dispatchFunc(
+                AppStore.UpdateAction(
+                  Update([|UpdateStore.Inspector, UpdateStore.Project|]),
+                ),
+              ); */
+         )
+       );
   };
 };

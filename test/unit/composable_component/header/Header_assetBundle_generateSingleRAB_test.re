@@ -154,7 +154,8 @@ let _ =
                    let (
                      basicMaterials,
                      lightMaterials,
-                     textures,
+                     basicSourceTextures,
+                     cubemapTextures,
                      geometrys,
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,
@@ -264,7 +265,8 @@ let _ =
                             let (
                               basicMaterials,
                               lightMaterials,
-                              textures,
+                              basicSourceTextures,
+                              cubemapTextures,
                               geometrys,
                               scriptEventFunctionDataArr,
                               scriptAttributeDataArr,
@@ -276,7 +278,7 @@ let _ =
                               |> StateLogicService.getStateToGetData;
 
                             let editorState = StateEditorService.getState();
-                            (lightMaterials, textures)
+                            (lightMaterials, basicSourceTextures)
                             |> expect
                             == (
                                  [|
@@ -337,7 +339,8 @@ let _ =
                 let (
                   basicMaterials,
                   lightMaterials,
-                  textures,
+                  basicSourceTextures,
+                  cubemapTextures,
                   geometrys,
                   scriptEventFunctionDataArr,
                   scriptAttributeDataArr,
@@ -377,7 +380,8 @@ let _ =
                    let (
                      basicMaterials,
                      lightMaterials,
-                     textures,
+                     basicSourceTextures,
+                     cubemapTextures,
                      geometrys,
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,

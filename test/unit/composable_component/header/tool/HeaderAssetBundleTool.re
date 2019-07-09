@@ -31,15 +31,13 @@ module GenerateSingleRAB = {
       basicMaterials,
       lightMaterials,
       basicSourceTextures,
+      cubemapTextures,
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
       imageDataMap,
     ) =
       generateSingleRABResourceData(selectTree, (editorState, engineState));
-
-    /* TODO cubemapTextures */
-    let cubemapTextures = [||];
 
     GenerateAssetBundleEngineService.generateSingleRAB(
       GenerateAssetBundleEngineService.buildResourceData(

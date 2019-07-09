@@ -16,17 +16,24 @@ let message_language_array = [|
     },
   },
   {
-    title: "load-asset-file",
+    title: "load-asset-file-error",
     language: {
       zh: {j|上传的资源类型错误，资源类型包括 (.wdb, .glb, .jpg, .jpeg, .png, .zip) ！|j},
-      en: "the loaded asset type is error, asset type include (.wdb, .glb, .jpg, .jpeg, .png, .zip)! ",
+      en: "the loaded asset type is error, type should include (.wdb, .glb, .jpg, .jpeg, .png, .zip)! ",
     },
   },
   {
-    title: "load-asset-package",
+    title: "load-package-error",
     language: {
       zh: {j|上传的包类型错误，包类型包括(.wpk) ！|j},
-      en: "the loaded package type is error, package type include (.wpk)",
+      en: "the loaded package type is error, type should include (.wpk)",
+    },
+  },
+  {
+    title: "load-cubemap-faceSource-error",
+    language: {
+      zh: {j|上传的Cubemap Face Source类型错误，类型包括(.jpg, .jpeg, .png) ！|j},
+      en: "the loaded cubemap face source type is error, type should include (.jpg, .jpeg, .png)! ",
     },
   },
   {

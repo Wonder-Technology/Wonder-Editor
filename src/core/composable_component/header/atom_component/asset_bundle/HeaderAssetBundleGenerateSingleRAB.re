@@ -35,6 +35,7 @@ module Method = {
               |> HeaderAssetBundleType.convertValueToBasicSourceTextureData;
 
             ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)->Some;
+          | "cubemapTexture" => Some("./public/img/cubemap.png")
           | _ => None
           }
       }
@@ -45,10 +46,10 @@ module Method = {
     materialData.materialComponent;
 
   let _addLightMaterialContainedTextureData =
-      (lightMaterials, textures, (editorState, engineState)) =>
+      (lightMaterials, basicSourceTextures, (editorState, engineState)) =>
     lightMaterials
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. textures, lightMaterialComponent) =>
+         (. basicSourceTextures, lightMaterialComponent) =>
            LightMaterialEngineService.hasLightMaterialDiffuseMap(
              lightMaterialComponent,
              engineState,
@@ -62,9 +63,9 @@ module Method = {
                  editorState,
                )
              ) {
-             | None => textures
+             | None => basicSourceTextures
              | Some(textureNodeData) =>
-               textures
+               basicSourceTextures
                |> ArrayService.push(
                     {
                       textureComponent: textureNodeData.textureComponent,
@@ -72,8 +73,8 @@ module Method = {
                     }: HeaderAssetBundleType.basicSourceTextureData,
                   )
              } :
-             textures,
-         textures,
+             basicSourceTextures,
+         basicSourceTextures,
        );
 
   let _addResourceData = (resources, value, convertValueToResourceDataFunc) =>
@@ -84,7 +85,8 @@ module Method = {
     let (
       basicMaterials,
       lightMaterials,
-      textures,
+      basicSourceTextures,
+      cubemapTextures,
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
@@ -98,13 +100,15 @@ module Method = {
           WonderCommonlib.ArrayService.createEmpty(),
           WonderCommonlib.ArrayService.createEmpty(),
           WonderCommonlib.ArrayService.createEmpty(),
+          WonderCommonlib.ArrayService.createEmpty(),
         ),
         ~valueNodeFunc=
           (
             (
               basicMaterials,
               lightMaterials,
-              textures,
+              basicSourceTextures,
+              cubemapTextures,
               geometrys,
               scriptEventFunctionDataArr,
               scriptAttributeDataArr,
@@ -124,7 +128,8 @@ module Method = {
                       |> _getMaterialComponentFromMaterialData
                     ),
                     lightMaterials,
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
@@ -136,7 +141,8 @@ module Method = {
                       |> HeaderAssetBundleType.convertValueToMaterialData
                       |> _getMaterialComponentFromMaterialData
                     ),
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
@@ -145,9 +151,23 @@ module Method = {
                     basicMaterials,
                     lightMaterials,
                     _addResourceData(
-                      textures,
+                      basicSourceTextures,
                       value,
                       HeaderAssetBundleType.convertValueToBasicSourceTextureData,
+                    ),
+                    cubemapTextures,
+                    geometrys,
+                    scriptEventFunctionDataArr,
+                    scriptAttributeDataArr,
+                  )
+                | "cubemapTexture" => (
+                    basicMaterials,
+                    lightMaterials,
+                    basicSourceTextures,
+                    _addResourceData(
+                      cubemapTextures,
+                      value,
+                      HeaderAssetBundleType.convertValueToCubemapTextureData,
                     ),
                     geometrys,
                     scriptEventFunctionDataArr,
@@ -156,7 +176,8 @@ module Method = {
                 | "scriptEventFunction" => (
                     basicMaterials,
                     lightMaterials,
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     geometrys,
                     _addResourceData(
                       scriptEventFunctionDataArr,
@@ -168,7 +189,8 @@ module Method = {
                 | "scriptAttribute" => (
                     basicMaterials,
                     lightMaterials,
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     geometrys,
                     scriptEventFunctionDataArr,
                     _addResourceData(
@@ -180,7 +202,8 @@ module Method = {
                 | "geometry" => (
                     basicMaterials,
                     lightMaterials,
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     _addResourceData(
                       geometrys,
                       value,
@@ -192,7 +215,8 @@ module Method = {
                 | _ => (
                     basicMaterials,
                     lightMaterials,
-                    textures,
+                    basicSourceTextures,
+                    cubemapTextures,
                     geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
@@ -202,7 +226,8 @@ module Method = {
               (
                 basicMaterials,
                 lightMaterials,
-                textures,
+                basicSourceTextures,
+                cubemapTextures,
                 geometrys,
                 scriptEventFunctionDataArr,
                 scriptAttributeDataArr,
@@ -211,10 +236,10 @@ module Method = {
         (),
       );
 
-    let textures =
+    let basicSourceTextures =
       _addLightMaterialContainedTextureData(
         lightMaterials,
-        textures,
+        basicSourceTextures,
         (editorState, engineState),
       );
 
@@ -253,11 +278,16 @@ module Method = {
     (
       basicMaterials |> WonderCommonlib.ArrayService.removeDuplicateItems,
       lightMaterials |> WonderCommonlib.ArrayService.removeDuplicateItems,
-      textures
+      basicSourceTextures
       |> ArrayService.removeDuplicateItems(
            (.
              {textureComponent}: HeaderAssetBundleType.basicSourceTextureData,
            ) =>
+           textureComponent |> string_of_int
+         ),
+      cubemapTextures
+      |> ArrayService.removeDuplicateItems(
+           (. {textureComponent}: HeaderAssetBundleType.cubemapTextureData) =>
            textureComponent |> string_of_int
          ),
       geometrys |> WonderCommonlib.ArrayService.removeDuplicateItems,
@@ -281,6 +311,7 @@ module Method = {
       basicMaterials,
       lightMaterials,
       basicSourceTextures,
+      cubemapTextures,
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
@@ -290,9 +321,6 @@ module Method = {
         selectTreeForGenerateSingleRAB,
         (editorState, engineState),
       );
-
-    /* TODO cubemapTextures */
-    let cubemapTextures = [||];
 
     let rab =
       GenerateAssetBundleEngineService.generateSingleRAB(
