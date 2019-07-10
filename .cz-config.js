@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "skybox" },
     { name: "inspectorCanvas" },
     { name: "asset-bundle" },
     { name: "script" },

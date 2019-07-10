@@ -79,6 +79,48 @@ let header_language_array = [|
     },
   },
   {
+    title: "header-setting",
+    language: {
+      zh: {j|设置|j},
+      en: "Setting",
+    },
+  },
+  {
+    title: "setting-scene",
+    language: {
+      zh: {j|场景|j},
+      en: "Scene",
+    },
+  },
+  {
+    title: "setting-scene-ambient",
+    language: {
+      zh: {j|环境光颜色|j},
+      en: "AmbientColor",
+    },
+  },
+  {
+    title: "setting-scene-ambient-describe",
+    language: {
+      zh: {j|设置环境光的颜色。环境光是全局的。|j},
+      en: "set ambient color which is global.",
+    },
+  },
+  {
+    title: "setting-scene-skybox-cubemap",
+    language: {
+      zh: {j|天空盒Cubemap|j},
+      en: "Skybox Cubemap",
+    },
+  },
+  {
+    title: "setting-scene-skybox-cubemap-describe",
+    language: {
+      zh: {j|设置场景天空盒的Cubemap|j},
+      en: "set scene skybox->cubemap",
+    },
+  },
+  {
     title: "header-help",
     language: {
       zh: {j|帮助|j},

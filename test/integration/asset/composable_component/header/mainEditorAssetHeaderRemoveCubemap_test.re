@@ -56,13 +56,12 @@ let _ =
               assetTreeData,
             );
 
-          SceneEngineService.setCubemapTexture(
+          HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
             MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
               ~nodeId=firstCubemapNodeId,
               (),
             ),
-          )
-          |> StateLogicService.getAndSetEngineState;
+          );
 
           firstCubemapNodeId;
         };

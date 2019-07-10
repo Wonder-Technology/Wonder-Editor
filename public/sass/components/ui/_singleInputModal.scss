@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     @import "./normalInput";
+
     .modal-item {
         width: 470px;
         height: 400px;
@@ -16,6 +17,7 @@
         background: #c1c1c1;
         border-radius: 5px;
         z-index: 150;
+
         .modal-item-header {
             width: 100%;
             height: 22px;
@@ -29,6 +31,7 @@
             border-bottom: 1px solid #868686;
             background: #555454;
             position: relative;
+
             img {
                 position: absolute;
                 top: 8px;
@@ -38,6 +41,7 @@
                 height: 15px;
             }
         }
+
         .modal-item-content {
             @import "../../utils/scrollBarUtils";
             color: #000;
@@ -48,6 +52,7 @@
             padding-top: 10px;
             box-sizing: border-box;
             font-size: 16px;
+
             .content-field {
                 width: 100%;
                 height: 24px;
@@ -55,11 +60,13 @@
                 @import "../../utils/modalUtils";
             }
         }
+
         .modal-item-footer {
             height: 50px;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
             position: relative;
+
             .footer-submit {
                 width: 100px;
                 position: absolute;

@@ -1,0 +1,55 @@
+.wonder-settingScene-modal {
+    .modal-item {
+        .setting-scene-ambient {
+            flex: initial;
+            width: 18%;
+            height: 100%;
+
+            .header-item {
+                display: flex;
+                flex: initial;
+                align-items: center;
+                height: 100%;
+                flex-direction: row;
+                margin-left: 10px;
+
+                .component-item {
+                    flex: initial;
+
+                    .inspector-item {
+                        display: flex;
+
+                        .item-header {
+                            height: 25px;
+                            line-height: 25px;
+                        }
+
+                        .item-content {
+                            flex: initial;
+                            display: flex;
+                            flex-direction: row;
+                            margin-left: 10px;
+                            align-items: center;
+                            justify-content: center;
+
+                            .color-hex {
+                                border-radius: 10px;
+                                width: 40px;
+                                height: 15px;
+                            }
+
+                            .color-select {
+                                margin-left: 10px;
+
+                                img {
+                                    width: 15px;
+                                    height: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
