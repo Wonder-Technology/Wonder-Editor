@@ -155,7 +155,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.Material.getFirstMaterialNodeId(
               assetTreeData,
             );
-          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+          AssetInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId,
             ~name=OperateMaterialLogicService.getDefaultName(),
             (),

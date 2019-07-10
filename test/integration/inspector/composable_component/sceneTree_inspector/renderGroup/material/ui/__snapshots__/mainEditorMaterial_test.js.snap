@@ -124,7 +124,7 @@ exports[`MainEditorMaterial test select material group->show order
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"
@@ -299,7 +299,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"

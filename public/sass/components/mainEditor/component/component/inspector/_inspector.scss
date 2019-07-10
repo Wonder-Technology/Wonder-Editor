@@ -32,9 +32,9 @@
         @import "sceneTree/inspectorScript";
     }
 
-    .wonder-inspector-assetTree {
+    .wonder-inspector-asset {
         @import "../../../../ui/attributeBox";
-        @import "assetTree/inspectorCubemapAsset";
+        @import "asset/inspectorCubemapAsset";
 
         @include inspectorItem("inspector-asset-folder");
         @include inspectorItem("wonder-texture-inspector");

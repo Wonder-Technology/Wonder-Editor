@@ -37,7 +37,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     className="wonder-direction-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"
@@ -132,7 +132,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     className="wonder-point-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"
@@ -323,7 +323,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     className="wonder-direction-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"

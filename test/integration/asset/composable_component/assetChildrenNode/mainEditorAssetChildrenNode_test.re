@@ -387,23 +387,23 @@ let _ =
                            (),
                          )
                          |> then_(uploadedTextureNodeId2 => {
-                              AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+                              AssetInspectorTool.Rename.renameAssetFolderNode(
                                 ~nodeId=addedFolderNodeId1,
                                 ~name="FFolder",
                                 (),
                               );
-                              AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+                              AssetInspectorTool.Rename.renameAssetFolderNode(
                                 ~nodeId=addedFolderNodeId2,
                                 ~name="AFolder",
                                 (),
                               );
 
-                              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                              AssetInspectorTool.Rename.renameAssetMaterialNode(
                                 ~nodeId=addedMaterialNodeId1,
                                 ~name="CMaterial",
                                 (),
                               );
-                              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                              AssetInspectorTool.Rename.renameAssetMaterialNode(
                                 ~nodeId=addedMaterialNodeId2,
                                 ~name="AMaterial",
                                 (),

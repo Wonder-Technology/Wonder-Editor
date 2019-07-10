@@ -597,7 +597,7 @@ let _ =
               let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-              AssetTreeInspectorTool.Rename.renameAssetScriptEventFunctionNode(
+              AssetInspectorTool.Rename.renameAssetScriptEventFunctionNode(
                 ~nodeId=addedNodeId,
                 ~name=scriptEventFunctionDataNameRef^,
                 (),
@@ -708,7 +708,7 @@ let _ =
                   (),
                 );
 
-                AssetTreeInspectorTool.Rename.renameAssetScriptAttributeNode(
+                AssetInspectorTool.Rename.renameAssetScriptAttributeNode(
                   ~nodeId=addedNodeId,
                   ~name=scriptAttributeNameRef^,
                   (),

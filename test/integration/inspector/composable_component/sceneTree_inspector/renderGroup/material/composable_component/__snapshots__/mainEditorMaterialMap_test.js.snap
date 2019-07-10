@@ -571,7 +571,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

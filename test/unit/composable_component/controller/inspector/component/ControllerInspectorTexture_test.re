@@ -44,7 +44,7 @@ let _ =
           );
 
         MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
-        AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+        AssetInspectorTool.Rename.renameAssetTextureNode(
           ~nodeId,
           ~name=newName,
           (),

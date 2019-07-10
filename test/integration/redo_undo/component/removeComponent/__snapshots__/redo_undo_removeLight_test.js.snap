@@ -1057,7 +1057,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
           className="wonder-direction-light"
         >
           <article
-            className="inspector-item"
+            className="color-pick"
           >
             <div
               className="item-header"

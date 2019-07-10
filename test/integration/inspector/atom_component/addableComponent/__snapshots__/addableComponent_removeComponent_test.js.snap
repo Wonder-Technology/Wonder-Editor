@@ -508,7 +508,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -2982,7 +2982,7 @@ exports[`AddableComponent remove component test remove script component test sna
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

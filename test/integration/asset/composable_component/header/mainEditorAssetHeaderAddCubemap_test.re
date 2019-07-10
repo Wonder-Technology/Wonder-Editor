@@ -153,7 +153,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
               assetTreeData,
             );
-          AssetTreeInspectorTool.Rename.renameAssetCubemapNode(
+          AssetInspectorTool.Rename.renameAssetCubemapNode(
             ~nodeId,
             ~name=OperateCubemapLogicService.getDefaultName(),
             (),

@@ -37,7 +37,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className="wonder-point-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"
@@ -228,7 +228,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className="wonder-point-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"
@@ -419,7 +419,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className="wonder-direction-light"
   >
     <article
-      className="inspector-item"
+      className="color-pick"
     >
       <div
         className="item-header"

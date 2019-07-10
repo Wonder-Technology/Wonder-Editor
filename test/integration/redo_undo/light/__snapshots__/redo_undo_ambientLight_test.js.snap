@@ -37,43 +37,39 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           className="setting-scene-ambient"
         >
           <div
-            className="header-item"
+            className="content-field"
           >
-            <div
-              className="component-item"
+            <article
+              className="color-pick"
             >
-              <article
-                className="inspector-item"
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
               >
                 <div
-                  className="item-header"
-                  title="set ambient color which is global."
-                >
-                  AmbientColor
-                </div>
-                <div
-                  className="item-content item-color"
-                >
-                  <div
-                    className="color-hex"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "background": "#7df1e8",
-                      }
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#7df1e8",
                     }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
                   />
-                  <div
-                    className="color-select"
-                    onClick={[Function]}
-                  >
-                    <img
-                      src="./public/img/color.png"
-                    />
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           </div>
         </div>
         <div
@@ -143,43 +139,39 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           className="setting-scene-ambient"
         >
           <div
-            className="header-item"
+            className="content-field"
           >
-            <div
-              className="component-item"
+            <article
+              className="color-pick"
             >
-              <article
-                className="inspector-item"
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
               >
                 <div
-                  className="item-header"
-                  title="set ambient color which is global."
-                >
-                  AmbientColor
-                </div>
-                <div
-                  className="item-content item-color"
-                >
-                  <div
-                    className="color-hex"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "background": "#1918e8",
-                      }
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#1918e8",
                     }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
                   />
-                  <div
-                    className="color-select"
-                    onClick={[Function]}
-                  >
-                    <img
-                      src="./public/img/color.png"
-                    />
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           </div>
         </div>
         <div
@@ -249,43 +241,39 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           className="setting-scene-ambient"
         >
           <div
-            className="header-item"
+            className="content-field"
           >
-            <div
-              className="component-item"
+            <article
+              className="color-pick"
             >
-              <article
-                className="inspector-item"
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
               >
                 <div
-                  className="item-header"
-                  title="set ambient color which is global."
-                >
-                  AmbientColor
-                </div>
-                <div
-                  className="item-content item-color"
-                >
-                  <div
-                    className="color-hex"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "background": "#1918e8",
-                      }
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#1918e8",
                     }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
                   />
-                  <div
-                    className="color-select"
-                    onClick={[Function]}
-                  >
-                    <img
-                      src="./public/img/color.png"
-                    />
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           </div>
         </div>
         <div
@@ -355,43 +343,39 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           className="setting-scene-ambient"
         >
           <div
-            className="header-item"
+            className="content-field"
           >
-            <div
-              className="component-item"
+            <article
+              className="color-pick"
             >
-              <article
-                className="inspector-item"
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
               >
                 <div
-                  className="item-header"
-                  title="set ambient color which is global."
-                >
-                  AmbientColor
-                </div>
-                <div
-                  className="item-content item-color"
-                >
-                  <div
-                    className="color-hex"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "background": "#7df1e8",
-                      }
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#7df1e8",
                     }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
                   />
-                  <div
-                    className="color-select"
-                    onClick={[Function]}
-                  >
-                    <img
-                      src="./public/img/color.png"
-                    />
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           </div>
         </div>
         <div
@@ -461,43 +445,39 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           className="setting-scene-ambient"
         >
           <div
-            className="header-item"
+            className="content-field"
           >
-            <div
-              className="component-item"
+            <article
+              className="color-pick"
             >
-              <article
-                className="inspector-item"
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
               >
                 <div
-                  className="item-header"
-                  title="set ambient color which is global."
-                >
-                  AmbientColor
-                </div>
-                <div
-                  className="item-content item-color"
-                >
-                  <div
-                    className="color-hex"
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "background": "#000000",
-                      }
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#000000",
                     }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
                   />
-                  <div
-                    className="color-select"
-                    onClick={[Function]}
-                  >
-                    <img
-                      src="./public/img/color.png"
-                    />
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
           </div>
         </div>
         <div

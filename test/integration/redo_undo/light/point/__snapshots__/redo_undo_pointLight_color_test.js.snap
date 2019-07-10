@@ -5,7 +5,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   className="wonder-point-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -163,7 +163,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   className="wonder-point-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -321,7 +321,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   className="wonder-point-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -479,7 +479,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   className="wonder-point-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -637,7 +637,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   className="wonder-point-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
