@@ -238,12 +238,12 @@ let _ =
                (
                  editorState
                  |> ImageDataMapAssetEditorService.unsafeGetData(
-                      materialNodeData1.imageDataIndex,
+                      materialNodeData1.snapshotImageDataIndex,
                     )
                  |> (({base64}) => base64 |> OptionService.unsafeGet),
                  editorState
                  |> ImageDataMapAssetEditorService.unsafeGetData(
-                      materialNodeData2.imageDataIndex,
+                      materialNodeData2.snapshotImageDataIndex,
                     )
                  |> (({base64}) => base64 |> OptionService.unsafeGet),
                )

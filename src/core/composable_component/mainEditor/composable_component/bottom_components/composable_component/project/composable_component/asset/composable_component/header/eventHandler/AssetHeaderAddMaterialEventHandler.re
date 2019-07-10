@@ -35,7 +35,7 @@ module CustomEventHandler = {
           ~nodeId=newNodeId,
           ~type_=MaterialDataAssetType.LightMaterial,
           ~materialComponent=newMaterial,
-          ~imageDataIndex=newImageDataIndex,
+          ~snapshotImageDataIndex=newImageDataIndex,
         ),
         editorState,
       )

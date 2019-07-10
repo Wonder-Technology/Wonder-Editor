@@ -496,7 +496,7 @@ let _ =
                 _prepareAndExec(~sandbox, ());
 
               let editorState = StateEditorService.getState();
-              let {imageDataIndex}: NodeAssetType.materialNodeData =
+              let {snapshotImageDataIndex}: NodeAssetType.materialNodeData =
                 editorState
                 |> OperateTreeAssetEditorService.unsafeFindNodeById(
                      addedMaterialNodeId,
@@ -504,7 +504,9 @@ let _ =
                 |> MaterialNodeAssetService.getNodeData;
 
               editorState
-              |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+              |> ImageDataMapAssetEditorService.unsafeGetData(
+                   snapshotImageDataIndex,
+                 )
               |> (
                 ({base64}) =>
                   base64

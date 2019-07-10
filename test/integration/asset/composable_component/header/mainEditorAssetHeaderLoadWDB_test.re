@@ -395,7 +395,7 @@ let _ =
                           engineState,
                         );
 
-                   let {imageDataIndex} =
+                   let {snapshotImageDataIndex} =
                      OperateTreeAssetEditorService.findMaterialNode(
                        material,
                        MaterialDataAssetType.LightMaterial,
@@ -406,7 +406,7 @@ let _ =
 
                    editorState
                    |> ImageDataMapAssetEditorService.unsafeGetData(
-                        imageDataIndex,
+                        snapshotImageDataIndex,
                       )
                    |> (
                      ({base64}) =>

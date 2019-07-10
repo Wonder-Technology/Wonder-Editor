@@ -236,8 +236,10 @@ module Method = {
                       MaterialNodeAssetService.getMaterialComponent(
                         assetNode,
                       ),
-                    imageDataIndex:
-                      MaterialNodeAssetService.getImageDataIndex(assetNode),
+                    snapshotImageDataIndex:
+                      MaterialNodeAssetService.getSnapshotImageDataIndex(
+                        assetNode,
+                      ),
                   }: materialData
                 )
                 |> convertMaterialDataToValue,

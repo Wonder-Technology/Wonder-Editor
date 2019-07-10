@@ -29,13 +29,13 @@ let closeColorPicker =
 let judgeImgCanvasSnapshotIsStoreInImageDataMap =
     (addedMaterialNodeId, imgCanvasFakeBase64Str) => {
   let editorState = StateEditorService.getState();
-  let {imageDataIndex} =
+  let {snapshotImageDataIndex} =
     editorState
     |> OperateTreeAssetEditorService.unsafeFindNodeById(addedMaterialNodeId)
     |> MaterialNodeAssetService.getNodeData;
 
   editorState
-  |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+  |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
   |> (
     ({base64}) =>
       base64 |> OptionService.unsafeGet |> expect == imgCanvasFakeBase64Str

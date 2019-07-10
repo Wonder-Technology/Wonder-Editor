@@ -54,12 +54,14 @@ let _clipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => 
 };
 
 let _setSnapShotToImageDataMap =
-    (imgCanvasBase64, imageDataIndex, editorState) =>
+    (imgCanvasBase64, snapshotImageDataIndex, editorState) =>
   editorState
   |> ImageDataMapAssetEditorService.setData(
-       imageDataIndex,
+       snapshotImageDataIndex,
        editorState
-       |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+       |> ImageDataMapAssetEditorService.unsafeGetData(
+            snapshotImageDataIndex,
+          )
        |> (
          imageData => {
            ...imageData,
@@ -72,12 +74,16 @@ let _setSnapShotToImageDataMap =
 
 let _setSnapShotToImageDataMapByMaterialNodeId =
     (imgCanvasBase64, currentNodeId, editorState) => {
-  let {imageDataIndex}: materialNodeData =
+  let {snapshotImageDataIndex}: materialNodeData =
     editorState
     |> OperateTreeAssetEditorService.unsafeFindNodeById(currentNodeId)
     |> MaterialNodeAssetService.getNodeData;
 
-  _setSnapShotToImageDataMap(imgCanvasBase64, imageDataIndex, editorState);
+  _setSnapShotToImageDataMap(
+    imgCanvasBase64,
+    snapshotImageDataIndex,
+    editorState,
+  );
 };
 
 let _setSnapShotToImageDataMapByWDBNodeId =
@@ -98,11 +104,12 @@ let clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId =
 
 let clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNode =
     (targetCanvasDom, imgCanvasDom, currentNode, editorState) => {
-  let {imageDataIndex} = MaterialNodeAssetService.getNodeData(currentNode);
+  let {snapshotImageDataIndex} =
+    MaterialNodeAssetService.getNodeData(currentNode);
 
   editorState
   |> _clipTargetCanvasSnapshot(targetCanvasDom, imgCanvasDom)
-  |> _setSnapShotToImageDataMap(_, imageDataIndex, editorState);
+  |> _setSnapShotToImageDataMap(_, snapshotImageDataIndex, editorState);
 };
 
 let clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId =

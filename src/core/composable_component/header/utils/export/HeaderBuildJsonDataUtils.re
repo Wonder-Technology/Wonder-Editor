@@ -188,13 +188,13 @@ let _buildMaterialData =
              (editorState, engineState),
            );
 
-         let {materialComponent, type_, imageDataIndex}: NodeAssetType.materialNodeData =
+         let {materialComponent, type_, snapshotImageDataIndex}: NodeAssetType.materialNodeData =
            MaterialNodeAssetService.getNodeData(node);
 
          let snapshot =
            imageIndexMap
            |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                imageDataIndex,
+                snapshotImageDataIndex,
               );
 
          switch (type_) {

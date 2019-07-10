@@ -605,7 +605,7 @@ module AssetTree = {
            ~nodeId=newNodeId,
            ~type_=MaterialDataAssetType.LightMaterial,
            ~materialComponent=material,
-           ~imageDataIndex=newImageDataIndex,
+           ~snapshotImageDataIndex=newImageDataIndex,
          ),
        )
     |> ImageDataMapAssetEditorService.setData(

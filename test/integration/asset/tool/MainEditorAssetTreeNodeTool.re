@@ -30,7 +30,7 @@ let insertMaterialNode =
     (
       materialNodeId,
       parentFolderNodeId,
-      (material, imageDataIndex),
+      (material, snapshotImageDataIndex),
       (editorState, engineState),
     ) => (
   editorState
@@ -40,11 +40,11 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
-         ~imageDataIndex,
+         ~snapshotImageDataIndex,
        ),
      )
   |> ImageDataMapAssetEditorService.setData(
-       imageDataIndex,
+       snapshotImageDataIndex,
        ImageDataMapAssetService.buildData(
          ~base64=OperateMaterialLogicService.getDefaultSnapshotBase64()->Some,
          ~uint8Array=None,

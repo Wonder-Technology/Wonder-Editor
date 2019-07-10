@@ -157,7 +157,7 @@ let _ =
 
             let editorState = StateEditorService.getState();
 
-            let {imageDataIndex}: materialNodeData =
+            let {snapshotImageDataIndex}: materialNodeData =
               editorState
               |> OperateTreeAssetEditorService.unsafeFindNodeById(
                    addedMaterialNodeId,
@@ -165,7 +165,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -207,7 +207,7 @@ let _ =
 
             let editorState = StateEditorService.getState();
 
-            let {imageDataIndex}: materialNodeData =
+            let {snapshotImageDataIndex}: materialNodeData =
               editorState
               |> OperateTreeAssetEditorService.unsafeFindNodeById(
                    addedMaterialNodeId,
@@ -215,7 +215,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
