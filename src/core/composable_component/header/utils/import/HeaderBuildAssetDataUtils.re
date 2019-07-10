@@ -245,7 +245,7 @@ let _addMaterialToAssetTree =
          ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
-         ~imageDataIndex=
+         ~snapshotImageDataIndex=
            imageDataIndexMap
            |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(snapshot),
        ),

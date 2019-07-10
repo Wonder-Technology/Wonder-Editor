@@ -46,8 +46,9 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
 };
 
 let _disposeMaterialNodeEditorDataBeforeRemoveNode =
-    ({imageDataIndex}: materialNodeData, editorState) =>
-  editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+    ({snapshotImageDataIndex}: materialNodeData, editorState) =>
+  editorState
+  |> ImageDataMapAssetEditorService.removeData(snapshotImageDataIndex);
 
 let _disposeWDBNodeEditorDataBeforeRemoveNode =
     ({wdbGameObject}, (editorState, engineState)) => {

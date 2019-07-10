@@ -22,10 +22,11 @@ module Method = {
           switch (type_) {
           | "basicMaterial"
           | "lightMaterial" =>
-            let {imageDataIndex}: HeaderAssetBundleType.materialData =
+            let {snapshotImageDataIndex}: HeaderAssetBundleType.materialData =
               value |> HeaderAssetBundleType.convertValueToMaterialData;
 
-            ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)->Some;
+            ImageDataMapUtils.getImgSrc(snapshotImageDataIndex, editorState)
+            ->Some;
           | "geometry" => Some("./public/img/geo.png")
           | "scriptEventFunction" => Some("./public/img/selectJsFunc.png")
           | "scriptAttribute" => Some("./public/img/scriptAttribute.png")

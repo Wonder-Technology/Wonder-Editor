@@ -2,7 +2,7 @@ open SelectTreeType;
 
 type materialData = {
   materialComponent: int,
-  imageDataIndex: int,
+  snapshotImageDataIndex: int,
 };
 
 type basicSourceTextureData = Wonderjs.RABType.basicSourceTextureData;

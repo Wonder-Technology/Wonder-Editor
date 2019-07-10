@@ -109,7 +109,7 @@ let _ =
 
       let editorState = StateEditorService.getState();
 
-      let {imageDataIndex}: NodeAssetType.materialNodeData =
+      let {snapshotImageDataIndex}: NodeAssetType.materialNodeData =
         OperateTreeAssetEditorService.unsafeFindNodeById(
           addedMaterialNodeId,
           editorState,
@@ -117,9 +117,9 @@ let _ =
         |> MaterialNodeAssetService.getNodeData;
 
       (
-        imageDataIndex,
+        snapshotImageDataIndex,
         editorState
-        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> ImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isSome,
       )
       |> expect == (newImageDataMapIndex, true);

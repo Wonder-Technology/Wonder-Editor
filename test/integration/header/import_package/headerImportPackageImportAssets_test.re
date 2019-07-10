@@ -155,7 +155,7 @@ let _ =
                   let editorState = StateEditorService.getState();
                   let engineState = StateEngineService.unsafeGetState();
 
-                  let {imageDataIndex}: NodeAssetType.materialNodeData =
+                  let {snapshotImageDataIndex}: NodeAssetType.materialNodeData =
                     OperateTreeAssetLogicService.findNodeByName(
                       newMaterialName,
                       (editorState, engineState),
@@ -165,7 +165,7 @@ let _ =
 
                   editorState
                   |> ImageDataMapAssetEditorService.unsafeGetData(
-                       imageDataIndex,
+                       snapshotImageDataIndex,
                      )
                   |> (
                     ({blobObjectURL}) =>

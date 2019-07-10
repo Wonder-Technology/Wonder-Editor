@@ -6,16 +6,16 @@ let getNodeName =
     ({materialComponent, type_}: materialNodeData, getMaterialNameFunc) =>
   getMaterialNameFunc(~material=materialComponent, ~type_);
 
-let buildNodeData = (~type_, ~materialComponent, ~imageDataIndex) => {
+let buildNodeData = (~type_, ~materialComponent, ~snapshotImageDataIndex) => {
   type_,
   materialComponent,
-  imageDataIndex,
+  snapshotImageDataIndex,
 };
 
-let buildNode = (~nodeId, ~type_, ~materialComponent, ~imageDataIndex) =>
+let buildNode = (~nodeId, ~type_, ~materialComponent, ~snapshotImageDataIndex) =>
   MaterialNode(
     nodeId,
-    buildNodeData(~type_, ~materialComponent, ~imageDataIndex),
+    buildNodeData(~type_, ~materialComponent, ~snapshotImageDataIndex),
   );
 
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
@@ -45,4 +45,5 @@ let getMaterialComponent = node => getNodeData(node).materialComponent;
 
 let getMaterialType = node => getNodeData(node).type_;
 
-let getImageDataIndex = node => getNodeData(node).imageDataIndex;
+let getSnapshotImageDataIndex = node =>
+  getNodeData(node).snapshotImageDataIndex;

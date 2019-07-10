@@ -41,7 +41,7 @@ type cubemapNodeData = {
 type materialNodeData = {
   type_: MaterialDataAssetType.materialType,
   materialComponent: int,
-  imageDataIndex: int,
+  snapshotImageDataIndex: int,
 };
 
 type scriptEventFunctionNodeData = {

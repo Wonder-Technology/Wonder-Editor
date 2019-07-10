@@ -209,7 +209,7 @@ module Method = {
                  |> Result.SameDataResult.success;
                },
              ~materialNodeFunc=
-               (nodeId, {materialComponent, type_, imageDataIndex}) => {
+               (nodeId, {materialComponent, type_, snapshotImageDataIndex}) => {
                  let fileName =
                    NodeNameAssetLogicService.getMaterialNodeName(
                      ~material=materialComponent,
@@ -218,7 +218,10 @@ module Method = {
                    );
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
+                   ImageDataMapUtils.getImgSrc(
+                     snapshotImageDataIndex,
+                     editorState,
+                   );
 
                  <FileBox
                    key

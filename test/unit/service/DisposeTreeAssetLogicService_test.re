@@ -136,7 +136,7 @@ describe("disposeTree", () => {
                (),
              );
 
-             let {imageDataIndex} =
+             let {snapshotImageDataIndex} =
                StateEditorService.getState()
                |> OperateTreeAssetEditorService.unsafeFindNodeById(
                     addedMaterialNodeId,
@@ -148,7 +148,9 @@ describe("disposeTree", () => {
                |> StateLogicService.getStateToGetData;
 
              editorState
-             |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+             |> ImageDataMapAssetEditorService.getData(
+                  snapshotImageDataIndex,
+                )
              |> Js.Option.isNone
              |> expect == true
              |> resolve;
