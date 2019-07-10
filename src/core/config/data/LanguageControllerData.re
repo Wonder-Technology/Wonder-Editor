@@ -2,20 +2,6 @@ open LanguageDataType;
 
 let controller_language_array = [|
   {
-    title: "controller-ambient",
-    language: {
-      zh: {j|环境光颜色：|j},
-      en: "AmbientColor:",
-    },
-  },
-  {
-    title: "ambient-describe",
-    language: {
-      zh: {j|设置环境光的颜色。环境光是全局的。|j},
-      en: "set ambient color which is global.",
-    },
-  },
-  {
     title: "run-describe",
     language: {
       zh: {j|运行/停止场景。|j},

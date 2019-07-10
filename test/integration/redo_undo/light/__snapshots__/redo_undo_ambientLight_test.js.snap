@@ -1,576 +1,531 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
-<article
-  className="wonder-controller-component"
+<div
+  className="header-item"
 >
   <div
-    className="header-controller"
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
   >
     <div
-      className="controller-ambient"
+      className="modal-item"
     >
       <div
-        className="header-item"
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
       >
         <div
-          className="component-item"
+          className="setting-scene-ambient"
         >
-          <article
-            className="inspector-item"
+          <div
+            className="header-item"
           >
             <div
-              className="item-header"
-              title="set ambient color which is global."
+              className="component-item"
             >
-              AmbientColor:
-            </div>
-            <div
-              className="item-content item-color"
-            >
-              <div
-                className="color-hex"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "background": "#7df1e8",
-                  }
-                }
-              />
-              <div
-                className="color-select"
-                onClick={[Function]}
+              <article
+                className="inspector-item"
               >
-                <img
-                  src="./public/img/color.png"
-                />
-              </div>
+                <div
+                  className="item-header"
+                  title="set ambient color which is global."
+                >
+                  AmbientColor
+                </div>
+                <div
+                  className="item-content item-color"
+                >
+                  <div
+                    className="color-hex"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#7df1e8",
+                      }
+                    }
+                  />
+                  <div
+                    className="color-select"
+                    onClick={[Function]}
+                  >
+                    <img
+                      src="./public/img/color.png"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </div>
-    <div
-      className="controller-transform"
-    >
-      <div
-        className="header-item"
-      >
         <div
-          className="component-item"
+          className="setting-scene-skybox"
         >
-          <article
-            className="transform-gizmo-switch"
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
           >
             <div
-              className="translation select"
+              className="cubemap-img"
               onClick={[Function]}
-              title="set to translation gizmo"
             />
-            <div
-              className="rotation not-select"
-              onClick={[Function]}
-              title="set to rotation gizmo"
-            />
-            <div
-              className="scale not-select"
-              onClick={[Function]}
-              title="set to scale gizmo"
-            />
-          </article>
-          <article
-            className="transform-gizmo-coordinate-system-switch"
-          >
             <button
-              disabled={false}
+              className="cubemap-remove"
               onClick={[Function]}
-              title="switch gizmo's coordinate system"
             >
-              World
+              Remove
             </button>
-          </article>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      className="controller-runAndStop"
-      onClick={[Function]}
-      title="run/stop scene"
-    >
-      <img
-        src="./public/img/run.png"
-      />
-    </div>
-    <div
-      className="controller-other"
-    >
-      <div
-        className="other-language"
-        onClick={[Function]}
-      >
-        中文
-      </div>
-    </div>
-  </div>
-</article>
+  </article>
+</div>
 `;
 
 exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
-<article
-  className="wonder-controller-component"
+<div
+  className="header-item"
 >
   <div
-    className="header-controller"
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
   >
     <div
-      className="controller-ambient"
+      className="modal-item"
     >
       <div
-        className="header-item"
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
       >
         <div
-          className="component-item"
+          className="setting-scene-ambient"
         >
-          <article
-            className="inspector-item"
+          <div
+            className="header-item"
           >
             <div
-              className="item-header"
-              title="set ambient color which is global."
+              className="component-item"
             >
-              AmbientColor:
-            </div>
-            <div
-              className="item-content item-color"
-            >
-              <div
-                className="color-hex"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "background": "#1918e8",
-                  }
-                }
-              />
-              <div
-                className="color-select"
-                onClick={[Function]}
+              <article
+                className="inspector-item"
               >
-                <img
-                  src="./public/img/color.png"
-                />
-              </div>
+                <div
+                  className="item-header"
+                  title="set ambient color which is global."
+                >
+                  AmbientColor
+                </div>
+                <div
+                  className="item-content item-color"
+                >
+                  <div
+                    className="color-hex"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#1918e8",
+                      }
+                    }
+                  />
+                  <div
+                    className="color-select"
+                    onClick={[Function]}
+                  >
+                    <img
+                      src="./public/img/color.png"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </div>
-    <div
-      className="controller-transform"
-    >
-      <div
-        className="header-item"
-      >
         <div
-          className="component-item"
+          className="setting-scene-skybox"
         >
-          <article
-            className="transform-gizmo-switch"
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
           >
             <div
-              className="translation select"
+              className="cubemap-img"
               onClick={[Function]}
-              title="set to translation gizmo"
             />
-            <div
-              className="rotation not-select"
-              onClick={[Function]}
-              title="set to rotation gizmo"
-            />
-            <div
-              className="scale not-select"
-              onClick={[Function]}
-              title="set to scale gizmo"
-            />
-          </article>
-          <article
-            className="transform-gizmo-coordinate-system-switch"
-          >
             <button
-              disabled={false}
+              className="cubemap-remove"
               onClick={[Function]}
-              title="switch gizmo's coordinate system"
             >
-              World
+              Remove
             </button>
-          </article>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      className="controller-runAndStop"
-      onClick={[Function]}
-      title="run/stop scene"
-    >
-      <img
-        src="./public/img/run.png"
-      />
-    </div>
-    <div
-      className="controller-other"
-    >
-      <div
-        className="other-language"
-        onClick={[Function]}
-      >
-        中文
-      </div>
-    </div>
-  </div>
-</article>
+  </article>
+</div>
 `;
 
 exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
-<article
-  className="wonder-controller-component"
+<div
+  className="header-item"
 >
   <div
-    className="header-controller"
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
   >
     <div
-      className="controller-ambient"
+      className="modal-item"
     >
       <div
-        className="header-item"
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
       >
         <div
-          className="component-item"
+          className="setting-scene-ambient"
         >
-          <article
-            className="inspector-item"
+          <div
+            className="header-item"
           >
             <div
-              className="item-header"
-              title="set ambient color which is global."
+              className="component-item"
             >
-              AmbientColor:
-            </div>
-            <div
-              className="item-content item-color"
-            >
-              <div
-                className="color-hex"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "background": "#1918e8",
-                  }
-                }
-              />
-              <div
-                className="color-select"
-                onClick={[Function]}
+              <article
+                className="inspector-item"
               >
-                <img
-                  src="./public/img/color.png"
-                />
-              </div>
+                <div
+                  className="item-header"
+                  title="set ambient color which is global."
+                >
+                  AmbientColor
+                </div>
+                <div
+                  className="item-content item-color"
+                >
+                  <div
+                    className="color-hex"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#1918e8",
+                      }
+                    }
+                  />
+                  <div
+                    className="color-select"
+                    onClick={[Function]}
+                  >
+                    <img
+                      src="./public/img/color.png"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </div>
-    <div
-      className="controller-transform"
-    >
-      <div
-        className="header-item"
-      >
         <div
-          className="component-item"
+          className="setting-scene-skybox"
         >
-          <article
-            className="transform-gizmo-switch"
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
           >
             <div
-              className="translation select"
+              className="cubemap-img"
               onClick={[Function]}
-              title="set to translation gizmo"
             />
-            <div
-              className="rotation not-select"
-              onClick={[Function]}
-              title="set to rotation gizmo"
-            />
-            <div
-              className="scale not-select"
-              onClick={[Function]}
-              title="set to scale gizmo"
-            />
-          </article>
-          <article
-            className="transform-gizmo-coordinate-system-switch"
-          >
             <button
-              disabled={false}
+              className="cubemap-remove"
               onClick={[Function]}
-              title="switch gizmo's coordinate system"
             >
-              World
+              Remove
             </button>
-          </article>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      className="controller-runAndStop"
-      onClick={[Function]}
-      title="run/stop scene"
-    >
-      <img
-        src="./public/img/run.png"
-      />
-    </div>
-    <div
-      className="controller-other"
-    >
-      <div
-        className="other-language"
-        onClick={[Function]}
-      >
-        中文
-      </div>
-    </div>
-  </div>
-</article>
+  </article>
+</div>
 `;
 
 exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
-<article
-  className="wonder-controller-component"
+<div
+  className="header-item"
 >
   <div
-    className="header-controller"
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
   >
     <div
-      className="controller-ambient"
+      className="modal-item"
     >
       <div
-        className="header-item"
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
       >
         <div
-          className="component-item"
+          className="setting-scene-ambient"
         >
-          <article
-            className="inspector-item"
+          <div
+            className="header-item"
           >
             <div
-              className="item-header"
-              title="set ambient color which is global."
+              className="component-item"
             >
-              AmbientColor:
-            </div>
-            <div
-              className="item-content item-color"
-            >
-              <div
-                className="color-hex"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "background": "#7df1e8",
-                  }
-                }
-              />
-              <div
-                className="color-select"
-                onClick={[Function]}
+              <article
+                className="inspector-item"
               >
-                <img
-                  src="./public/img/color.png"
-                />
-              </div>
+                <div
+                  className="item-header"
+                  title="set ambient color which is global."
+                >
+                  AmbientColor
+                </div>
+                <div
+                  className="item-content item-color"
+                >
+                  <div
+                    className="color-hex"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#7df1e8",
+                      }
+                    }
+                  />
+                  <div
+                    className="color-select"
+                    onClick={[Function]}
+                  >
+                    <img
+                      src="./public/img/color.png"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </div>
-    <div
-      className="controller-transform"
-    >
-      <div
-        className="header-item"
-      >
         <div
-          className="component-item"
+          className="setting-scene-skybox"
         >
-          <article
-            className="transform-gizmo-switch"
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
           >
             <div
-              className="translation select"
+              className="cubemap-img"
               onClick={[Function]}
-              title="set to translation gizmo"
             />
-            <div
-              className="rotation not-select"
-              onClick={[Function]}
-              title="set to rotation gizmo"
-            />
-            <div
-              className="scale not-select"
-              onClick={[Function]}
-              title="set to scale gizmo"
-            />
-          </article>
-          <article
-            className="transform-gizmo-coordinate-system-switch"
-          >
             <button
-              disabled={false}
+              className="cubemap-remove"
               onClick={[Function]}
-              title="switch gizmo's coordinate system"
             >
-              World
+              Remove
             </button>
-          </article>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      className="controller-runAndStop"
-      onClick={[Function]}
-      title="run/stop scene"
-    >
-      <img
-        src="./public/img/run.png"
-      />
-    </div>
-    <div
-      className="controller-other"
-    >
-      <div
-        className="other-language"
-        onClick={[Function]}
-      >
-        中文
-      </div>
-    </div>
-  </div>
-</article>
+  </article>
+</div>
 `;
 
 exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
-<article
-  className="wonder-controller-component"
+<div
+  className="header-item"
 >
   <div
-    className="header-controller"
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
   >
     <div
-      className="controller-ambient"
+      className="modal-item"
     >
       <div
-        className="header-item"
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
       >
         <div
-          className="component-item"
+          className="setting-scene-ambient"
         >
-          <article
-            className="inspector-item"
+          <div
+            className="header-item"
           >
             <div
-              className="item-header"
-              title="set ambient color which is global."
+              className="component-item"
             >
-              AmbientColor:
-            </div>
-            <div
-              className="item-content item-color"
-            >
-              <div
-                className="color-hex"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "background": "#000000",
-                  }
-                }
-              />
-              <div
-                className="color-select"
-                onClick={[Function]}
+              <article
+                className="inspector-item"
               >
-                <img
-                  src="./public/img/color.png"
-                />
-              </div>
+                <div
+                  className="item-header"
+                  title="set ambient color which is global."
+                >
+                  AmbientColor
+                </div>
+                <div
+                  className="item-content item-color"
+                >
+                  <div
+                    className="color-hex"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#000000",
+                      }
+                    }
+                  />
+                  <div
+                    className="color-select"
+                    onClick={[Function]}
+                  >
+                    <img
+                      src="./public/img/color.png"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </div>
-    <div
-      className="controller-transform"
-    >
-      <div
-        className="header-item"
-      >
         <div
-          className="component-item"
+          className="setting-scene-skybox"
         >
-          <article
-            className="transform-gizmo-switch"
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
           >
             <div
-              className="translation select"
+              className="cubemap-img"
               onClick={[Function]}
-              title="set to translation gizmo"
             />
-            <div
-              className="rotation not-select"
-              onClick={[Function]}
-              title="set to rotation gizmo"
-            />
-            <div
-              className="scale not-select"
-              onClick={[Function]}
-              title="set to scale gizmo"
-            />
-          </article>
-          <article
-            className="transform-gizmo-coordinate-system-switch"
-          >
             <button
-              disabled={false}
+              className="cubemap-remove"
               onClick={[Function]}
-              title="switch gizmo's coordinate system"
             >
-              World
+              Remove
             </button>
-          </article>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      className="controller-runAndStop"
-      onClick={[Function]}
-      title="run/stop scene"
-    >
-      <img
-        src="./public/img/run.png"
-      />
-    </div>
-    <div
-      className="controller-other"
-    >
-      <div
-        className="other-language"
-        onClick={[Function]}
-      >
-        中文
-      </div>
-    </div>
-  </div>
-</article>
+  </article>
+</div>
 `;

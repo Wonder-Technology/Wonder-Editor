@@ -3,6 +3,7 @@ type navType =
   | File
   | Edit
   | Publish
+  | Setting
   | Help
   | AssetBundle;
 
@@ -91,6 +92,14 @@ let render =
         isPublishNav={state.currentSelectNav === Publish}
         toggleShowNavFunc={() => send(ToggleShowNav(Publish))}
         hoverNavFunc={() => send(HoverNav(Publish))}
+      />
+      <HeaderSetting
+        uiState
+        dispatchFunc
+        isSettingNav={state.currentSelectNav === Setting}
+        isShowSceneModal=false
+        toggleShowNavFunc={() => send(ToggleShowNav(Setting))}
+        hoverNavFunc={() => send(HoverNav(Setting))}
       />
       <HeaderHelp
         uiState
