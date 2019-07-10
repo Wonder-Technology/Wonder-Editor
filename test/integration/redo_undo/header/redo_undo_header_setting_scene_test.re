@@ -10,21 +10,6 @@ let _ =
   describe("redo_undo: header->setting->scene", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _simulateSetSkyboxCubemapTexture = () => {
-      let assetTreeData =
-        MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
-
-      HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
-        MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
-          ~nodeId=
-            MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
-              assetTreeData,
-            ),
-          (),
-        ),
-      );
-    };
-
     let _beforeEach = () => MainEditorSceneTool.prepareScene(sandbox);
 
     let _afterEach = () => ();
@@ -36,12 +21,51 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set skybox->cubemap texture", () =>
+    describe("test skybox", () => {
+      let _simulateSetSkyboxCubemapTexture = () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+
+        HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
+          MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
+                assetTreeData,
+              ),
+            (),
+          ),
+        );
+      };
+
+      let _simulateRemoveSkyboxCubemapTexture = () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+
+        HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
+          MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
+                assetTreeData,
+              ),
+            (),
+          ),
+        );
+
+        HeaderSettingTool.Scene.Skybox.removeCubemap();
+      };
+
       RedoUndoTool.testRedoUndoOneStep(
         sandbox,
-        "test redo/undo one step",
+        "test set skybox->cubemap texture",
         (_simulateSetSkyboxCubemapTexture, _beforeEach, _afterEach),
         HeaderSettingTool.UI.buildSettingSceneModal,
-      )
-    );
+      );
+
+      RedoUndoTool.testRedoUndoOneStep(
+        sandbox,
+        "test remove skybox->cubemap texture",
+        (_simulateRemoveSkyboxCubemapTexture, _beforeEach, _afterEach),
+        HeaderSettingTool.UI.buildSettingSceneModal,
+      );
+    });
   });
