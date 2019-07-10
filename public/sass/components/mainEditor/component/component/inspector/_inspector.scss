@@ -1,8 +1,10 @@
 @import "../../../../../utils/inspectorItemMixin";
+
 .wonder-inspector-component {
     @import "../../../../ui/floatInput";
     @import "../../../../ui/intInput";
     @import "../../../../ui/threeFloatInput";
+
     .wonder-inspector-sceneTree {
         padding-top: 5px;
         @include inspectorItem("sceneTree-name");
@@ -29,47 +31,57 @@
 
         @import "sceneTree/inspectorScript";
     }
+
     .wonder-inspector-assetTree {
         @import "../../../../ui/attributeBox";
+        @import "assetTree/inspectorCubemapAsset";
+
         @include inspectorItem("inspector-asset-folder");
         @include inspectorItem("wonder-texture-inspector");
-        @include inspectorItem("wonder-cubemap-assetTree");
+        @include inspectorItem("wonder-cubemap-inspector");
         @include inspectorItem("inspector-asset-wdb");
         @include inspectorItem("wonder-material-inspector");
         @include inspectorItem("wonder-scriptEventFunction-inspector");
         @include inspectorItem("wonder-scriptAttribute-inspector");
+
         .wonder-scriptEventFunction-inspector {
             .scriptEventFunction-data {
-                .wonder-file-input{
+                .wonder-file-input {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    textarea{
-                        height:300px;
+
+                    textarea {
+                        height: 300px;
                     }
-                    button{
-                        margin:20px;
-                        height:28px;
-                        width:230px;
+
+                    button {
+                        margin: 20px;
+                        height: 28px;
+                        width: 230px;
                     }
                 }
             }
         }
+
         .wonder-scriptAttribute-inspector {
             .scriptAttribute-data {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                .data-fields{
-                    width:90%;
+
+                .data-fields {
+                    width: 90%;
                 }
-                hr{
-                    width:100%;
+
+                hr {
+                    width: 100%;
                 }
-                .data-addable-btn{
-                    margin:20px;
-                    height:28px;
-                    width:230px;
+
+                .data-addable-btn {
+                    margin: 20px;
+                    height: 28px;
+                    width: 230px;
                 }
             }
         }
