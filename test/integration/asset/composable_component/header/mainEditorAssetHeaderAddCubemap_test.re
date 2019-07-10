@@ -96,6 +96,33 @@ let _ =
       cubemapComponent |> expect == newCubemap;
     });
 
+    test("init new cubemap", () => {
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+      let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+      let newCubemap = CubemapTextureToolEngine.getNewCubemap();
+
+      let glTexture = Obj.magic(1);
+      let createTexture = Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+      createTexture |> onCall(0) |> returns(glTexture);
+
+      FakeGlToolEngine.setFakeGl(
+        FakeGlToolEngine.buildFakeGl(~sandbox, ~createTexture, ()),
+      )
+      |> StateLogicService.getAndSetEngineState;
+
+      MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+      CubemapTextureToolEngine.unsafeGetGlTexture(
+        MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+          ~nodeId=addedCubemapNodeId,
+          (),
+        ),
+      )
+      |> StateLogicService.getEngineStateToGetData
+      |> expect == glTexture;
+    });
+
     test("set face source imageDataIndex to None", () => {
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();

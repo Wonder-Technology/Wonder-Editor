@@ -7,8 +7,11 @@ module CustomEventHandler = {
   type return = unit;
 
   let handleSelfLogic = ((uiState, dispatchFunc), (), cubemapTexture) =>
-    SceneEngineService.setCubemapTexture(cubemapTexture)
-    |> StateLogicService.getAndSetEngineState;
+    StateEngineService.unsafeGetState()
+    |> SceneEngineService.setCubemapTexture(cubemapTexture)
+    |> StateLogicService.renderWhenStop
+    |> StateEngineService.setState
+    |> ignore;
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);
