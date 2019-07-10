@@ -8,6 +8,7 @@ type state = {isShowCubemapGroup: bool};
 
 type action =
   | SetCubemapTextureToSceneSkybox(Wonderjs.CubemapTextureType.cubemapTexture)
+  | RemoveCubemap
   | ShowCubemapGroup
   | HideCubemapGroup;
 
@@ -72,8 +73,7 @@ module Method = {
       </span>
     };
 
-  let _removeCubemap = engineState =>
-    SceneEngineService.removeCubemapTexture(engineState);
+  let removeCubemap = SettingSceneModalSkyboxRemoveCubemapEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _renderSkybox = (sendFunc, languageType) =>
     <>
@@ -104,10 +104,7 @@ module Method = {
         </div>
         {_showCubemapTextureName |> StateLogicService.getEngineStateToGetData}
         <button
-          className="cubemap-remove"
-          onClick={
-            e => _removeCubemap |> StateLogicService.getAndSetEngineState
-          }>
+          className="cubemap-remove" onClick={e => sendFunc(RemoveCubemap)}>
           {DomHelper.textEl("Remove")}
         </button>
       </div>
@@ -214,6 +211,10 @@ let reducer = ((uiState, dispatchFunc), action, state) =>
         (),
         cubemapTexture,
       )
+    )
+  | RemoveCubemap =>
+    ReasonReactUtils.updateWithSideEffects(state, _state =>
+      Method.removeCubemap((uiState, dispatchFunc), (), ())
     )
   };
 

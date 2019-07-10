@@ -26,6 +26,13 @@ module Scene = {
         (),
         cubemapTexture,
       );
+
+    let removeCubemap = () =>
+      SettingSceneModal.Method.removeCubemap(
+        (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+        (),
+        (),
+      );
   };
 };
 
