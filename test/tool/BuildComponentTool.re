@@ -250,7 +250,7 @@ let buildScriptEventFunctionInspectorComponent =
                          |> StateLogicService.getEditorState,
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
-      ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
+      ~renameFunc=AssetInspectorTool.Rename.renameAssetNode(
                     (uiState, dispatchFunc),
                     currentNodeId,
                   ),
@@ -276,7 +276,7 @@ let buildScriptAttributeInspectorComponent =
                  |> StateLogicService.getEditorState,
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
-      ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
+      ~renameFunc=AssetInspectorTool.Rename.renameAssetNode(
                     (uiState, dispatchFunc),
                     currentNodeId,
                   ),

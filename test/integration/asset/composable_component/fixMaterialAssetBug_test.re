@@ -280,7 +280,7 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
                 let name = "Material222";
-                AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                AssetInspectorTool.Rename.renameAssetMaterialNode(
                   ~nodeId=addedMaterialNodeId,
                   ~name,
                   (),
@@ -326,7 +326,7 @@ let _ =
                   _prepareAndExec();
 
                 let name = "Material222";
-                AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                AssetInspectorTool.Rename.renameAssetMaterialNode(
                   ~nodeId=addedMaterialNodeId,
                   ~name,
                   (),

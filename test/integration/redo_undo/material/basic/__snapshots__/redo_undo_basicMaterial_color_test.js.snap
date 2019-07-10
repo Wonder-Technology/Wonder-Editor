@@ -5,7 +5,7 @@ exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTree
   className="wonder-basic-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -43,7 +43,7 @@ exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTree
   className="wonder-basic-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -81,7 +81,7 @@ exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTree
   className="wonder-basic-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -119,7 +119,7 @@ exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTree
   className="wonder-basic-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -157,7 +157,7 @@ exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTree
   className="wonder-basic-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"

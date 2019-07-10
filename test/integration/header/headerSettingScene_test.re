@@ -61,7 +61,7 @@ let _ =
               let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
               MainEditorAssetHeaderOperateNodeTool.addCubemap();
 
-              AssetTreeInspectorTool.Rename.renameAssetCubemapNode(
+              AssetInspectorTool.Rename.renameAssetCubemapNode(
                 ~nodeId=
                   MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
                     assetTreeData,
@@ -69,7 +69,7 @@ let _ =
                 ~name="BCubemap",
                 (),
               );
-              AssetTreeInspectorTool.Rename.renameAssetCubemapNode(
+              AssetInspectorTool.Rename.renameAssetCubemapNode(
                 ~nodeId=addedCubemapNodeId,
                 ~name="ACubemap",
                 (),

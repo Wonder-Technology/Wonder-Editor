@@ -508,7 +508,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1209,7 +1209,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1907,7 +1907,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -2608,7 +2608,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -3306,7 +3306,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

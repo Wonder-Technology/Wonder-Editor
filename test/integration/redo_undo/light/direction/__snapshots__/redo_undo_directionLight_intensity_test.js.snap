@@ -5,7 +5,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
   className="wonder-direction-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -67,7 +67,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
   className="wonder-direction-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -129,7 +129,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
   className="wonder-direction-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -191,7 +191,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
   className="wonder-direction-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -253,7 +253,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
   className="wonder-direction-light"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"

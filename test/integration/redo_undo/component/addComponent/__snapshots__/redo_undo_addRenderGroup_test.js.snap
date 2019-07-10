@@ -720,7 +720,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1564,7 +1564,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

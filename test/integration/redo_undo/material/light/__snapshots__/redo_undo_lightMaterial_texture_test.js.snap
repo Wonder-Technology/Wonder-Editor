@@ -5,7 +5,7 @@ exports[`redo_undo: lightMaterial texture prepare first step: set currentSceneTr
   className="wonder-light-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -107,7 +107,7 @@ exports[`redo_undo: lightMaterial texture prepare first step: set currentSceneTr
   className="wonder-light-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -209,7 +209,7 @@ exports[`redo_undo: lightMaterial texture prepare first step: set currentSceneTr
   className="wonder-light-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -311,7 +311,7 @@ exports[`redo_undo: lightMaterial texture prepare first step: set currentSceneTr
   className="wonder-light-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"
@@ -413,7 +413,7 @@ exports[`redo_undo: lightMaterial texture prepare first step: set currentSceneTr
   className="wonder-light-material"
 >
   <article
-    className="inspector-item"
+    className="color-pick"
   >
     <div
       className="item-header"

@@ -122,7 +122,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"
@@ -335,7 +335,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"

@@ -121,7 +121,7 @@ exports[`header import package->dispose assets dispose material assets
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"

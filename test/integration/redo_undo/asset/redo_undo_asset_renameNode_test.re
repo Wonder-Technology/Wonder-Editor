@@ -26,12 +26,12 @@ let _ =
       let name1 = "mickeyFolder1";
       let name2 = "mickeyFolder2";
 
-      AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+      AssetInspectorTool.Rename.renameAssetFolderNode(
         ~nodeId,
         ~name=name1,
         (),
       );
-      AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+      AssetInspectorTool.Rename.renameAssetFolderNode(
         ~nodeId,
         ~name=name2,
         (),

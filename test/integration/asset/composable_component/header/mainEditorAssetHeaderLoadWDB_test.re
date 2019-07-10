@@ -337,7 +337,7 @@ let _ =
 
               MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+              AssetInspectorTool.Rename.renameAssetMaterialNode(
                 ~nodeId=addedMaterialNodeId,
                 ~name=LoadWDBTool.getBoxTexturedMeshGameObjectMaterialName(),
                 (),
@@ -674,7 +674,7 @@ let _ =
                   assetTreeData,
                 );
 
-              AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+              AssetInspectorTool.Rename.renameAssetTextureNode(
                 ~nodeId=textureNodeId,
                 ~name=LoadWDBTool.getBoxTexturedMeshGameObjectTextureName(),
                 (),
@@ -929,7 +929,7 @@ let _ =
                 let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
                 MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-                AssetTreeInspectorTool.Rename.renameAssetScriptEventFunctionNode(
+                AssetInspectorTool.Rename.renameAssetScriptEventFunctionNode(
                   ~nodeId=addedNodeId,
                   ~name=scriptEventFunctionDataNameRef^,
                   (),

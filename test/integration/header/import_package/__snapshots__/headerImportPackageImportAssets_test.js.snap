@@ -14,7 +14,7 @@ exports[`header import package test import material assets fix bug
   className="wonder-inspector-component"
 >
   <article
-    className="wonder-inspector-assetTree"
+    className="wonder-inspector-asset"
   >
     <article
       className="wonder-material-inspector"
@@ -77,7 +77,7 @@ exports[`header import package test import material assets fix bug
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"

@@ -508,7 +508,7 @@ exports[`header import package->import scene wdb relate scene gameObjects and ma
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1203,7 +1203,7 @@ exports[`header import package->import scene wdb relate scene gameObjects and ma
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1901,7 +1901,7 @@ exports[`header import package->import scene wdb relate scene gameObjects and ma
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

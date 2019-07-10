@@ -517,7 +517,7 @@ exports[`MainEditorAssetHeader->remove script event function should remove from 
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

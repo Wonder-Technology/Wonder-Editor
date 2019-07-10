@@ -24,7 +24,7 @@ module Method = {
       switch (currentNode) {
       | None => ReasonReact.null
       | Some(currentNode) =>
-        <AssetTreeInspector
+        <AssetInspector
           key={DomHelper.getRandomKey()}
           uiState
           dispatchFunc
