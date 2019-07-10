@@ -35,6 +35,12 @@ module Method = {
       target,
       DomHelper.getElementsByClassName("section-fileLoad"),
     );
+
+  let isHeaderSettingSceneModalDom = target =>
+    DomUtils.isSpecificDomChildrenHasTargetDom(
+      target,
+      DomHelper.getElementsByClassName("wonder-settingScene-modal"),
+    );
 };
 
 let component = ReasonReact.reducerComponent("Header");
@@ -130,7 +136,9 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       e => {
         let target = ReactEventRe.Form.target(e);
 
-        Method.isHeaderDom(target) || Method.isImportPackageDom(target) ?
+        Method.isHeaderDom(target)
+        || Method.isImportPackageDom(target)
+        || Method.isHeaderSettingSceneModalDom(target) ?
           () : send(BlurNav);
       },
     ),
