@@ -198,6 +198,144 @@ html, body {
         .wonder-modal .modal-item .modal-item-footer .footer-submit:hover {
           color: #000; }
 
+.wonder-settingScene-modal {
+  position: fixed;
+  z-index: 200;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  top: 20%;
+  display: flex;
+  justify-content: center; }
+  .wonder-settingScene-modal .modal-item {
+    width: 470px;
+    height: 400px;
+    position: relative;
+    background: #c1c1c1;
+    border-radius: 5px;
+    z-index: 150; }
+    .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field {
+      width: 100%;
+      height: 24px;
+      display: flex; }
+      .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick {
+        width: 100%;
+        display: flex; }
+        .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-header {
+          width: 40%;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+        .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-content {
+          margin: 0 auto;
+          display: flex; }
+          .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-content a {
+            white-space: nowrap; }
+          .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-content .color-hex {
+            border-radius: 10px;
+            width: 40px;
+            height: 15px; }
+          .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-content .color-select {
+            margin-left: 10px; }
+            .wonder-settingScene-modal .modal-item .setting-scene-ambient .content-field .color-pick .item-content .color-select img {
+              width: 15px;
+              height: 15px; }
+    .wonder-settingScene-modal .modal-item .setting-scene-skybox {
+      display: flex; }
+      .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-header {
+        width: 40%;
+        text-align: center;
+        height: 24px;
+        line-height: 24px; }
+      .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-content {
+        display: flex;
+        margin: 0 auto; }
+        .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-content .cubemap-img {
+          width: 23px;
+          height: 23px;
+          border: 2px solid #a7a5a5;
+          box-sizing: border-box; }
+          .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-content .cubemap-img img {
+            width: 23px;
+            height: 23px; }
+        .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-content span {
+          height: 24px;
+          line-height: 24px;
+          margin-left: 10px; }
+        .wonder-settingScene-modal .modal-item .setting-scene-skybox .item-content .cubemap-remove {
+          margin-left: 10px; }
+    .wonder-settingScene-modal .modal-item .modal-item-header {
+      width: 100%;
+      height: 22px;
+      line-height: 22px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 5px 0px 2px 0px;
+      border-bottom: 1px solid #868686;
+      background: #555454;
+      position: relative; }
+      .wonder-settingScene-modal .modal-item .modal-item-header img {
+        position: absolute;
+        top: 8px;
+        cursor: hand;
+        right: 20px;
+        width: 15px;
+        height: 15px; }
+    .wonder-settingScene-modal .modal-item .modal-item-content {
+      color: #000;
+      height: 314px;
+      overflow-y: auto;
+      width: 90%;
+      margin-left: 5%;
+      padding-top: 10px;
+      box-sizing: border-box;
+      font-size: 16px; }
+      .wonder-settingScene-modal .modal-item .modal-item-content::-webkit-scrollbar {
+        width: 4px;
+        height: 6px; }
+      .wonder-settingScene-modal .modal-item .modal-item-content::-webkit-scrollbar-button {
+        display: none; }
+      .wonder-settingScene-modal .modal-item .modal-item-content::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .wonder-settingScene-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+        .wonder-settingScene-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb:hover {
+          background: #fc7100; }
+      .wonder-settingScene-modal .modal-item .modal-item-content .content-field {
+        width: 100%;
+        height: 24px;
+        display: flex; }
+        .wonder-settingScene-modal .modal-item .modal-item-content .content-field .field-title {
+          width: 20%;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+        .wonder-settingScene-modal .modal-item .modal-item-content .content-field .field-content {
+          width: 80%;
+          margin-left: 4px;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+          .wonder-settingScene-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
+    .wonder-settingScene-modal .modal-item .modal-item-footer {
+      height: 50px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      position: relative; }
+      .wonder-settingScene-modal .modal-item .modal-item-footer .footer-submit {
+        width: 100px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        padding-top: 5px; }
+
 .wonder-singleInput-modal {
   position: fixed;
   z-index: 200;
@@ -532,7 +670,7 @@ html, body {
         .wonder-app-component .wonder-header-component .header-nav .header-item .component-item .wonder-file-input .file-input {
           width: 500px;
           height: 200px; }
-        .wonder-app-component .wonder-header-component .header-nav .header-item .item-content {
+        .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content {
           white-space: nowrap;
           position: absolute;
           z-index: 100;
@@ -541,7 +679,7 @@ html, body {
           padding-bottom: 20px;
           min-height: 50px;
           background-color: #555555; }
-          .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section {
+          .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content .content-section {
             padding-left: 30px;
             padding-right: 30px;
             height: 28px;
@@ -551,21 +689,21 @@ html, body {
             position: relative;
             display: flex;
             flex-direction: row; }
-            .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section:hover {
+            .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content .content-section:hover {
               background: #e66b19; }
-            .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section .section-fileLoad {
+            .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content .content-section .section-fileLoad {
               opacity: 0;
               position: absolute;
               left: 0;
               display: inline-block;
               height: 100%;
               width: 100%; }
-            .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section .section-header {
+            .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content .content-section .section-header {
               flex: initial;
               display: inline-block;
               font-size: 14px;
               height: 100%; }
-            .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section .section-tail {
+            .wonder-app-component .wonder-header-component .header-nav .header-item > .item-content .content-section .section-tail {
               flex: initial;
               display: inline-block;
               height: 100%;
@@ -581,40 +719,6 @@ html, body {
       height: 100%;
       background-color: #444444;
       display: flex; }
-      .wonder-app-component .wonder-controller-component .header-controller .controller-ambient {
-        flex: initial;
-        width: 18%;
-        height: 100%; }
-        .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item {
-          display: flex;
-          flex: initial;
-          align-items: center;
-          height: 100%;
-          flex-direction: row;
-          margin-left: 10px; }
-          .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item {
-            flex: initial; }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item {
-              display: flex; }
-              .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-header {
-                height: 25px;
-                line-height: 25px; }
-              .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content {
-                flex: initial;
-                display: flex;
-                flex-direction: row;
-                margin-left: 10px;
-                align-items: center;
-                justify-content: center; }
-                .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-hex {
-                  border-radius: 10px;
-                  width: 40px;
-                  height: 15px; }
-                .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-select {
-                  margin-left: 10px; }
-                  .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-select img {
-                    width: 15px;
-                    height: 15px; }
       .wonder-app-component .wonder-controller-component .header-controller .controller-transform {
         flex: initial;
         width: 30%;
@@ -3177,6 +3281,34 @@ html, body {
             justify-content: center; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-submit .submit-btn {
               width: 230px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .wonder-cubemap-inspector-faceSource {
+          display: flex;
+          margin-top: 10px;
+          margin-bottom: 10px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .wonder-cubemap-inspector-faceSource .item-header {
+            width: 32%;
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 100px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .wonder-cubemap-inspector-faceSource .item-content .texture-img {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #a7a5a5;
+            box-sizing: border-box; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .wonder-cubemap-inspector-faceSource .item-content .texture-img img {
+              width: 100px;
+              height: 100px;
+              box-sizing: border-box; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .wonder-cubemap-inspector-faceSource .item-content .texture-img input {
+              width: 100px;
+              height: 100px;
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              opacity: 0; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder h1 {
           padding-left: 30px;
           font-size: 16px; }
@@ -3330,6 +3462,85 @@ html, body {
                 width: 20px;
                 height: 20px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-inspector .inspector-item .item-texture .texture-remove {
+              flex: initial;
+              display: flex;
+              margin-left: 15px;
+              align-items: center;
+              justify-content: center; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector h1 {
+          padding-left: 30px;
+          font-size: 16px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item {
+          width: 100%;
+          height: 25px;
+          display: flex;
+          font-size: 13px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-header {
+            flex: initial;
+            height: 25px;
+            line-height: 25px;
+            width: 32%;
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-header:hover {
+              color: #00c1de;
+              cursor: pointer; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-content {
+            flex: initial;
+            height: 100%;
+            width: 68%;
+            display: flex;
+            align-items: center;
+            padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-color {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-color .color-hex {
+              width: 100%;
+              height: 60%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 10px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-color .color-select {
+              flex: initial;
+              width: 30px;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-color .color-select img {
+                width: 15px;
+                height: 15px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-texture {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-texture .texture-img {
+              flex: initial;
+              width: 23px;
+              height: 23px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #a7a5a5;
+              position: relative;
+              box-sizing: border-box; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-texture .texture-img .img-dragBg {
+                position: absolute;
+                z-index: 100;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-texture .texture-img img {
+                width: 20px;
+                height: 20px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-cubemap-inspector .inspector-item .item-texture .texture-remove {
               flex: initial;
               display: flex;
               margin-left: 15px;

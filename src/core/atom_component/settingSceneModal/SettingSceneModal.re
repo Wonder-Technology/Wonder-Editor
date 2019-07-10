@@ -27,29 +27,27 @@ module Method = {
   let _closeAmbientLightColorPick = SettingSceneModalAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let _renderAmbientLight = ((uiState, dispatchFunc), languageType) =>
-    <div className="header-item">
-      <div className="component-item">
-        <PickColorComponent
-          key={DomHelper.getRandomKey()}
-          label={
-            LanguageUtils.getHeaderLanguageDataByType(
-              "setting-scene-ambient",
-              languageType,
-            )
-          }
-          title={
-            LanguageUtils.getHeaderLanguageDataByType(
-              "setting-scene-ambient-describe",
-              languageType,
-            )
-          }
-          getColorFunc=_getAmbientLightColor
-          changeColorFunc=_changeAmbientLightColor
-          closeColorPickFunc={
-            _closeAmbientLightColorPick((uiState, dispatchFunc), ())
-          }
-        />
-      </div>
+    <div className="content-field">
+      <PickColorComponent
+        key={DomHelper.getRandomKey()}
+        label={
+          LanguageUtils.getHeaderLanguageDataByType(
+            "setting-scene-ambient",
+            languageType,
+          )
+        }
+        title={
+          LanguageUtils.getHeaderLanguageDataByType(
+            "setting-scene-ambient-describe",
+            languageType,
+          )
+        }
+        getColorFunc=_getAmbientLightColor
+        changeColorFunc=_changeAmbientLightColor
+        closeColorPickFunc={
+          _closeAmbientLightColorPick((uiState, dispatchFunc), ())
+        }
+      />
     </div>;
 
   let _showCubemapTextureImage = engineState =>
@@ -103,10 +101,8 @@ module Method = {
             _showCubemapTextureImage
             |> StateLogicService.getEngineStateToGetData
           }
-          {
-            _showCubemapTextureName |> StateLogicService.getEngineStateToGetData
-          }
         </div>
+        {_showCubemapTextureName |> StateLogicService.getEngineStateToGetData}
         <button
           className="cubemap-remove"
           onClick={

@@ -44,7 +44,7 @@ let render =
       changeColorFunc,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
-  <article className="inspector-item">
+  <article className="color-pick">
     <div className="item-header" title> {DomHelper.textEl(label)} </div>
     <div className="item-content item-color">
       <div

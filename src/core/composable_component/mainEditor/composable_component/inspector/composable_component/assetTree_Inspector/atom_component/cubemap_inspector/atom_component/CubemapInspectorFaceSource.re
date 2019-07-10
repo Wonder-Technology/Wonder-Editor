@@ -46,7 +46,7 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article className="inspector-item">
+  <article className="wonder-cubemap-inspector-faceSource">
     <div
       className="item-header"
       title={
