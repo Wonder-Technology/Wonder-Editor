@@ -2,11 +2,8 @@ let _changeWrap = (cubemapTexture, value, setWrapFunc) => {
   let engineState = StateEngineService.unsafeGetState();
 
   engineState
-  |> setWrapFunc(
-       value |> TextureTypeUtils.convertIntToWrap,
-       cubemapTexture,
-     )
-  |> BasicSourceTextureEngineService.setIsNeedUpdate(true, cubemapTexture)
+  |> setWrapFunc(value |> TextureTypeUtils.convertIntToWrap, cubemapTexture)
+  |> CubemapTextureEngineService.setIsNeedUpdate(true, cubemapTexture)
   |> StateLogicService.refreshEngineState;
 };
 
