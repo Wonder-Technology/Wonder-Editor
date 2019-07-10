@@ -20,3 +20,9 @@ let isAlive = (texture, engineState) =>
     texture,
     Wonderjs.RecordCubemapTextureMainService.getRecord(engineState),
   );
+
+let unsafeGetGlTexture = (texture, state) =>
+  Wonderjs.OperateGlTextureMapService.unsafeGetTexture(
+    texture,
+    Wonderjs.RecordCubemapTextureMainService.getRecord(state).glTextureMap,
+  );

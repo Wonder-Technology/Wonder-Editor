@@ -95,7 +95,7 @@ let _ =
         );
 
         describe("test select cubemap", () => {
-          beforeEach(() => {
+          let _prepareAndExec = () => {
             let _ =
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
             let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
@@ -107,19 +107,92 @@ let _ =
                 (),
               ),
             );
-          });
+          };
 
-          test("ui->modal->skybox should has cubemap", () =>
+          test("ui->modal->skybox should has cubemap", () => {
+            _prepareAndExec();
+
             HeaderSettingTool.UI.buildSettingSceneModal()
-            |> ReactTestTool.createSnapshotAndMatch
-          );
-          test("should set to skybox", () =>
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+          test("should set to skybox", () => {
+            _prepareAndExec();
+
             SceneEngineService.getCubemapTexture
             |> StateLogicService.getEngineStateToGetData
             |> Js.Option.isSome
-            |> expect == true
-          );
+            |> expect == true;
+          });
+          test("should render when stop", () => {
+            MainEditorSceneTool.initStateWithJob(
+              ~sandbox,
+              ~isBuildFakeDom=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~loopPipelines=
+                    {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "clear_color"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                  (),
+                ),
+              (),
+            );
+            MainEditorSceneTool.prepareScene(sandbox);
+            ControllerTool.setIsRun(false);
+
+            _prepareAndExec();
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> toCalledOnce;
+          });
         });
+
+        describe("test remove cubemap", () =>
+          test("should render when stop", () => {
+            MainEditorSceneTool.initStateWithJob(
+              ~sandbox,
+              ~isBuildFakeDom=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~loopPipelines=
+                    {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "clear_color"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                  (),
+                ),
+              (),
+            );
+            MainEditorSceneTool.prepareScene(sandbox);
+            ControllerTool.setIsRun(false);
+            let _ =
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+            let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+            MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+            HeaderSettingTool.Scene.Skybox.removeCubemap();
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> toCalledOnce;
+          })
+        );
       });
     });
   });

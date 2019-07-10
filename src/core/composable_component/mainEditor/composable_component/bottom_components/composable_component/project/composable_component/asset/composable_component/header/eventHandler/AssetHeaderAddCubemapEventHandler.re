@@ -27,7 +27,8 @@ module CustomEventHandler = {
       |> CubemapTextureEngineService.setCubemapTextureName(
            cubemapName,
            newCubemap,
-         );
+         )
+      |> CubemapTextureEngineService.initTexture(newCubemap);
 
     let editorState =
       CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
