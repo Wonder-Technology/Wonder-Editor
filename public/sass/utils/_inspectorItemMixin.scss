@@ -1,94 +1,111 @@
 @mixin inspectorItem($component) {
-    .#{$component}{
-        h1{
-            padding-left:30px;
-            font-size:16px;
+    .#{$component} {
+        h1 {
+            padding-left: 30px;
+            font-size: 16px;
         }
-        .inspector-item{
-            width:100%;
-            height:25px;
+
+
+        .inspector-item,
+        .color-pick {
+            width: 100%;
+            height: 25px;
             display: flex;
-            font-size:13px;
-            .item-header{
+            font-size: 13px;
+
+            .item-header {
                 flex: initial;
-                height:25px;
+                height: 25px;
                 line-height: 25px;
-                width:32%;
-                margin-left:15px;
+                width: 32%;
+                margin-left: 15px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                &:hover{
+
+                &:hover {
                     color: #00c1de;
                     cursor: pointer;
-                } 
+                }
             }
-            .item-content{
-                flex:initial;
-                height:100%;
-                width:68%;
+
+            .item-content {
+                flex: initial;
+                height: 100%;
+                width: 68%;
                 display: flex;
                 align-items: center;
-                padding-right:4px;
+                padding-right: 4px;
+
                 span {
                     white-space: nowrap;
-                    width:100%;
+                    width: 100%;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
             }
-            .item-color{
+
+            .item-color {
                 display: flex;
-                .color-hex{
-                    width:100%;
-                    height:60%;
+
+                .color-hex {
+                    width: 100%;
+                    height: 60%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     border-radius: 10px;
                 }
-                .color-select{
-                    flex:initial;
-                    width:30px;
-                    height:100%;
+
+                .color-select {
+                    flex: initial;
+                    width: 30px;
+                    height: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    img{
-                        width:15px;
-                        height:15px;
+
+                    img {
+                        width: 15px;
+                        height: 15px;
                     }
                 }
             }
-            .item-texture{
+
+
+            .item-texture {
                 display: flex;
-                .texture-img{
-                    flex:initial;
-                    width:23px;
-                    height:23px;
+
+                .texture-img {
+                    flex: initial;
+                    width: 23px;
+                    height: 23px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    border:2px solid rgb(167, 165, 165);
+                    border: 2px solid rgb(167, 165, 165);
                     position: relative;
                     box-sizing: border-box;
-                    .img-dragBg{
+
+                    .img-dragBg {
                         position: absolute;
-                        z-index:100;
-                        left:0px;
-                        top:0px;
-                        width:100%;
-                        height:100%;
+                        z-index: 100;
+                        left: 0px;
+                        top: 0px;
+                        width: 100%;
+                        height: 100%;
                     }
-                    img{
-                        width:20px;
-                        height:20px;
+
+                    img {
+                        width: 20px;
+                        height: 20px;
                     }
                 }
-                .texture-remove{
-                    flex:initial;
+
+                .texture-remove {
+                    flex: initial;
                     display: flex;
-                    margin-left:15px;
+                    margin-left: 15px;
                     align-items: center;
                     justify-content: center;
                 }
