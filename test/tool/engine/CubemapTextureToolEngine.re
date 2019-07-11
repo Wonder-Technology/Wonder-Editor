@@ -1,7 +1,5 @@
 let getIsNeedUpdate = (texture, engineState) =>
-  CubemapTextureEngineService.getIsNeedUpdate(texture, engineState)
-  === Wonderjs.BufferTextureService.getNeedUpdate() ?
-    true : false;
+  CubemapTextureEngineService.getIsNeedUpdate(texture, engineState);
 
 let getNewCubemap = (~engineState=StateEngineService.unsafeGetState(), ()) => {
   open Wonderjs.CubemapTextureType;

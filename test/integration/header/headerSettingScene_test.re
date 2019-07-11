@@ -123,75 +123,32 @@ let _ =
             |> Js.Option.isSome
             |> expect == true;
           });
-          test("should render when stop", () => {
-            MainEditorSceneTool.initStateWithJob(
-              ~sandbox,
-              ~isBuildFakeDom=false,
-              ~noWorkerJobRecord=
-                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-                  ~loopPipelines=
-                    {|
-                   [
-                       {
-                           "name": "default",
-                           "jobs": [
-                               {
-                                   "name": "clear_color"
-                               }
-                           ]
-                       }
-                   ]
-               |},
-                  (),
-                ),
-              (),
-            );
-            MainEditorSceneTool.prepareScene(sandbox);
-            ControllerTool.setIsRun(false);
-
-            _prepareAndExec();
-
-            let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalledOnce;
-          });
+          test("should render when stop", () =>
+            RefreshEngineStateTool.testRefreshEngineState(
+              sandbox,
+              () => {
+                ControllerTool.setIsRun(false);
+                _prepareAndExec();
+              },
+            )
+          );
         });
 
         describe("test remove cubemap", () =>
-          test("should render when stop", () => {
-            MainEditorSceneTool.initStateWithJob(
-              ~sandbox,
-              ~isBuildFakeDom=false,
-              ~noWorkerJobRecord=
-                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-                  ~loopPipelines=
-                    {|
-                   [
-                       {
-                           "name": "default",
-                           "jobs": [
-                               {
-                                   "name": "clear_color"
-                               }
-                           ]
-                       }
-                   ]
-               |},
-                  (),
-                ),
-              (),
-            );
-            MainEditorSceneTool.prepareScene(sandbox);
-            ControllerTool.setIsRun(false);
-            let _ =
-              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-            let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
-            MainEditorAssetHeaderOperateNodeTool.addCubemap();
+          test("should render when stop", () =>
+            RefreshEngineStateTool.testRefreshEngineState(
+              sandbox,
+              () => {
+                ControllerTool.setIsRun(false);
+                let _ =
+                  MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+                let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+                MainEditorAssetHeaderOperateNodeTool.addCubemap();
 
-            HeaderSettingTool.Scene.Skybox.removeCubemap();
-
-            let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalledOnce;
-          })
+                HeaderSettingTool.Scene.Skybox.removeCubemap();
+              },
+            )
+          )
         );
       });
     });

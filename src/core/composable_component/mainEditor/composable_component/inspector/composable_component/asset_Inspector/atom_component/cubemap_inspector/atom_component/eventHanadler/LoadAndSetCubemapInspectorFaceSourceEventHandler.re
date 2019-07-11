@@ -123,20 +123,22 @@ module CustomEventHandler = {
            |> WonderBsMost.Most.tap(loadedImg => {
                 let engineState = StateEngineService.unsafeGetState();
 
-                let engineState =
-                  engineState
-                  |> setSourceFunc(
-                       cubemapTexture,
-                       loadedImg |> ImageType.convertDomToImageElement,
-                     )
-                  |> setFormatFunc(
-                       TextureUtils.getFormat(
-                         FileNameService.getExtName(fileResult.name),
-                       ),
-                       cubemapTexture,
-                     );
-
-                engineState |> StateEngineService.setState |> ignore;
+                engineState
+                |> setSourceFunc(
+                     cubemapTexture,
+                     loadedImg |> ImageType.convertDomToImageElement,
+                   )
+                |> setFormatFunc(
+                     TextureUtils.getFormat(
+                       FileNameService.getExtName(fileResult.name),
+                     ),
+                     cubemapTexture,
+                   )
+                |> CubemapTextureEngineService.setIsNeedUpdate(
+                     true,
+                     cubemapTexture,
+                   )
+                |> StateLogicService.refreshEngineState;
               })
          )
       |> WonderBsMost.Most.tap(_ =>

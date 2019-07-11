@@ -1,7 +1,5 @@
 let getIsNeedUpdate = (texture, engineState) =>
-  BasicSourceTextureEngineService.getIsNeedUpdate(texture, engineState)
-  === Wonderjs.BufferTextureService.getNeedUpdate() ?
-    true : false;
+  BasicSourceTextureEngineService.getIsNeedUpdate(texture, engineState);
 
 let isAlive = (texture, engineState) =>
   Wonderjs.DisposeBasicSourceTextureMainService.isAlive(
