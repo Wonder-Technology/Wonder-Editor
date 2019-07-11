@@ -75,8 +75,19 @@ let _prepareFakeCanvas = sandbox => {
 
   let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
   let base64_2 = "data:image/jpeg;base64,bbb";
+  let base64_3 = "data:image/png;base64,aaa";
+  let base64_4 = "data:image/png;base64,ccc";
+  let base64_5 = "data:image/png;base64,ddd";
+  let base64_6 = "data:image/jpeg;base64,ccc";
+  let base64_7 = "data:image/png;base64,azc";
+
   let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
   let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
+  let canvas3 = _buildFakeCanvas(sandbox, base64_3, 2);
+  let canvas4 = _buildFakeCanvas(sandbox, base64_4, 3);
+  let canvas5 = _buildFakeCanvas(sandbox, base64_5, 4);
+  let canvas6 = _buildFakeCanvas(sandbox, base64_6, 5);
+  let canvas7 = _buildFakeCanvas(sandbox, base64_7, 6);
 
   let createElementStub =
     createMethodStub(
@@ -91,9 +102,19 @@ let _prepareFakeCanvas = sandbox => {
   |> returns(canvas1)
   |> onCall(1)
   |> returns(canvas2)
+  |> onCall(2)
+  |> returns(canvas3)
+  |> onCall(3)
+  |> returns(canvas4)
+  |> onCall(4)
+  |> returns(canvas5)
+  |> onCall(5)
+  |> returns(canvas6)
+  |> onCall(6)
+  |> returns(canvas7)
   |> ignore;
 
-  (base64_1, base64_2);
+  (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6, base64_7);
 };
 
 let generateWDB = buildWDBGameObjectFunc => {

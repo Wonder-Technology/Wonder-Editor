@@ -36,12 +36,6 @@ module CustomEventHandler = {
         CubemapNodeAssetService.buildNode(
           ~nodeId=newNodeId,
           ~textureComponent=newCubemap,
-          ~pxImageDataIndex=None,
-          ~nxImageDataIndex=None,
-          ~pyImageDataIndex=None,
-          ~nyImageDataIndex=None,
-          ~pzImageDataIndex=None,
-          ~nzImageDataIndex=None,
         ),
         editorState,
       );

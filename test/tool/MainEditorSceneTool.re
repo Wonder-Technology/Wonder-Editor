@@ -263,3 +263,15 @@ let addSceneGameObjectComponentTypeToMap = () =>
     StateEngineService.unsafeGetState(),
   )
   |> StateLogicService.getAndSetEditorState;
+
+module Skybox = {
+  let createCubemapAndSetToSceneSkybox = engineState => {
+    let (engineState, cubemap) =
+      CubemapTextureEngineService.create(engineState);
+
+    let engineState =
+      engineState |> SceneEngineService.setCubemapTexture(cubemap);
+
+    (engineState, cubemap);
+  };
+};

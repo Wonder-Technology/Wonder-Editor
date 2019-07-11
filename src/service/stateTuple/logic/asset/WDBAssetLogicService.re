@@ -92,6 +92,7 @@ let importAssetWDB =
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
+  let skyboxCubemapOptRef = ref(None);
   let basicSourceTextureImageUint8ArrayDataMapRef =
     ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
   let cubemapTextureImageUint8ArrayDataMapRef =
@@ -117,7 +118,7 @@ let importAssetWDB =
              ),
              _,
            ),
-           gameObject,
+           (gameObject, skyboxCubemapOpt),
          ),
        ) => {
        let allGameObjects =
@@ -141,6 +142,7 @@ let importAssetWDB =
        |> ignore;
 
        allGameObjectsRef := allGameObjects;
+       skyboxCubemapOptRef := skyboxCubemapOpt;
        basicSourceTextureImageUint8ArrayDataMapRef :=
          basicSourceTextureImageUint8ArrayDataMap;
        cubemapTextureImageUint8ArrayDataMapRef :=
@@ -151,6 +153,7 @@ let importAssetWDB =
        resolve((
          (
            allGameObjectsRef^,
+           skyboxCubemapOptRef^,
            basicSourceTextureImageUint8ArrayDataMapRef^,
            cubemapTextureImageUint8ArrayDataMapRef^,
          ),

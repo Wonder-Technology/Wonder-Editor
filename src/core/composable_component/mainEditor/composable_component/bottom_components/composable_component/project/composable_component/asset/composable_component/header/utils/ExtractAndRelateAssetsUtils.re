@@ -396,7 +396,11 @@ module Extract = {
   };
 
   let extractAndRelateAssets =
-      (allGameObjects, imageUint8ArrayDataMap, (editorState, engineState)) => {
+      (
+        allGameObjects,
+        basicSourceTextureImageUint8ArrayDataMap,
+        (editorState, engineState),
+      ) => {
     let (
       defaultMaterialData,
       basicMaterialMap,
@@ -466,7 +470,7 @@ module Extract = {
                    extractedMaterialAssetDataArr,
                  ),
                  (
-                   imageUint8ArrayDataMap,
+                   basicSourceTextureImageUint8ArrayDataMap,
                    defaultMaterialData,
                    (basicMaterialDataMap, lightMaterialDataMap),
                  ),
@@ -483,7 +487,7 @@ module Extract = {
                  ) =
                    _extractAndRelateTextureAssets(
                      gameObject,
-                     imageUint8ArrayDataMap,
+                     basicSourceTextureImageUint8ArrayDataMap,
                      (
                        replacedTargetTextureMap,
                        hasExtractedTextureAssetMap,
@@ -549,6 +553,12 @@ module Extract = {
       (editorState, engineState),
     );
   };
+
+  let extractCubemapAssets = skyboxCubemapOpt =>
+    switch (skyboxCubemapOpt) {
+    | None => [||]
+    | Some(skyboxCubemap) => [|skyboxCubemap|]
+    };
 };
 
 module AssetTree = {
@@ -787,6 +797,64 @@ module AssetTree = {
            );
       };
 
+  let _addCubemapNodeToAssetTree =
+      (
+        extractedCubemapAssetArr,
+        selectedFolderNodeInAssetTree,
+        (editorState, engineState),
+      ) =>
+    extractedCubemapAssetArr |> Js.Array.length === 0 ?
+      (editorState, engineState) :
+      {
+        let folderName = "Cubemaps";
+
+        let (editorState, folderNode) =
+          _buildFolderNode(
+            folderName,
+            selectedFolderNodeInAssetTree,
+            (editorState, engineState),
+          );
+
+        extractedCubemapAssetArr
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (. (editorState, engineState), cubemap) => {
+               let cubemapName =
+                 engineState
+                 |> OperateTreeAssetLogicService.getUniqueNodeName(
+                      OperateCubemapLogicService.getName(
+                        ~texture=cubemap,
+                        ~engineState,
+                      ),
+                      folderNode,
+                    );
+
+               let engineState =
+                 engineState
+                 |> CubemapTextureEngineService.setCubemapTextureName(
+                      cubemapName,
+                      cubemap,
+                    )
+                 |> CubemapTextureEngineService.initTexture(cubemap);
+
+               let (editorState, newNodeId) =
+                 IdAssetEditorService.generateNodeId(editorState);
+
+               let editorState =
+                 CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
+                   folderNode,
+                   CubemapNodeAssetService.buildNode(
+                     ~nodeId=newNodeId,
+                     ~textureComponent=cubemap,
+                   ),
+                   editorState,
+                 );
+
+               (editorState, engineState);
+             },
+             (editorState, engineState),
+           );
+      };
+
   let _addScriptEventFunctionNodeToAssetTree =
       (
         extractedScriptEventFunctionAssetEntriesArr,
@@ -873,6 +941,7 @@ module AssetTree = {
       (
         extractedMaterialAssetDataArr,
         extractedTextureAssetDataArr,
+        extractedCubemapAssetArr,
         extractedScriptEventFunctionAssetEntriesArr,
         extractedScriptAttributeAssetEntriesArr,
         (editorState, engineState),
@@ -888,6 +957,10 @@ module AssetTree = {
        )
     |> _addTextureNodeToAssetTree(
          extractedTextureAssetDataArr,
+         selectedFolderNodeInAssetTree,
+       )
+    |> _addCubemapNodeToAssetTree(
+         extractedCubemapAssetArr,
          selectedFolderNodeInAssetTree,
        )
     |> _addScriptEventFunctionNodeToAssetTree(

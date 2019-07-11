@@ -118,7 +118,7 @@ let _ =
                true,
                true,
              )
-          |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
+          |> WonderBsMost.Most.tap(((engineState, _, (gameObject, _))) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)
                  |> JudgeTool.isNotEqual(_, 0);
@@ -205,7 +205,7 @@ let _ =
                true,
                true,
              )
-          |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
+          |> WonderBsMost.Most.tap(((engineState, _, (gameObject, _))) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)
                  |> JudgeTool.isNotEqual(_, 0);

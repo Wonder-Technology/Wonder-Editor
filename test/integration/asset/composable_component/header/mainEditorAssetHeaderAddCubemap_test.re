@@ -123,39 +123,39 @@ let _ =
       |> expect == glTexture;
     });
 
-    test("set face source imageDataIndex to None", () => {
-      let assetTreeData =
-        MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
-      let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+    /* test("set face source imageDataIndex to None", () => {
+         let assetTreeData =
+           MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+         let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
 
-      MainEditorAssetHeaderOperateNodeTool.addCubemap();
+         MainEditorAssetHeaderOperateNodeTool.addCubemap();
 
-      let editorState = StateEditorService.getState();
+         let editorState = StateEditorService.getState();
 
-      let {
-        pxImageDataIndex,
-        nxImageDataIndex,
-        pyImageDataIndex,
-        nyImageDataIndex,
-        pzImageDataIndex,
-        nzImageDataIndex,
-      }: NodeAssetType.cubemapNodeData =
-        OperateTreeAssetEditorService.unsafeFindNodeById(
-          addedCubemapNodeId,
-          editorState,
-        )
-        |> CubemapNodeAssetService.getNodeData;
+         let {
+           pxImageDataIndex,
+           nxImageDataIndex,
+           pyImageDataIndex,
+           nyImageDataIndex,
+           pzImageDataIndex,
+           nzImageDataIndex,
+         }: NodeAssetType.cubemapNodeData =
+           OperateTreeAssetEditorService.unsafeFindNodeById(
+             addedCubemapNodeId,
+             editorState,
+           )
+           |> CubemapNodeAssetService.getNodeData;
 
-      (
-        pxImageDataIndex,
-        nxImageDataIndex,
-        pyImageDataIndex,
-        nyImageDataIndex,
-        pzImageDataIndex,
-        nzImageDataIndex,
-      )
-      |> expect == (None, None, None, None, None, None);
-    });
+         (
+           pxImageDataIndex,
+           nxImageDataIndex,
+           pyImageDataIndex,
+           nyImageDataIndex,
+           pzImageDataIndex,
+           nzImageDataIndex,
+         )
+         |> expect == (None, None, None, None, None, None);
+       }); */
 
     describe("test name", () => {
       test("test default name", () => {

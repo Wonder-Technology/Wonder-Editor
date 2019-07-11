@@ -176,18 +176,7 @@ module Method = {
                  |> Result.SameDataResult.success;
                },
              ~cubemapNodeFunc=
-               (
-                 nodeId,
-                 {
-                   textureComponent,
-                   pxImageDataIndex,
-                   nxImageDataIndex,
-                   pyImageDataIndex,
-                   nyImageDataIndex,
-                   pzImageDataIndex,
-                   nzImageDataIndex,
-                 },
-               ) => {
+               (nodeId, {textureComponent}) => {
                  let fileName =
                    NodeNameAssetLogicService.getCubemapNodeName(
                      ~texture=textureComponent,

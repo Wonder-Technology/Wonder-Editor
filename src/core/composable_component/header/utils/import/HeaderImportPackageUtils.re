@@ -232,6 +232,13 @@ let _init = allWDBGameObjectArrRef => {
      );
 };
 
+let _setSkyboxCubemap = (cubemapTextureOpt, engineState) =>
+  switch (cubemapTextureOpt) {
+  | None => engineState
+  | Some(cubemapTexture) =>
+    engineState |> SceneEngineService.setCubemapTexture(cubemapTexture)
+  };
+
 let _import = result => {
   _disposeAssets();
 
@@ -320,7 +327,7 @@ let _import = result => {
          |> WonderBsMost.Most.map(
               (
                 (
-                  sceneGameObject,
+                  (sceneGameObject, skyboxCubemapOpt),
                   (
                     sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap,
                     sceneGameObjectCubemapTextureImageUint8ArrayDataMap,
@@ -353,6 +360,10 @@ let _import = result => {
                   ),
                 StateEditorService.getStateIsDebug(),
               );
+
+              /* TODO test */
+              _setSkyboxCubemap(skyboxCubemapOpt)
+              |> StateLogicService.getAndSetEngineState;
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 HierarchyGameObjectEngineService.getAllGameObjects(

@@ -30,12 +30,12 @@ type textureNodeData = {
 
 type cubemapNodeData = {
   textureComponent: int,
-  pxImageDataIndex: option(int),
+  /* pxImageDataIndex: option(int),
   nxImageDataIndex: option(int),
   pyImageDataIndex: option(int),
   nyImageDataIndex: option(int),
   pzImageDataIndex: option(int),
-  nzImageDataIndex: option(int),
+  nzImageDataIndex: option(int), */
 };
 
 type materialNodeData = {
