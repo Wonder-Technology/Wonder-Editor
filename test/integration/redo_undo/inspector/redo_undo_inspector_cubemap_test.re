@@ -136,8 +136,7 @@ let _ =
 
           StateEngineService.unsafeGetState()
           |> CubemapTextureEngineService.getIsNeedUpdate(cubemapTexture)
-          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.TextureType.NeedUpdate;
+          |> expect == true;
         });
       });
 
@@ -165,8 +164,7 @@ let _ =
 
           StateEngineService.unsafeGetState()
           |> CubemapTextureEngineService.getIsNeedUpdate(cubemapTexture)
-          |> Wonderjs.TextureType.uint8ToIsNeedUpdate
-          |> expect == Wonderjs.TextureType.NeedUpdate;
+          |> expect == true;
         });
       });
     });

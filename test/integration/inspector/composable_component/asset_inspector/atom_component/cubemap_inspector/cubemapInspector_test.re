@@ -222,6 +222,60 @@ let _ =
           );
         });
 
+        testPromise("mark need update", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+
+          let cubemapTexture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
+                  assetTreeData,
+                ),
+              (),
+            );
+
+          CubemapTextureEngineService.setIsNeedUpdate(false, cubemapTexture)
+          |> StateLogicService.getAndSetEngineState;
+
+          CubemapInspectorTool.loadAndSetFaceSource(
+            ~cubemapTexture,
+            ~setSourceFunc=CubemapTextureEngineService.setPXSource,
+            (),
+          )
+          |> then_(_ =>
+               CubemapTextureEngineService.getIsNeedUpdate(cubemapTexture)
+               |> StateLogicService.getEngineStateToGetData
+               |> expect == true
+               |> resolve
+             );
+        });
+
+        testPromise("should refresh engine state", () =>
+          RefreshEngineStateTool.testRefreshEngineStatePromise(
+            sandbox,
+            () => {
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+
+              let cubemapTexture =
+                MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+                  ~nodeId=
+                    MainEditorAssetTreeTool.BuildAssetTree.Cubemap.getFirstCubemapNodeId(
+                      assetTreeData,
+                    ),
+                  (),
+                );
+
+              CubemapInspectorTool.loadAndSetFaceSource(
+                ~cubemapTexture,
+                ~setSourceFunc=CubemapTextureEngineService.setPXSource,
+                (),
+              );
+            },
+          )
+        );
+
         describe("test snapshot", () => {
           test("should has no face source defaultly", () => {
             let assetTreeData =

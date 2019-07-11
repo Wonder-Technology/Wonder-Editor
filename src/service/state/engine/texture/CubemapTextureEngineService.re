@@ -73,6 +73,16 @@ let getNZSource = (texture, engineState) => {
    let setNZSource = (source, texture, engineState) =>
      engineState |> CubemapTextureAPI.setCubemapTextureNZSource(texture, source); */
 
+let getIsNeedUpdate = (texture, engineState) =>
+  CubemapTextureAPI.getCubemapTextureIsNeedUpdate(texture, engineState);
+
+let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
+  CubemapTextureAPI.setCubemapTextureIsNeedUpdate(
+    texture,
+    isNeedUpdate,
+    engineState,
+  );
+
 let setPXSource = (texture, source, engineState) =>
   engineState |> CubemapTextureAPI.setCubemapTexturePXSource(texture, source);
 
@@ -233,19 +243,6 @@ let getFlipY = CubemapTextureAPI.getCubemapTextureFlipY;
 
 let setFlipY = (filpY, texture, engineState) =>
   engineState |> CubemapTextureAPI.setCubemapTextureFlipY(texture, filpY);
-
-let getIsNeedUpdate = (texture, engineState) =>
-  OperateCubemapTextureMainService.getIsNeedUpdate(texture, engineState);
-
-let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
-  OperateCubemapTextureMainService.setIsNeedUpdate(
-    texture,
-    isNeedUpdate ?
-      BufferTextureService.getNeedUpdate() :
-      BufferTextureService.getNotNeedUpdate(),
-    engineState,
-  );
-
 let initTexture = (texture, engineState) =>
   CubemapTextureAPI.initCubemapTexture(texture, engineState);
 

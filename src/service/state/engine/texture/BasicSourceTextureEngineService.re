@@ -2,11 +2,25 @@ open Wonderjs;
 
 let create = BasicSourceTextureAPI.createBasicSourceTexture;
 
+let getIsNeedUpdate = (texture, engineState) =>
+  BasicSourceTextureAPI.getBasicSourceTextureIsNeedUpdate(
+    texture,
+    engineState,
+  );
+
+let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
+  BasicSourceTextureAPI.setBasicSourceTextureIsNeedUpdate(
+    texture,
+    isNeedUpdate,
+    engineState,
+  );
+
 let unsafeGetSource = BasicSourceTextureAPI.unsafeGetBasicSourceTextureSource;
 
 let setSource = (source, texture, engineState) =>
   engineState
-  |> BasicSourceTextureAPI.setBasicSourceTextureSource(texture, source);
+  |> BasicSourceTextureAPI.setBasicSourceTextureSource(texture, source)
+  |> setIsNeedUpdate(true, texture);
 
 let getBasicSourceTextureName = NameBasicSourceTextureMainService.getName;
 
@@ -60,18 +74,6 @@ let getFlipY = BasicSourceTextureAPI.getBasicSourceTextureFlipY;
 let setFlipY = (filpY, texture, engineState) =>
   engineState
   |> BasicSourceTextureAPI.setBasicSourceTextureFlipY(texture, filpY);
-
-let getIsNeedUpdate = (texture, engineState) =>
-  OperateBasicSourceTextureMainService.getIsNeedUpdate(texture, engineState);
-
-let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
-  OperateBasicSourceTextureMainService.setIsNeedUpdate(
-    texture,
-    isNeedUpdate ?
-      BufferTextureService.getNeedUpdate() :
-      BufferTextureService.getNotNeedUpdate(),
-    engineState,
-  );
 
 let initTexture = (texture, engineState) =>
   InitSourceTextureMainService.initTexture(texture->Some, engineState);

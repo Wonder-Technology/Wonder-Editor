@@ -1,4 +1,4 @@
-let testRefreshEngineState = (sandbox, execFunc) => {
+let _prepareForTestRefreshEngineState = sandbox => {
   open Wonder_jest;
   open Expect;
   open Sinon;
@@ -37,7 +37,30 @@ let testRefreshEngineState = (sandbox, execFunc) => {
   |> StateEngineService.setState
   |> ignore;
 
+  clear;
+};
+
+let testRefreshEngineState = (sandbox, execFunc) => {
+  open Wonder_jest;
+  open Expect;
+  open Sinon;
+
+  let clear = _prepareForTestRefreshEngineState(sandbox);
+
   execFunc();
 
   clear |> expect |> toCalledOnce;
+};
+
+let testRefreshEngineStatePromise = (sandbox, execFunc) => {
+  open Wonder_jest;
+  open Expect;
+  open Sinon;
+
+  let clear = _prepareForTestRefreshEngineState(sandbox);
+
+  execFunc()
+  |> Js.Promise.then_(_ =>
+       clear |> expect |> toCalledOnce |> Js.Promise.resolve
+     );
 };
