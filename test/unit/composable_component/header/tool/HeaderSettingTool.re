@@ -23,7 +23,6 @@ module Scene = {
     let setCubemapTextureToSceneSkybox = cubemapTexture =>
       SettingSceneModal.Method.setCubemapTextureToSceneSkybox(
         (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
-        (),
         cubemapTexture,
       );
 

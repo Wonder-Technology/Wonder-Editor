@@ -193,7 +193,10 @@ let buildNoWorkerLoopJobConfig = () => {|
     },
     {
         "name": "render_transform_gizmos"
-    }
+    },
+      {
+        "name": "render_skybox"
+      }
 ]
             |};
 
@@ -301,6 +304,9 @@ let buildNoWorkerJobConfig =
       },
       {
         "name": "init_imgui"
+      },
+      {
+        "name": "init_skybox"
       }
     ]
                      |},
