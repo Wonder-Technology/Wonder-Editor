@@ -23,7 +23,8 @@ let _ =
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithArcballCameraController();
+      sceneWDBArrayBuffer :=
+        WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {
@@ -829,6 +830,215 @@ let _ =
                    })
               );
             })
+          );
+        });
+
+        describe("extract cubemap assets", () => {
+          let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
+          let _createCubemapAndSetToSceneSkybox = engineState => {
+            let (engineState, cubemap) =
+              MainEditorSceneTool.Skybox.createCubemapAndSetToSceneSkybox(
+                engineState,
+              );
+
+            let engineState =
+              CubemapTextureToolEngine.setAllSources(
+                ~engineState,
+                ~texture=cubemap,
+                (),
+              );
+
+            let engineState =
+              engineState
+              |> CubemapTextureEngineService.setCubemapTextureName(
+                   "sceneSkyboxCubemap",
+                   cubemap,
+                 );
+
+            (engineState, cubemap);
+          };
+
+          let _generateWDBWithSkyboxCubemap = () =>
+            WDBTool.generateWDB((editorState, engineState) => {
+              let (engineState, geometry) =
+                GeometryEngineService.createCubeGeometry(engineState);
+              let (engineState, lightMaterial) =
+                LightMaterialEngineService.create(engineState);
+
+              let (engineState, texture) =
+                BasicSourceTextureEngineService.create(engineState);
+
+              let engineState =
+                engineState
+                |> BasicSourceTextureEngineService.setSource(
+                     BasicSourceTextureToolEngine.buildSource(),
+                     texture,
+                   );
+
+              let engineState =
+                engineState
+                |> BasicSourceTextureEngineService.setBasicSourceTextureName(
+                     "texture1",
+                     texture,
+                   );
+
+              let engineState =
+                engineState
+                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                     texture,
+                     lightMaterial,
+                   );
+
+              let (editorState, engineState, cube1) =
+                PrimitiveLogicService.createCube(
+                  (geometry, lightMaterial),
+                  editorState,
+                  engineState,
+                );
+
+              let (engineState, cubemap1) =
+                CubemapTextureEngineService.create(engineState);
+
+              let (engineState, cubemap2) =
+                _createCubemapAndSetToSceneSkybox(engineState);
+
+              let engineState =
+                engineState
+                |> CubemapTextureEngineService.setCubemapTextureName(
+                     "cubemap1",
+                     cubemap1,
+                   );
+
+              let (engineState, rootGameObject) =
+                GameObjectEngineService.create(engineState);
+
+              let engineState =
+                engineState
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   );
+
+              (rootGameObject, (editorState, engineState));
+            });
+
+          beforeAll(() =>
+            sceneWDBArrayBuffer := _generateWDBWithSkyboxCubemap()
+          );
+
+          describe(
+            "if wdb->cubemap not exist in assets, extract them and add to assets",
+            () =>
+            describe(
+              {j|should add "Cubemaps" folder node and add cubemap node into it|j},
+              () => {
+              testPromise("test load the same wdb once", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     MainEditorAssetTreeTool.Select.selectFolderNode(
+                       ~nodeId=
+                         MainEditorAssetTreeTool.findNodeIdByName(
+                           "Cubemaps",
+                           (editorState, engineState),
+                         )
+                         |> OptionService.unsafeGet,
+                       (),
+                     );
+
+                     BuildComponentTool.buildAssetChildrenNode()
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   })
+              );
+              testPromise("init extracted skybox->cubemap", () => {
+                let glTexture = Obj.magic(1);
+                let createTexture =
+                  Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+                createTexture |> returns(glTexture);
+
+                FakeGlToolEngine.setFakeGl(
+                  FakeGlToolEngine.buildFakeGl(~sandbox, ~createTexture, ()),
+                )
+                |> StateLogicService.getAndSetEngineState;
+
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     CubemapTextureToolEngine.unsafeGetGlTexture(
+                       CubemapNodeAssetEditorService.getTextureComponents(
+                         editorState,
+                       )
+                       |> ArrayService.unsafeGetFirst,
+                       engineState,
+                     )
+                     |> expect == glTexture
+                     |> resolve;
+                   });
+              });
+              testPromise(
+                "shouldn't set extracted cubemap to scene->skybox", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId =>
+                     SceneEngineService.getCubemapTexture
+                     |> StateLogicService.getEngineStateToGetData
+                     |> expect == None
+                     |> resolve
+                   )
+              );
+            })
+          );
+
+          describe("else", () =>
+            describe("not relate them", () =>
+              testPromise(
+                "if has one cubemap with same data in the same dir, extracted new one with unique name",
+                () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId1 =>
+                     MainEditorAssetUploadTool.loadOneWDB(
+                       ~arrayBuffer=sceneWDBArrayBuffer^,
+                       (),
+                     )
+                     |> then_(uploadedWDBNodeId2 => {
+                          let editorState = StateEditorService.getState();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
+
+                          MainEditorAssetTreeTool.Select.selectFolderNode(
+                            ~nodeId=
+                              MainEditorAssetTreeTool.findNodeIdByName(
+                                "Cubemaps",
+                                (editorState, engineState),
+                              )
+                              |> OptionService.unsafeGet,
+                            (),
+                          );
+
+                          BuildComponentTool.buildAssetChildrenNode()
+                          |> ReactTestTool.createSnapshotAndMatch
+                          |> resolve;
+                        })
+                   )
+              )
+            )
           );
         });
 

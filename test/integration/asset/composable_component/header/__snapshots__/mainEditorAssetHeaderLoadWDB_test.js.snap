@@ -1,5 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract cubemap assets else not relate them if has one cubemap with same data in the same dir, extracted new one with unique name 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        sceneSkyboxCubemap
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        sceneSkyboxCubemap 1
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract cubemap assets if wdb->cubemap not exist in assets, extract them and add to assets should add "Cubemaps" folder node and add cubemap node into it test load the same wdb once 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        sceneSkyboxCubemap
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets fix bug if wdb gameObjects share the same material, should only extrace the shared material once 1`] = `
 <article
   className="wonder-asset-assetChildren"

@@ -26,35 +26,47 @@ let findAllCubemapNodes = editorState =>
     (),
   );
 
-/* let getDataByCubemapComponent = (targetCubemapComponent, editorState) =>
-     IterateTreeAssetService.findOne(
-       ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-       ~predCubemapNodeFunc=
-         node => {
-           let {textureComponent}: NodeAssetType.textureNodeData =
-             CubemapNodeAssetService.getNodeData(node);
+let getTextureComponents = editorState =>
+  editorState
+  |> findAllCubemapNodes
+  |> Js.Array.map(node => {
+       let {textureComponent}: NodeAssetType.cubemapNodeData =
+         CubemapNodeAssetService.getNodeData(node);
 
-           textureComponent === targetCubemapComponent;
-         },
-       (),
-     )
-     |> Js.Option.map((. node) => CubemapNodeAssetService.getNodeData(node));
+       textureComponent;
+     });
 
-   let findAllCubemapNodes = editorState =>
-     IterateTreeAssetEditorService.filter(
-       ~acc=[||],
-       ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
-       ~editorState,
-       ~predCubemapNodeFunc=node => true,
-       (),
-     );
+let getDataByTextureComponent = (targetTextureComponent, editorState) =>
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predCubemapNodeFunc=
+      node => {
+        let {textureComponent}: NodeAssetType.cubemapNodeData =
+          CubemapNodeAssetService.getNodeData(node);
 
-   let getCubemapComponents = editorState =>
-     editorState
-     |> findAllCubemapNodes
-     |> Js.Array.map(node => {
-          let {textureComponent}: NodeAssetType.textureNodeData =
-            CubemapNodeAssetService.getNodeData(node);
+        textureComponent === targetTextureComponent;
+      },
+    (),
+  )
+  |> Js.Option.map((. node) => CubemapNodeAssetService.getNodeData(node));
 
-          textureComponent;
-        }); */
+/*
+ let findAllCubemapNodes = editorState =>
+   IterateTreeAssetEditorService.filter(
+     ~acc=[||],
+     ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
+     ~editorState,
+     ~predCubemapNodeFunc=node => true,
+     (),
+   );
+
+ let getCubemapComponents = editorState =>
+   editorState
+   |> findAllCubemapNodes
+   |> Js.Array.map(node => {
+        let {textureComponent}: NodeAssetType.textureNodeData =
+          CubemapNodeAssetService.getNodeData(node);
+
+        textureComponent;
+      });
+       */

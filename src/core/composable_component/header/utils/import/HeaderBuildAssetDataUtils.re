@@ -658,6 +658,7 @@ let buildWDBData =
               (
                 (
                   allGameObjects,
+                  skyboxCubemapOpt,
                   wdbBasicSourceTextureImageUint8ArrayDataMap,
                   wdbCubemapTextureImageUint8ArrayDataMap,
                 ),

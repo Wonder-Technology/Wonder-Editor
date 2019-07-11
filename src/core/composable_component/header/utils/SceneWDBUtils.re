@@ -94,7 +94,7 @@ let importSceneWDB = wdbArrayBuffer => {
          (
            engineState,
            (imageUint8ArrayDataMapTuple, hasWDBIMGUIFunc),
-           sceneGameObject,
+           (sceneGameObject, skyboxCubemapOpt),
          ),
        ) => {
        let (sceneGameObject, engineState) =
@@ -102,6 +102,6 @@ let importSceneWDB = wdbArrayBuffer => {
 
        StateEngineService.setState(engineState) |> ignore;
 
-       (sceneGameObject, imageUint8ArrayDataMapTuple);
+       ((sceneGameObject, skyboxCubemapOpt), imageUint8ArrayDataMapTuple);
      });
 };

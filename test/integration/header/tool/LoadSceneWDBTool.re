@@ -2,7 +2,7 @@ open Js.Promise;
 
 let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.tap(((gameObject, _)) =>
+  |> WonderBsMost.Most.tap((((gameObject, _), _)) =>
        StateEngineService.unsafeGetState()
        |> ShaderEngineService.clearInitShaderCache
        |> GameObjectEngineService.initAllGameObjects(gameObject)
