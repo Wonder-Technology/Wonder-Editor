@@ -34,12 +34,7 @@ let _ =
             (),
           );
 
-        /* let imgName = "1.png";
-           let imgSrc = "newImgBase64222"; */
-
         CubemapInspectorTool.loadAndSetFaceSource(
-          /* ~imgName,
-             ~imgSrc, */
           ~cubemapTexture,
           ~setSourceFunc=CubemapTextureEngineService.setPXSource,
           (),
@@ -57,7 +52,7 @@ let _ =
         LoadTool.buildFakeLoadImage(.);
       });
 
-      describe("test undo operate", () =>
+      describe("test undo operate", () => {
         testPromise({|should undo "set source"|}, () =>
           _prepareAndExec(cubemapTexture => {
             RedoUndoTool.undoHistoryState();
@@ -67,10 +62,22 @@ let _ =
             |> expect == None
             |> resolve;
           })
-        )
-      );
+        );
+        testPromise("should mark texture->isNeedUpdate to true after undo", () =>
+          _prepareAndExec(cubemapTexture => {
+            CubemapTextureEngineService.setIsNeedUpdate(false, cubemapTexture)
+            |> StateLogicService.getAndSetEngineState;
+            RedoUndoTool.undoHistoryState();
 
-      describe("test redo operate", () =>
+            StateEngineService.unsafeGetState()
+            |> CubemapTextureEngineService.getIsNeedUpdate(cubemapTexture)
+            |> expect == true
+            |> resolve;
+          })
+        );
+      });
+
+      describe("test redo operate", () => {
         testPromise({|should redo "set source"|}, () =>
           _prepareAndExec(cubemapTexture => {
             RedoUndoTool.undoHistoryState();
@@ -82,8 +89,21 @@ let _ =
             |> expect == true
             |> resolve;
           })
-        )
-      );
+        );
+        testPromise("should mark texture->isNeedUpdate to true after undo", () =>
+          _prepareAndExec(cubemapTexture => {
+            RedoUndoTool.undoHistoryState();
+            CubemapTextureEngineService.setIsNeedUpdate(false, cubemapTexture)
+            |> StateLogicService.getAndSetEngineState;
+            RedoUndoTool.redoHistoryState();
+
+            StateEngineService.unsafeGetState()
+            |> CubemapTextureEngineService.getIsNeedUpdate(cubemapTexture)
+            |> expect == true
+            |> resolve;
+          })
+        );
+      });
     });
 
     describe("test change wrapS", () => {
@@ -155,8 +175,6 @@ let _ =
         test("should mark texture->isNeedUpdate to true after redo", () => {
           let (cubemapTexture, oldValue, newValue) = _prepareAndExec();
 
-          CubemapTextureEngineService.setIsNeedUpdate(false, cubemapTexture)
-          |> StateLogicService.getAndSetEngineState;
           RedoUndoTool.undoHistoryState();
           CubemapTextureEngineService.setIsNeedUpdate(false, cubemapTexture)
           |> StateLogicService.getAndSetEngineState;

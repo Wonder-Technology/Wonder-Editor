@@ -35,6 +35,21 @@ let _markBasicSourceTextureNeedUpdate =
        restoredState,
      );
 
+let _isCubemapTextureFaceSourcesDifferent =
+    (texture, currentState, targetState) =>
+  CubemapTextureEngineService.getPXSource(texture, currentState)
+  !== CubemapTextureEngineService.getPXSource(texture, targetState)
+  || CubemapTextureEngineService.getNXSource(texture, currentState)
+  !== CubemapTextureEngineService.getNXSource(texture, targetState)
+  || CubemapTextureEngineService.getPYSource(texture, currentState)
+  !== CubemapTextureEngineService.getPYSource(texture, targetState)
+  || CubemapTextureEngineService.getNYSource(texture, currentState)
+  !== CubemapTextureEngineService.getNYSource(texture, targetState)
+  || CubemapTextureEngineService.getPZSource(texture, currentState)
+  !== CubemapTextureEngineService.getPZSource(texture, targetState)
+  || CubemapTextureEngineService.getNZSource(texture, currentState)
+  !== CubemapTextureEngineService.getNZSource(texture, targetState);
+
 let _isCubemapTextureParametersDifferent =
     (texture, currentState, targetState) =>
   CubemapTextureEngineService.getWrapS(texture, currentState)
@@ -57,6 +72,11 @@ let _getCubemapTexturesNeedUpdate = (currentState, targetState) =>
          currentState,
          targetState,
        )
+       || _isCubemapTextureFaceSourcesDifferent(
+            texture,
+            currentState,
+            targetState,
+          )
      );
 
 let _markCubemapTextureNeedUpdate = (cubemapTexturesNeedUpdate, restoredState) =>
