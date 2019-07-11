@@ -63,6 +63,9 @@
         "name": "init_meshRenderer"
     },
     {
+        "name": "init_no_material_shader"
+    },
+    {
         "name": "init_basic_material"
     },
     {
@@ -171,6 +174,12 @@
     },
     {
         "name": "dispose_sourceInstance"
+    },
+    {
+        "name": "dispose_texture"
+    },
+    {
+        "name": "render_skybox"
     },
     {
         "name": "send_finish_dispose_data",

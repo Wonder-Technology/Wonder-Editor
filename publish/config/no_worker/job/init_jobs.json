@@ -49,5 +49,8 @@
     },
     {
         "name": "init_script_api"
+    },
+    {
+        "name": "init_skybox"
     }
 ]
