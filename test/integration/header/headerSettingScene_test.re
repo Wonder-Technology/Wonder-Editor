@@ -132,6 +132,76 @@ let _ =
               },
             )
           );
+
+          describe("handle error", () => {
+            let _prepareState = () => {
+              MainEditorSceneTool.initStateWithJob(
+                ~sandbox,
+                /* ~isInitJob=false, */
+                ~isBuildFakeDom=false,
+                ~noWorkerJobRecord=
+                  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                    ~initPipelines=
+                      {|
+            [
+        {
+          "name": "default",
+          "jobs": [
+            {
+              "name": "init_texture"
+            },
+            {
+              "name": "init_skybox"
+            }
+          ]
+        }
+      ]
+            |},
+                    ~loopPipelines=
+                      {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+
+                               {
+                                   "name": "render_skybox"
+                               }
+           ]
+         }
+       ]
+             |},
+                    (),
+                  ),
+                (),
+              );
+
+              MainEditorSceneTool.prepareScene(sandbox);
+            };
+
+            test({|test handle "should has all sources" error|}, () => {
+              _prepareState();
+              TestTool.openContractCheck();
+              StateLogicService.getAndSetEngineState(
+                MainUtils._handleEngineState,
+              );
+              ConsoleTool.notShowMessage();
+              let error =
+                createMethodStubWithJsObjSandbox(
+                  sandbox,
+                  ConsoleTool.console,
+                  "error",
+                );
+
+              _prepareAndExec();
+
+              error
+              |> expect
+              |> toCalledWith([|
+                   {|"expect has all sources, but actual not"|},
+                 |]);
+            });
+          });
         });
 
         describe("test remove cubemap", () =>

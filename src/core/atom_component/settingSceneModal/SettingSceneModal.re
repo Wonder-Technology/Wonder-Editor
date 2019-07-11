@@ -192,7 +192,29 @@ module Method = {
        });
   };
 
-  let setCubemapTextureToSceneSkybox = SettingSceneModalSkyboxSetCubemapTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let setCubemapTextureToSceneSkybox =
+      ((uiState, dispatchFunc), cubemapTexture) =>
+    Console.tryCatch(
+      () =>
+        SettingSceneModalSkyboxSetCubemapTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+          (uiState, dispatchFunc),
+          (),
+          cubemapTexture,
+        ),
+      e => {
+        let message = e##message;
+
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|$message|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        )
+        |> StateLogicService.getEditorState;
+      },
+    );
 };
 
 let component = ReasonReact.reducerComponent("SettingSceneModal");
@@ -208,7 +230,6 @@ let reducer = ((uiState, dispatchFunc), action, state) =>
       {...state, isShowCubemapGroup: false}, _state =>
       Method.setCubemapTextureToSceneSkybox(
         (uiState, dispatchFunc),
-        (),
         cubemapTexture,
       )
     )
