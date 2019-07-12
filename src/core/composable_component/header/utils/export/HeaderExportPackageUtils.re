@@ -54,7 +54,6 @@ let _export = () => {
 };
 
 let exportPackage = packageName => {
-  let editorState = StateEditorService.getState();
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
@@ -65,18 +64,35 @@ let exportPackage = packageName => {
           "should-in-stop",
           languageType,
         ),
-        editorState,
-      );
+      )
+      |> StateLogicService.getEditorState;
 
       ();
     } :
-    {
-      let wpkArrayBuffer = _export();
+    Console.tryCatch(
+      () => {
+        let wpkArrayBuffer = _export();
 
-      HeaderExportUtils.download(
-        wpkArrayBuffer,
-        packageName ++ WPKService.getExtName(),
-        "",
-      );
-    };
+        HeaderExportUtils.download(
+          wpkArrayBuffer,
+          packageName ++ WPKService.getExtName(),
+          "",
+        );
+      },
+      e => {
+        let message = e##message;
+        let stack = e##stack;
+
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|$message|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        )
+        |> StateLogicService.getEditorState;
+        ConsoleUtils.logStack(stack) |> ignore;
+      },
+    );
 };
