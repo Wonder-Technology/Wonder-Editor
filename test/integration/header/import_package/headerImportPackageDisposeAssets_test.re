@@ -285,6 +285,39 @@ let _ =
       );
     });
 
+    describe("dispose cubemap assets", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
+
+        MainEditorSceneTool.prepareScene(sandbox);
+      });
+
+      testPromise(
+        {|
+          add cubemap asset;
+          export;
+          import;
+
+          should has one cubemap asset;
+          |},
+        () => {
+          let _ =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                CubemapNodeAssetEditorService.findAllCubemapNodes
+                |> StateLogicService.getEditorState
+                |> Js.Array.length
+                |> expect == 1
+                |> resolve,
+            (),
+          );
+        },
+      );
+    });
+
     describe("dispose script event function assets", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(

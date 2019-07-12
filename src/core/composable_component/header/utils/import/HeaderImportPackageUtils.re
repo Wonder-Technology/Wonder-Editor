@@ -243,6 +243,7 @@ let _import = result => {
   _disposeAssets();
 
   StateEngineService.unsafeGetState()
+  |> SceneEngineService.removeCubemapTexture
   |> JobEngineService.execDisposeJob
   |> ReallocateCPUMemoryJob.reallocate(0.1)
   |> StateEngineService.setState
@@ -342,18 +343,13 @@ let _import = result => {
                         test(
                           Log.buildAssertMessage(
                             ~expect=
-                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap,sceneGameObjectCubemapTextureImageUint8ArrayDataMap  be empty|j},
+                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap  be empty|j},
                             ~actual={j|not|j},
                           ),
-                          () => {
-                            sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
-                            |> WonderCommonlib.ImmutableSparseMapService.length
-                            == 0;
-
-                            sceneGameObjectCubemapTextureImageUint8ArrayDataMap
-                            |> WonderCommonlib.ImmutableSparseMapService.length
-                            == 0;
-                          },
+                          () =>
+                          sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0
                         )
                       )
                     )
@@ -361,7 +357,6 @@ let _import = result => {
                 StateEditorService.getStateIsDebug(),
               );
 
-              /* TODO test */
               _setSkyboxCubemap(skyboxCubemapOpt)
               |> StateLogicService.getAndSetEngineState;
 

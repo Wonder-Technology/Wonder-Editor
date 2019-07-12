@@ -51,7 +51,7 @@ let _createStateTuple = () => {
   (editorState, engineState);
 };
 
-let _buildFakeCanvas = (sandbox, base64, callIndex) => {
+let _buildFakeCanvas = (sandbox, base64) => {
   open Sinon;
 
   let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
@@ -70,7 +70,7 @@ let _buildFakeCanvas = (sandbox, base64, callIndex) => {
   canvasDom;
 };
 
-let _prepareFakeCanvas = sandbox => {
+let prepareFakeCanvas = sandbox => {
   open Sinon;
 
   let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
@@ -81,16 +81,30 @@ let _prepareFakeCanvas = sandbox => {
   let base64_6 = "data:image/jpeg;base64,ccc";
   let base64_7 = "data:image/png;base64,azc";
 
-  let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
-  let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
-  let canvas3 = _buildFakeCanvas(sandbox, base64_3, 2);
-  let canvas4 = _buildFakeCanvas(sandbox, base64_4, 3);
-  let canvas5 = _buildFakeCanvas(sandbox, base64_5, 4);
-  let canvas6 = _buildFakeCanvas(sandbox, base64_6, 5);
-  let canvas7 = _buildFakeCanvas(sandbox, base64_7, 6);
+  let base64_8 = "data:image/jpeg;base64,bb2";
+  let base64_9 = "data:image/png;base64,aa1";
+  let base64_10 = "data:image/png;base64,c3c";
+  let base64_11 = "data:image/png;base64,d4d";
+  let base64_12 = "data:image/jpeg;base64,5cc";
+  let base64_13 = "data:image/png;base64,a6c";
+
+  let canvas1 = _buildFakeCanvas(sandbox, base64_1);
+  let canvas2 = _buildFakeCanvas(sandbox, base64_2);
+  let canvas3 = _buildFakeCanvas(sandbox, base64_3);
+  let canvas4 = _buildFakeCanvas(sandbox, base64_4);
+  let canvas5 = _buildFakeCanvas(sandbox, base64_5);
+  let canvas6 = _buildFakeCanvas(sandbox, base64_6);
+  let canvas7 = _buildFakeCanvas(sandbox, base64_7);
+
+  let canvas8 = _buildFakeCanvas(sandbox, base64_8);
+  let canvas9 = _buildFakeCanvas(sandbox, base64_9);
+  let canvas10 = _buildFakeCanvas(sandbox, base64_10);
+  let canvas11 = _buildFakeCanvas(sandbox, base64_11);
+  let canvas12 = _buildFakeCanvas(sandbox, base64_12);
+  let canvas13 = _buildFakeCanvas(sandbox, base64_13);
 
   let createElementStub =
-    createMethodStub(
+    SinonTool.createMethodStub(
       refJsObjToSandbox(sandbox^),
       DomHelper.document |> Obj.magic,
       "createElement",
@@ -112,9 +126,35 @@ let _prepareFakeCanvas = sandbox => {
   |> returns(canvas6)
   |> onCall(6)
   |> returns(canvas7)
+  |> onCall(7)
+  |> returns(canvas8)
+  |> onCall(8)
+  |> returns(canvas9)
+  |> onCall(9)
+  |> returns(canvas10)
+  |> onCall(10)
+  |> returns(canvas11)
+  |> onCall(11)
+  |> returns(canvas12)
+  |> onCall(12)
+  |> returns(canvas13)
   |> ignore;
 
-  (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6, base64_7);
+  (
+    base64_1,
+    base64_2,
+    base64_3,
+    base64_4,
+    base64_5,
+    base64_6,
+    base64_7,
+    base64_8,
+    base64_9,
+    base64_10,
+    base64_11,
+    base64_12,
+    base64_13,
+  );
 };
 
 let generateWDB = buildWDBGameObjectFunc => {
@@ -123,7 +163,7 @@ let generateWDB = buildWDBGameObjectFunc => {
   let (editorState, engineState) = _createStateTuple();
 
   let sandbox = ref(createSandbox());
-  let _ = _prepareFakeCanvas(sandbox);
+  let _ = prepareFakeCanvas(sandbox);
 
   let (rootGameObject, (editorState, engineState)) =
     buildWDBGameObjectFunc(editorState, engineState);

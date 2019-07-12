@@ -17,6 +17,34 @@ type texture = {
   flipY: bool,
 };
 
+type cubemap = {
+  path: string,
+  pxSource: imageIndex,
+  nxSource: imageIndex,
+  pySource: imageIndex,
+  nySource: imageIndex,
+  pzSource: imageIndex,
+  nzSource: imageIndex,
+  name: string,
+  magFilter: int,
+  minFilter: int,
+  wrapS: int,
+  wrapT: int,
+  flipY: bool,
+  pxFormat: int,
+  nxFormat: int,
+  pyFormat: int,
+  nyFormat: int,
+  pzFormat: int,
+  nzFormat: int,
+  pxType: int,
+  nxType: int,
+  pyType: int,
+  nyType: int,
+  pzType: int,
+  nzType: int,
+};
+
 type wdb = {
   name: string,
   path: string,
@@ -88,6 +116,7 @@ type copyright = {
 type assets = {
   copyright,
   textures: array(texture),
+  cubemaps: array(cubemap),
   images: array(image),
   basicMaterials: array(basicMaterial),
   lightMaterials: array(lightMaterial),

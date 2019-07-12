@@ -25,7 +25,8 @@ let unsafeGetGlTexture = (texture, state) =>
     Wonderjs.RecordCubemapTextureMainService.getRecord(state).glTextureMap,
   );
 
-let buildSource = (~width=2, ~height=4, ~src="", ~name="cubemapTexture_Source", ()) =>
+let buildSource =
+    (~width=4, ~height=4, ~src="", ~name="cubemapTexture_Source", ()) =>
   {"width": width, "height": height, "src": src, "name": name} |> Obj.magic;
 
 let setAllSources =
@@ -34,29 +35,35 @@ let setAllSources =
       ~texture,
       ~width=4,
       ~height=4,
-      ~image1Name="i1",
-      ~image2Name="i2",
-      ~image3Name="i3",
-      ~image4Name="i4",
-      ~image5Name="i5",
-      ~image6Name="i6",
+      ~image1Name="i1.png",
+      ~image2Name="i2.png",
+      ~image3Name="i3.png",
+      ~image4Name="i4.png",
+      ~image5Name="i5.png",
+      ~image6Name="i6.png",
       (),
     ) => {
-  let source1 = buildSource(~width, ~height, ~src="px", ~name=image1Name, ());
-  let source2 = buildSource(~width, ~height, ~src="nx", ~name=image2Name, ());
-  let source3 = buildSource(~width, ~height, ~src="py", ~name=image3Name, ());
-  let source4 = buildSource(~width, ~height, ~src="ny", ~name=image4Name, ());
-  let source5 = buildSource(~width, ~height, ~src="pz", ~name=image5Name, ());
-  let source6 = buildSource(~width, ~height, ~src="nz", ~name=image6Name, ());
+  let source1 =
+    buildSource(~width, ~height, ~src="px.png", ~name=image1Name, ());
+  let source2 =
+    buildSource(~width, ~height, ~src="nx.png", ~name=image2Name, ());
+  let source3 =
+    buildSource(~width, ~height, ~src="py.png", ~name=image3Name, ());
+  let source4 =
+    buildSource(~width, ~height, ~src="ny.png", ~name=image4Name, ());
+  let source5 =
+    buildSource(~width, ~height, ~src="pz.png", ~name=image5Name, ());
+  let source6 =
+    buildSource(~width, ~height, ~src="nz.png", ~name=image6Name, ());
 
   let engineState =
     engineState
-    |> CubemapTextureEngineService.setPXSource(texture, source1)
-    |> CubemapTextureEngineService.setNXSource(texture, source2)
-    |> CubemapTextureEngineService.setPYSource(texture, source3)
-    |> CubemapTextureEngineService.setNYSource(texture, source4)
-    |> CubemapTextureEngineService.setPZSource(texture, source5)
-    |> CubemapTextureEngineService.setNZSource(texture, source6);
+    |> CubemapTextureEngineService.setPXSource(source1, texture)
+    |> CubemapTextureEngineService.setNXSource(source2, texture)
+    |> CubemapTextureEngineService.setPYSource(source3, texture)
+    |> CubemapTextureEngineService.setNYSource(source4, texture)
+    |> CubemapTextureEngineService.setPZSource(source5, texture)
+    |> CubemapTextureEngineService.setNZSource(source6, texture);
 
   engineState;
 };

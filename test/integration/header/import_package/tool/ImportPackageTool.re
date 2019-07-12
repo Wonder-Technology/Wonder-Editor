@@ -168,3 +168,28 @@ let prepareFakeCanvas = sandbox => {
 
   ();
 };
+
+module Cubemap = {
+  let getImportedCubemapAssetCubemapComponents = () =>
+    CubemapNodeAssetEditorService.findAllCubemapNodes
+    |> StateLogicService.getEditorState
+    |> Js.Array.map(node => {
+         let {textureComponent}: NodeAssetType.cubemapNodeData =
+           CubemapNodeAssetService.getNodeData(node);
+
+         textureComponent;
+       });
+
+  let prepareForAddOneCubemapAsset = sandbox => {
+    WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+    let assetTreeData =
+      MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+    let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+    MainEditorAssetHeaderOperateNodeTool.addCubemap();
+    MainEditorAssetCubemapNodeTool.setAllSources(~nodeId=addedNodeId, ())
+    |> StateEngineService.setState
+    |> ignore;
+
+    addedNodeId;
+  };
+};

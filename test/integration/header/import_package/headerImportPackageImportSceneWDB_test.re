@@ -87,6 +87,58 @@ let _ =
       );
     });
 
+    describe("test skybox", () =>
+      testPromise("set package->skybox->cubemap", () => {
+        let _ = WDBTool.prepareFakeCanvas(sandbox);
+        let _ = MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+        let addedCubemapNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+        let cubemapName = "ACubemap";
+
+        AssetInspectorTool.Rename.renameAssetCubemapNode(
+          ~nodeId=addedCubemapNodeId1,
+          ~name=cubemapName,
+          (),
+        );
+
+        MainEditorAssetCubemapNodeTool.setAllSources(
+          ~nodeId=addedCubemapNodeId1,
+          (),
+        )
+        |> StateEngineService.setState
+        |> ignore;
+
+        HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
+          MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+            ~nodeId=addedCubemapNodeId1,
+            (),
+          ),
+        );
+
+        let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+        HeaderSettingTool.Scene.Skybox.removeCubemap();
+
+        ImportPackageTool.testImportPackageWithoutExport(
+          ~wpkArrayBuffer,
+          ~testFunc=
+            () => {
+              let engineState = StateEngineService.unsafeGetState();
+
+              CubemapTextureEngineService.unsafeGetCubemapTextureName(
+                SceneEngineService.getCubemapTexture(engineState)
+                |> OptionService.unsafeGet,
+                engineState,
+              )
+              |> expect == cubemapName
+              |> resolve;
+            },
+          (),
+        );
+      })
+    );
+
     describe("relate scene gameObjects and material assets", () => {
       testPromise(
         "if scene gameObject use material asset, should still use it after import",

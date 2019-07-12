@@ -114,6 +114,7 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
     (
       imageArr,
       textureArr,
+      cubemapArr,
       basicMaterialArr,
       lightMaterialArr,
       wdbArr,
@@ -141,6 +142,7 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
         |]),
         imageArr,
         textureArr,
+        cubemapArr,
         basicMaterialArr,
         lightMaterialArr,
         wdbArr,

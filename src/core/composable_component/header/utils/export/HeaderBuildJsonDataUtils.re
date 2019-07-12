@@ -31,6 +31,40 @@ let _computeBufferViewDataByteLength = bufferViewArr =>
     byteOffset + BufferUtils.alignedLength(byteLength)
   };
 
+let _addImageData =
+    (
+      (uint8Array, name, mimeType),
+      (
+        /* imageIndexMap, */
+        imageArr,
+        bufferViewArr,
+        uint8ArrayArr,
+        byteOffset,
+      ),
+    ) => {
+  /* let uint8Array = _getUint8Array(uint8Array, base64, editorState); */
+  let byteLength = uint8Array |> Uint8Array.length;
+  let alignedByteLength = BufferUtils.alignedLength(byteLength);
+
+  (
+    /* imageIndexMap
+       |> WonderCommonlib.ImmutableSparseMapService.set(
+            imageA imageA Jss
+            imageArr |> Js.Array.length,
+          ), */
+    imageArr
+    |> ArrayService.push(
+         {name, mimeType, bufferView: bufferViewArr |> Js.Array.length}: ExportAssetType.image,
+       ),
+    bufferViewArr
+    |> ArrayService.push(
+         {byteOffset, byteLength}: ExportAssetType.bufferView,
+       ),
+    uint8ArrayArr |> ArrayService.push(uint8Array),
+    byteOffset + alignedByteLength,
+  );
+};
+
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
     ImageDataMapAssetEditorService.getMap(editorState)
@@ -164,6 +198,339 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
        },
        (WonderCommonlib.ImmutableSparseMapService.createEmpty(), [||]),
      );
+
+let _addFaceSourceImageData =
+    (
+      textureComponent,
+      (editorState, engineState),
+      unsafeGetFaceSourceFunc,
+      (imageArr, bufferViewArr, uint8ArrayArr, byteOffset),
+    ) => {
+  let faceSource = unsafeGetFaceSourceFunc(textureComponent, engineState);
+
+  let faceSourceName = ImageUtils.getImageName(faceSource);
+
+  (
+    imageArr |> Js.Array.length,
+    _addImageData(
+      (
+        BufferUtils.getImageBase64(faceSource)
+        |> BufferUtils.convertBase64ToUint8Array,
+        faceSourceName,
+        ImageUtils.getImageMimeType(
+          FileNameService.getExtName(faceSourceName),
+          editorState,
+        ),
+      ),
+      (imageArr, bufferViewArr, uint8ArrayArr, byteOffset),
+    ),
+  );
+};
+
+/* TODO perf: use cubemap image data map for get source */
+let _buildCubemapData =
+    (
+      (
+        imageArr,
+        imageBufferViewArr,
+        imageUint8ArrayArr,
+        imageAlignedByteLength,
+      ),
+      (editorState, engineState),
+    ) => {
+  let (
+    cubemapArr,
+    (imageArr, imageBufferViewArr, imageUint8ArrayArr, imageByteOffset),
+  ) =
+    CubemapNodeAssetEditorService.findAllCubemapNodes(editorState)
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           (
+             cubemapArr,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ),
+           node,
+         ) => {
+           let {textureComponent}: NodeAssetType.cubemapNodeData =
+             CubemapNodeAssetService.getNodeData(node);
+
+           let (
+             pxSource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetPXSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           let (
+             nxSource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetNXSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           let (
+             pySource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetPYSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           let (
+             nySource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetNYSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           let (
+             pzSource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetPZSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           let (
+             nzSource,
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           ) =
+             _addFaceSourceImageData(
+               textureComponent,
+               (editorState, engineState),
+               CubemapTextureEngineService.unsafeGetNZSource,
+               (
+                 imageArr,
+                 imageBufferViewArr,
+                 imageUint8ArrayArr,
+                 imageByteOffset,
+               ),
+             );
+
+           (
+             cubemapArr
+             |> ArrayService.push(
+                  {
+                    path:
+                      PathTreeAssetLogicService.getNodePath(
+                        node,
+                        (editorState, engineState),
+                      ),
+                    name:
+                      NodeNameAssetLogicService.getNodeName(
+                        node,
+                        engineState,
+                      ),
+                    pxSource,
+                    nxSource,
+                    pySource,
+                    nySource,
+                    pzSource,
+                    nzSource,
+                    wrapS:
+                      CubemapTextureEngineService.getWrapS(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertWrapToInt,
+                    wrapT:
+                      CubemapTextureEngineService.getWrapT(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertWrapToInt,
+                    minFilter:
+                      CubemapTextureEngineService.getMinFilter(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFilterToInt,
+                    magFilter:
+                      CubemapTextureEngineService.getMagFilter(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFilterToInt,
+                    pxFormat:
+                      CubemapTextureEngineService.getPXFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    nxFormat:
+                      CubemapTextureEngineService.getNXFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    pyFormat:
+                      CubemapTextureEngineService.getPYFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    nyFormat:
+                      CubemapTextureEngineService.getNYFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    pzFormat:
+                      CubemapTextureEngineService.getPZFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    nzFormat:
+                      CubemapTextureEngineService.getNZFormat(
+                        textureComponent,
+                        engineState,
+                      )
+                      |> TextureTypeUtils.convertFormatToInt,
+                    pxType:
+                      CubemapTextureEngineService.getPXType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    nxType:
+                      CubemapTextureEngineService.getNXType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    pyType:
+                      CubemapTextureEngineService.getPYType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    nyType:
+                      CubemapTextureEngineService.getNYType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    pzType:
+                      CubemapTextureEngineService.getPZType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    nzType:
+                      CubemapTextureEngineService.getNZType(
+                        textureComponent,
+                        engineState,
+                      ),
+                    flipY:
+                      CubemapTextureEngineService.getFlipY(
+                        textureComponent,
+                        engineState,
+                      ),
+                  }: ExportAssetType.cubemap,
+                ),
+             (
+               imageArr,
+               imageBufferViewArr,
+               imageUint8ArrayArr,
+               imageByteOffset,
+             ),
+           );
+         },
+         (
+           [||],
+           (
+             imageArr,
+             imageBufferViewArr,
+             imageUint8ArrayArr,
+             imageAlignedByteLength,
+           ),
+         ),
+       );
+
+  (
+    cubemapArr,
+    (
+      imageArr,
+      imageBufferViewArr,
+      imageUint8ArrayArr,
+      _computeBufferViewDataByteLength(imageBufferViewArr),
+    ),
+  );
+};
 
 let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
   switch (textureComponent) {
@@ -447,12 +814,33 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
 
   let (textureIndexMap, textureArr) =
     _buildTextureData(imageIndexMap, (editorState, engineState));
+
+  let (
+    cubemapArr,
+    (
+      imageArr,
+      imageBufferViewArr,
+      imageUint8ArrayArr,
+      imageAlignedByteLength,
+    ),
+  ) =
+    _buildCubemapData(
+      (
+        imageArr,
+        imageBufferViewArr,
+        imageUint8ArrayArr,
+        imageAlignedByteLength,
+      ),
+      (editorState, engineState),
+    );
+
   let (basicMaterialArr, lightMaterialArr) =
     _buildMaterialData(
       imageIndexMap,
       textureIndexMap,
       (editorState, engineState),
     );
+
   let (
     engineState,
     wdbArr,
@@ -490,6 +878,7 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
     (
       imageArr,
       textureArr,
+      cubemapArr,
       basicMaterialArr,
       lightMaterialArr,
       wdbArr,
@@ -510,6 +899,7 @@ let buildJsonUint8Array =
         bufferViewArr,
         imageArr,
         textureArr,
+        cubemapArr,
         basicMaterialArr,
         lightMaterialArr,
         wdbArr,
@@ -530,6 +920,7 @@ let buildJsonUint8Array =
            },
            images: imageArr,
            textures: textureArr,
+           cubemaps: cubemapArr,
            basicMaterials: basicMaterialArr,
            lightMaterials: lightMaterialArr,
            scriptEventFunctions: scriptEventFunctionArr,

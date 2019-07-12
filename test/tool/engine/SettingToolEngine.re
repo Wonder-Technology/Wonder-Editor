@@ -65,7 +65,8 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
       "cssText": "",
     },
   };
-  createMethodStub(
+
+ SinonTool.createMethodStub(
     refJsObjToSandbox(sandbox^),
     DomHelper.document |> Obj.magic,
     "createElement",
