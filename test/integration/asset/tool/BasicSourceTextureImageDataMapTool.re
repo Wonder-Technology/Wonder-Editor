@@ -2,11 +2,11 @@ let getDataByTextureNode = (textureNode, editorState) => {
   let {imageDataIndex}: NodeAssetType.textureNodeData =
     TextureNodeAssetService.getNodeData(textureNode);
 
-  ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex, editorState);
+  BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(imageDataIndex, editorState);
 };
 
 let getMapValidLength = editorState =>
-  ImageDataMapAssetEditorService.getMap(editorState)
+  BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.getValidValues
   |> Js.Array.length;
 

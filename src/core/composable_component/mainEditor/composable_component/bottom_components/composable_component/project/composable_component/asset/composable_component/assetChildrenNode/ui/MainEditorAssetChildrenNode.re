@@ -12,7 +12,7 @@ module Method = {
 
   let _build = (imageDataIndex, editorState) => {
     let {base64, uint8Array, blobObjectURL, mimeType} as data =
-      ImageDataMapAssetEditorService.unsafeGetData(
+      BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
         imageDataIndex,
         editorState,
       );
@@ -29,7 +29,7 @@ module Method = {
                   uint8Array
                   |> OptionService.either(
                        (editorState, _) =>
-                         ImageDataMapAssetEditorService.setData(
+                         BasicSourceTextureImageDataMapAssetEditorService.setData(
                            imageDataIndex,
                            {
                              ...data,

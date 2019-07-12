@@ -485,9 +485,9 @@ let _ =
             )
           );
 
-          describe("store snapshot in imageDataMap", () =>
+          describe("store snapshot in basicSourceTextureImageDataMap", () =>
             test(
-              "should store img canvas snapshot in imageDataMap's base64", () => {
+              "should store img canvas snapshot in basicSourceTextureImageDataMap's base64", () => {
               let (
                 addedMaterialNodeId,
                 imgCanvasFakeBase64Str,
@@ -504,7 +504,7 @@ let _ =
                 |> MaterialNodeAssetService.getNodeData;
 
               editorState
-              |> ImageDataMapAssetEditorService.unsafeGetData(
+              |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                    snapshotImageDataIndex,
                  )
               |> (

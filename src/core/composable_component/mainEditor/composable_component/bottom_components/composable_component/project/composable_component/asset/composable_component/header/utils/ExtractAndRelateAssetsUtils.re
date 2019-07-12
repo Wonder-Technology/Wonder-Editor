@@ -618,9 +618,9 @@ module AssetTree = {
            ~snapshotImageDataIndex=newImageDataIndex,
          ),
        )
-    |> ImageDataMapAssetEditorService.setData(
+    |> BasicSourceTextureImageDataMapAssetEditorService.setData(
          newImageDataIndex,
-         ImageDataMapAssetService.buildData(
+         BasicSourceTextureImageDataMapAssetService.buildData(
            ~base64=None,
            ~uint8Array=None,
            ~name=materialName,
@@ -770,7 +770,7 @@ module AssetTree = {
                  setTextureNameFunc(textureName, texture, engineState);
 
                let (editorState, imageDataIndex) =
-                 ImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
+                 BasicSourceTextureImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
                    imageUint8Array,
                    imageName,
                    mimeType,

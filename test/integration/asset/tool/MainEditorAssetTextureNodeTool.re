@@ -37,11 +37,11 @@ let setTextureImageName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 
   editorState
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        textureComponent,
        {
          ...
-           ImageDataMapAssetEditorService.unsafeGetData(
+           BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
              textureComponent,
              editorState,
            ),

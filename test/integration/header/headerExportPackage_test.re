@@ -106,7 +106,7 @@ let _ =
                TextureNodeAssetEditorService.findAllTextureNodes(editorState)
                |> Js.Array.filter(node => {
                     let {uint8Array}: ImageDataType.imageData =
-                      ImageDataMapTool.getDataByTextureNode(
+                      BasicSourceTextureImageDataMapTool.getDataByTextureNode(
                         node,
                         editorState,
                       );
@@ -165,7 +165,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -215,7 +215,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -265,7 +265,7 @@ let _ =
                    |> WDBNodeAssetService.getNodeData;
 
                  editorState
-                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                 |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                       imageDataIndex,
                     )
                  |> (

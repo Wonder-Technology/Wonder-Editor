@@ -35,7 +35,7 @@ module GenerateSingleRAB = {
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
-      imageDataMap,
+      basicSourceTextureImageDataMap,
     ) =
       generateSingleRABResourceData(selectTree, (editorState, engineState));
 
@@ -48,7 +48,7 @@ module GenerateSingleRAB = {
         geometrys,
         scriptEventFunctionDataArr,
         scriptAttributeDataArr,
-        imageDataMap,
+        basicSourceTextureImageDataMap,
       ),
       engineState,
     );

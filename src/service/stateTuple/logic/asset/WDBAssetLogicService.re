@@ -15,9 +15,9 @@ let _createWDBNodeAndSnapshot =
          ~imageDataIndex=newImageDataIndex,
        ),
      )
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        newImageDataIndex,
-       ImageDataMapAssetService.buildData(
+       BasicSourceTextureImageDataMapAssetService.buildData(
          ~base64=None,
          ~uint8Array=None,
          ~blobObjectURL=None,

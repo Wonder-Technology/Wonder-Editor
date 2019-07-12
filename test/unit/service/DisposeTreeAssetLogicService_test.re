@@ -29,7 +29,7 @@ describe("disposeTree", () => {
         upload two textures with the same image i1;
         disposeTree;
 
-        the i1->base64 should remove from imageDataMap;
+        the i1->base64 should remove from basicSourceTextureImageDataMap;
       |j},
       () =>
       NodeAssetType.(
@@ -57,7 +57,7 @@ describe("disposeTree", () => {
                   (
                     textureData1.imageDataIndex,
                     editorState
-                    |> ImageDataMapAssetEditorService.getData(
+                    |> BasicSourceTextureImageDataMapAssetEditorService.getData(
                          textureData2.imageDataIndex,
                        )
                     |> Js.Option.isNone,
@@ -111,7 +111,7 @@ describe("disposeTree", () => {
         load texture to set m1 material's map;
         disposeTree;
 
-        the m1->base64 should remove from imageDataMap;
+        the m1->base64 should remove from basicSourceTextureImageDataMap;
       |j},
       () => {
         open NodeAssetType;
@@ -148,7 +148,7 @@ describe("disposeTree", () => {
                |> StateLogicService.getStateToGetData;
 
              editorState
-             |> ImageDataMapAssetEditorService.getData(
+             |> BasicSourceTextureImageDataMapAssetEditorService.getData(
                   snapshotImageDataIndex,
                 )
              |> Js.Option.isNone

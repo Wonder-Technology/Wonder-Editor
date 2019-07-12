@@ -148,7 +148,7 @@ let _ =
           })
         );
 
-        testPromise("test draw wdb snapshot store in imageDataMap", () => {
+        testPromise("test draw wdb snapshot store in basicSourceTextureImageDataMap", () => {
           EventListenerTool.buildFakeDom()
           |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
@@ -179,7 +179,7 @@ let _ =
                  |> WDBNodeAssetService.getNodeData;
 
                editorState
-               |> ImageDataMapAssetEditorService.unsafeGetData(
+               |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                     imageDataIndex,
                   )
                |> (
@@ -406,7 +406,7 @@ let _ =
                      |> MaterialNodeAssetService.getNodeData;
 
                    editorState
-                   |> ImageDataMapAssetEditorService.unsafeGetData(
+                   |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                         snapshotImageDataIndex,
                       )
                    |> (
@@ -819,7 +819,7 @@ let _ =
                               editorState,
                             )
                             |> Js.Array.length,
-                            ImageDataMapAssetEditorService.getValidValues(
+                            BasicSourceTextureImageDataMapAssetEditorService.getValidValues(
                               editorState,
                             )
                             |> WonderCommonlib.ImmutableSparseMapService.length,

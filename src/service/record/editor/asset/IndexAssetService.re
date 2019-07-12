@@ -4,11 +4,11 @@ let getNodeIndex = assetRecord => assetRecord.nodeIndex;
 
 let setNodeIndex = (nodeIndex, assetRecord) => {...assetRecord, nodeIndex};
 
-let getImageDataMapIndex = assetRecord => assetRecord.imageDataMapIndex;
+let getImageDataMapIndex = assetRecord => assetRecord.basicSourceTextureImageDataMapIndex;
 
-let setImageDataMapIndex = (imageDataMapIndex, assetRecord) => {
+let setImageDataMapIndex = (basicSourceTextureImageDataMapIndex, assetRecord) => {
   ...assetRecord,
-  imageDataMapIndex,
+  basicSourceTextureImageDataMapIndex,
 };
 
 let generateImageDataMapIndex = index => (index |> succ, index |> succ);

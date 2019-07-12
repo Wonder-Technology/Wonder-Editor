@@ -6,7 +6,7 @@ let _buildDefaultMaterialSnapshotUint8Array = () =>
   );
 
 let _buildImageDataUint8Array = editorState =>
-  ImageDataMapAssetEditorService.getMap(editorState)
+  BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.mapValid(
        (. data: ImageDataType.imageData) =>
        {
@@ -19,7 +19,7 @@ let _buildImageDataUint8Array = editorState =>
            ->Some,
        }
      )
-  |> ImageDataMapAssetEditorService.setMap(_, editorState);
+  |> BasicSourceTextureImageDataMapAssetEditorService.setMap(_, editorState);
 
 let _export = () => {
   let editorState = StateEditorService.getState();

@@ -39,9 +39,9 @@ module CustomEventHandler = {
         ),
         editorState,
       )
-      |> ImageDataMapAssetEditorService.setData(
+      |> BasicSourceTextureImageDataMapAssetEditorService.setData(
            newImageDataIndex,
-           ImageDataMapAssetService.buildData(
+           BasicSourceTextureImageDataMapAssetService.buildData(
              ~base64=
                OperateMaterialLogicService.getDefaultSnapshotBase64()->Some,
              ~uint8Array=None,
