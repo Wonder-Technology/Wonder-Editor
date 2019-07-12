@@ -409,6 +409,123 @@ let _ =
       });
     });
 
+    describe("test import cubemap assets", () => {
+      beforeEach(() => MainEditorSceneTool.prepareScene(sandbox));
+
+      testPromise("should add cubemap assets to asset tree", () => {
+        let addedCubemapNodeId1 =
+          ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+        ImportPackageTool.testImportPackage(
+          ~testFunc=
+            () =>
+              BuildComponentTool.buildAssetChildrenNode()
+              |> ReactTestTool.createSnapshotAndMatch
+              |> resolve,
+          (),
+        );
+      });
+
+      describe("should keep cubemap data not change", () => {
+        let _prepare = (value, setValueFunc) => {
+          let addedCubemapNodeId1 =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          let editorState = StateEditorService.getState();
+          let engineState = StateEngineService.unsafeGetState();
+
+          let texture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=addedCubemapNodeId1,
+              ~editorState,
+              (),
+            );
+
+          let engineState = setValueFunc(value, texture, engineState);
+
+          editorState |> StateEditorService.setState |> ignore;
+          engineState |> StateEngineService.setState |> ignore;
+        };
+
+        let _test = (value, (getValueFunc, setValueFunc)) => {
+          _prepare(value, setValueFunc);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                let textureComponent =
+                  ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                  |> ArrayService.unsafeGetFirst;
+
+                getValueFunc(textureComponent, engineState)
+                |> expect == value
+                |> resolve;
+              },
+            (),
+          );
+        };
+
+        testPromise("test source", () => {
+          let sourceName = "b3.png";
+
+          _prepare(
+            CubemapTextureToolEngine.buildSource(~name=sourceName, ()),
+            CubemapTextureEngineService.setPYSource,
+          );
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                let textureComponent =
+                  ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                  |> ArrayService.unsafeGetFirst;
+
+                Obj.magic(
+                  CubemapTextureEngineService.unsafeGetPYSource(
+                    textureComponent,
+                    engineState,
+                  ),
+                )##name
+                |> expect == sourceName
+                |> resolve;
+              },
+            (),
+          );
+        });
+        testPromise("test format", () =>
+          _test(
+            Wonderjs.TextureType.Luminance,
+            (
+              CubemapTextureEngineService.getPYFormat,
+              CubemapTextureEngineService.setPYFormat,
+            ),
+          )
+        );
+        testPromise("test type_", () =>
+          _test(
+            3,
+            (
+              CubemapTextureEngineService.getNZType,
+              CubemapTextureEngineService.setNZType,
+            ),
+          )
+        );
+        testPromise("test flipY", () =>
+          _test(
+            false,
+            (
+              CubemapTextureEngineService.getFlipY,
+              CubemapTextureEngineService.setFlipY,
+            ),
+          )
+        );
+      });
+    });
+
     describe("test import wdb assets", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(

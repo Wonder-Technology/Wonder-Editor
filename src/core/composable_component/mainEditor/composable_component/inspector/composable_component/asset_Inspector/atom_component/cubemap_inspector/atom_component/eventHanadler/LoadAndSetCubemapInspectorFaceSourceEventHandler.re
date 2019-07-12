@@ -3,8 +3,8 @@ module CustomEventHandler = {
   type prepareTuple = (
     Wonderjs.CubemapTextureType.cubemapTexture,
     (
-      Wonderjs.CubemapTextureType.cubemapTexture,
       WonderWebgl.DomExtendType.imageElement,
+      Wonderjs.CubemapTextureType.cubemapTexture,
       Wonderjs.StateDataMainType.state
     ) =>
     Wonderjs.StateDataMainType.state,
@@ -125,8 +125,8 @@ module CustomEventHandler = {
 
                 engineState
                 |> setSourceFunc(
-                     cubemapTexture,
                      loadedImg |> ImageType.convertDomToImageElement,
+                     cubemapTexture,
                    )
                 |> setFormatFunc(
                      TextureUtils.getFormat(

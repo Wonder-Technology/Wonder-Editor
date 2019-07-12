@@ -223,6 +223,174 @@ let buildTextureData =
        ),
      );
 
+let buildCubemapData =
+    (
+      {cubemaps}: ExportAssetType.assets,
+      imageMap,
+      (editorState, engineState),
+    ) =>
+  cubemaps
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (editorState, engineState),
+         {
+           path,
+           pxSource,
+           nxSource,
+           pySource,
+           nySource,
+           pzSource,
+           nzSource,
+           name,
+           magFilter,
+           minFilter,
+           wrapS,
+           wrapT,
+           flipY,
+           pxFormat,
+           nxFormat,
+           pyFormat,
+           nyFormat,
+           pzFormat,
+           nzFormat,
+           pxType,
+           nxType,
+           pyType,
+           nyType,
+           pzType,
+           nzType,
+         }: ExportAssetType.cubemap,
+         cubemapIndex,
+       ) => {
+         let (engineState, cubemap) =
+           CubemapTextureEngineService.create(engineState);
+
+         let engineState =
+           engineState
+           |> CubemapTextureEngineService.setWrapS(
+                wrapS |> TextureTypeUtils.convertIntToWrap,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setWrapT(
+                wrapT |> TextureTypeUtils.convertIntToWrap,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setMagFilter(
+                magFilter |> TextureTypeUtils.convertIntToFilter,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setMinFilter(
+                minFilter |> TextureTypeUtils.convertIntToFilter,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPXFormat(
+                pxFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNXFormat(
+                nxFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPYFormat(
+                pyFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNYFormat(
+                nyFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPZFormat(
+                pzFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNZFormat(
+                nzFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPXType(pxType, cubemap)
+           |> CubemapTextureEngineService.setNXType(nxType, cubemap)
+           |> CubemapTextureEngineService.setPYType(pyType, cubemap)
+           |> CubemapTextureEngineService.setNYType(nyType, cubemap)
+           |> CubemapTextureEngineService.setPZType(pzType, cubemap)
+           |> CubemapTextureEngineService.setNZType(nzType, cubemap)
+           |> CubemapTextureEngineService.setFlipY(flipY, cubemap)
+           |> CubemapTextureEngineService.setCubemapTextureName(
+                name,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPXSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     pxSource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNXSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     nxSource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPYSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     pySource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNYSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     nySource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPZSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     pzSource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNZSource(
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     nzSource,
+                   )
+                |> ImageType.convertDomToImageElement,
+                cubemap,
+              );
+
+         let (editorState, assetNodeId) =
+           IdAssetEditorService.generateNodeId(editorState);
+
+         let (editorState, parentFolderNode) =
+           OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+             path,
+             (editorState, engineState),
+           );
+
+         let editorState =
+           editorState
+           |> CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
+                parentFolderNode,
+                CubemapNodeAssetService.buildNode(
+                  ~nodeId=assetNodeId,
+                  ~textureComponent=cubemap,
+                ),
+              );
+
+         (editorState, engineState);
+       },
+       (editorState, engineState),
+     );
+
 let _addMaterialToAssetTree =
     (
       (material, path, type_),

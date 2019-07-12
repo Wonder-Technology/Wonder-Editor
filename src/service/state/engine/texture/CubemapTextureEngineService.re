@@ -55,7 +55,19 @@ let getNZSource = (texture, engineState) => {
   _getSource(texture, nzSourceMap);
 };
 
-/* let setPXSource = (source, texture, engineState) =>
+
+let getIsNeedUpdate = (texture, engineState) =>
+  CubemapTextureAPI.getCubemapTextureIsNeedUpdate(texture, engineState);
+
+let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
+  CubemapTextureAPI.setCubemapTextureIsNeedUpdate(
+    texture,
+    isNeedUpdate,
+    engineState,
+  );
+
+
+let setPXSource = (source, texture, engineState) =>
      engineState |> CubemapTextureAPI.setCubemapTexturePXSource(texture, source);
 
    let setNXSource = (source, texture, engineState) =>
@@ -71,19 +83,9 @@ let getNZSource = (texture, engineState) => {
      engineState |> CubemapTextureAPI.setCubemapTexturePZSource(texture, source);
 
    let setNZSource = (source, texture, engineState) =>
-     engineState |> CubemapTextureAPI.setCubemapTextureNZSource(texture, source); */
+     engineState |> CubemapTextureAPI.setCubemapTextureNZSource(texture, source);
 
-let getIsNeedUpdate = (texture, engineState) =>
-  CubemapTextureAPI.getCubemapTextureIsNeedUpdate(texture, engineState);
-
-let setIsNeedUpdate = (isNeedUpdate, texture, engineState) =>
-  CubemapTextureAPI.setCubemapTextureIsNeedUpdate(
-    texture,
-    isNeedUpdate,
-    engineState,
-  );
-
-let setPXSource = (texture, source, engineState) =>
+/* let setPXSource = (texture, source, engineState) =>
   engineState |> CubemapTextureAPI.setCubemapTexturePXSource(texture, source);
 
 let setNXSource = (texture, source, engineState) =>
@@ -99,7 +101,7 @@ let setPZSource = (texture, source, engineState) =>
   engineState |> CubemapTextureAPI.setCubemapTexturePZSource(texture, source);
 
 let setNZSource = (texture, source, engineState) =>
-  engineState |> CubemapTextureAPI.setCubemapTextureNZSource(texture, source);
+  engineState |> CubemapTextureAPI.setCubemapTextureNZSource(texture, source); */
 
 /* let _removeSource = (texture, sourceMap) =>
      sourceMap |> WonderCommonlib.MutableSparseMapService.deleteVal(texture);

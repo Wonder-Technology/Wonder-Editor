@@ -13,13 +13,21 @@ let getCubemapName =
       ~editorState=StateEditorService.getState(),
       ~engineState=StateEngineService.unsafeGetState(),
       (),
-    ) => {
-  let {textureComponent}: NodeAssetType.cubemapNodeData =
-    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
-    |> CubemapNodeAssetService.getNodeData;
-
+    ) =>
   NodeNameAssetLogicService.getCubemapNodeName(
-    ~texture=textureComponent,
+    ~texture=getCubemapTextureComponent(~nodeId, ~editorState, ()),
     ~engineState,
   );
-};
+
+let setAllSources =
+    (
+      ~nodeId,
+      ~editorState=StateEditorService.getState(),
+      ~engineState=StateEngineService.unsafeGetState(),
+      (),
+    ) =>
+  CubemapTextureToolEngine.setAllSources(
+    ~engineState=StateEngineService.unsafeGetState(),
+    ~texture=getCubemapTextureComponent(~nodeId, ~editorState, ()),
+    (),
+  );

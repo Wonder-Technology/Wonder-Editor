@@ -11,6 +11,8 @@ let alignedLength = (value: int): int =>
     };
   };
 
+let getImageBase64 = Wonderjs.BuildTextureDataUtils.getImageBase64;
+
 let convertBase64ToUint8Array = [%raw
   dataURI => {|
     var BASE64_MARKER = ';base64,';
