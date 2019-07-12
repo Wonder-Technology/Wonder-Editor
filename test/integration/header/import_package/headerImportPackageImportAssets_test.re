@@ -34,39 +34,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -524,6 +492,78 @@ let _ =
           )
         );
       });
+
+      describe("fix bug", () => {
+        testPromise("support cubemap asset with no sources", () => {
+          WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                BuildComponentTool.buildAssetChildrenNode()
+                |> ReactTestTool.createSnapshotAndMatch
+                |> resolve,
+            (),
+          );
+        });
+
+        describe("export asb->wdb shouldn't contain skybox data", () => {
+          let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
+          beforeAll(() =>
+            sceneWDBArrayBuffer :=
+              WDBTool.Cubemap.generateWDBWithBasicSourceTextureAndSkyboxCubemap()
+          );
+
+          beforeEach(() => {
+            MainEditorAssetTool.buildFakeFileReader();
+
+            LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+            LoadTool.buildFakeURL(sandbox^);
+
+            LoadTool.buildFakeLoadImage(.);
+          });
+
+          testPromise(
+            {|
+            load wdb w1 with skybox data;
+            set w1->cubemap to scene skybox;
+            export;
+            import;
+
+            shouldn't error;
+            |},
+            () => {
+              WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+              TestTool.openContractCheck();
+              ConsoleTool.notShowMessage();
+              let errorStub =
+                createMethodStub(sandbox^, ConsoleTool.console, "error");
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
+                     WDBTool.Cubemap.findSkyboxCubemapFromLoadedWDB
+                     |> StateLogicService.getEditorState,
+                   );
+
+                   ImportPackageTool.testImportPackage(
+                     ~testFunc=
+                       () => ConsoleTool.judgeNotError(errorStub) |> resolve,
+                     (),
+                   );
+                 });
+            },
+          );
+        });
+      });
     });
 
     describe("test import wdb assets", () => {
@@ -579,37 +619,7 @@ let _ =
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
             (),
           );
-          MainEditorSceneTool.initInspectorEngineState(
-            ~sandbox,
-            ~isInitJob=false,
-            ~noWorkerJobRecord=
-              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-                ~initPipelines=
-                  {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-                ~initJobs=
-                  {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-                (),
-              ),
-            (),
-          );
-
-          StateInspectorEngineService.unsafeGetState()
-          |> MainUtils._handleInspectorEngineState
-          |> StateInspectorEngineService.setState
-          |> ignore;
+          MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
           MainEditorSceneTool.createDefaultComponents();
 

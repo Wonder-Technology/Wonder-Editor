@@ -19,12 +19,12 @@ type texture = {
 
 type cubemap = {
   path: string,
-  pxSource: imageIndex,
-  nxSource: imageIndex,
-  pySource: imageIndex,
-  nySource: imageIndex,
-  pzSource: imageIndex,
-  nzSource: imageIndex,
+  pxSource: option(imageIndex),
+  nxSource: option(imageIndex),
+  pySource: option(imageIndex),
+  nySource: option(imageIndex),
+  pzSource: option(imageIndex),
+  nzSource: option(imageIndex),
   name: string,
   magFilter: int,
   minFilter: int,

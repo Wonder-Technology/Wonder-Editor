@@ -148,7 +148,8 @@ let _ =
           })
         );
 
-        testPromise("test draw wdb snapshot store in basicSourceTextureImageDataMap", () => {
+        testPromise(
+          "test draw wdb snapshot store in basicSourceTextureImageDataMap", () => {
           EventListenerTool.buildFakeDom()
           |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
@@ -836,95 +837,9 @@ let _ =
         describe("extract cubemap assets", () => {
           let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
-          let _createCubemapAndSetToSceneSkybox = engineState => {
-            let (engineState, cubemap) =
-              MainEditorSceneTool.Skybox.createCubemapAndSetToSceneSkybox(
-                engineState,
-              );
-
-            let engineState =
-              CubemapTextureToolEngine.setAllSources(
-                ~engineState,
-                ~texture=cubemap,
-                (),
-              );
-
-            let engineState =
-              engineState
-              |> CubemapTextureEngineService.setCubemapTextureName(
-                   "sceneSkyboxCubemap",
-                   cubemap,
-                 );
-
-            (engineState, cubemap);
-          };
-
-          let _generateWDBWithSkyboxCubemap = () =>
-            WDBTool.generateWDB((editorState, engineState) => {
-              let (engineState, geometry) =
-                GeometryEngineService.createCubeGeometry(engineState);
-              let (engineState, lightMaterial) =
-                LightMaterialEngineService.create(engineState);
-
-              let (engineState, texture) =
-                BasicSourceTextureEngineService.create(engineState);
-
-              let engineState =
-                engineState
-                |> BasicSourceTextureEngineService.setSource(
-                     BasicSourceTextureToolEngine.buildSource(),
-                     texture,
-                   );
-
-              let engineState =
-                engineState
-                |> BasicSourceTextureEngineService.setBasicSourceTextureName(
-                     "texture1",
-                     texture,
-                   );
-
-              let engineState =
-                engineState
-                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-                     texture,
-                     lightMaterial,
-                   );
-
-              let (editorState, engineState, cube1) =
-                PrimitiveLogicService.createCube(
-                  (geometry, lightMaterial),
-                  editorState,
-                  engineState,
-                );
-
-              let (engineState, cubemap1) =
-                CubemapTextureEngineService.create(engineState);
-
-              let (engineState, cubemap2) =
-                _createCubemapAndSetToSceneSkybox(engineState);
-
-              let engineState =
-                engineState
-                |> CubemapTextureEngineService.setCubemapTextureName(
-                     "cubemap1",
-                     cubemap1,
-                   );
-
-              let (engineState, rootGameObject) =
-                GameObjectEngineService.create(engineState);
-
-              let engineState =
-                engineState
-                |> HierarchyGameObjectEngineService.addChild(
-                     rootGameObject,
-                     cube1,
-                   );
-
-              (rootGameObject, (editorState, engineState));
-            });
-
           beforeAll(() =>
-            sceneWDBArrayBuffer := _generateWDBWithSkyboxCubemap()
+            sceneWDBArrayBuffer :=
+              WDBTool.Cubemap.generateWDBWithBasicSourceTextureAndSkyboxCubemap()
           );
 
           describe(

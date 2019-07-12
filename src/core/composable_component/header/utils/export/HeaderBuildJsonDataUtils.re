@@ -203,29 +203,30 @@ let _addFaceSourceImageData =
     (
       textureComponent,
       (editorState, engineState),
-      unsafeGetFaceSourceFunc,
+      getFaceSourceFunc,
       (imageArr, bufferViewArr, uint8ArrayArr, byteOffset),
-    ) => {
-  let faceSource = unsafeGetFaceSourceFunc(textureComponent, engineState);
+    ) =>
+  switch (getFaceSourceFunc(textureComponent, engineState)) {
+  | None => (None, (imageArr, bufferViewArr, uint8ArrayArr, byteOffset))
+  | Some(faceSource) =>
+    let faceSourceName = ImageUtils.getImageName(faceSource);
 
-  let faceSourceName = ImageUtils.getImageName(faceSource);
-
-  (
-    imageArr |> Js.Array.length,
-    _addImageData(
-      (
-        BufferUtils.getImageBase64(faceSource)
-        |> BufferUtils.convertBase64ToUint8Array,
-        faceSourceName,
-        ImageUtils.getImageMimeType(
-          FileNameService.getExtName(faceSourceName),
-          editorState,
+    (
+      (imageArr |> Js.Array.length)->Some,
+      _addImageData(
+        (
+          BufferUtils.getImageBase64(faceSource)
+          |> BufferUtils.convertBase64ToUint8Array,
+          faceSourceName,
+          ImageUtils.getImageMimeType(
+            FileNameService.getExtName(faceSourceName),
+            editorState,
+          ),
         ),
+        (imageArr, bufferViewArr, uint8ArrayArr, byteOffset),
       ),
-      (imageArr, bufferViewArr, uint8ArrayArr, byteOffset),
-    ),
-  );
-};
+    );
+  };
 
 /* TODO perf: use cubemap image data map for get source */
 let _buildCubemapData =
@@ -271,7 +272,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetPXSource,
+               CubemapTextureEngineService.getPXSource,
                (
                  imageArr,
                  imageBufferViewArr,
@@ -292,7 +293,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetNXSource,
+               CubemapTextureEngineService.getNXSource,
                (
                  imageArr,
                  imageBufferViewArr,
@@ -313,7 +314,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetPYSource,
+               CubemapTextureEngineService.getPYSource,
                (
                  imageArr,
                  imageBufferViewArr,
@@ -334,7 +335,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetNYSource,
+               CubemapTextureEngineService.getNYSource,
                (
                  imageArr,
                  imageBufferViewArr,
@@ -355,7 +356,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetPZSource,
+               CubemapTextureEngineService.getPZSource,
                (
                  imageArr,
                  imageBufferViewArr,
@@ -376,7 +377,7 @@ let _buildCubemapData =
              _addFaceSourceImageData(
                textureComponent,
                (editorState, engineState),
-               CubemapTextureEngineService.unsafeGetNZSource,
+               CubemapTextureEngineService.getNZSource,
                (
                  imageArr,
                  imageBufferViewArr,

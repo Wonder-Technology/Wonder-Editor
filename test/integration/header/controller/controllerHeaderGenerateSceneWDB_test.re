@@ -19,7 +19,7 @@ let _ =
     let _generateSceneWDB =
         (
           ~isSceneRoot=false,
-          ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
+          ~generateWDBFunc=GenerateSceneGraphEngineService.generateSceneWDB,
           ~imageUint8ArrayMap=Js.Nullable.return(
                                 Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
                                   StateEditorService.getState(),
