@@ -4,6 +4,14 @@ let generateGLBData = Wonderjs.GenerateSceneGraphAPI.generateGLBData;
 
 let generateWDB = Wonderjs.GenerateSceneGraphAPI.generateWDB;
 
+let generateSceneWDB = (sceneGameObject, imageUint8ArrayMap, engineState) =>
+  generateWDB(
+    sceneGameObject,
+    imageUint8ArrayMap,
+    true,
+    engineState,
+  );
+
 let _writeUint32DataToUint8Array = uint32Data =>
   Uint8Array.fromBuffer(
     Uint32Array.make([|uint32Data|]) |> Uint32Array.buffer,
@@ -25,6 +33,7 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   Wonderjs.GenerateWDBSystem.generateWDB(
     sceneGameObject,
     imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
+    true,
     (
       (
         (. geometry, engineState) => {
@@ -84,6 +93,7 @@ let generateWDBForASB = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   Wonderjs.GenerateWDBSystem.generateWDB(
     sceneGameObject,
     imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
+    false,
     (
       (
         Wonderjs.VerticesGeometryMainService.getVertices,

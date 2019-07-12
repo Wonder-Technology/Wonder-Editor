@@ -223,6 +223,20 @@ let buildTextureData =
        ),
      );
 
+let _setFaceSource =
+    ((cubemap, faceSourceOpt), imageMap, setSourceFunc, engineState) =>
+  switch (faceSourceOpt) {
+  | None => engineState
+  | Some(faceSource) =>
+    engineState
+    |> setSourceFunc(
+         imageMap
+         |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(faceSource)
+         |> ImageType.convertDomToImageElement,
+         cubemap,
+       )
+  };
+
 let buildCubemapData =
     (
       {cubemaps}: ExportAssetType.assets,
@@ -318,53 +332,35 @@ let buildCubemapData =
                 name,
                 cubemap,
               )
-           |> CubemapTextureEngineService.setPXSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     pxSource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, pxSource),
+                imageMap,
+                CubemapTextureEngineService.setPXSource,
               )
-           |> CubemapTextureEngineService.setNXSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     nxSource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, nxSource),
+                imageMap,
+                CubemapTextureEngineService.setNXSource,
               )
-           |> CubemapTextureEngineService.setPYSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     pySource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, pySource),
+                imageMap,
+                CubemapTextureEngineService.setPYSource,
               )
-           |> CubemapTextureEngineService.setNYSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     nySource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, nySource),
+                imageMap,
+                CubemapTextureEngineService.setNYSource,
               )
-           |> CubemapTextureEngineService.setPZSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     pzSource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, pzSource),
+                imageMap,
+                CubemapTextureEngineService.setPZSource,
               )
-           |> CubemapTextureEngineService.setNZSource(
-                imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                     nzSource,
-                   )
-                |> ImageType.convertDomToImageElement,
-                cubemap,
+           |> _setFaceSource(
+                (cubemap, nzSource),
+                imageMap,
+                CubemapTextureEngineService.setNZSource,
               );
 
          let (editorState, assetNodeId) =
@@ -816,6 +812,7 @@ let buildWDBData =
            path,
            (editorState, engineState),
          );
+
        HeaderImportASBWDBUtils.importWDB(
          (imageDataIndexMap, snapshot, name, arrayBuffer),
          (assetNodeId, parentFolderNode),

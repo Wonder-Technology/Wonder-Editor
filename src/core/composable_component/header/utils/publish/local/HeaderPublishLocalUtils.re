@@ -325,7 +325,7 @@ module Publish = {
   let _generateSceneWDB = (editorState, engineState) =>
     HeaderExportSceneWDBUtils.generateSceneWDB(
       false,
-      GenerateSceneGraphEngineService.generateWDB,
+      GenerateSceneGraphEngineService.generateSceneWDB,
       Js.Nullable.return(
         Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
       ),

@@ -88,6 +88,8 @@ let prepareFakeCanvas = sandbox => {
   let base64_12 = "data:image/jpeg;base64,5cc";
   let base64_13 = "data:image/png;base64,a6c";
 
+  let base64_more = "data:image/png;base64,a9c";
+
   let canvas1 = _buildFakeCanvas(sandbox, base64_1);
   let canvas2 = _buildFakeCanvas(sandbox, base64_2);
   let canvas3 = _buildFakeCanvas(sandbox, base64_3);
@@ -103,12 +105,16 @@ let prepareFakeCanvas = sandbox => {
   let canvas12 = _buildFakeCanvas(sandbox, base64_12);
   let canvas13 = _buildFakeCanvas(sandbox, base64_13);
 
+  let canvas_more = _buildFakeCanvas(sandbox, base64_more);
+
   let createElementStub =
     SinonTool.createMethodStub(
       refJsObjToSandbox(sandbox^),
       DomHelper.document |> Obj.magic,
       "createElement",
     );
+
+  createElementStub |> withOneArg("canvas") |> returns(canvas_more) |> ignore;
 
   createElementStub
   |> withOneArg("canvas")
@@ -154,6 +160,7 @@ let prepareFakeCanvas = sandbox => {
     base64_11,
     base64_12,
     base64_13,
+    base64_more,
   );
 };
 
@@ -179,7 +186,7 @@ let generateWDB = buildWDBGameObjectFunc => {
           Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
         ),
       ),
-      GenerateSceneGraphEngineService.generateWDB,
+      GenerateSceneGraphEngineService.generateSceneWDB,
       engineState,
     );
 
@@ -510,4 +517,101 @@ module ScriptAttribute = {
 
   let getScriptGameObject = engineState =>
     LoadWDBTool.findGameObjectByName(getScriptGameObjectName(), engineState);
+};
+
+module Cubemap = {
+  let _createCubemapAndSetToSceneSkybox = engineState => {
+    let (engineState, cubemap) =
+      MainEditorSceneTool.Skybox.createCubemapAndSetToSceneSkybox(
+        engineState,
+      );
+
+    let engineState =
+      CubemapTextureToolEngine.setAllSources(
+        ~engineState,
+        ~texture=cubemap,
+        (),
+      );
+
+    let engineState =
+      engineState
+      |> CubemapTextureEngineService.setCubemapTextureName(
+           "sceneSkyboxCubemap",
+           cubemap,
+         );
+
+    (engineState, cubemap);
+  };
+
+  let generateWDBWithBasicSourceTextureAndSkyboxCubemap = () =>
+    generateWDB((editorState, engineState) => {
+      let (engineState, geometry) =
+        GeometryEngineService.createCubeGeometry(engineState);
+      let (engineState, lightMaterial) =
+        LightMaterialEngineService.create(engineState);
+
+      let (engineState, texture) =
+        BasicSourceTextureEngineService.create(engineState);
+
+      let engineState =
+        engineState
+        |> BasicSourceTextureEngineService.setSource(
+             BasicSourceTextureToolEngine.buildSource(),
+             texture,
+           );
+
+      let engineState =
+        engineState
+        |> BasicSourceTextureEngineService.setBasicSourceTextureName(
+             "texture1",
+             texture,
+           );
+
+      let engineState =
+        engineState
+        |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+             texture,
+             lightMaterial,
+           );
+
+      let (editorState, engineState, cube1) =
+        PrimitiveLogicService.createCube(
+          (geometry, lightMaterial),
+          editorState,
+          engineState,
+        );
+
+      let (engineState, cubemap1) =
+        CubemapTextureEngineService.create(engineState);
+
+      let (engineState, cubemap2) =
+        _createCubemapAndSetToSceneSkybox(engineState);
+
+      let engineState =
+        engineState
+        |> CubemapTextureEngineService.setCubemapTextureName(
+             "cubemap1",
+             cubemap1,
+           );
+
+      let (engineState, rootGameObject) =
+        GameObjectEngineService.create(engineState);
+
+      let engineState =
+        engineState
+        |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
+
+      (rootGameObject, (editorState, engineState));
+    });
+
+  let findSkyboxCubemapFromLoadedWDB = editorState =>
+    editorState
+    |> CubemapNodeAssetEditorService.findAllCubemapNodes
+    |> Js.Array.map(node => {
+         let {textureComponent}: NodeAssetType.cubemapNodeData =
+           CubemapNodeAssetService.getNodeData(node);
+
+         textureComponent;
+       })
+    |> ArrayService.unsafeGetFirst;
 };
