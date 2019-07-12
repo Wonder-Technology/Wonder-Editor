@@ -343,13 +343,18 @@ let _import = result => {
                         test(
                           Log.buildAssertMessage(
                             ~expect=
-                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap  be empty|j},
+                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap, sceneGameObjectCubemapTextureImageUint8ArrayDataMap be empty|j},
                             ~actual={j|not|j},
                           ),
-                          () =>
-                          sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
-                          |> WonderCommonlib.ImmutableSparseMapService.length
-                          == 0
+                          () => {
+                            sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+
+                            sceneGameObjectCubemapTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+                          },
                         )
                       )
                     )
