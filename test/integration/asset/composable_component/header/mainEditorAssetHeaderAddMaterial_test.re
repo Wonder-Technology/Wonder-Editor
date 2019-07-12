@@ -103,7 +103,7 @@ let _ =
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
       let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
-      let newImageDataMapIndex = ImageDataMapTool.getNewImageDataMapIndex();
+      let newImageDataMapIndex = BasicSourceTextureImageDataMapTool.getNewImageDataMapIndex();
 
       MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
@@ -119,7 +119,7 @@ let _ =
       (
         snapshotImageDataIndex,
         editorState
-        |> ImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
+        |> BasicSourceTextureImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isSome,
       )
       |> expect == (newImageDataMapIndex, true);

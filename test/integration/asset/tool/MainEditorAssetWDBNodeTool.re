@@ -42,7 +42,7 @@ let getWDBNodeIdByName = (wdbGameObjectName, (editorState, engineState)) =>
   |> NodeAssetService.getNodeId(~node=_);
 
 let getValidTextureArray = editorState =>
-  ImageDataMapAssetEditorService.getValidValues(editorState)
+  BasicSourceTextureImageDataMapAssetEditorService.getValidValues(editorState)
   |> Js.Array.filter(
        ({base64, uint8Array, blobObjectURL}: ImageDataType.imageData) =>
        uint8Array |> Js.Option.isSome

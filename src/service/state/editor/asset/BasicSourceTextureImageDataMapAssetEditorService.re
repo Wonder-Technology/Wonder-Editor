@@ -1,12 +1,12 @@
 open EditorType;
 
-let getMap = editorState => editorState.assetRecord.imageDataMap;
+let getMap = editorState => editorState.assetRecord.basicSourceTextureImageDataMap;
 
 let setMap = (map, editorState) => {
   ...editorState,
   assetRecord: {
     ...editorState.assetRecord,
-    imageDataMap: map,
+    basicSourceTextureImageDataMap: map,
   },
 };
 
@@ -14,20 +14,20 @@ let clearMap = editorState => {
   ...editorState,
   assetRecord: {
     ...editorState.assetRecord,
-    imageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    basicSourceTextureImageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
 };
 
 let getData = (index, editorState) =>
-  ImageDataMapAssetService.getData(index, editorState.assetRecord);
+  BasicSourceTextureImageDataMapAssetService.getData(index, editorState.assetRecord);
 
 let unsafeGetData = (index, editorState) =>
-  ImageDataMapAssetService.unsafeGetData(index, editorState.assetRecord);
+  BasicSourceTextureImageDataMapAssetService.unsafeGetData(index, editorState.assetRecord);
 
 let setData = (index, data, editorState) => {
   ...editorState,
   assetRecord:
-    editorState.assetRecord |> ImageDataMapAssetService.setData(index, data),
+    editorState.assetRecord |> BasicSourceTextureImageDataMapAssetService.setData(index, data),
 };
 
 let _getImageDataIndexByBase64 = (imageBase64, editorState) =>
@@ -53,7 +53,7 @@ let addImageDataIfBase64NotExist = (base64, fileName, mimeType, editorState) =>
       editorState
       |> setData(
            newImageDataIndex,
-           ImageDataMapAssetService.buildData(
+           BasicSourceTextureImageDataMapAssetService.buildData(
              ~base64=Some(base64),
              ~uint8Array=None,
              ~name=fileName,
@@ -94,7 +94,7 @@ let addImageDataIfUint8ArrayNotExist =
       editorState
       |> setData(
            newImageDataIndex,
-           ImageDataMapAssetService.buildData(
+           BasicSourceTextureImageDataMapAssetService.buildData(
              ~base64=None,
              ~uint8Array=Some(uint8Array),
              ~name,
@@ -110,7 +110,7 @@ let addImageDataIfUint8ArrayNotExist =
 let removeData = (index, editorState) => {
   ...editorState,
   assetRecord:
-    editorState.assetRecord |> ImageDataMapAssetService.removeData(index),
+    editorState.assetRecord |> BasicSourceTextureImageDataMapAssetService.removeData(index),
 };
 
 let unsafeGetUint8Array = (index, editorState) =>

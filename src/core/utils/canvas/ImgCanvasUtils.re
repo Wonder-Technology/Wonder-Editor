@@ -56,10 +56,10 @@ let _clipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => 
 let _setSnapShotToImageDataMap =
     (imgCanvasBase64, snapshotImageDataIndex, editorState) =>
   editorState
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        snapshotImageDataIndex,
        editorState
-       |> ImageDataMapAssetEditorService.unsafeGetData(
+       |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
             snapshotImageDataIndex,
           )
        |> (

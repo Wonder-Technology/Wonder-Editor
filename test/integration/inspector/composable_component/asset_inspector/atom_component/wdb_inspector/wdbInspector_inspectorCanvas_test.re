@@ -628,9 +628,9 @@ let _ =
           )
         );
 
-        describe("store snapshot in imageDataMap", () =>
+        describe("store snapshot in basicSourceTextureImageDataMap", () =>
           testPromise(
-            "should store img canvas snapshot in imageDataMap's base64", () => {
+            "should store img canvas snapshot in basicSourceTextureImageDataMap's base64", () => {
             let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
               InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
@@ -652,7 +652,7 @@ let _ =
                    |> WDBNodeAssetService.getNodeData;
 
                  editorState
-                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                 |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                       imageDataIndex,
                     )
                  |> (

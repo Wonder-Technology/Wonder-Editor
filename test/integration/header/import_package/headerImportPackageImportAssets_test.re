@@ -164,7 +164,7 @@ let _ =
                     |> MaterialNodeAssetService.getNodeData;
 
                   editorState
-                  |> ImageDataMapAssetEditorService.unsafeGetData(
+                  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                        snapshotImageDataIndex,
                      )
                   |> (

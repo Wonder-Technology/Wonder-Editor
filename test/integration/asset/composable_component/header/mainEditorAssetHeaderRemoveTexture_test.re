@@ -61,7 +61,7 @@ let _ =
           {j|
                   remove one of them;
 
-                  the base64 should not remove from imageDataMap;
+                  the base64 should not remove from basicSourceTextureImageDataMap;
                   |j},
           () =>
           NodeAssetType.(
@@ -90,7 +90,7 @@ let _ =
                       (
                         textureData1.imageDataIndex,
                         editorState
-                        |> ImageDataMapAssetEditorService.getData(
+                        |> BasicSourceTextureImageDataMapAssetEditorService.getData(
                              textureData2.imageDataIndex,
                            )
                         |> Js.Option.isSome,
@@ -105,7 +105,7 @@ let _ =
           {j|
                   remove all of them;
 
-                  the base64 should remove from imageDataMap;
+                  the base64 should remove from basicSourceTextureImageDataMap;
                   |j},
           () =>
           NodeAssetType.(
@@ -140,7 +140,7 @@ let _ =
                       (
                         textureData1.imageDataIndex,
                         editorState
-                        |> ImageDataMapAssetEditorService.getData(
+                        |> BasicSourceTextureImageDataMapAssetEditorService.getData(
                              textureData2.imageDataIndex,
                            )
                         |> Js.Option.isNone,
@@ -187,7 +187,7 @@ let _ =
           MainEditorAssetTool.buildFakeFileReader();
         });
 
-        testPromise("should redraw m1,m2 snapshot to imageDataMap", () => {
+        testPromise("should redraw m1,m2 snapshot to basicSourceTextureImageDataMap", () => {
           let (
             addedMaterialNodeId,
             newMaterialComponent,
@@ -237,12 +237,12 @@ let _ =
 
                (
                  editorState
-                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                 |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                       materialNodeData1.snapshotImageDataIndex,
                     )
                  |> (({base64}) => base64 |> OptionService.unsafeGet),
                  editorState
-                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                 |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                       materialNodeData2.snapshotImageDataIndex,
                     )
                  |> (({base64}) => base64 |> OptionService.unsafeGet),

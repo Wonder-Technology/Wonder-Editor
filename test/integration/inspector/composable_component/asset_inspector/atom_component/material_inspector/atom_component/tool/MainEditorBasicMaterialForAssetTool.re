@@ -35,7 +35,7 @@ let judgeImgCanvasSnapshotIsStoreInImageDataMap =
     |> MaterialNodeAssetService.getNodeData;
 
   editorState
-  |> ImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
   |> (
     ({base64}) =>
       base64 |> OptionService.unsafeGet |> expect == imgCanvasFakeBase64Str

@@ -1,6 +1,6 @@
 let getImgSrc = (imageDataIndex, editorState) =>
   editorState
-  |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
   |> (
     ({blobObjectURL, base64}: ImageDataType.imageData) =>
       switch (blobObjectURL, base64) {

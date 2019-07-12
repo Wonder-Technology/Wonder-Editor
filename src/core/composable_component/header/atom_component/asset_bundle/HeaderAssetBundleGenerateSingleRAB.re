@@ -245,7 +245,7 @@ module Method = {
       );
 
     let imageDataMap =
-      ImageDataMapAssetEditorService.getMap(editorState)
+      BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
       |> WonderCommonlib.ImmutableSparseMapService.mapValid(
            (. imageData: ImageDataType.imageData) =>
            (

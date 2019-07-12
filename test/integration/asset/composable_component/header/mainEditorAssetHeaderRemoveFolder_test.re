@@ -101,7 +101,7 @@ let _ =
         );
 
         StateEditorService.getState()
-        |> ImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
+        |> BasicSourceTextureImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isNone
         |> expect == true;
       });

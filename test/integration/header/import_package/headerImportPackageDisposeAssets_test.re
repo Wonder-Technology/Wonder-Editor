@@ -594,7 +594,7 @@ let _ =
                  ImportPackageTool.testImportPackage(
                    ~testFunc=
                      () =>
-                       ImageDataMapTool.getMapValidLength
+                       BasicSourceTextureImageDataMapTool.getMapValidLength
                        |> StateLogicService.getEditorState
                        |> expect == 3
                        |> resolve,

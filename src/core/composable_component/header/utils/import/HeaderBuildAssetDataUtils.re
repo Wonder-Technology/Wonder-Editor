@@ -69,9 +69,9 @@ let buildImageData =
                 imageDataIndex,
               ),
            editorState
-           |> ImageDataMapAssetEditorService.setData(
+           |> BasicSourceTextureImageDataMapAssetEditorService.setData(
                 imageDataIndex,
-                ImageDataMapAssetService.buildData(
+                BasicSourceTextureImageDataMapAssetService.buildData(
                   ~base64=None,
                   ~uint8Array=None,
                   ~blobObjectURL=Some(blobObjectURL),

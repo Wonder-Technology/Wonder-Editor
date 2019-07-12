@@ -22,7 +22,7 @@ let _handleImage =
              );
 
         let (editorState, imageDataIndex) =
-          ImageDataMapAssetEditorService.addImageDataIfBase64NotExist(
+          BasicSourceTextureImageDataMapAssetEditorService.addImageDataIfBase64NotExist(
             imgBase64,
             fileName,
             mimeType,

@@ -67,7 +67,7 @@ let _addImageData =
 
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
-    ImageDataMapAssetEditorService.getMap(editorState)
+    BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
     |> WonderCommonlib.ImmutableSparseMapService.reduceiValid(
          (.
            (

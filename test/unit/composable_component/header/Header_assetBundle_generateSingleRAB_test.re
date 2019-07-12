@@ -130,7 +130,7 @@ let _ =
       describe("build resource data", () =>
         describe(
           "build selected assets from selectTree to be resource data", () => {
-          describe("test resource data->imageDataMap", () =>
+          describe("test resource data->basicSourceTextureImageDataMap", () =>
             testPromise("test", () => {
               let imageBase64 = Base64Tool.buildFakeBase64_1();
 
@@ -159,7 +159,7 @@ let _ =
                      geometrys,
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,
-                     imageDataMap,
+                     basicSourceTextureImageDataMap,
                    ) =
                      HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,
@@ -173,11 +173,11 @@ let _ =
                        editorState,
                      );
                    let {uint8Array, name, mimeType}: ImageDataType.imageData =
-                     ImageDataMapAssetEditorService.unsafeGetData(
+                     BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                        imageDataIndex1,
                        editorState,
                      );
-                   imageDataMap
+                   basicSourceTextureImageDataMap
                    |> expect
                    == (
                         WonderCommonlib.ImmutableSparseMapService.createEmpty()
@@ -270,7 +270,7 @@ let _ =
                               geometrys,
                               scriptEventFunctionDataArr,
                               scriptAttributeDataArr,
-                              imageDataMap,
+                              basicSourceTextureImageDataMap,
                             ) =
                               HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                                 selectTree,
@@ -344,7 +344,7 @@ let _ =
                   geometrys,
                   scriptEventFunctionDataArr,
                   scriptAttributeDataArr,
-                  imageDataMap,
+                  basicSourceTextureImageDataMap,
                 ) =
                   HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                     selectTree,
@@ -385,7 +385,7 @@ let _ =
                      geometrys,
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,
-                     imageDataMap,
+                     basicSourceTextureImageDataMap,
                    ) =
                      HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,

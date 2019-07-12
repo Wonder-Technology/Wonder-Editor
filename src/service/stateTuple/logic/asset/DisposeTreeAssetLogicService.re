@@ -36,7 +36,7 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
       editorState,
     ) ?
       editorState :
-      editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+      editorState |> BasicSourceTextureImageDataMapAssetEditorService.removeData(imageDataIndex);
 
   editorState
   |> SourceTextureCacheInspectorCanvasLogicService.removeCache(
@@ -48,7 +48,7 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
 let _disposeMaterialNodeEditorDataBeforeRemoveNode =
     ({snapshotImageDataIndex}: materialNodeData, editorState) =>
   editorState
-  |> ImageDataMapAssetEditorService.removeData(snapshotImageDataIndex);
+  |> BasicSourceTextureImageDataMapAssetEditorService.removeData(snapshotImageDataIndex);
 
 let _disposeWDBNodeEditorDataBeforeRemoveNode =
     ({wdbGameObject}, (editorState, engineState)) => {
@@ -275,7 +275,7 @@ let disposeTree = ((editorState, engineState)) => {
     editorState
     |> SourceTextureCacheInspectorCanvasEditorService.clearCache
     |> TreeAssetEditorService.clearTree
-    |> ImageDataMapAssetEditorService.clearMap
+    |> BasicSourceTextureImageDataMapAssetEditorService.clearMap
     |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
     |> CurrentNodeIdAssetEditorService.clearCurrentNodeId,
     engineState,

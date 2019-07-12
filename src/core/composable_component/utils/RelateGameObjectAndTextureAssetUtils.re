@@ -189,7 +189,7 @@ let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
     editorState,
   )
   |> Js.Option.map((. {imageDataIndex}: NodeAssetType.textureNodeData) =>
-       ImageDataMapAssetEditorService.unsafeGetUint8Array(
+       BasicSourceTextureImageDataMapAssetEditorService.unsafeGetUint8Array(
          imageDataIndex,
          editorState,
        )
