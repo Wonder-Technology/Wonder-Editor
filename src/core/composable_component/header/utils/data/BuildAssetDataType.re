@@ -1,4 +1,11 @@
-type loadedImageData = (ImageType.htmlImage, string, int, string, string);
+type loadedImageData = (
+  ImageType.htmlImage,
+  string,
+  int,
+  string,
+  string,
+  Js.Typed_array.Uint8Array.t,
+);
 
 type loadedCubemapTextureImageData = {
   imageIndex: int,

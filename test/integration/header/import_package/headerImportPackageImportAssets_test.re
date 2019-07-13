@@ -381,7 +381,7 @@ let _ =
       beforeEach(() => MainEditorSceneTool.prepareScene(sandbox));
 
       testPromise("should add cubemap assets to asset tree", () => {
-        let addedCubemapNodeId1 =
+        let _ =
           ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
 
         ImportPackageTool.testImportPackage(
@@ -397,7 +397,6 @@ let _ =
       describe("should keep cubemap data not change", () => {
         let _prepare = (value, setValueFunc) => {
           let (
-            (editorState, engineState),
             (source1, source2, source3, source4, source5, source6),
             (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
             addedCubemapNodeId1,
@@ -407,14 +406,11 @@ let _ =
           let texture =
             MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
               ~nodeId=addedCubemapNodeId1,
-              ~editorState,
               (),
             );
 
-          let engineState = setValueFunc(value, texture, engineState);
-
-          editorState |> StateEditorService.setState |> ignore;
-          engineState |> StateEngineService.setState |> ignore;
+          setValueFunc(value, texture)
+          |> StateLogicService.getAndSetEngineState;
 
           (
             (source1, source2, source3, source4, source5, source6),
@@ -448,20 +444,12 @@ let _ =
           let newSource =
             CubemapTextureToolEngine.buildSource(~name=newSourceName, ());
 
-          let (
-            (editorState, engineState),
-            /* (source1, source2, source3, source4, source5, source6),
-               (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),*/
-            _,
-            _,
-            addedCubemapNodeId1,
-          ) =
+          let (_, _, addedCubemapNodeId1) =
             ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
 
           let texture =
             MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
               ~nodeId=addedCubemapNodeId1,
-              ~editorState,
               (),
             );
 
@@ -470,7 +458,6 @@ let _ =
             ~faceSource=newSource,
             ~setSourceFunc=CubemapTextureEngineService.setPYSource,
             ~setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPYImageData,
-            ~engineState,
             (),
           );
 
@@ -523,6 +510,33 @@ let _ =
           )
         );
       });
+
+      describe("should set data to cubemapTextureImageDataMap", () =>
+        testPromise("should set uint8Array", () => {
+          let _ =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                CubemapTextureImageDataMapTool.getPXImageData(
+                  MainEditorAssetCubemapNodeTool.getImageDataIndexByTextureComponent(
+                    ~textureComponent=
+                      ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                      |> ArrayService.unsafeGetFirst,
+                    (),
+                  ),
+                )
+                |> StateLogicService.getEditorState
+                |> OptionService.unsafeGet
+                |> (
+                  ({uint8Array}: ImageDataType.imageData) =>
+                    uint8Array |> Js.Option.isSome |> expect == true |> resolve
+                ),
+            (),
+          );
+        })
+      );
 
       describe("fix bug", () => {
         testPromise("support cubemap asset with no sources", () => {
