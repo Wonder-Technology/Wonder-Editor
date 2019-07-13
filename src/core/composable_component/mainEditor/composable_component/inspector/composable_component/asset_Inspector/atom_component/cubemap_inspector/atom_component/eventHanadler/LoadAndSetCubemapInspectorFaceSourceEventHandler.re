@@ -14,6 +14,12 @@ module CustomEventHandler = {
       Wonderjs.StateDataMainType.state
     ) =>
     Wonderjs.StateDataMainType.state,
+    (
+      WonderEditor.ImageDataType.cubemapTextureImageDataIndex,
+      WonderEditor.ImageDataType.imageData,
+      WonderEditor.EditorType.editorState
+    ) =>
+    WonderEditor.EditorType.editorState,
   );
   type dataTuple = ReactEventRe.Form.t;
   type return = WonderBsMost.Most.stream(unit);
@@ -72,20 +78,81 @@ module CustomEventHandler = {
   };
 
   let _loadImageFromBase64 =
-      (fileResult: CubemapInspectorType.uploadFaceSourceFileResultType) =>
+      (fileResult: CubemapInspectorType.uploadFaceSourceFileResultType) => {
+    let imgBase64 = fileResult.base64 |> FileReader.convertResultToString;
+
     Js.Promise.make((~resolve, ~reject) =>
       Image.onload(
-        fileResult.base64 |> FileReader.convertResultToString,
+        imgBase64,
         loadedImg => {
           ImageUtils.setImageName(loadedImg, fileResult.name);
 
-          resolve(. loadedImg);
+          resolve(. (loadedImg, imgBase64));
         },
       )
     );
+  };
+
+  let _buildImageData = (imageName, imgBase64, editorState) =>
+    CubemapTextureImageDataMapAssetService.buildImageData(
+      ~base64=Some(imgBase64),
+      ~uint8Array=Some(BufferUtils.convertBase64ToUint8Array(imgBase64)),
+      ~name=imageName,
+      ~mimeType=
+        ImageUtils.getImageMimeType(
+          FileNameService.getExtName(imageName),
+          editorState,
+        ),
+      ~blobObjectURL=None,
+      (),
+    );
+
+  let _setFaceSource =
+      (
+        cubemapTexture,
+        (loadedImg, imgBase64),
+        (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
+        (editorState, engineState),
+      ) => {
+    let {imageDataIndex}: NodeAssetType.cubemapNodeData =
+      CubemapNodeAssetEditorService.getDataByTextureComponent(
+        cubemapTexture,
+        editorState,
+      )
+      |> OptionService.unsafeGet;
+
+    let imageName = ImageUtils.getImageName(loadedImg);
+
+    let editorState =
+      editorState
+      |> setFaceImageDataFunc(
+           imageDataIndex,
+           _buildImageData(imageName, imgBase64, editorState),
+         );
+
+    let engineState =
+      engineState
+      |> setSourceFunc(
+           loadedImg |> ImageType.convertDomToImageElement,
+           cubemapTexture,
+         )
+      |> setFormatFunc(
+           TextureUtils.getFormat(FileNameService.getExtName(imageName)),
+           cubemapTexture,
+         )
+      |> CubemapTextureEngineService.setIsNeedUpdate(true, cubemapTexture)
+      |> StateLogicService.renderEngineStateAndReturnEngineState;
+
+    (editorState, engineState);
+  };
 
   let _fileLoad =
-      (uiState, cubemapTexture, (setSourceFunc, setFormatFunc), event) => {
+      (
+        uiState,
+        cubemapTexture,
+        (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
+        event,
+      ) => {
     let e = ReactEventType.convertReactFormEventToJsEvent(event);
     EventHelper.preventDefault(e);
 
@@ -120,26 +187,16 @@ module CustomEventHandler = {
       |> WonderBsMost.Most.flatMap(
            (fileResult: CubemapInspectorType.uploadFaceSourceFileResultType) =>
            WonderBsMost.Most.fromPromise(_loadImageFromBase64(fileResult))
-           |> WonderBsMost.Most.tap(loadedImg => {
-                let engineState = StateEngineService.unsafeGetState();
-
-                engineState
-                |> setSourceFunc(
-                     loadedImg |> ImageType.convertDomToImageElement,
-                     cubemapTexture,
-                   )
-                |> setFormatFunc(
-                     TextureUtils.getFormat(
-                       FileNameService.getExtName(fileResult.name),
-                     ),
-                     cubemapTexture,
-                   )
-                |> CubemapTextureEngineService.setIsNeedUpdate(
-                     true,
-                     cubemapTexture,
-                   )
-                |> StateLogicService.refreshEngineState;
-              })
+           |> WonderBsMost.Most.tap(((loadedImg, imgBase64))
+                =>
+                  _setFaceSource(
+                    cubemapTexture,
+                    (loadedImg, imgBase64),
+                    (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
+                  )
+                  |> StateLogicService.getAndSetState
+                  |> ignore
+                )
          )
       |> WonderBsMost.Most.tap(_ =>
            FileReader.makeSureCanLoadSameNameFileAgain(target)
@@ -151,10 +208,15 @@ module CustomEventHandler = {
   let handleSelfLogic =
       (
         (uiState, dispatchFunc),
-        (cubemapTexture, setSourceFunc, setFormatFunc),
+        (cubemapTexture, setSourceFunc, setFormatFunc, setFaceImageDataFunc),
         event,
       ) =>
-    _fileLoad(uiState, cubemapTexture, (setSourceFunc, setFormatFunc), event)
+    _fileLoad(
+      uiState,
+      cubemapTexture,
+      (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
+      event,
+    )
     |> WonderBsMost.Most.tap(_ =>
          dispatchFunc(
            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),

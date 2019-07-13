@@ -245,6 +245,7 @@ let getFlipY = CubemapTextureAPI.getCubemapTextureFlipY;
 
 let setFlipY = (filpY, texture, engineState) =>
   engineState |> CubemapTextureAPI.setCubemapTextureFlipY(texture, filpY);
+
 let initTexture = (texture, engineState) =>
   CubemapTextureAPI.initCubemapTexture(texture, engineState);
 

@@ -1,4 +1,4 @@
-let buildImageUint8ArrayMap = editorState =>
+let buildBasicSourceTextureImageUint8ArrayMap = editorState =>
   TextureNodeAssetEditorService.findAllTextureNodes(editorState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. map, textureNode) => {

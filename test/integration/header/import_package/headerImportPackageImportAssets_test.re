@@ -396,11 +396,13 @@ let _ =
 
       describe("should keep cubemap data not change", () => {
         let _prepare = (value, setValueFunc) => {
-          let addedCubemapNodeId1 =
+          let (
+            (editorState, engineState),
+            (source1, source2, source3, source4, source5, source6),
+            (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+            addedCubemapNodeId1,
+          ) =
             ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
-
-          let editorState = StateEditorService.getState();
-          let engineState = StateEngineService.unsafeGetState();
 
           let texture =
             MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
@@ -413,10 +415,15 @@ let _ =
 
           editorState |> StateEditorService.setState |> ignore;
           engineState |> StateEngineService.setState |> ignore;
+
+          (
+            (source1, source2, source3, source4, source5, source6),
+            (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+          );
         };
 
         let _test = (value, (getValueFunc, setValueFunc)) => {
-          _prepare(value, setValueFunc);
+          let _ = _prepare(value, setValueFunc);
 
           ImportPackageTool.testImportPackage(
             ~testFunc=
@@ -436,11 +443,35 @@ let _ =
         };
 
         testPromise("test source", () => {
-          let sourceName = "b3.png";
+          let newSourceName = "b3.png";
 
-          _prepare(
-            CubemapTextureToolEngine.buildSource(~name=sourceName, ()),
-            CubemapTextureEngineService.setPYSource,
+          let newSource =
+            CubemapTextureToolEngine.buildSource(~name=newSourceName, ());
+
+          let (
+            (editorState, engineState),
+            /* (source1, source2, source3, source4, source5, source6),
+               (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),*/
+            _,
+            _,
+            addedCubemapNodeId1,
+          ) =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          let texture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=addedCubemapNodeId1,
+              ~editorState,
+              (),
+            );
+
+          MainEditorAssetCubemapNodeTool.changeFaceSource(
+            ~textureComponent=texture,
+            ~faceSource=newSource,
+            ~setSourceFunc=CubemapTextureEngineService.setPYSource,
+            ~setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPYImageData,
+            ~engineState,
+            (),
           );
 
           ImportPackageTool.testImportPackage(
@@ -458,7 +489,7 @@ let _ =
                     engineState,
                   ),
                 )##name
-                |> expect == sourceName
+                |> expect == newSourceName
                 |> resolve;
               },
             (),

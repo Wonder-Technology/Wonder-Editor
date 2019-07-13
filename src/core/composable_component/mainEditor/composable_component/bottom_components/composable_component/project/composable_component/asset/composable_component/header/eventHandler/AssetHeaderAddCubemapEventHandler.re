@@ -30,12 +30,16 @@ module CustomEventHandler = {
          )
       |> CubemapTextureEngineService.initTexture(newCubemap);
 
+    let (editorState, imageDataIndex) =
+      CubemapTextureImageDataMapAssetEditorService.addEmptyData(editorState);
+
     let editorState =
       CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
         targetTreeNode,
         CubemapNodeAssetService.buildNode(
           ~nodeId=newNodeId,
           ~textureComponent=newCubemap,
+          ~imageDataIndex,
         ),
         editorState,
       );

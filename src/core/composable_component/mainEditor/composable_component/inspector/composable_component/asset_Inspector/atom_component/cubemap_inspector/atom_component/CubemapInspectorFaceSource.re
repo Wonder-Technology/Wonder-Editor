@@ -16,7 +16,7 @@ let _renderSourceImage =
       (uiState, dispatchFunc),
       cubemapTexture,
       currentSource,
-      (setSourceFunc, setFormatFunc),
+      (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
     ) =>
   <div className="texture-img">
     {Method.showSource(currentSource)}
@@ -28,7 +28,12 @@ let _renderSourceImage =
         e =>
           Method.loadAndSetSource(
             (uiState, dispatchFunc),
-            (cubemapTexture, setSourceFunc, setFormatFunc),
+            (
+              cubemapTexture,
+              setSourceFunc,
+              setFormatFunc,
+              setFaceImageDataFunc,
+            ),
             e,
           )
           |> WonderBsMost.Most.drain
@@ -41,7 +46,7 @@ let render =
     (
       (uiState, dispatchFunc),
       (cubemapTexture, label, title, currentSource),
-      (setSourceFunc, setFormatFunc),
+      (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
@@ -63,7 +68,7 @@ let render =
           (uiState, dispatchFunc),
           cubemapTexture,
           currentSource,
-          (setSourceFunc, setFormatFunc),
+          (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
         )
       }
     </div>
@@ -79,6 +84,7 @@ let make =
       ~currentSource,
       ~setSourceFunc,
       ~setFormatFunc,
+      ~setFaceImageDataFunc,
       ~title: option(string)=?,
       _children,
     ) => {
@@ -87,6 +93,6 @@ let make =
     render(
       (uiState, dispatchFunc),
       (cubemapTexture, label, title, currentSource),
-      (setSourceFunc, setFormatFunc),
+      (setSourceFunc, setFormatFunc, setFaceImageDataFunc),
     ),
 };

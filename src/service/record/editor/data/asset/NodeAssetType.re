@@ -25,17 +25,18 @@ type wdbNodeData = {
 
 type textureNodeData = {
   textureComponent: int,
-  imageDataIndex: int,
+  imageDataIndex: ImageDataType.basicSourceTextureImageDataIndex,
 };
 
 type cubemapNodeData = {
   textureComponent: int,
+  imageDataIndex: ImageDataType.cubemapTextureImageDataIndex,
   /* pxImageDataIndex: option(int),
-  nxImageDataIndex: option(int),
-  pyImageDataIndex: option(int),
-  nyImageDataIndex: option(int),
-  pzImageDataIndex: option(int),
-  nzImageDataIndex: option(int), */
+     nxImageDataIndex: option(int),
+     pyImageDataIndex: option(int),
+     nyImageDataIndex: option(int),
+     pzImageDataIndex: option(int),
+     nzImageDataIndex: option(int), */
 };
 
 type materialNodeData = {

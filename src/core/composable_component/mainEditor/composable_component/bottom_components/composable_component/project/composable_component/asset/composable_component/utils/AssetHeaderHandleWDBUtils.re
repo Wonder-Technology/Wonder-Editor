@@ -42,20 +42,19 @@ let handleAssetWDBType =
          (
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
+           extractedCubemapAssetDataArr,
            extractedScriptEventFunctionAssetEntriesArr,
            extractedScriptAttributeAssetEntriesArr,
          ),
          (editorState, engineState),
        ) =
          ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
-           allGameObjects,
-           basicSourceTextureImageUint8ArrayDataMap,
+           (allGameObjects, skyboxCubemapOpt),
+           (
+             basicSourceTextureImageUint8ArrayDataMap,
+             cubemapTextureImageUint8ArrayDataMap,
+           ),
            (editorState, engineState),
-         );
-
-       let extractedCubemapAssetArr =
-         ExtractAndRelateAssetsUtils.Extract.extractCubemapAssets(
-           skyboxCubemapOpt,
          );
 
        let defaultGeometryData =
@@ -82,7 +81,7 @@ let handleAssetWDBType =
          ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
-           extractedCubemapAssetArr,
+           extractedCubemapAssetDataArr,
            extractedScriptEventFunctionAssetEntriesArr,
            extractedScriptAttributeAssetEntriesArr,
            (editorState, engineState),

@@ -102,12 +102,14 @@ let _ =
           (),
         );
 
-        MainEditorAssetCubemapNodeTool.setAllSources(
-          ~nodeId=addedCubemapNodeId1,
-          (),
-        )
-        |> StateEngineService.setState
-        |> ignore;
+        let ((editorState, engineState), _, _) =
+          MainEditorAssetCubemapNodeTool.setAllSources(
+            ~nodeId=addedCubemapNodeId1,
+            (),
+          );
+
+        editorState |> StateEditorService.setState |> ignore;
+        engineState |> StateEngineService.setState |> ignore;
 
         HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
           MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(

@@ -5,7 +5,7 @@ let _buildDefaultMaterialSnapshotUint8Array = () =>
     OperateMaterialLogicService.getDefaultSnapshotBase64(),
   );
 
-let _buildImageDataUint8Array = editorState =>
+let _buildBasicSourceTextureImageDataUint8ArrayToMap = editorState =>
   BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.mapValid(
        (. data: ImageDataType.imageData) =>
@@ -25,22 +25,25 @@ let _export = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let editorState = editorState |> _buildImageDataUint8Array;
+  let editorState =
+    editorState |> _buildBasicSourceTextureImageDataUint8ArrayToMap;
 
-  let imageUint8ArrayMap =
-    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState);
+  let basicSourceTextureImageUint8ArrayMap =
+    Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+      editorState,
+    );
 
   let (engineState, sceneGraphArrayBuffer) =
     HeaderExportSceneWDBUtils.generateSceneWDB(
       false,
       GenerateSceneGraphEngineService.generateWDBForWPK,
-      Js.Nullable.return(imageUint8ArrayMap),
+      Js.Nullable.return(basicSourceTextureImageUint8ArrayMap),
       engineState,
     );
 
   let (engineState, asbArrayBuffer) =
     HeaderExportASBUtils.generateASB(
-      imageUint8ArrayMap,
+      basicSourceTextureImageUint8ArrayMap,
       (editorState, engineState),
     );
 

@@ -8,6 +8,8 @@ let isDefaultLightMaterialName = ConverterAPI.isDefaultLightMaterialName;
 
 let isDefaultBasicMaterialName = ConverterAPI.isDefaultBasicMaterialName;
 
-let isDefaultTextureName = ConverterAPI.isDefaultTextureName;
+let isDefaultBasicSourceTextureName = ConverterAPI.isDefaultBasicSourceTextureName;
+
+let isDefaultCubemapTextureName = ConverterAPI.isDefaultCubemapTextureName;
 
 let isDefaultGeometryName = ConverterAPI.isDefaultGeometryName;

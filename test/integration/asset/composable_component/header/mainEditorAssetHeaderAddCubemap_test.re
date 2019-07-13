@@ -123,39 +123,38 @@ let _ =
       |> expect == glTexture;
     });
 
-    /* test("set face source imageDataIndex to None", () => {
-         let assetTreeData =
-           MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
-         let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+    test("add empty data to cubemapTextureImageDataMap", () => {
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
+      let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
 
-         MainEditorAssetHeaderOperateNodeTool.addCubemap();
+      MainEditorAssetHeaderOperateNodeTool.addCubemap();
 
-         let editorState = StateEditorService.getState();
+      let editorState = StateEditorService.getState();
 
-         let {
-           pxImageDataIndex,
-           nxImageDataIndex,
-           pyImageDataIndex,
-           nyImageDataIndex,
-           pzImageDataIndex,
-           nzImageDataIndex,
-         }: NodeAssetType.cubemapNodeData =
-           OperateTreeAssetEditorService.unsafeFindNodeById(
-             addedCubemapNodeId,
-             editorState,
-           )
-           |> CubemapNodeAssetService.getNodeData;
+      let {imageDataIndex}: NodeAssetType.cubemapNodeData =
+        OperateTreeAssetEditorService.unsafeFindNodeById(
+          addedCubemapNodeId,
+          editorState,
+        )
+        |> CubemapNodeAssetService.getNodeData;
 
-         (
-           pxImageDataIndex,
-           nxImageDataIndex,
-           pyImageDataIndex,
-           nyImageDataIndex,
-           pzImageDataIndex,
-           nzImageDataIndex,
-         )
-         |> expect == (None, None, None, None, None, None);
-       }); */
+      CubemapTextureImageDataMapAssetEditorService.unsafeGetData(
+        imageDataIndex,
+        editorState,
+      )
+      |> expect
+      == (
+           {
+             pxImageData: None,
+             nxImageData: None,
+             pyImageData: None,
+             nyImageData: None,
+             pzImageData: None,
+             nzImageData: None,
+           }: ImageDataType.cubemapTextureImageData
+         );
+    });
 
     describe("test name", () => {
       test("test default name", () => {

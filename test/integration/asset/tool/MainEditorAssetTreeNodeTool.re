@@ -165,13 +165,37 @@ let insertCubemapNode =
     (
       nodeId,
       parentFolderNodeId,
-      textureComponent,
+      cubemapName,
+      /* textureComponent, */
       (editorState, engineState),
-    ) => (
-  editorState
-  |> OperateTreeAssetEditorService.insertNode(
-       parentFolderNodeId,
-       CubemapNodeAssetService.buildNode(~nodeId, ~textureComponent),
-     ),
-  engineState,
-);
+    ) => {
+  /* let (textureComponent, engineState) =
+     TextureUtils.createAndInitTexture(textureName, ".png", engineState); */
+
+  let (engineState, newCubemap) =
+    CubemapTextureEngineService.create(engineState);
+
+  let engineState =
+    engineState
+    |> CubemapTextureEngineService.setCubemapTextureName(
+         cubemapName,
+         newCubemap,
+       )
+    |> CubemapTextureEngineService.initTexture(newCubemap);
+
+  let (editorState, imageDataIndex) =
+    CubemapTextureImageDataMapAssetEditorService.addEmptyData(editorState);
+
+  (
+    editorState
+    |> OperateTreeAssetEditorService.insertNode(
+         parentFolderNodeId,
+         CubemapNodeAssetService.buildNode(
+           ~nodeId,
+           ~textureComponent=newCubemap,
+           ~imageDataIndex,
+         ),
+       ),
+    engineState,
+  );
+};

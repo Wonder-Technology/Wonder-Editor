@@ -11,4 +11,4 @@ let getMapValidLength = editorState =>
   |> Js.Array.length;
 
 let getNewImageDataMapIndex = (~editorState=StateEditorService.getState(), ()) =>
-  IndexAssetEditorService.getImageDataMapIndex(editorState) |> succ;
+  IndexAssetEditorService.getBasicSourceTextureImageDataMapIndex(editorState) |> succ;

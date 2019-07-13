@@ -47,7 +47,7 @@ let addImageDataIfBase64NotExist = (base64, fileName, mimeType, editorState) =>
   switch (_getImageDataIndexByBase64(base64, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
-      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+      IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(editorState);
 
     (
       editorState
@@ -88,7 +88,7 @@ let addImageDataIfUint8ArrayNotExist =
   switch (_getImageDataIndexByUint8Array(uint8Array, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
-      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+      IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(editorState);
 
     (
       editorState

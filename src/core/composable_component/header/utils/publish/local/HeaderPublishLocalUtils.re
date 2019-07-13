@@ -327,7 +327,7 @@ module Publish = {
       false,
       GenerateSceneGraphEngineService.generateSceneWDB,
       Js.Nullable.return(
-        Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+        Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(editorState),
       ),
       engineState,
     );

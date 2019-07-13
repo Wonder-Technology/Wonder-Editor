@@ -152,6 +152,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setPXSource
       setFormatFunc=CubemapTextureEngineService.setPXFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPXImageData
     />
     <CubemapInspectorFaceSource
       uiState
@@ -170,6 +171,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setNXSource
       setFormatFunc=CubemapTextureEngineService.setNXFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setNXImageData
     />
     <CubemapInspectorFaceSource
       uiState
@@ -188,6 +190,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setPYSource
       setFormatFunc=CubemapTextureEngineService.setPYFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPYImageData
     />
     <CubemapInspectorFaceSource
       uiState
@@ -206,6 +209,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setNYSource
       setFormatFunc=CubemapTextureEngineService.setNYFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setNYImageData
     />
     <CubemapInspectorFaceSource
       uiState
@@ -224,6 +228,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setPZSource
       setFormatFunc=CubemapTextureEngineService.setPZFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPZImageData
     />
     <CubemapInspectorFaceSource
       uiState
@@ -242,6 +247,7 @@ let render =
       }
       setSourceFunc=CubemapTextureEngineService.setNZSource
       setFormatFunc=CubemapTextureEngineService.setNZFormat
+      setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setNZImageData
     />
     {Method.renderWrapSSelect(dispatchFunc, textureComponent, languageType)}
     {Method.renderWrapTSelect(dispatchFunc, textureComponent, languageType)}

@@ -3,7 +3,7 @@ open Js.Promise;
 let _createWDBNodeAndSnapshot =
     (parentFolderNode, (wdbNodeId, name, gameObject), editorState) => {
   let (editorState, newImageDataIndex) =
-    editorState |> IndexAssetEditorService.generateImageDataMapIndex;
+    editorState |> IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex;
 
   editorState
   |> OperateTreeAssetEditorService.insertNode(
