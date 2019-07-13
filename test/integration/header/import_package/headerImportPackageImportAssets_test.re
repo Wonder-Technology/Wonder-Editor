@@ -375,6 +375,34 @@ let _ =
           )
         );
       });
+
+      describe("should set data to basicSourceTextureImageDataMap", () =>
+        testPromise("should set uint8Array", () =>
+          MainEditorAssetUploadTool.loadOneTexture()
+          |> then_(uploadedTextureNodeId =>
+               ImportPackageTool.testImportPackage(
+                 ~testFunc=
+                   () =>
+                     BasicSourceTextureImageDataMapTool.getDataByTextureNode(
+                       ImportPackageTool.getImportedTextureAssetNodes()
+                       |> ArrayService.unsafeGetFirst,
+                     )
+                     |> StateLogicService.getEditorState
+                     |> (
+                       ({uint8Array}: ImageDataType.imageData) =>
+                       {
+                         uint8Array
+                         |> OptionService.unsafeGet
+                         |> Uint8Array.length
+                         |> expect == 3
+                         |> resolve
+                       }
+                     ),
+                 (),
+               )
+             )
+        )
+      );
     });
 
     describe("test import cubemap assets", () => {
@@ -531,7 +559,11 @@ let _ =
                 |> OptionService.unsafeGet
                 |> (
                   ({uint8Array}: ImageDataType.imageData) =>
-                    uint8Array |> Js.Option.isSome |> expect == true |> resolve
+                    uint8Array
+                    |> OptionService.unsafeGet
+                    |> Uint8Array.length
+                    |> expect == 156
+                    |> resolve
                 ),
             (),
           );

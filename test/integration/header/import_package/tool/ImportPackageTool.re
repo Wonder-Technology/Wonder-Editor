@@ -102,9 +102,13 @@ let getImporteMaterialAssetLightMaterialComponents = () =>
        materialComponent;
      });
 
-let getImportedTextureAssetTextureComponents = () =>
+
+let getImportedTextureAssetNodes = () =>
   TextureNodeAssetEditorService.findAllTextureNodes
-  |> StateLogicService.getEditorState
+  |> StateLogicService.getEditorState;
+
+let getImportedTextureAssetTextureComponents = () =>
+  getImportedTextureAssetNodes()
   |> Js.Array.map(node => {
        let {textureComponent}: NodeAssetType.textureNodeData =
          TextureNodeAssetService.getNodeData(node);

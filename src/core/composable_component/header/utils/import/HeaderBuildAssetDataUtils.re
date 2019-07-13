@@ -329,7 +329,7 @@ let buildImageData =
                 /* TODO set uint8Array here? */
                 BasicSourceTextureImageDataMapAssetService.buildData(
                   ~base64=None,
-                  ~uint8Array=None,
+                  ~uint8Array=Some(uint8Array),
                   ~blobObjectURL=Some(blobObjectURL),
                   ~name,
                   ~mimeType,
