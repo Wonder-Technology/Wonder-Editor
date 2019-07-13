@@ -648,7 +648,11 @@ let buildCubemapData =
            |> CubemapTextureEngineService.setPZType(pzType, cubemap)
            |> CubemapTextureEngineService.setNZType(nzType, cubemap)
            |> CubemapTextureEngineService.setFlipY(flipY, cubemap)
-           |> CubemapTextureEngineService.setCubemapTextureName(name, cubemap);
+           |> CubemapTextureEngineService.setCubemapTextureName(
+                name,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.initTexture(cubemap);
 
          let imageMapData =
            imageMap
