@@ -87,8 +87,8 @@ let _ =
       );
     });
 
-    describe("test skybox", () =>
-      testPromise("set package->skybox->cubemap", () => {
+    describe("test skybox", () => {
+      let _prepare = sandbox => {
         let _ = WDBTool.prepareFakeCanvas(sandbox);
         let _ = MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
         let addedCubemapNodeId1 = MainEditorAssetIdTool.getNewAssetId();
@@ -122,6 +122,12 @@ let _ =
 
         HeaderSettingTool.Scene.Skybox.removeCubemap();
 
+        (wpkArrayBuffer, cubemapName);
+      };
+
+      testPromise("set package->skybox->cubemap", () => {
+        let (wpkArrayBuffer, cubemapName) = _prepare(sandbox);
+
         ImportPackageTool.testImportPackageWithoutExport(
           ~wpkArrayBuffer,
           ~testFunc=
@@ -138,8 +144,67 @@ let _ =
             },
           (),
         );
-      })
-    );
+      });
+
+      describe("relate scene skybox->cubemap and cubemap assets", () => {
+        testPromise(
+          "should set the corresponding one of cubemap assets to scene skybox",
+          () => {
+          let (wpkArrayBuffer, cubemapName) = _prepare(sandbox);
+
+          ImportPackageTool.testImportPackageWithoutExport(
+            ~wpkArrayBuffer,
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                (
+                  ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                  |> Js.Array.length,
+                  SceneEngineService.getCubemapTexture(engineState)
+                  |> OptionService.unsafeGet,
+                )
+                |> expect
+                == (
+                     1,
+                     ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                     |> ArrayService.unsafeGetFirst,
+                   )
+                |> resolve;
+              },
+            (),
+          );
+        });
+        testPromise("should init scene skybox->cubemap", () => {
+          let _ = WDBTool.prepareFakeCanvas(sandbox);
+          let glTexture = Obj.magic(1);
+          let createTexture = Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+          createTexture |> returns(glTexture);
+          FakeGlToolEngine.setFakeGl(
+            FakeGlToolEngine.buildFakeGl(~sandbox, ~createTexture, ()),
+          )
+          |> StateLogicService.getAndSetEngineState;
+
+          let (wpkArrayBuffer, cubemapName) = _prepare(sandbox);
+
+          ImportPackageTool.testImportPackageWithoutExport(
+            ~wpkArrayBuffer,
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+                CubemapTextureToolEngine.unsafeGetGlTexture(
+                  SceneEngineService.getCubemapTexture(engineState)
+                  |> OptionService.unsafeGet,
+                  engineState,
+                )
+                |> expect == glTexture
+                |> resolve;
+              },
+            (),
+          );
+        });
+      });
+    });
 
     describe("relate scene gameObjects and material assets", () => {
       testPromise(

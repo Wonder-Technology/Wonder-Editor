@@ -232,13 +232,6 @@ let _init = allWDBGameObjectArrRef => {
      );
 };
 
-let _setSkyboxCubemap = (cubemapTextureOpt, engineState) =>
-  switch (cubemapTextureOpt) {
-  | None => engineState
-  | Some(cubemapTexture) =>
-    engineState |> SceneEngineService.setCubemapTexture(cubemapTexture)
-  };
-
 let _import = result => {
   _disposeAssets();
 
@@ -362,8 +355,15 @@ let _import = result => {
                 StateEditorService.getStateIsDebug(),
               );
 
-              _setSkyboxCubemap(skyboxCubemapOpt)
-              |> StateLogicService.getAndSetEngineState;
+              StateEngineService.unsafeGetState()
+              |> ImportPackageRelateSceneSkyboxAndCubemapAssetUtils.setSkyboxCubemap(
+                   ImportPackageRelateSceneSkyboxAndCubemapAssetUtils.getRelatedSkyboxCubemapOptFromCubemapAssets(
+                     skyboxCubemapOpt,
+                     (StateEditorService.getState(), engineState),
+                   ),
+                 )
+              |> StateEngineService.setState
+              |> ignore;
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 HierarchyGameObjectEngineService.getAllGameObjects(
