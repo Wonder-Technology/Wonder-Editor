@@ -16,6 +16,18 @@ let getImageDataIndex =
   imageDataIndex;
 };
 
+let getImageDataIndexByTextureComponent =
+    (~textureComponent, ~editorState=StateEditorService.getState(), ()) => {
+  let {imageDataIndex}: NodeAssetType.cubemapNodeData =
+    CubemapNodeAssetEditorService.getDataByTextureComponent(
+      textureComponent,
+      editorState,
+    )
+    |> OptionService.unsafeGet;
+
+  imageDataIndex;
+};
+
 let getCubemapName =
     (
       ~nodeId,

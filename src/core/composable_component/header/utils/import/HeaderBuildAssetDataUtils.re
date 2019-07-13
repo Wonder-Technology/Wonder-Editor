@@ -44,7 +44,14 @@ let _loadBasicSourceTextureImages = (buffer, bufferViews, images) =>
                    image;
                  })
               |> WonderBsMost.Most.map(image =>
-                   (image, blobObjectURL, imageIndex, name, mimeType)
+                   (
+                     image,
+                     blobObjectURL,
+                     imageIndex,
+                     name,
+                     mimeType,
+                     Uint8Array.fromBuffer(arrayBuffer),
+                   )
                  ),
             );
        },
@@ -76,7 +83,15 @@ let _loadCubemapTextureFaceImage =
            image;
          })
       |> WonderBsMost.Most.map(image =>
-           (image, blobObjectURL, imageIndex, name, mimeType)->Some
+           (
+             image,
+             blobObjectURL,
+             imageIndex,
+             name,
+             mimeType,
+             Uint8Array.fromBuffer(arrayBuffer),
+           )
+           ->Some
          );
     };
 
@@ -181,7 +196,7 @@ let _loadCubemapTextureImages = (buffer, bufferViews, images) =>
      )
   |> WonderBsMost.Most.mergeArray;
 
-let _convertLoadedImageDataToImage = ((image, _, _, _, _)) => image;
+let _convertLoadedImageDataToImage = ((image, _, _, _, _, _)) => image;
 
 let _convertLoadedCubemapTextureImageDataToCubemapImageMapData =
     (
@@ -228,10 +243,10 @@ let _convertLoadedCubemapTextureImageDataToCubemapImageMapData =
 };
 
 let _convertLoadedImageDataToImageData =
-    ((image, blobObjectURL, _, name, mimeType)) =>
+    ((image, blobObjectURL, _, name, mimeType, uint8Array)) =>
   CubemapTextureImageDataMapAssetService.buildImageData(
     ~base64=None,
-    ~uint8Array=None,
+    ~uint8Array=Some(uint8Array),
     ~blobObjectURL=Some(blobObjectURL),
     ~name,
     ~mimeType,
@@ -293,7 +308,7 @@ let buildImageData =
   |> WonderBsMost.Most.reduce(
        (
          (imageMap, imageDataIndexMap, editorState),
-         (image, blobObjectURL, imageIndex, name, mimeType),
+         (image, blobObjectURL, imageIndex, name, mimeType, uint8Array),
        ) => {
          let (editorState, imageDataIndex) =
            IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
@@ -311,6 +326,7 @@ let buildImageData =
            editorState
            |> BasicSourceTextureImageDataMapAssetEditorService.setData(
                 imageDataIndex,
+                /* TODO set uint8Array here? */
                 BasicSourceTextureImageDataMapAssetService.buildData(
                   ~base64=None,
                   ~uint8Array=None,
@@ -340,17 +356,7 @@ let buildImageData =
        |> _loadCubemapTextureImages(buffer, bufferViews)
        |> WonderBsMost.Most.reduce(
             (
-              (
-                /* pxImageMap,
-                   nxImageMap,
-                   pyImageMap,
-                   nyImageMap,
-                   pzImageMap,
-                   nzImageMap, */
-                imageMap,
-                imageDataIndexMap,
-                editorState,
-              ),
+              (imageMap, imageDataIndexMap, editorState),
               (
                 {
                   imageIndex,

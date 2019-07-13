@@ -194,8 +194,9 @@ module Cubemap = {
     ) =
       MainEditorAssetCubemapNodeTool.setAllSources(~nodeId=addedNodeId, ());
 
+    (editorState, engineState) |> StateLogicService.setState;
+
     (
-      (editorState, engineState),
       (source1, source2, source3, source4, source5, source6),
       (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
       addedNodeId,
