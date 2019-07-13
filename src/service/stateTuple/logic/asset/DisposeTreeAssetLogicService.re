@@ -36,7 +36,10 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
       editorState,
     ) ?
       editorState :
-      editorState |> BasicSourceTextureImageDataMapAssetEditorService.removeData(imageDataIndex);
+      editorState
+      |> BasicSourceTextureImageDataMapAssetEditorService.removeData(
+           imageDataIndex,
+         );
 
   editorState
   |> SourceTextureCacheInspectorCanvasLogicService.removeCache(
@@ -45,10 +48,17 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
      );
 };
 
+let _disposeCubemapNodeEditorDataBeforeRemoveNode =
+    ({imageDataIndex}: NodeAssetType.cubemapNodeData, editorState) =>
+  editorState
+  |> CubemapTextureImageDataMapAssetEditorService.removeData(imageDataIndex);
+
 let _disposeMaterialNodeEditorDataBeforeRemoveNode =
     ({snapshotImageDataIndex}: materialNodeData, editorState) =>
   editorState
-  |> BasicSourceTextureImageDataMapAssetEditorService.removeData(snapshotImageDataIndex);
+  |> BasicSourceTextureImageDataMapAssetEditorService.removeData(
+       snapshotImageDataIndex,
+     );
 
 let _disposeWDBNodeEditorDataBeforeRemoveNode =
     ({wdbGameObject}, (editorState, engineState)) => {
@@ -74,7 +84,9 @@ let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
           engineState,
           editorState,
         ),
-    ~cubemapNodeFunc=(_, _) => editorState,
+    ~cubemapNodeFunc=
+      (_, nodeData) =>
+        _disposeCubemapNodeEditorDataBeforeRemoveNode(nodeData, editorState),
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEditorDataBeforeRemoveNode(nodeData, editorState),

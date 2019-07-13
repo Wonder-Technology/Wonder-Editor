@@ -149,6 +149,55 @@ let _ =
           LoadTool.buildFakeLoadImage(.);
         });
 
+        testPromise("set image data to cubemapTextureImageDataMap", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+          let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+          MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+          let cubemapTexture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=addedCubemapNodeId,
+              (),
+            );
+
+          let imgName = "1.png";
+          let imgSrc = ImportPackageTool.buildBase64_2();
+
+          CubemapInspectorTool.loadAndSetFaceSource(
+            ~imgName,
+            ~imgSrc,
+            ~cubemapTexture,
+            ~setSourceFunc=CubemapTextureEngineService.setPXSource,
+            ~setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPXImageData,
+            (),
+          )
+          |> then_(_ => {
+               let imageDataIndex =
+                 MainEditorAssetCubemapNodeTool.getImageDataIndex(
+                   ~nodeId=addedCubemapNodeId,
+                   (),
+                 );
+
+               CubemapTextureImageDataMapTool.getPXImageData(imageDataIndex)
+               |> StateLogicService.getEditorState
+               |> OptionService.unsafeGet
+               |> expect
+               == (
+                    {
+                      base64: Some(imgSrc),
+                      uint8Array:
+                        Some(Js.Typed_array.Uint8Array.make([|109, 182|])),
+                      blobObjectURL: None,
+                      name: imgName,
+                      mimeType: "image/png",
+                    }: ImageDataType.imageData
+                  )
+               |> resolve;
+             });
+        });
+
         testPromise("set source name and src", () => {
           let assetTreeData =
             MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();

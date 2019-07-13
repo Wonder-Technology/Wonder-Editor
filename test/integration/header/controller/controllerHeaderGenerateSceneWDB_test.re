@@ -21,7 +21,7 @@ let _ =
           ~isSceneRoot=false,
           ~generateWDBFunc=GenerateSceneGraphEngineService.generateSceneWDB,
           ~imageUint8ArrayMap=Js.Nullable.return(
-                                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                                Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
                                   StateEditorService.getState(),
                                 ),
                               ),

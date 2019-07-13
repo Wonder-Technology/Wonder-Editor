@@ -146,7 +146,7 @@ module Method = {
     TextureNodeAssetEditorService.findAllTextureNodes(editorState)
     |> _sortByName(engineState)
     |> ArrayService.traverseSameDataResultAndCollectByApply(textureNode => {
-         let {textureComponent, imageDataIndex} =
+         let {textureComponent, imageDataIndex}: NodeAssetType.textureNodeData =
            TextureNodeAssetService.getNodeData(textureNode);
          let nodeId = NodeAssetService.getNodeId(~node=textureNode);
 

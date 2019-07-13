@@ -9,20 +9,42 @@ let setNodeIndex = (index, editorState) => {
     editorState.assetRecord |> IndexAssetService.setNodeIndex(index),
 };
 
-let getImageDataMapIndex = editorState =>
-  editorState.assetRecord |> IndexAssetService.getImageDataMapIndex;
+let getBasicSourceTextureImageDataMapIndex = editorState =>
+  editorState.assetRecord
+  |> IndexAssetService.getBasicSourceTextureImageDataMapIndex;
 
-let setImageDataMapIndex = (index, editorState) => {
+let setBasicSourceTextureImageDataMapIndex = (index, editorState) => {
   ...editorState,
   assetRecord:
-    editorState.assetRecord |> IndexAssetService.setImageDataMapIndex(index),
+    editorState.assetRecord
+    |> IndexAssetService.setBasicSourceTextureImageDataMapIndex(index),
 };
 
-let generateImageDataMapIndex = editorState => {
+let generateBasicSourceTextureImageDataMapIndex = editorState => {
   let (newIndex, index) =
-    IndexAssetService.generateImageDataMapIndex(
-      getImageDataMapIndex(editorState),
+    IndexAssetService.generateBasicSourceTextureImageDataMapIndex(
+      getBasicSourceTextureImageDataMapIndex(editorState),
     );
 
-  (setImageDataMapIndex(newIndex, editorState), index);
+  (setBasicSourceTextureImageDataMapIndex(newIndex, editorState), index);
+};
+
+let getCubemapTextureImageDataMapIndex = editorState =>
+  editorState.assetRecord
+  |> IndexAssetService.getCubemapTextureImageDataMapIndex;
+
+let setCubemapTextureImageDataMapIndex = (index, editorState) => {
+  ...editorState,
+  assetRecord:
+    editorState.assetRecord
+    |> IndexAssetService.setCubemapTextureImageDataMapIndex(index),
+};
+
+let generateCubemapTextureImageDataMapIndex = editorState => {
+  let (newIndex, index) =
+    IndexAssetService.generateCubemapTextureImageDataMapIndex(
+      getCubemapTextureImageDataMapIndex(editorState),
+    );
+
+  (setCubemapTextureImageDataMapIndex(newIndex, editorState), index);
 };

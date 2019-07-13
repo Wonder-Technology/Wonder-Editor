@@ -4,7 +4,7 @@ let _isTextureNameEqual = (name1, texture2, engineState) =>
     texture2,
     (
       BasicSourceTextureEngineService.getBasicSourceTextureName,
-      ConverterEngineService.isDefaultTextureName,
+      ConverterEngineService.isDefaultBasicSourceTextureName,
     ),
     engineState,
   );

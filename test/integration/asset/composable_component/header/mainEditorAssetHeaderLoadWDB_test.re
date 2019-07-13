@@ -918,43 +918,59 @@ let _ =
             })
           );
 
-          describe("else", () =>
-            describe("not relate them", () =>
-              testPromise(
-                "if has one cubemap with same data in the same dir, extracted new one with unique name",
-                () =>
-                MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=sceneWDBArrayBuffer^,
-                  (),
-                )
-                |> then_(uploadedWDBNodeId1 =>
-                     MainEditorAssetUploadTool.loadOneWDB(
-                       ~arrayBuffer=sceneWDBArrayBuffer^,
-                       (),
-                     )
-                     |> then_(uploadedWDBNodeId2 => {
-                          let editorState = StateEditorService.getState();
-                          let engineState =
-                            StateEngineService.unsafeGetState();
-
-                          MainEditorAssetTreeTool.Select.selectFolderNode(
-                            ~nodeId=
-                              MainEditorAssetTreeTool.findNodeIdByName(
-                                "Cubemaps",
-                                (editorState, engineState),
-                              )
-                              |> OptionService.unsafeGet,
-                            (),
-                          );
-
-                          BuildComponentTool.buildAssetChildrenNode()
-                          |> ReactTestTool.createSnapshotAndMatch
-                          |> resolve;
-                        })
-                   )
+          describe("else", () => {
+            testPromise("not extracted new one", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
               )
-            )
-          );
+              |> then_(uploadedWDBNodeId1 =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=sceneWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId2 => {
+                        let editorState = StateEditorService.getState();
+                        let engineState = StateEngineService.unsafeGetState();
+
+                        MainEditorAssetTreeTool.Select.selectFolderNode(
+                          ~nodeId=
+                            MainEditorAssetTreeTool.findNodeIdByName(
+                              "Cubemaps",
+                              (editorState, engineState),
+                            )
+                            |> OptionService.unsafeGet,
+                          (),
+                        );
+
+                        CubemapNodeAssetEditorService.findAllCubemapNodes(
+                          editorState,
+                        )
+                        |> Js.Array.length
+                        |> expect == 1
+                        |> resolve;
+                      })
+                 )
+            );
+            testPromise("not set to scene skybox", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId1 =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=sceneWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId2 =>
+                        SceneEngineService.getCubemapTexture
+                        |> StateLogicService.getEngineStateToGetData
+                        |> expect == None
+                        |> resolve
+                      )
+                 )
+            );
+          });
         });
 
         describe("extract script event function assets", () => {

@@ -70,15 +70,22 @@ let _buildFakeCanvas = (sandbox, base64) => {
   canvasDom;
 };
 
-let prepareFakeCanvas = sandbox => {
-  open Sinon;
-
+let buildCubemapAllFaceSourceBase64 = () => {
   let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
   let base64_2 = "data:image/jpeg;base64,bbb";
   let base64_3 = "data:image/png;base64,aaa";
   let base64_4 = "data:image/png;base64,ccc";
   let base64_5 = "data:image/png;base64,ddd";
   let base64_6 = "data:image/jpeg;base64,ccc";
+
+  (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6);
+};
+
+let prepareFakeCanvas = sandbox => {
+  open Sinon;
+
+  let (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6) =
+    buildCubemapAllFaceSourceBase64();
   let base64_7 = "data:image/png;base64,azc";
 
   let base64_8 = "data:image/jpeg;base64,bb2";
@@ -183,7 +190,9 @@ let generateWDB = buildWDBGameObjectFunc => {
         rootGameObject,
         true,
         Js.Nullable.return(
-          Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+          Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+            editorState,
+          ),
         ),
       ),
       GenerateSceneGraphEngineService.generateSceneWDB,
@@ -200,7 +209,7 @@ let generateWDB = buildWDBGameObjectFunc => {
        ~isSceneRoot=false,
        ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
        ~imageUint8ArrayMap=Js.Nullable.return(
-                             Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                             Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
                                StateEditorService.getState(),
                              ),
                            ),
@@ -526,7 +535,7 @@ module Cubemap = {
         engineState,
       );
 
-    let engineState =
+    let (engineState, _) =
       CubemapTextureToolEngine.setAllSources(
         ~engineState,
         ~texture=cubemap,

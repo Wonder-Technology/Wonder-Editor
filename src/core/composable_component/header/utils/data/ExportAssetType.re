@@ -2,11 +2,13 @@ type bufferViewIndex = int;
 
 type textureIndex = int;
 
-type imageIndex = int;
+type basicSourceTextureImageIndex = int;
+
+type cubemapTextureImageIndex = int;
 
 type texture = {
   path: string,
-  source: imageIndex,
+  source: basicSourceTextureImageIndex,
   name: string,
   magFilter: int,
   minFilter: int,
@@ -19,12 +21,13 @@ type texture = {
 
 type cubemap = {
   path: string,
-  pxSource: option(imageIndex),
-  nxSource: option(imageIndex),
-  pySource: option(imageIndex),
-  nySource: option(imageIndex),
-  pzSource: option(imageIndex),
-  nzSource: option(imageIndex),
+  /* pxSource: option(cubemapTextureImageIndex),
+     nxSource: option(cubemapTextureImageIndex),
+     pySource: option(cubemapTextureImageIndex),
+     nySource: option(cubemapTextureImageIndex),
+     pzSource: option(cubemapTextureImageIndex),
+     nzSource: option(cubemapTextureImageIndex), */
+  source: cubemapTextureImageIndex,
   name: string,
   magFilter: int,
   minFilter: int,
@@ -49,13 +52,24 @@ type wdb = {
   name: string,
   path: string,
   bufferView: bufferViewIndex,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
 };
 
 type image = {
   name: string,
   bufferView: bufferViewIndex,
   mimeType: string,
+};
+
+type basicSourceTextureImage = image;
+
+type cubemapTextureImage = {
+  pxImage: option(image),
+  nxImage: option(image),
+  pyImage: option(image),
+  nyImage: option(image),
+  pzImage: option(image),
+  nzImage: option(image),
 };
 
 /* type magFilter = Wonderjs.TextureType.filter;
@@ -76,14 +90,14 @@ type bufferView = {
 type basicMaterial = {
   name: string,
   path: string,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
   color: array(float),
 };
 
 type lightMaterial = {
   name: string,
   path: string,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
   diffuseColor: array(float),
   diffuseMap: option(textureIndex),
   shininess: float,
@@ -117,7 +131,8 @@ type assets = {
   copyright,
   textures: array(texture),
   cubemaps: array(cubemap),
-  images: array(image),
+  basicSourceTextureImages: array(basicSourceTextureImage),
+  cubemapTextureImages: array(cubemapTextureImage),
   basicMaterials: array(basicMaterial),
   lightMaterials: array(lightMaterial),
   wdbs: array(wdb),

@@ -3,15 +3,16 @@ let loadAndSetFaceSource =
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~imgName="loadImg.png",
-      ~imgSrc="newImgBase64",
+      ~imgSrc=ImportPackageTool.buildBase64_1(),
       ~cubemapTexture,
       ~setSourceFunc=CubemapTextureEngineService.setPXSource,
       ~setFormatFunc=CubemapTextureEngineService.setPXFormat,
+      ~setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPXImageData,
       (),
     ) =>
   LoadAndSetCubemapInspectorFaceSourceEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
     (uiState, dispatchFunc),
-    (cubemapTexture, setSourceFunc, setFormatFunc),
+    (cubemapTexture, setSourceFunc, setFormatFunc, setFaceImageDataFunc),
     BaseEventTool.buildFaceSourceFileEvent(~imgName, ~imgSrc, ()),
   )
   |> WonderBsMost.Most.drain;

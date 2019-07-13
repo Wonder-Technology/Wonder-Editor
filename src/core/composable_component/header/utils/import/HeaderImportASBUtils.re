@@ -50,18 +50,27 @@ let importASB = asb => {
   HeaderBuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
   |> WonderBsMost.Most.fromPromise
   |> WonderBsMost.Most.map(
-       ((imageMap, basicSourceTextureImageDataIndexMap, editorState)) => {
+       (
+         (
+           (basicSourceTextureImageMap, cubemapTextureImageMap),
+           (
+             basicSourceTextureImageDataIndexMap,
+             cubemapTextureImageDataIndexMap,
+           ),
+           editorState,
+         ),
+       ) => {
        let (textureMap, (editorState, engineState)) =
          HeaderBuildAssetDataUtils.buildTextureData(
            asbRecord,
-           (imageMap, basicSourceTextureImageDataIndexMap),
+           (basicSourceTextureImageMap, basicSourceTextureImageDataIndexMap),
            (editorState, engineState),
          );
 
        let (editorState, engineState) =
          HeaderBuildAssetDataUtils.buildCubemapData(
            asbRecord,
-           imageMap,
+           (cubemapTextureImageMap, cubemapTextureImageDataIndexMap),
            (editorState, engineState),
          );
 
@@ -114,7 +123,7 @@ let importASB = asb => {
             (
               (
                 allWDBGameObjectArr,
-                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
                   editorState,
                 ),
               ),

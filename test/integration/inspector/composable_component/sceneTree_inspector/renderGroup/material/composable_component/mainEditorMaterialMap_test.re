@@ -181,7 +181,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
               assetTreeData,
             );
-          let {textureComponent, imageDataIndex} =
+          let {textureComponent, imageDataIndex}: NodeAssetType.textureNodeData =
             TextureNodeAssetEditorService.unsafeGetNodeData(
               firstTextureNodeId,
             )

@@ -18,10 +18,12 @@ let create = () => {
   assetRecord: {
     nodeIndex: 0,
     basicSourceTextureImageDataMapIndex: 0,
+    cubemapTextureImageDataMapIndex: 0,
     tree: None,
     currentNodeId: None,
     selectedFolderNodeIdInAssetTree: None,
     basicSourceTextureImageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    cubemapTextureImageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),

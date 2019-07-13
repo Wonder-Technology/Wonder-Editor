@@ -72,7 +72,7 @@ let _ =
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
               let (editorState, newImageDataIndex) =
-                IndexAssetEditorService.generateImageDataMapIndex(
+                IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
                   editorState,
                 );
 

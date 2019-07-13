@@ -6,7 +6,7 @@ let getNodeName =
     ({textureComponent}: NodeAssetType.cubemapNodeData, getCubemapNameFunc) =>
   getCubemapNameFunc(~texture=textureComponent);
 
-let buildNodeData = (~textureComponent) =>
+let buildNodeData = (~textureComponent, ~imageDataIndex) =>
   /* ~pxImageDataIndex,
      ~nxImageDataIndex,
      ~pyImageDataIndex,
@@ -14,7 +14,8 @@ let buildNodeData = (~textureComponent) =>
      ~pzImageDataIndex,
      ~nzImageDataIndex, */
   {
-    textureComponent: textureComponent,
+    textureComponent,
+    imageDataIndex,
     /* pxImageDataIndex,
        nxImageDataIndex,
        pyImageDataIndex,
@@ -23,7 +24,7 @@ let buildNodeData = (~textureComponent) =>
        nzImageDataIndex, */
   };
 
-let buildNode = (~nodeId, ~textureComponent) =>
+let buildNode = (~nodeId, ~textureComponent, ~imageDataIndex) =>
   /* ~pxImageDataIndex,
      ~nxImageDataIndex,
      ~pyImageDataIndex,
@@ -34,6 +35,7 @@ let buildNode = (~nodeId, ~textureComponent) =>
     nodeId,
     buildNodeData(
       ~textureComponent,
+      ~imageDataIndex,
       /* ~pxImageDataIndex,
          ~nxImageDataIndex,
          ~pyImageDataIndex,
@@ -70,6 +72,12 @@ let getTextureComponent = node => {
   let {textureComponent}: NodeAssetType.cubemapNodeData = getNodeData(node);
 
   textureComponent;
+};
+
+let getImageDataIndex = node => {
+  let {imageDataIndex}: NodeAssetType.cubemapNodeData = getNodeData(node);
+
+  imageDataIndex;
 };
 
 /* let getPXImageDataIndex = node => {

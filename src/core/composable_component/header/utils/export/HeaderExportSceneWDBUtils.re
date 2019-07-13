@@ -30,6 +30,7 @@ let generateWDB =
   (engineState, wdbArrayBuffer);
 };
 
+/* TODO perf: optimize generate scene wdb from cubemapImageUint8ArrayMap */
 let generateSceneWDB =
     (isSceneRoot, generateWDBFunc, imageUint8ArrayMap, engineState) =>
   generateWDB(

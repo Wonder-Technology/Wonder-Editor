@@ -27,7 +27,7 @@ let _ =
         select cubemap;
         click remove-button;
             |},
-      () =>
+      () => {
       test("should remove it from assetTreeRoot", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.Cubemap.buildOneCubemapAssetTree();
@@ -42,8 +42,32 @@ let _ =
 
         BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
-      })
-    );
+      });
+
+      test("should remove it from cubemapTextureImageDataMap", () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+        let addedCubemapNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+        MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+        let imageDataIndex =
+          MainEditorAssetCubemapNodeTool.getImageDataIndex(
+            ~nodeId=addedCubemapNodeId,
+            (),
+          );
+
+        MainEditorAssetHeaderOperateNodeTool.removeCubemapNode(
+          ~cubemapNodeId=addedCubemapNodeId,
+          (),
+        );
+
+        CubemapTextureImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> StateLogicService.getEditorState
+        |> Js.Option.isNone
+        |> expect == true;
+      });
+    });
 
     describe("should remove it from engineState", () => {
       describe("if scene skybox use it", () => {

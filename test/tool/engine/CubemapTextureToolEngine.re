@@ -65,5 +65,5 @@ let setAllSources =
     |> CubemapTextureEngineService.setPZSource(source5, texture)
     |> CubemapTextureEngineService.setNZSource(source6, texture);
 
-  engineState;
+  (engineState, (source1, source2, source3, source4, source5, source6));
 };
