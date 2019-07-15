@@ -374,7 +374,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                       className="treeNode-icon"
                       src="./public/null.png"
                     />
-                    texture_0
+                    basicSourceTexture_0
                   </div>
                 </li>
               </ul>
@@ -394,7 +394,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                       className="treeNode-icon"
                       src="./public/null.png"
                     />
-                    texture_1
+                    basicSourceTexture_1
                   </div>
                 </li>
               </ul>
