@@ -2,9 +2,10 @@ module Method = {
   let generateSingleSAB = ((editorState, engineState)) =>
     GenerateAssetBundleEngineService.generateSingleSAB(
       SceneEngineService.getSceneGameObject(engineState),
-      Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(editorState),
-      /* TODO fix? */
-      false,
+      Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+        editorState,
+      ),
+      true,
       engineState,
     );
 };

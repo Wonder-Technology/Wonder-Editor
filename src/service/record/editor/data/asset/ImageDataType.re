@@ -8,6 +8,8 @@ type imageData = {
 
 type basicSourceTextureImageDataIndex = int;
 
+type basicSourceTextureImageData = imageData;
+
 type basicSourceTextureImageDataMap =
   WonderCommonlib.ImmutableSparseMapService.t(imageData);
 

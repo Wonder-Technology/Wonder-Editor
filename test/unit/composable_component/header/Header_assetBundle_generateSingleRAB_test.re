@@ -160,6 +160,7 @@ let _ =
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,
                      basicSourceTextureImageDataMap,
+                     cubemapTextureImageDataMap,
                    ) =
                      HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,
@@ -195,6 +196,173 @@ let _ =
                       )
                    |> resolve;
                  });
+            })
+          );
+
+          describe("test resource data->cubemapTextureImageDataMap", () =>
+            testPromise("test", () => {
+              let (
+                (source1, source2, source3, source4, source5, source6),
+                (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+                nodeId,
+              ) =
+                ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(
+                  sandbox,
+                );
+
+              let selectTree =
+                HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
+                |> StateLogicService.getStateToGetData
+                |> SelectTreeTool.setSelectForSelectTree(
+                     true,
+                     MainEditorAssetCubemapNodeTool.getCubemapName(
+                       ~nodeId,
+                       (),
+                     ),
+                   );
+
+              let (
+                basicMaterials,
+                lightMaterials,
+                basicSourceTextures,
+                cubemapTextures,
+                geometrys,
+                scriptEventFunctionDataArr,
+                scriptAttributeDataArr,
+                basicSourceTextureImageDataMap,
+                cubemapTextureImageDataMap,
+              ) =
+                HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
+                  selectTree,
+                )
+                |> StateLogicService.getStateToGetData;
+
+              let editorState = StateEditorService.getState();
+              let imageDataIndex1 =
+                MainEditorAssetCubemapNodeTool.getImageDataIndex(
+                  ~nodeId,
+                  ~editorState,
+                  (),
+                );
+              let data =
+                CubemapTextureImageDataMapAssetEditorService.unsafeGetData(
+                  imageDataIndex1,
+                  editorState,
+                );
+
+              cubemapTextureImageDataMap
+              |> expect
+              == (
+                   WonderCommonlib.ImmutableSparseMapService.createEmpty()
+                   |> WonderCommonlib.ImmutableSparseMapService.set(
+                        imageDataIndex1,
+                        {
+                          pxImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_1,
+                                  ),
+                                name: ImageUtils.getImageName(source1),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source1),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                          nxImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_2,
+                                  ),
+                                name: ImageUtils.getImageName(source2),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source2),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                          pyImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_3,
+                                  ),
+                                name: ImageUtils.getImageName(source3),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source3),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                          nyImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_4,
+                                  ),
+                                name: ImageUtils.getImageName(source4),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source4),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                          pzImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_5,
+                                  ),
+                                name: ImageUtils.getImageName(source5),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source5),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                          nzImageData:
+                            Some(
+                              {
+                                uint8Array:
+                                  BufferUtils.convertBase64ToUint8Array(
+                                    base64_6,
+                                  ),
+                                name: ImageUtils.getImageName(source6),
+                                mimeType:
+                                  ImageUtils.getImageMimeType(
+                                    FileNameService.getExtName(
+                                      ImageUtils.getImageName(source6),
+                                    ),
+                                  )
+                                  |> StateLogicService.getEditorState,
+                              }: HeaderAssetBundleType.imageData,
+                            ),
+                        }: HeaderAssetBundleType.cubemapTextureImageData,
+                      )
+                 )
+              |> resolve;
             })
           );
 
@@ -271,6 +439,7 @@ let _ =
                               scriptEventFunctionDataArr,
                               scriptAttributeDataArr,
                               basicSourceTextureImageDataMap,
+                              cubemapTextureImageDataMap,
                             ) =
                               HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                                 selectTree,
@@ -345,6 +514,7 @@ let _ =
                   scriptEventFunctionDataArr,
                   scriptAttributeDataArr,
                   basicSourceTextureImageDataMap,
+                  cubemapTextureImageDataMap,
                 ) =
                   HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                     selectTree,
@@ -386,6 +556,7 @@ let _ =
                      scriptEventFunctionDataArr,
                      scriptAttributeDataArr,
                      basicSourceTextureImageDataMap,
+                     cubemapTextureImageDataMap,
                    ) =
                      HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,
