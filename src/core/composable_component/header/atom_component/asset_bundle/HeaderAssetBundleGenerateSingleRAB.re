@@ -81,6 +81,30 @@ module Method = {
   let _addResourceData = (resources, value, convertValueToResourceDataFunc) =>
     resources |> ArrayService.push(value |> convertValueToResourceDataFunc);
 
+  let _convertImageData =
+      (imageDataInImageDataMap: ImageDataType.imageData)
+      : HeaderAssetBundleType.imageData => {
+    let imageName = imageDataInImageDataMap.name;
+
+    {
+      uint8Array:
+        ImageDataAssetService.getUint8Array(imageDataInImageDataMap, () =>
+          WonderLog.Log.fatal(
+            WonderLog.Log.buildFatalMessage(
+              ~title="_convertImageData",
+              ~description=
+                {j|image(whose name is $imageName) should has uint8Array or base64 data|j},
+              ~reason="",
+              ~solution={j||j},
+              ~params={j||j},
+            ),
+          )
+        ),
+      name: imageName,
+      mimeType: imageDataInImageDataMap.mimeType,
+    };
+  };
+
   let _generateSingleRABResourceData =
       (selectTreeForGenerateSingleRAB, (editorState, engineState)) => {
     let (
@@ -244,35 +268,61 @@ module Method = {
         (editorState, engineState),
       );
 
-    let imageDataMap =
+    let basicSourceTextureImageDataMap =
       BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
       |> WonderCommonlib.ImmutableSparseMapService.mapValid(
-           (. imageData: ImageDataType.imageData) =>
+           (. imageData: ImageDataType.basicSourceTextureImageData) =>
+           (
+             _convertImageData(imageData): HeaderAssetBundleType.basicSourceTextureImageData
+           )
+         );
+
+    let cubemapTextureImageDataMap =
+      CubemapTextureImageDataMapAssetEditorService.getMap(editorState)
+      |> WonderCommonlib.ImmutableSparseMapService.mapValid(
+           (.
+             {
+               pxImageData,
+               nxImageData,
+               pyImageData,
+               nyImageData,
+               pzImageData,
+               nzImageData,
+             }: ImageDataType.cubemapTextureImageData,
+           ) =>
            (
              {
-               let imageName = imageData.name;
-
-               {
-                 uint8Array:
-                   ImageDataAssetService.getUint8Array(imageData, ()
-                     /* ImageDataAssetService.getBase64ForWhiteImage()
-                        |> BufferUtils.convertBase64ToUint8Array */
-                     =>
-                       WonderLog.Log.fatal(
-                         WonderLog.Log.buildFatalMessage(
-                           ~title="_generateSingleRABResourceData",
-                           ~description=
-                             {j|image(whose name is $imageName) should has uint8Array or base64 data|j},
-                           ~reason="",
-                           ~solution={j||j},
-                           ~params={j||j},
-                         ),
-                       )
-                     ),
-                 name: imageName,
-                 mimeType: imageData.mimeType,
-               };
-             }: HeaderAssetBundleType.imageData
+               pxImageData:
+                 pxImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+               nxImageData:
+                 nxImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+               pyImageData:
+                 pyImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+               nyImageData:
+                 nyImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+               pzImageData:
+                 pzImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+               nzImageData:
+                 nzImageData
+                 |> Js.Option.map((. imageData) =>
+                      _convertImageData(imageData)
+                    ),
+             }: HeaderAssetBundleType.cubemapTextureImageData
            )
          );
 
@@ -302,7 +352,8 @@ module Method = {
            (. {name}: HeaderAssetBundleType.scriptAttributeData) =>
            name
          ),
-      imageDataMap,
+      basicSourceTextureImageDataMap,
+      cubemapTextureImageDataMap,
     );
   };
 
@@ -316,7 +367,8 @@ module Method = {
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
-      imageDataMap,
+      basicSourceTextureImageDataMap,
+      cubemapTextureImageDataMap,
     ) =
       _generateSingleRABResourceData(
         selectTreeForGenerateSingleRAB,
@@ -333,7 +385,8 @@ module Method = {
           geometrys,
           scriptEventFunctionDataArr,
           scriptAttributeDataArr,
-          imageDataMap,
+          basicSourceTextureImageDataMap,
+          cubemapTextureImageDataMap,
         ),
         engineState,
       );

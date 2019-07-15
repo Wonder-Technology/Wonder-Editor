@@ -176,37 +176,8 @@ module Method = {
                   {
                     textureComponent:
                       CubemapNodeAssetService.getTextureComponent(assetNode),
-                    /* TODO fix! */
-                    pxImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetPXImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
-                    nxImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetNXImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
-                    pyImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetPYImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
-                    nyImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetNYImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
-                    pzImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetPZImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
-                    nzImageDataIndex:
-                      /* CubemapNodeAssetService.unsafeGetNZImageDataIndex(
-                           assetNode,
-                         ), */
-                      0,
+                    imageDataIndex:
+                      CubemapNodeAssetService.getImageDataIndex(assetNode),
                   }: cubemapTextureData
                 )
                 |> convertCubemapTextureDataToValue,

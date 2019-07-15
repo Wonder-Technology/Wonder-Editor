@@ -5,13 +5,13 @@ type materialData = {
   snapshotImageDataIndex: int,
 };
 
-type basicSourceTextureData = Wonderjs.RABType.basicSourceTextureData;
+type basicSourceTextureData = Wonderjs.RABType.ResourceData.basicSourceTextureData;
 
-type cubemapTextureData = Wonderjs.RABType.cubemapTextureData;
+type cubemapTextureData = Wonderjs.RABType.ResourceData.cubemapTextureData;
 
-type scriptEventFunctionData = Wonderjs.RABType.scriptEventFunctionData;
+type scriptEventFunctionData = Wonderjs.RABType.ResourceData.scriptEventFunctionData;
 
-type scriptAttributeData = Wonderjs.RABType.scriptAttributeData;
+type scriptAttributeData = Wonderjs.RABType.ResourceData.scriptAttributeData;
 
 type assetBundleData = {
   assetBundle: Js.Typed_array.ArrayBuffer.t,
@@ -19,9 +19,15 @@ type assetBundleData = {
   type_: NodeAssetType.assetBundleType,
 };
 
-type imageData = Wonderjs.RABType.imageData;
+type imageData = Wonderjs.RABType.ResourceData.imageData;
 
-type imageDataMap = Wonderjs.RABType.imageDataMap;
+type basicSourceTextureImageData = Wonderjs.RABType.ResourceData.basicSourceTextureImageData;
+
+type basicSourceTextureImageDataMap = Wonderjs.RABType.ResourceData.basicSourceTextureImageDataMap;
+
+type cubemapTextureImageData = Wonderjs.RABType.ResourceData.cubemapTextureImageData;
+
+type cubemapTextureImageDataMap = Wonderjs.RABType.ResourceData.cubemapTextureImageDataMap;
 
 external convertMaterialDataToValue: materialData => value = "%identity";
 
