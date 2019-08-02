@@ -1316,7 +1316,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

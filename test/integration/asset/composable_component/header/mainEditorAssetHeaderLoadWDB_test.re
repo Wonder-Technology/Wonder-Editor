@@ -23,7 +23,8 @@ let _ =
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+      sceneWDBArrayBuffer :=
+        WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {
@@ -147,7 +148,8 @@ let _ =
           })
         );
 
-        testPromise("test draw wdb snapshot store in imageDataMap", () => {
+        testPromise(
+          "test draw wdb snapshot store in basicSourceTextureImageDataMap", () => {
           EventListenerTool.buildFakeDom()
           |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
@@ -178,7 +180,7 @@ let _ =
                  |> WDBNodeAssetService.getNodeData;
 
                editorState
-               |> ImageDataMapAssetEditorService.unsafeGetData(
+               |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                     imageDataIndex,
                   )
                |> (
@@ -337,7 +339,7 @@ let _ =
 
               MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+              AssetInspectorTool.Rename.renameAssetMaterialNode(
                 ~nodeId=addedMaterialNodeId,
                 ~name=LoadWDBTool.getBoxTexturedMeshGameObjectMaterialName(),
                 (),
@@ -395,7 +397,7 @@ let _ =
                           engineState,
                         );
 
-                   let {imageDataIndex} =
+                   let {snapshotImageDataIndex} =
                      OperateTreeAssetEditorService.findMaterialNode(
                        material,
                        MaterialDataAssetType.LightMaterial,
@@ -405,8 +407,8 @@ let _ =
                      |> MaterialNodeAssetService.getNodeData;
 
                    editorState
-                   |> ImageDataMapAssetEditorService.unsafeGetData(
-                        imageDataIndex,
+                   |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+                        snapshotImageDataIndex,
                       )
                    |> (
                      ({base64}) =>
@@ -674,7 +676,7 @@ let _ =
                   assetTreeData,
                 );
 
-              AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+              AssetInspectorTool.Rename.renameAssetTextureNode(
                 ~nodeId=textureNodeId,
                 ~name=LoadWDBTool.getBoxTexturedMeshGameObjectTextureName(),
                 (),
@@ -818,7 +820,7 @@ let _ =
                               editorState,
                             )
                             |> Js.Array.length,
-                            ImageDataMapAssetEditorService.getValidValues(
+                            BasicSourceTextureImageDataMapAssetEditorService.getValidValues(
                               editorState,
                             )
                             |> WonderCommonlib.ImmutableSparseMapService.length,
@@ -830,6 +832,145 @@ let _ =
               );
             })
           );
+        });
+
+        describe("extract cubemap assets", () => {
+          let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
+          beforeAll(() =>
+            sceneWDBArrayBuffer :=
+              WDBTool.Cubemap.generateWDBWithBasicSourceTextureAndSkyboxCubemap()
+          );
+
+          describe(
+            "if wdb->cubemap not exist in assets, extract them and add to assets",
+            () =>
+            describe(
+              {j|should add "Cubemaps" folder node and add cubemap node into it|j},
+              () => {
+              testPromise("test load the same wdb once", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     MainEditorAssetTreeTool.Select.selectFolderNode(
+                       ~nodeId=
+                         MainEditorAssetTreeTool.findNodeIdByName(
+                           "Cubemaps",
+                           (editorState, engineState),
+                         )
+                         |> OptionService.unsafeGet,
+                       (),
+                     );
+
+                     BuildComponentTool.buildAssetChildrenNode()
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   })
+              );
+              testPromise("init extracted skybox->cubemap", () => {
+                let glTexture = Obj.magic(1);
+                let createTexture =
+                  Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+                createTexture |> returns(glTexture);
+
+                FakeGlToolEngine.setFakeGl(
+                  FakeGlToolEngine.buildFakeGl(~sandbox, ~createTexture, ()),
+                )
+                |> StateLogicService.getAndSetEngineState;
+
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     CubemapTextureToolEngine.unsafeGetGlTexture(
+                       CubemapNodeAssetEditorService.getTextureComponents(
+                         editorState,
+                       )
+                       |> ArrayService.unsafeGetFirst,
+                       engineState,
+                     )
+                     |> expect == glTexture
+                     |> resolve;
+                   });
+              });
+              testPromise(
+                "shouldn't set extracted cubemap to scene->skybox", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=sceneWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId =>
+                     SceneEngineService.getCubemapTexture
+                     |> StateLogicService.getEngineStateToGetData
+                     |> expect == None
+                     |> resolve
+                   )
+              );
+            })
+          );
+
+          describe("else", () => {
+            testPromise("not extracted new one", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId1 =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=sceneWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId2 => {
+                        let editorState = StateEditorService.getState();
+                        let engineState = StateEngineService.unsafeGetState();
+
+                        MainEditorAssetTreeTool.Select.selectFolderNode(
+                          ~nodeId=
+                            MainEditorAssetTreeTool.findNodeIdByName(
+                              "Cubemaps",
+                              (editorState, engineState),
+                            )
+                            |> OptionService.unsafeGet,
+                          (),
+                        );
+
+                        CubemapNodeAssetEditorService.findAllCubemapNodes(
+                          editorState,
+                        )
+                        |> Js.Array.length
+                        |> expect == 1
+                        |> resolve;
+                      })
+                 )
+            );
+            testPromise("not set to scene skybox", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId1 =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=sceneWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId2 =>
+                        SceneEngineService.getCubemapTexture
+                        |> StateLogicService.getEngineStateToGetData
+                        |> expect == None
+                        |> resolve
+                      )
+                 )
+            );
+          });
         });
 
         describe("extract script event function assets", () => {
@@ -929,7 +1070,7 @@ let _ =
                 let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
                 MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-                AssetTreeInspectorTool.Rename.renameAssetScriptEventFunctionNode(
+                AssetInspectorTool.Rename.renameAssetScriptEventFunctionNode(
                   ~nodeId=addedNodeId,
                   ~name=scriptEventFunctionDataNameRef^,
                   (),

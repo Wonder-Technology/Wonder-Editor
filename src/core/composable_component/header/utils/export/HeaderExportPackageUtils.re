@@ -5,8 +5,8 @@ let _buildDefaultMaterialSnapshotUint8Array = () =>
     OperateMaterialLogicService.getDefaultSnapshotBase64(),
   );
 
-let _buildImageDataUint8Array = editorState =>
-  ImageDataMapAssetEditorService.getMap(editorState)
+let _buildBasicSourceTextureImageDataUint8ArrayToMap = editorState =>
+  BasicSourceTextureImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.mapValid(
        (. data: ImageDataType.imageData) =>
        {
@@ -19,28 +19,31 @@ let _buildImageDataUint8Array = editorState =>
            ->Some,
        }
      )
-  |> ImageDataMapAssetEditorService.setMap(_, editorState);
+  |> BasicSourceTextureImageDataMapAssetEditorService.setMap(_, editorState);
 
 let _export = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let editorState = editorState |> _buildImageDataUint8Array;
+  let editorState =
+    editorState |> _buildBasicSourceTextureImageDataUint8ArrayToMap;
 
-  let imageUint8ArrayMap =
-    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState);
+  let basicSourceTextureImageUint8ArrayMap =
+    Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+      editorState,
+    );
 
   let (engineState, sceneGraphArrayBuffer) =
     HeaderExportSceneWDBUtils.generateSceneWDB(
       false,
       GenerateSceneGraphEngineService.generateWDBForWPK,
-      Js.Nullable.return(imageUint8ArrayMap),
+      Js.Nullable.return(basicSourceTextureImageUint8ArrayMap),
       engineState,
     );
 
   let (engineState, asbArrayBuffer) =
     HeaderExportASBUtils.generateASB(
-      imageUint8ArrayMap,
+      basicSourceTextureImageUint8ArrayMap,
       (editorState, engineState),
     );
 
@@ -54,7 +57,6 @@ let _export = () => {
 };
 
 let exportPackage = packageName => {
-  let editorState = StateEditorService.getState();
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
@@ -65,18 +67,35 @@ let exportPackage = packageName => {
           "should-in-stop",
           languageType,
         ),
-        editorState,
-      );
+      )
+      |> StateLogicService.getEditorState;
 
       ();
     } :
-    {
-      let wpkArrayBuffer = _export();
+    Console.tryCatch(
+      () => {
+        let wpkArrayBuffer = _export();
 
-      HeaderExportUtils.download(
-        wpkArrayBuffer,
-        packageName ++ WPKService.getExtName(),
-        "",
-      );
-    };
+        HeaderExportUtils.download(
+          wpkArrayBuffer,
+          packageName ++ WPKService.getExtName(),
+          "",
+        );
+      },
+      e => {
+        let message = e##message;
+        let stack = e##stack;
+
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|$message|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        )
+        |> StateLogicService.getEditorState;
+        ConsoleUtils.logStack(stack) |> ignore;
+      },
+    );
 };

@@ -29,6 +29,24 @@ let _textureNodeFunc =
     ),
   );
 
+let _cubemapNodeFunc =
+    (
+      targetNodeId,
+      engineState,
+      acc: (bool, 'a),
+      nodeId,
+      {textureComponent}: NodeAssetType.cubemapNodeData,
+    ) =>
+  _handleLeafNodeFunc(
+    acc,
+    targetNodeId,
+    nodeId,
+    NodeNameAssetLogicService.getCubemapNodeName(
+      ~texture=textureComponent,
+      ~engineState,
+    ),
+  );
+
 let _materialNodeFunc =
     (
       targetNodeId,
@@ -122,6 +140,7 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ~acc=(false, [||]),
       ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
       ~textureNodeFunc=_textureNodeFunc(targetNodeId, engineState),
+      ~cubemapNodeFunc=_cubemapNodeFunc(targetNodeId, engineState),
       ~materialNodeFunc=_materialNodeFunc(targetNodeId, engineState),
       ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc(targetNodeId),
       ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc(targetNodeId),

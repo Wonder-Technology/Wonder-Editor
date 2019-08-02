@@ -12,7 +12,7 @@ module Method = {
 
   let _build = (imageDataIndex, editorState) => {
     let {base64, uint8Array, blobObjectURL, mimeType} as data =
-      ImageDataMapAssetEditorService.unsafeGetData(
+      BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
         imageDataIndex,
         editorState,
       );
@@ -29,7 +29,7 @@ module Method = {
                   uint8Array
                   |> OptionService.either(
                        (editorState, _) =>
-                         ImageDataMapAssetEditorService.setData(
+                         BasicSourceTextureImageDataMapAssetEditorService.setData(
                            imageDataIndex,
                            {
                              ...data,
@@ -108,6 +108,10 @@ module Method = {
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
 
+    let cubemapAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node => node |> CubemapNodeAssetService.isCubemapNode);
+
     let assetBundleAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node =>
@@ -121,6 +125,7 @@ module Method = {
       _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
+      _sortByName(cubemapAssetTreeChildrenNodeArr, engineState),
       _sortByName(assetBundleAssetTreeChildrenNodeArr, engineState),
     |]);
   };
@@ -170,8 +175,30 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             ~cubemapNodeFunc=
+               (nodeId, {textureComponent}) => {
+                 let fileName =
+                   NodeNameAssetLogicService.getCubemapNodeName(
+                     ~texture=textureComponent,
+                     ~engineState,
+                   );
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/cubemap.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
              ~materialNodeFunc=
-               (nodeId, {materialComponent, type_, imageDataIndex}) => {
+               (nodeId, {materialComponent, type_, snapshotImageDataIndex}) => {
                  let fileName =
                    NodeNameAssetLogicService.getMaterialNodeName(
                      ~material=materialComponent,
@@ -180,7 +207,10 @@ module Method = {
                    );
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
+                   ImageDataMapUtils.getImgSrc(
+                     snapshotImageDataIndex,
+                     editorState,
+                   );
 
                  <FileBox
                    key

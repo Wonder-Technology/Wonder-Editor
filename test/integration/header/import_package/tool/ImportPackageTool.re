@@ -102,9 +102,13 @@ let getImporteMaterialAssetLightMaterialComponents = () =>
        materialComponent;
      });
 
-let getImportedTextureAssetTextureComponents = () =>
+
+let getImportedTextureAssetNodes = () =>
   TextureNodeAssetEditorService.findAllTextureNodes
-  |> StateLogicService.getEditorState
+  |> StateLogicService.getEditorState;
+
+let getImportedTextureAssetTextureComponents = () =>
+  getImportedTextureAssetNodes()
   |> Js.Array.map(node => {
        let {textureComponent}: NodeAssetType.textureNodeData =
          TextureNodeAssetService.getNodeData(node);
@@ -167,4 +171,39 @@ let prepareFakeCanvas = sandbox => {
   createElementStub |> withOneArg("canvas") |> returns(canvas) |> ignore;
 
   ();
+};
+
+module Cubemap = {
+  let getImportedCubemapAssetCubemapComponents = () =>
+    CubemapNodeAssetEditorService.findAllCubemapNodes
+    |> StateLogicService.getEditorState
+    |> Js.Array.map(node => {
+         let {textureComponent}: NodeAssetType.cubemapNodeData =
+           CubemapNodeAssetService.getNodeData(node);
+
+         textureComponent;
+       });
+
+  let prepareForAddOneCubemapAsset = sandbox => {
+    WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+    let assetTreeData =
+      MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+    let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+    MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+    let (
+      (editorState, engineState),
+      (source1, source2, source3, source4, source5, source6),
+      (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+    ) =
+      MainEditorAssetCubemapNodeTool.setAllSources(~nodeId=addedNodeId, ());
+
+    (editorState, engineState) |> StateLogicService.setState;
+
+    (
+      (source1, source2, source3, source4, source5, source6),
+      (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+      addedNodeId,
+    );
+  };
 };

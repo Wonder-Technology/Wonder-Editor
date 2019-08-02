@@ -45,13 +45,13 @@ let _ =
         BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
       });
-      test("should remove its imageData from imageDataMap", () => {
+      test("should remove its imageData from basicSourceTextureImageDataMap", () => {
         open NodeAssetType;
 
         let materialNodeId = MainEditorAssetIdTool.getNewAssetId();
         MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-        let {imageDataIndex} =
+        let {snapshotImageDataIndex} =
           StateEditorService.getState()
           |> OperateTreeAssetEditorService.unsafeFindNodeById(materialNodeId)
           |> MaterialNodeAssetService.getNodeData;
@@ -62,7 +62,7 @@ let _ =
         );
 
         StateEditorService.getState()
-        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> BasicSourceTextureImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isNone
         |> expect == true;
       });

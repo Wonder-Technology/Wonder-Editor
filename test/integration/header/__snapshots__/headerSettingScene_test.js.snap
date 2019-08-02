@@ -1,0 +1,529 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Setting->Scene test Scene test ambient light test change color should update ui 1`] = `
+<div
+  className="header-item"
+>
+  <div
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="setting-scene-ambient"
+        >
+          <div
+            className="content-field"
+          >
+            <article
+              className="color-pick"
+            >
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
+              >
+                <div
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#7df1e8",
+                    }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
+                  />
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div
+          className="setting-scene-skybox"
+        >
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="cubemap-img"
+              onClick={[Function]}
+            />
+            <button
+              className="cubemap-remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+`;
+
+exports[`Header Setting->Scene test Scene test skybox test has no cubemap ui->modal->skybox should has no cubemap 1`] = `
+<article
+  className="wonder-settingScene-modal"
+>
+  <div
+    className="modal-item"
+  >
+    <div
+      className="modal-item-header"
+    >
+      SettingSceneModal
+      <img
+        onClick={[Function]}
+        src="./public/img/close.png"
+      />
+    </div>
+    <div
+      className="modal-item-content"
+    >
+      <div
+        className="setting-scene-ambient"
+      >
+        <div
+          className="content-field"
+        >
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="set ambient color which is global."
+            >
+              AmbientColor
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div
+        className="setting-scene-skybox"
+      >
+        <div
+          className="item-header"
+          title="set scene skybox->cubemap"
+        >
+          Skybox Cubemap
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="cubemap-img"
+            onClick={[Function]}
+          />
+          <button
+            className="cubemap-remove"
+            onClick={[Function]}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`Header Setting->Scene test Scene test skybox test select cubemap group -> show order 
+        order should be:
+        sort cubemap assets by firstname alphabetically
+         1`] = `
+<article
+  className="wonder-settingScene-modal"
+>
+  <div
+    className="modal-item"
+  >
+    <div
+      className="modal-item-header"
+    >
+      SettingSceneModal
+      <img
+        onClick={[Function]}
+        src="./public/img/close.png"
+      />
+    </div>
+    <div
+      className="modal-item-content"
+    >
+      <div
+        className="setting-scene-ambient"
+      >
+        <div
+          className="content-field"
+        >
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="set ambient color which is global."
+            >
+              AmbientColor
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div
+        className="setting-scene-skybox"
+      >
+        <div
+          className="item-header"
+          title="set scene skybox->cubemap"
+        >
+          Skybox Cubemap
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="cubemap-img"
+            onClick={[Function]}
+          />
+          <button
+            className="cubemap-remove"
+            onClick={[Function]}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Cubemap
+        </div>
+        <div
+          className="select-item-imgBody"
+        >
+          <div
+            className="imgBody-content"
+          >
+            <div
+              className="select-item-imgContent"
+              onClick={[Function]}
+            >
+              <img
+                className="imgContent-img"
+                src="./public/img/cubemap.png"
+              />
+              <div
+                className="imgContent-text"
+              >
+                ACubemap
+              </div>
+            </div>
+            <div
+              className="select-item-imgContent"
+              onClick={[Function]}
+            >
+              <img
+                className="imgContent-img"
+                src="./public/img/cubemap.png"
+              />
+              <div
+                className="imgContent-text"
+              >
+                BCubemap
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+</article>
+`;
+
+exports[`Header Setting->Scene test Scene test skybox test select cubemap ui->modal->skybox should has cubemap 1`] = `
+<article
+  className="wonder-settingScene-modal"
+>
+  <div
+    className="modal-item"
+  >
+    <div
+      className="modal-item-header"
+    >
+      SettingSceneModal
+      <img
+        onClick={[Function]}
+        src="./public/img/close.png"
+      />
+    </div>
+    <div
+      className="modal-item-content"
+    >
+      <div
+        className="setting-scene-ambient"
+      >
+        <div
+          className="content-field"
+        >
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="set ambient color which is global."
+            >
+              AmbientColor
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div
+        className="setting-scene-skybox"
+      >
+        <div
+          className="item-header"
+          title="set scene skybox->cubemap"
+        >
+          Skybox Cubemap
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="cubemap-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/cubemap.png"
+            />
+          </div>
+          <span>
+            New Cubemap
+          </span>
+          <button
+            className="cubemap-remove"
+            onClick={[Function]}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`Header Setting->Scene test Scene test ui->scene modal snapshot 1`] = `
+<div
+  className="header-item"
+>
+  <div
+    className="component-item"
+  >
+    <span
+      className="item-title"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+    >
+      Setting
+    </span>
+  </div>
+  <article
+    className="wonder-settingScene-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        Scene
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="setting-scene-ambient"
+        >
+          <div
+            className="content-field"
+          >
+            <article
+              className="color-pick"
+            >
+              <div
+                className="item-header"
+                title="set ambient color which is global."
+              >
+                AmbientColor
+              </div>
+              <div
+                className="item-content item-color"
+              >
+                <div
+                  className="color-hex"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "background": "#000000",
+                    }
+                  }
+                />
+                <div
+                  className="color-select"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/color.png"
+                  />
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div
+          className="setting-scene-skybox"
+        >
+          <div
+            className="item-header"
+            title="set scene skybox->cubemap"
+          >
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="cubemap-img"
+              onClick={[Function]}
+            />
+            <button
+              className="cubemap-remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+`;

@@ -51,7 +51,7 @@ let _createStateTuple = () => {
   (editorState, engineState);
 };
 
-let _buildFakeCanvas = (sandbox, base64, callIndex) => {
+let _buildFakeCanvas = (sandbox, base64) => {
   open Sinon;
 
   let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
@@ -70,20 +70,58 @@ let _buildFakeCanvas = (sandbox, base64, callIndex) => {
   canvasDom;
 };
 
-let _prepareFakeCanvas = sandbox => {
-  open Sinon;
-
+let buildCubemapAllFaceSourceBase64 = () => {
   let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
   let base64_2 = "data:image/jpeg;base64,bbb";
-  let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
-  let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
+  let base64_3 = "data:image/png;base64,aaa";
+  let base64_4 = "data:image/png;base64,ccc";
+  let base64_5 = "data:image/png;base64,ddd";
+  let base64_6 = "data:image/jpeg;base64,ccc";
+
+  (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6);
+};
+
+let prepareFakeCanvas = sandbox => {
+  open Sinon;
+
+  let (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6) =
+    buildCubemapAllFaceSourceBase64();
+  let base64_7 = "data:image/png;base64,azc";
+
+  let base64_8 = "data:image/jpeg;base64,bb2";
+  let base64_9 = "data:image/png;base64,aa1";
+  let base64_10 = "data:image/png;base64,c3c";
+  let base64_11 = "data:image/png;base64,d4d";
+  let base64_12 = "data:image/jpeg;base64,5cc";
+  let base64_13 = "data:image/png;base64,a6c";
+
+  let base64_more = "data:image/png;base64,a9c";
+
+  let canvas1 = _buildFakeCanvas(sandbox, base64_1);
+  let canvas2 = _buildFakeCanvas(sandbox, base64_2);
+  let canvas3 = _buildFakeCanvas(sandbox, base64_3);
+  let canvas4 = _buildFakeCanvas(sandbox, base64_4);
+  let canvas5 = _buildFakeCanvas(sandbox, base64_5);
+  let canvas6 = _buildFakeCanvas(sandbox, base64_6);
+  let canvas7 = _buildFakeCanvas(sandbox, base64_7);
+
+  let canvas8 = _buildFakeCanvas(sandbox, base64_8);
+  let canvas9 = _buildFakeCanvas(sandbox, base64_9);
+  let canvas10 = _buildFakeCanvas(sandbox, base64_10);
+  let canvas11 = _buildFakeCanvas(sandbox, base64_11);
+  let canvas12 = _buildFakeCanvas(sandbox, base64_12);
+  let canvas13 = _buildFakeCanvas(sandbox, base64_13);
+
+  let canvas_more = _buildFakeCanvas(sandbox, base64_more);
 
   let createElementStub =
-    createMethodStub(
+    SinonTool.createMethodStub(
       refJsObjToSandbox(sandbox^),
       DomHelper.document |> Obj.magic,
       "createElement",
     );
+
+  createElementStub |> withOneArg("canvas") |> returns(canvas_more) |> ignore;
 
   createElementStub
   |> withOneArg("canvas")
@@ -91,9 +129,46 @@ let _prepareFakeCanvas = sandbox => {
   |> returns(canvas1)
   |> onCall(1)
   |> returns(canvas2)
+  |> onCall(2)
+  |> returns(canvas3)
+  |> onCall(3)
+  |> returns(canvas4)
+  |> onCall(4)
+  |> returns(canvas5)
+  |> onCall(5)
+  |> returns(canvas6)
+  |> onCall(6)
+  |> returns(canvas7)
+  |> onCall(7)
+  |> returns(canvas8)
+  |> onCall(8)
+  |> returns(canvas9)
+  |> onCall(9)
+  |> returns(canvas10)
+  |> onCall(10)
+  |> returns(canvas11)
+  |> onCall(11)
+  |> returns(canvas12)
+  |> onCall(12)
+  |> returns(canvas13)
   |> ignore;
 
-  (base64_1, base64_2);
+  (
+    base64_1,
+    base64_2,
+    base64_3,
+    base64_4,
+    base64_5,
+    base64_6,
+    base64_7,
+    base64_8,
+    base64_9,
+    base64_10,
+    base64_11,
+    base64_12,
+    base64_13,
+    base64_more,
+  );
 };
 
 let generateWDB = buildWDBGameObjectFunc => {
@@ -102,7 +177,7 @@ let generateWDB = buildWDBGameObjectFunc => {
   let (editorState, engineState) = _createStateTuple();
 
   let sandbox = ref(createSandbox());
-  let _ = _prepareFakeCanvas(sandbox);
+  let _ = prepareFakeCanvas(sandbox);
 
   let (rootGameObject, (editorState, engineState)) =
     buildWDBGameObjectFunc(editorState, engineState);
@@ -115,10 +190,12 @@ let generateWDB = buildWDBGameObjectFunc => {
         rootGameObject,
         true,
         Js.Nullable.return(
-          Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+          Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+            editorState,
+          ),
         ),
       ),
-      GenerateSceneGraphEngineService.generateWDB,
+      GenerateSceneGraphEngineService.generateSceneWDB,
       engineState,
     );
 
@@ -132,7 +209,7 @@ let generateWDB = buildWDBGameObjectFunc => {
        ~isSceneRoot=false,
        ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
        ~imageUint8ArrayMap=Js.Nullable.return(
-                             Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                             Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
                                StateEditorService.getState(),
                              ),
                            ),
@@ -184,7 +261,8 @@ let generateDirectionPointLightsAndCubeWDB = () =>
     (rootGameObject, (editorState, engineState));
   });
 
-let generateSceneWDB = () =>
+let _generateWDBWithCameraType =
+    (createCameraControllerFunc, bindEventFunc, addCameraControllerFunc) =>
   generateWDB((editorState, engineState) => {
     let engineState =
       ManageIMGUIEngineService.setIMGUIFunc(
@@ -222,8 +300,8 @@ let generateSceneWDB = () =>
       CameraLogicService.createCamera(editorState, engineState);
     let (editorState, engineState, camera2) =
       CameraLogicService.createCamera(editorState, engineState);
-    let (engineState, arcballCameraController) =
-      ArcballCameraEngineService.create(engineState);
+    let (engineState, cameraController) =
+      createCameraControllerFunc(engineState);
 
     let basicCameraViewComponent =
       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -240,37 +318,17 @@ let generateSceneWDB = () =>
              engineState,
            ),
          )
-      /* |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-              200.,
-              arcballCameraController,
-            )
-         |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
-              arcballCameraController,
-              8.,
-            )
-         |> ArcballCameraEngineService.setArcballCameraControllerTheta(
-              arcballCameraController,
-              Js.Math._PI /. 5.,
-            ) */
-      |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView(
-           arcballCameraController,
-         )
+      |> bindEventFunc(cameraController)
       |> BasicCameraViewEngineService.activeBasicCameraView(
            basicCameraViewComponent,
          );
 
     let (editorState, engineState) =
       (editorState, engineState)
-      |> GameObjectLogicService.addArcballCameraController(
-           camera,
-           arcballCameraController,
-         );
+      |> addCameraControllerFunc(camera, cameraController);
 
     let (editorState, engineState, directionLight) =
       PrimitiveLogicService.createDirectionLight(editorState, engineState);
-
-    /* let (editorState, engineState, pointLight) =
-       _createPointLight(editorState, engineState); */
 
     let (engineState, rootGameObject) =
       GameObjectEngineService.create(engineState);
@@ -287,6 +345,20 @@ let generateSceneWDB = () =>
 
     (rootGameObject, (editorState, engineState));
   });
+
+let generateSceneWDBWithArcballCameraController = () =>
+  _generateWDBWithCameraType(
+    ArcballCameraEngineService.create,
+    ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+    GameObjectLogicService.addArcballCameraController,
+  );
+
+let generateSceneWDBWithFlyCameraController = () =>
+  _generateWDBWithCameraType(
+    FlyCameraEngineService.create,
+    FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView,
+    GameObjectLogicService.addFlyCameraController,
+  );
 
 module ScriptEventFunction = {
   let getScriptGameObjectName = () => "ScriptGameObject";
@@ -454,4 +526,101 @@ module ScriptAttribute = {
 
   let getScriptGameObject = engineState =>
     LoadWDBTool.findGameObjectByName(getScriptGameObjectName(), engineState);
+};
+
+module Cubemap = {
+  let _createCubemapAndSetToSceneSkybox = engineState => {
+    let (engineState, cubemap) =
+      MainEditorSceneTool.Skybox.createCubemapAndSetToSceneSkybox(
+        engineState,
+      );
+
+    let (engineState, _) =
+      CubemapTextureToolEngine.setAllSources(
+        ~engineState,
+        ~texture=cubemap,
+        (),
+      );
+
+    let engineState =
+      engineState
+      |> CubemapTextureEngineService.setCubemapTextureName(
+           "sceneSkyboxCubemap",
+           cubemap,
+         );
+
+    (engineState, cubemap);
+  };
+
+  let generateWDBWithBasicSourceTextureAndSkyboxCubemap = () =>
+    generateWDB((editorState, engineState) => {
+      let (engineState, geometry) =
+        GeometryEngineService.createCubeGeometry(engineState);
+      let (engineState, lightMaterial) =
+        LightMaterialEngineService.create(engineState);
+
+      let (engineState, texture) =
+        BasicSourceTextureEngineService.create(engineState);
+
+      let engineState =
+        engineState
+        |> BasicSourceTextureEngineService.setSource(
+             BasicSourceTextureToolEngine.buildSource(),
+             texture,
+           );
+
+      let engineState =
+        engineState
+        |> BasicSourceTextureEngineService.setBasicSourceTextureName(
+             "texture1",
+             texture,
+           );
+
+      let engineState =
+        engineState
+        |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+             texture,
+             lightMaterial,
+           );
+
+      let (editorState, engineState, cube1) =
+        PrimitiveLogicService.createCube(
+          (geometry, lightMaterial),
+          editorState,
+          engineState,
+        );
+
+      let (engineState, cubemap1) =
+        CubemapTextureEngineService.create(engineState);
+
+      let (engineState, cubemap2) =
+        _createCubemapAndSetToSceneSkybox(engineState);
+
+      let engineState =
+        engineState
+        |> CubemapTextureEngineService.setCubemapTextureName(
+             "cubemap1",
+             cubemap1,
+           );
+
+      let (engineState, rootGameObject) =
+        GameObjectEngineService.create(engineState);
+
+      let engineState =
+        engineState
+        |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
+
+      (rootGameObject, (editorState, engineState));
+    });
+
+  let findSkyboxCubemapFromLoadedWDB = editorState =>
+    editorState
+    |> CubemapNodeAssetEditorService.findAllCubemapNodes
+    |> Js.Array.map(node => {
+         let {textureComponent}: NodeAssetType.cubemapNodeData =
+           CubemapNodeAssetService.getNodeData(node);
+
+         textureComponent;
+       })
+    |> ArrayService.unsafeGetFirst;
 };

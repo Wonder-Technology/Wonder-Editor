@@ -212,6 +212,34 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "fly-cameraController-describe",
+    language: {
+      zh: {j|自由相机组件|j},
+      en: "fly camera controller",
+    },
+  },
+  {
+    title: "fly-move-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
+    title: "fly-rotate-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
+    title: "fly-wheel-speed-describe",
+    language: {
+      zh: {j|相机按键移动速度|j},
+      en: "distance between camera and target",
+    },
+  },
+  {
     title: "arcball-cameraController-describe",
     language: {
       zh: {j|轨道相机组件|j},
@@ -389,7 +417,7 @@ let inspector_language_array = [|
   {
     title: "texture-mag-filter-describe",
     language: {
-      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何��样|j},
+      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何采样|j},
       en: "defines how textures are sampled when a texel covers multiple pixels",
     },
   },
@@ -398,6 +426,83 @@ let inspector_language_array = [|
     language: {
       zh: {j|定义当一个纹理单元（texel）不足以覆盖单个像素点时纹理如何采样|j},
       en: "defines how textures are sampled when a texel is insufficient to cover a single pixel",
+    },
+  },
+  {
+    title: "cubemap-name-describe",
+    language: {
+      zh: {j|cubemap纹理的名字|j},
+      en: "cubemap's name",
+    },
+  },
+  {
+    title: "cubemap-right-describe",
+    language: {
+      zh: {j|cubemap +X source|j},
+      en: "cubemap +X source",
+    },
+  },
+  {
+    title: "cubemap-left-describe",
+    language: {
+      zh: {j|cubemap -X source|j},
+      en: "cubemap -X source",
+    },
+  },
+  {
+    title: "cubemap-top-describe",
+    language: {
+      zh: {j|cubemap +Y source|j},
+      en: "cubemap +Y source",
+    },
+  },
+  {
+    title: "cubemap-bottom-describe",
+    language: {
+      zh: {j|cubemap -Y source|j},
+      en: "cubemap -Y source",
+    },
+  },
+  {
+    title: "cubemap-front-describe",
+    language: {
+      zh: {j|cubemap +Z source|j},
+      en: "cubemap +Z source",
+    },
+  },
+  {
+    title: "cubemap-back-describe",
+    language: {
+      zh: {j|cubemap -Z source|j},
+      en: "cubemap -Z source",
+    },
+  },
+  {
+    title: "cubemap-wraps-describe",
+    language: {
+      zh: {j|cubemap纹理水平方向的重复模式|j},
+      en: "repetitive pattern in horizontal direction of cubemap",
+    },
+  },
+  {
+    title: "cubemap-wrapt-describe",
+    language: {
+      zh: {j|cubemap纹理垂直方向的重复模式|j},
+      en: "repetitive pattern in vertical direction of cubemap",
+    },
+  },
+  {
+    title: "cubemap-mag-filter-describe",
+    language: {
+      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何采样|j},
+      en: "defines how cubemaps are sampled when a texel covers multiple pixels",
+    },
+  },
+  {
+    title: "cubemap-min-filter-describe",
+    language: {
+      zh: {j|定义当一个纹理单元（texel）不足以覆盖单个像素点时纹理如何采样|j},
+      en: "defines how cubemaps are sampled when a texel is insufficient to cover a single pixel",
     },
   },
   {

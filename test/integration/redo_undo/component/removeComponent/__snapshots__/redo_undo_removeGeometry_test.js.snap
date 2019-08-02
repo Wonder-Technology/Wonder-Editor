@@ -508,7 +508,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1140,7 +1140,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1772,7 +1772,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

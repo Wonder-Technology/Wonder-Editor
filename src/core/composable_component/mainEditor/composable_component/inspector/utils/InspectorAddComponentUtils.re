@@ -73,6 +73,35 @@ let _addScript = (currentSceneTreeNode, (editorState, engineState)) => {
   |> GameObjectLogicService.addScript(currentSceneTreeNode, scriptComponent);
 };
 
+let _addFlyCameraController =
+    (currentSceneTreeNode, (editorState, engineState)) => {
+  let (engineState, cameraController) =
+    engineState |> FlyCameraEngineService.create;
+
+  let engineState =
+    StateEditorService.getIsRun()
+    && engineState
+    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         currentSceneTreeNode,
+       )
+    && engineState
+    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+         currentSceneTreeNode,
+       )
+    |> BasicCameraViewEngineService.isActiveBasicCameraView(_, engineState) ?
+      FlyCameraEngineService.bindFlyCameraControllerEventForGameView(
+        cameraController,
+        engineState,
+      ) :
+      engineState;
+
+  (editorState, engineState)
+  |> GameObjectLogicService.addFlyCameraController(
+       currentSceneTreeNode,
+       cameraController,
+     );
+};
+
 let _addArcballCameraController =
     (currentSceneTreeNode, (editorState, engineState)) => {
   let (engineState, cameraController) =
@@ -121,6 +150,8 @@ let addComponentByType =
          cameraComponentRecord,
        );
 
+  | FlyCameraController =>
+    _addFlyCameraController(currentSceneTreeNode, (editorState, engineState))
   | ArcballCameraController =>
     _addArcballCameraController(
       currentSceneTreeNode,

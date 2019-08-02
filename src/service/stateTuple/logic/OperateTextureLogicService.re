@@ -36,7 +36,7 @@ let setName = (~texture, ~name, ~engineState) =>
    let getTextureBaseName = (currentNodeId, textureNodeMap) =>
      textureNodeMap
      |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(currentNodeId)
-     |> (({textureComponent}) => textureComponent)
+     |> (({textureComponent}: NodeAssetType.textureNodeData) => textureComponent)
      |> getTextureBaseNameByTextureComponent(_)
      |> StateLogicService.getEngineStateToGetData; */
 

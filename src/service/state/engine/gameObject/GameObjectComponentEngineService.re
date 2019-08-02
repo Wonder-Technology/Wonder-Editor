@@ -140,6 +140,16 @@ let hasLightComponent = (gameObject, engineState) =>
   hasDirectionLightComponent(gameObject, engineState)
   || hasPointLightComponent(gameObject, engineState);
 
+/* fly camera */
+
+let addFlyCameraControllerComponent = GameObjectAPI.addGameObjectFlyCameraControllerComponent;
+
+let disposeFlyCameraControllerComponent = GameObjectAPI.disposeGameObjectFlyCameraControllerComponent;
+
+let unsafeGetFlyCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectFlyCameraControllerComponent;
+
+let hasFlyCameraControllerComponent = GameObjectAPI.hasGameObjectFlyCameraControllerComponent;
+
 /* arcball camera */
 
 let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCameraControllerComponent;
@@ -173,6 +183,8 @@ let getAllLightMaterialComponents = GameObjectAPI.getAllLightMaterialComponents;
 let getAllDirectionLightComponents = GameObjectAPI.getAllDirectionLightComponents;
 
 let getAllBasicCameraViewComponents = GameObjectAPI.getAllBasicCameraViewComponents;
+
+let getAllFlyCameraControllerComponents = GameObjectAPI.getAllFlyCameraControllerComponents;
 
 let getAllArcballCameraControllerComponents = GameObjectAPI.getAllArcballCameraControllerComponents;
 

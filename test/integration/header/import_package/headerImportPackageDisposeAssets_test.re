@@ -234,39 +234,8 @@ let _ =
     describe("dispose material assets", () => {
       beforeEach(() => {
         MainEditorSceneTool.initState(~sandbox, ());
-        MainEditorSceneTool.initInspectorEngineState(
-          ~sandbox,
-          ~isInitJob=false,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-              ~initPipelines=
-                {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-              ~initJobs=
-                {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-              (),
-            ),
-          (),
-        );
 
-        StateInspectorEngineService.unsafeGetState()
-        |> MainUtils._handleInspectorEngineState
-        |> StateInspectorEngineService.setState
-        |> ignore;
-
-        CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+        MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
         MainEditorSceneTool.prepareScene(sandbox);
 
@@ -313,6 +282,39 @@ let _ =
                (),
              );
            })
+      );
+    });
+
+    describe("dispose cubemap assets", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
+
+        MainEditorSceneTool.prepareScene(sandbox);
+      });
+
+      testPromise(
+        {|
+          add cubemap asset;
+          export;
+          import;
+
+          should has one cubemap asset;
+          |},
+        () => {
+          let _ =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                CubemapNodeAssetEditorService.findAllCubemapNodes
+                |> StateLogicService.getEditorState
+                |> Js.Array.length
+                |> expect == 1
+                |> resolve,
+            (),
+          );
+        },
       );
     });
 
@@ -577,39 +579,7 @@ let _ =
     testPromise("clear imageData map", () => {
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
       MainEditorSceneTool.prepareScene(sandbox);
 
@@ -624,7 +594,7 @@ let _ =
                  ImportPackageTool.testImportPackage(
                    ~testFunc=
                      () =>
-                       ImageDataMapTool.getMapValidLength
+                       BasicSourceTextureImageDataMapTool.getMapValidLength
                        |> StateLogicService.getEditorState
                        |> expect == 3
                        |> resolve,
@@ -665,6 +635,8 @@ let _ =
               ),
             (),
           );
+
+          MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
           MainEditorSceneTool.prepareScene(sandbox);
 

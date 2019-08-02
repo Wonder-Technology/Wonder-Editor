@@ -1,3 +1,5 @@
+open Wonderjs;
+
 let _getFixedDistance = () => 3.;
 
 let _isFixedDistance = distance => distance === _getFixedDistance();
@@ -7,8 +9,72 @@ let _calcMoveSpeed = distance => distance /. 100.;
 let _calcWheelSpeed = distance =>
   _isFixedDistance(distance) ? 0.5 : distance /. 50.;
 
+let _calcPosition = (transform, (target, distance), engineState) =>
+  engineState
+  |> TransformEngineService.getLocalToWorldMatrixTypeArray(transform)
+  |> Wonderjs.Matrix4Service.setTranslation(target)
+  |> Vector3Service.transformMat4Tuple((0., 0., distance));
+
+let _setFlyCameraControllerFocusRelatedAttribute =
+    (camera, (distance, (posX, posY, posZ) as centerPosition), engineState) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|the editor camera should has flyCameraController component|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+                camera,
+                engineState,
+              )
+              |> assertTrue
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  let flyCameraController =
+    GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+      camera,
+      engineState,
+    );
+  let moveSpeed = _calcMoveSpeed(distance);
+  let wheelSpeed = _calcWheelSpeed(distance);
+
+  let cameraTransform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      camera,
+      engineState,
+    );
+
+  engineState
+  |> _calcPosition(cameraTransform, (centerPosition, distance))
+  |> TransformEngineService.setLocalPosition(_, cameraTransform, engineState)
+  |> FlyCameraEngineService.setFlyCameraControllerMoveSpeed(
+       flyCameraController,
+       moveSpeed,
+     )
+  |> FlyCameraEngineService.setFlyCameraControllerWheelSpeed(
+       flyCameraController,
+       wheelSpeed,
+     );
+};
+
 let _setArcballCameraControllerFocusRelatedAttribute =
-    (arcballCameraController, (distance, target), engineState) => {
+    (camera, (distance, target), engineState) => {
+  let arcballCameraController =
+    GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+      camera,
+      engineState,
+    );
   let moveSpeed = _calcMoveSpeed(distance);
   let wheelSpeed = _calcWheelSpeed(distance);
 
@@ -86,42 +152,22 @@ let _calcCenterAndDistance = (targetGameObject, radiusRatio, engineState) =>
 
 let setCameraFocusTargetGameObject =
     (camera, targetGameObject, radiusRatio, engineState) => {
-  WonderLog.Contract.requireCheck(
-    () =>
-      WonderLog.(
-        Contract.(
-          Operators.(
-            test(
-              Log.buildAssertMessage(
-                ~expect=
-                  {j|the editor camera should has arcballCameraController component|j},
-                ~actual={j|not|j},
-              ),
-              () =>
-              GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                camera,
-                engineState,
-              )
-              |> assertTrue
-            )
-          )
-        )
-      ),
-    StateEditorService.getStateIsDebug(),
-  );
-
-  let editorCameraArcballControllerComponent =
-    GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-      camera,
-      engineState,
-    );
-
   let (center, distance) =
     engineState |> _calcCenterAndDistance(targetGameObject, radiusRatio);
 
-  _setArcballCameraControllerFocusRelatedAttribute(
-    editorCameraArcballControllerComponent,
-    (distance, center),
-    engineState,
-  );
+  switch (CameraControllerUtils.getCameraControllerType(camera, engineState)) {
+  | Some(FlyCameraController) =>
+    engineState
+    |> _setFlyCameraControllerFocusRelatedAttribute(
+         camera,
+         (distance, center),
+       )
+  | Some(ArcballCameraController) =>
+    engineState
+    |> _setArcballCameraControllerFocusRelatedAttribute(
+         camera,
+         (distance, center),
+       )
+  | None => engineState
+  };
 };

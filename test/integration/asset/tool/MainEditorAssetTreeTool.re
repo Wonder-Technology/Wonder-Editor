@@ -109,7 +109,9 @@ module BuildAssetTree = {
         IdAssetEditorService.generateNodeId(editorState);
 
       let (editorState, newImageDataIndex) =
-        IndexAssetEditorService.generateImageDataMapIndex(editorState);
+        IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+          editorState,
+        );
 
       let (newMaterial, engineState) =
         LightMaterialEngineService.createLightMaterialAndSetName(
@@ -179,6 +181,41 @@ module BuildAssetTree = {
       scriptAttributeNodeIdArr |> ArrayService.unsafeGetFirst;
   };
 
+  module Cubemap = {
+    type assetTreeData = {
+      root: int,
+      cubemapNodeIdArr: array(int),
+    };
+
+    let buildOneCubemapAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
+      let engineState = StateEngineService.unsafeGetState();
+
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
+
+
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertCubemapNode(
+           id1,
+           rootId,
+           /* newCubemap, */
+
+           "cubemap1",
+         )
+      |> StateLogicService.setState;
+
+      {root: rootId, cubemapNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstCubemapNodeId = ({root, cubemapNodeIdArr}) =>
+      cubemapNodeIdArr |> ArrayService.unsafeGetFirst;
+  };
+
   module WDB = {
     type assetTreeData = {
       root: int,
@@ -198,7 +235,9 @@ module BuildAssetTree = {
         GameObjectEngineService.create(engineState);
       let name = "gameObject1";
       let (editorState, newImageDataIndex) =
-        IndexAssetEditorService.generateImageDataMapIndex(editorState);
+        IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+          editorState,
+        );
 
       (editorState, engineState)
       |> MainEditorAssetTreeNodeTool.insertWDBNode(
@@ -371,9 +410,13 @@ module BuildAssetTree = {
           );
 
         let (editorState, imgIndex1) =
-          IndexAssetEditorService.generateImageDataMapIndex(editorState);
+          IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+            editorState,
+          );
         let (editorState, imgIndex2) =
-          IndexAssetEditorService.generateImageDataMapIndex(editorState);
+          IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+            editorState,
+          );
 
         (editorState, engineState)
         |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)

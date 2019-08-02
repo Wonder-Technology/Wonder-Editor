@@ -1,0 +1,367 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->add cubemap else add cubemap into specific treeNode test snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add cubemap if not select specific treeNode should add cubemap into root treeNode test snapshot 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+        title="add asset"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+        title="remove asset"
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+          title="upload asset"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          <div
+            className="draggable-container select-not-active"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Assets
+          </div>
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/cubemap.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          cubemap1
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/cubemap.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Cubemap
+        </span>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add cubemap test name remove first cubemap which use default name;
+             add three cubemap;
+
+             the first new one's name should be removed-cubemap's name;
+                      1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap 1
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap 2
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add cubemap test name test default name 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+        title="add asset"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+        title="remove asset"
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+          title="upload asset"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          <div
+            className="draggable-container select-not-active"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Assets
+          </div>
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/cubemap.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          cubemap1
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/cubemap.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Cubemap
+        </span>
+      </div>
+    </article>
+  </article>
+</article>
+`;

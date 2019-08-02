@@ -2,22 +2,25 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit => WonderBsJszip.Zip.jszip;
   type dataTuple = ReactEventRe.Form.t;
-  type return = Js.Promise.t(unit);
+  type return = WonderBsMost.Most.stream(unit);
 
   let handleSelfLogic = ((uiState, dispatchFunc), createJsZipFunc, event) =>
-    AssetHeaderUtils.fileLoad(
-      (uiState, dispatchFunc),
-      createJsZipFunc,
-      event,
-    )
-    |> Js.Promise.catch(e => {
+    AssetHeaderUtils.fileLoad(uiState, createJsZipFunc, event)
+    |> WonderBsMost.Most.tap(_ =>
+         dispatchFunc(
+           AppStore.UpdateAction(
+             Update([|UpdateStore.Inspector, UpdateStore.Project|]),
+           ),
+         )
+         |> ignore
+       )
+    |> WonderBsMost.Most.recoverWith(e => {
          AllHistoryService.handleUndo(uiState, dispatchFunc);
 
-         let e = Obj.magic(e);
          let editorState = StateEditorService.getState();
 
-         switch (e) {
-         | NodeAssetType.LoadException(message) =>
+         switch (ExnType.convertJsExnToExn(e)) {
+         | NodeAssetType.LoadAssetException(message) =>
            ConsoleUtils.error(
              LogUtils.buildErrorMessage(
                ~description={j|$message|j},
@@ -27,9 +30,10 @@ module CustomEventHandler = {
              ),
              editorState,
            )
-         | _ =>
-           let message = e##message;
-           let stack = e##stack;
+         | e =>
+           let e = ExnType.convertExnToJsExn(e);
+           let message = e |> Js.Exn.message;
+           let stack = e |> Js.Exn.stack;
 
            ConsoleUtils.error(
              LogUtils.buildErrorMessage(
@@ -43,8 +47,9 @@ module CustomEventHandler = {
            ConsoleUtils.logStack(stack) |> ignore;
          };
 
-         Js.Promise.resolve();
-       });
+         WonderBsMost.Most.empty();
+       })
+    |> MostUtils.ignore;
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

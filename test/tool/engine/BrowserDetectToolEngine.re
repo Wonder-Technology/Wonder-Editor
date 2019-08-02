@@ -2,7 +2,7 @@ open Wonderjs;
 
 open StateDataMainType;
 
-open BrowserDetectType;
+open AllBrowserDetectType;
 
 let setChromeFromEngineState = engineState => {
   ...engineState,

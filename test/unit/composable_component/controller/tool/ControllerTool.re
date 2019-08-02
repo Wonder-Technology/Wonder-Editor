@@ -21,11 +21,3 @@ let stubCancelAnimationFrame = [%bs.raw
 let getIsRun = () => StateEditorService.getIsRun();
 
 let setIsRun = isRun => StateEditorService.setIsRun(isRun);
-
-let getColor = () => Controller.Method.getColor();
-
-let changeColor = color => Controller.Method.changeColor(color);
-
-let closeColorPicker =
-    (~color, ~dispatchFunc=_ => (), ~uiState=TestTool.buildEmptyAppState(), ()) =>
-  Controller.Method.closeColorPick((uiState, dispatchFunc), (), color);

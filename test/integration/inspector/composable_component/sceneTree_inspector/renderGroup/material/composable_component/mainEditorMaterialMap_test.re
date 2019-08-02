@@ -127,7 +127,7 @@ let _ =
           let assetTreeData =
             MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+          AssetInspectorTool.Rename.renameAssetTextureNode(
             ~nodeId=
               MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                 assetTreeData,
@@ -135,7 +135,7 @@ let _ =
             ~name="BTexture",
             (),
           );
-          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+          AssetInspectorTool.Rename.renameAssetTextureNode(
             ~nodeId=
               MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
                 assetTreeData,
@@ -181,7 +181,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
               assetTreeData,
             );
-          let {textureComponent, imageDataIndex} =
+          let {textureComponent, imageDataIndex}: NodeAssetType.textureNodeData =
             TextureNodeAssetEditorService.unsafeGetNodeData(
               firstTextureNodeId,
             )

@@ -9,7 +9,7 @@ let generateWDB =
     isRun ?
       engineState :
       engineState
-      |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
+      |> CameraControllerUtils.bindGameViewActiveCameraControllerEvent;
 
   let engineState =
     engineState
@@ -25,11 +25,12 @@ let generateWDB =
     isRun ?
       engineState :
       engineState
-      |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent;
+      |> CameraControllerUtils.unbindGameViewActiveCameraControllerEvent;
 
   (engineState, wdbArrayBuffer);
 };
 
+/* TODO perf: optimize generate scene wdb from cubemapImageUint8ArrayMap */
 let generateSceneWDB =
     (isSceneRoot, generateWDBFunc, imageUint8ArrayMap, engineState) =>
   generateWDB(

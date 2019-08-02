@@ -1,9 +1,9 @@
 let _generateSceneWDB = (editorState, engineState) =>
   HeaderExportSceneWDBUtils.generateSceneWDB(
     true,
-    GenerateSceneGraphEngineService.generateWDB,
+    GenerateSceneGraphEngineService.generateSceneWDB,
     Js.Nullable.return(
-      Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+      Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(editorState),
     ),
     engineState,
   );

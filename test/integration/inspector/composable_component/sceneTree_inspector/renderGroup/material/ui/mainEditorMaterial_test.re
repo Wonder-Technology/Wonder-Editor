@@ -155,12 +155,12 @@ let _ =
           let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
           MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+          AssetInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId=addedMaterialNodeId1,
             ~name="BMaterial",
             (),
           );
-          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+          AssetInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId=addedMaterialNodeId2,
             ~name="AMaterial",
             (),

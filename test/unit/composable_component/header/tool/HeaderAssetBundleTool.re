@@ -30,11 +30,13 @@ module GenerateSingleRAB = {
     let (
       basicMaterials,
       lightMaterials,
-      textures,
+      basicSourceTextures,
+      cubemapTextures,
       geometrys,
       scriptEventFunctionDataArr,
       scriptAttributeDataArr,
-      imageDataMap,
+      basicSourceTextureImageDataMap,
+      cubemapTextureImageDataMap,
     ) =
       generateSingleRABResourceData(selectTree, (editorState, engineState));
 
@@ -42,17 +44,20 @@ module GenerateSingleRAB = {
       GenerateAssetBundleEngineService.buildResourceData(
         basicMaterials,
         lightMaterials,
-        textures,
+        basicSourceTextures,
+        cubemapTextures,
         geometrys,
         scriptEventFunctionDataArr,
         scriptAttributeDataArr,
-        imageDataMap,
+        basicSourceTextureImageDataMap,
+        cubemapTextureImageDataMap,
       ),
       engineState,
     );
   };
 
-  let buildTextureData = (textureComponent, imageDataIndex): textureData => {
+  let buildTextureData =
+      (textureComponent, imageDataIndex): basicSourceTextureData => {
     textureComponent,
     imageDataIndex,
   };

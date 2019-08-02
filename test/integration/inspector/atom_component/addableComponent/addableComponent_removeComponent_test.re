@@ -245,6 +245,45 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
+      describe("test remove flyCamera component", () => {
+        beforeEach(() =>
+          MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent()
+        );
+        describe("test snapshot", () =>
+          test(
+            "test remove flyCamera component, should remove from inspector", () => {
+            MainEditorInspectorRemoveComponentTool.removeFlyCameraControllerComponent();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+        describe("test logic", () => {
+          test(
+            "test if not remove flyCamera component, current gameObject should has it",
+            () =>
+            GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true
+          );
+          test(
+            "test click remove flyCamera component, current gameObject shouldn't has it",
+            () => {
+            MainEditorInspectorRemoveComponentTool.removeFlyCameraControllerComponent();
+
+            GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false;
+          });
+        });
+      });
       describe("test remove arcballCamera component", () => {
         beforeEach(() =>
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent()

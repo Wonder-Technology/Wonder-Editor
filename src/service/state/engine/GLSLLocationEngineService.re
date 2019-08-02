@@ -1,4 +1,4 @@
 open Wonderjs;
 
 let isUniformLocationExist = pos =>
-  GLSLLocationService.isUniformLocationExist(pos);
+  AllGLSLLocationService.isUniformLocationExist(pos);

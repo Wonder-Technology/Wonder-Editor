@@ -2,11 +2,13 @@ type bufferViewIndex = int;
 
 type textureIndex = int;
 
-type imageIndex = int;
+type basicSourceTextureImageIndex = int;
+
+type cubemapTextureImageIndex = int;
 
 type texture = {
   path: string,
-  source: imageIndex,
+  source: basicSourceTextureImageIndex,
   name: string,
   magFilter: int,
   minFilter: int,
@@ -17,11 +19,40 @@ type texture = {
   flipY: bool,
 };
 
+type cubemap = {
+  path: string,
+  /* pxSource: option(cubemapTextureImageIndex),
+     nxSource: option(cubemapTextureImageIndex),
+     pySource: option(cubemapTextureImageIndex),
+     nySource: option(cubemapTextureImageIndex),
+     pzSource: option(cubemapTextureImageIndex),
+     nzSource: option(cubemapTextureImageIndex), */
+  source: cubemapTextureImageIndex,
+  name: string,
+  magFilter: int,
+  minFilter: int,
+  wrapS: int,
+  wrapT: int,
+  flipY: bool,
+  pxFormat: int,
+  nxFormat: int,
+  pyFormat: int,
+  nyFormat: int,
+  pzFormat: int,
+  nzFormat: int,
+  pxType: int,
+  nxType: int,
+  pyType: int,
+  nyType: int,
+  pzType: int,
+  nzType: int,
+};
+
 type wdb = {
   name: string,
   path: string,
   bufferView: bufferViewIndex,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
 };
 
 type image = {
@@ -30,11 +61,22 @@ type image = {
   mimeType: string,
 };
 
-/* type magFilter = Wonderjs.SourceTextureType.filter;
+type basicSourceTextureImage = image;
 
-   type minFilter = Wonderjs.SourceTextureType.filter;
+type cubemapTextureImage = {
+  pxImage: option(image),
+  nxImage: option(image),
+  pyImage: option(image),
+  nyImage: option(image),
+  pzImage: option(image),
+  nzImage: option(image),
+};
 
-   type wrap = Wonderjs.SourceTextureType.wrap; */
+/* type magFilter = Wonderjs.TextureType.filter;
+
+   type minFilter = Wonderjs.TextureType.filter;
+
+   type wrap = Wonderjs.TextureType.wrap; */
 
 /* type buffer = {byteLength: int}; */
 
@@ -48,14 +90,14 @@ type bufferView = {
 type basicMaterial = {
   name: string,
   path: string,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
   color: array(float),
 };
 
 type lightMaterial = {
   name: string,
   path: string,
-  snapshot: imageIndex,
+  snapshot: basicSourceTextureImageIndex,
   diffuseColor: array(float),
   diffuseMap: option(textureIndex),
   shininess: float,
@@ -88,7 +130,9 @@ type copyright = {
 type assets = {
   copyright,
   textures: array(texture),
-  images: array(image),
+  cubemaps: array(cubemap),
+  basicSourceTextureImages: array(basicSourceTextureImage),
+  cubemapTextureImages: array(cubemapTextureImage),
   basicMaterials: array(basicMaterial),
   lightMaterials: array(lightMaterial),
   wdbs: array(wdb),

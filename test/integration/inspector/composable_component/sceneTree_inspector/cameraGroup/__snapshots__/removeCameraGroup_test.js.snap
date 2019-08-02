@@ -846,7 +846,7 @@ exports[`test remove camera group test still has other camera groups after remov
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

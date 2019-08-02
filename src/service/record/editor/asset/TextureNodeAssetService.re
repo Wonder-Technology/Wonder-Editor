@@ -2,10 +2,11 @@ open TreeAssetType;
 
 open NodeAssetType;
 
-let getNodeName = ({textureComponent}: textureNodeData, getTextureNameFunc) =>
+let getNodeName =
+    ({textureComponent}: NodeAssetType.textureNodeData, getTextureNameFunc) =>
   getTextureNameFunc(~texture=textureComponent);
 
-let buildNodeData = (~textureComponent, ~imageDataIndex) => {
+let buildNodeData = (~textureComponent, ~imageDataIndex): textureNodeData => {
   textureComponent,
   imageDataIndex,
 };
@@ -37,13 +38,13 @@ let getNodeData = node =>
   };
 
 let getTextureComponent = node => {
-  let {textureComponent} = getNodeData(node);
+  let {textureComponent}: NodeAssetType.textureNodeData = getNodeData(node);
 
   textureComponent;
 };
 
 let getImageDataIndex = node => {
-  let {imageDataIndex}: textureNodeData = getNodeData(node);
+  let {imageDataIndex}: NodeAssetType.textureNodeData = getNodeData(node);
 
   imageDataIndex;
 };

@@ -85,8 +85,8 @@ let _ =
         );
 
         describe("test should add into nodeMap", () => {
-          describe("test imageDataMap", () => {
-            testPromise("add image base64 to imageDataMap", () => {
+          describe("test basicSourceTextureImageDataMap", () => {
+            testPromise("add image base64 to basicSourceTextureImageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -100,7 +100,7 @@ let _ =
 
                    let editorState = StateEditorService.getState();
                    let {base64}: ImageDataType.imageData =
-                     ImageDataMapTool.getDataByTextureNode(
+                     BasicSourceTextureImageDataMapTool.getDataByTextureNode(
                        MainEditorAssetNodeTool.unsafeGetCurrentNode(
                          editorState,
                        ),
@@ -114,7 +114,7 @@ let _ =
                  });
             });
             testPromise(
-              "test show texture image, get it base64 from imageDataMap", () => {
+              "test show texture image, get it base64 from basicSourceTextureImageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -255,18 +255,16 @@ let _ =
         let _getErrorTypeFile = () =>
           LoadAssetUtils.getUploadAssetType("aaa.bb");
 
-        test("if upload error file type, should error", () => {
-          ConsoleTool.notShowMessage();
-          let component = BuildComponentTool.buildConsole();
-          let errorStub =
-            createMethodStub(sandbox^, ConsoleTool.console, "error");
+        test("if upload error file type, should contract error", () => {
+          TestTool.openContractCheck();
 
-          LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
-            _getErrorTypeFile(),
-            (() => (), () => (), () => (), () => (), () => ()),
-          );
-
-          ConsoleTool.judgeError("type is error", errorStub);
+          expect(() =>
+            LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
+              _getErrorTypeFile(),
+              (() => (), () => (), () => (), () => (), () => ()),
+            )
+          )
+          |> toThrowMessage("expect type_ not be LoadError");
         });
       });
     });

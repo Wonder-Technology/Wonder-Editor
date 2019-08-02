@@ -5,10 +5,10 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
   className="wonder-inspector-component"
 >
   <article
-    className="wonder-inspector-assetTree"
+    className="wonder-inspector-asset"
   >
     <article
-      className="wonder-texture-assetTree"
+      className="wonder-texture-inspector"
     >
       <h1>
         Texture
@@ -694,7 +694,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

@@ -16,11 +16,11 @@ let getUploadAssetType = name => {
   | ".wab" => LoadAssetBundle
   | ".zip" => LoadZip
   | _ =>
-    ConsoleUtils.error(
+    LoadError(
       LogUtils.buildErrorMessage(
         ~description=
           LanguageUtils.getMessageLanguageDataByType(
-            "load-asset-file",
+            "load-asset-file-error",
             LanguageEditorService.unsafeGetType
             |> StateLogicService.getEditorState,
           ),
@@ -29,42 +29,8 @@ let getUploadAssetType = name => {
         ~params={j||j},
       ),
     )
-    |> StateLogicService.getEditorState;
-
-    LoadError;
   };
 };
-
-let getUploadPackageType = name => {
-  let extname = FileNameService.getExtName(name);
-
-  switch (extname) {
-  | ".wpk" => LoadWPK
-  | _ =>
-    ConsoleUtils.error(
-      LogUtils.buildErrorMessage(
-        ~description=
-          LanguageUtils.getMessageLanguageDataByType(
-            "load-asset-package",
-            LanguageEditorService.unsafeGetType
-            |> StateLogicService.getEditorState,
-          ),
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
-    |> StateLogicService.getEditorState;
-
-    LoadError;
-  };
-};
-
-let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
-  switch (type_) {
-  | LoadWPK => handleWPKFunc()
-  | LoadError => ()
-  };
 
 let _handleAssetSpecificFuncByTypeSync =
     (
@@ -76,25 +42,41 @@ let _handleAssetSpecificFuncByTypeSync =
         handleGLBFunc,
         handleZipFunc,
       ),
-    ) =>
+    ) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|type_ not be LoadError|j},
+                ~actual={j|be|j},
+              ),
+              () =>
+              switch (type_) {
+              | LoadError(_) => assertFail()
+              | _ => assertPass()
+              }
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   switch (type_) {
   | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
   | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
   | LoadZip => handleZipFunc()
-  | LoadError => ()
   };
+};
 
-let readPakckageByTypeSync = (reader, fileInfo: fileInfoType) =>
-  _handlePackageSpecificFuncByTypeSync(
-    getUploadPackageType(fileInfo.name), () =>
-    FileReader.readAsArrayBuffer(reader, fileInfo.file)
-  );
-
-let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
+let readAssetByTypeSync = (reader, fileInfo: fileInfoType, type_) =>
   _handleAssetSpecificFuncByTypeSync(
-    getUploadAssetType(fileInfo.name),
+    type_,
     (
       () => FileReader.readAsDataURL(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),

@@ -2,6 +2,8 @@ open Js.Promise;
 
 open Js.Typed_array;
 
+open ImportPackageType;
+
 let _disposeAssets = () => {
   let (editorState, engineState) =
     DisposeTreeAssetLogicService.disposeTree((
@@ -234,6 +236,7 @@ let _import = result => {
   _disposeAssets();
 
   StateEngineService.unsafeGetState()
+  |> SceneEngineService.removeCubemapTexture
   |> JobEngineService.execDisposeJob
   |> ReallocateCPUMemoryJob.reallocate(0.1)
   |> StateEngineService.setState
@@ -316,7 +319,15 @@ let _import = result => {
        MostUtils.callStreamFunc(() =>
          SceneWDBUtils.importSceneWDB(sceneWDB)
          |> WonderBsMost.Most.map(
-              ((sceneGameObject, _sceneGameObjectImageUint8ArrayDataMap)) => {
+              (
+                (
+                  (sceneGameObject, skyboxCubemapOpt),
+                  (
+                    sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap,
+                    sceneGameObjectCubemapTextureImageUint8ArrayDataMap,
+                  ),
+                ),
+              ) => {
               WonderLog.Contract.requireCheck(
                 () =>
                   WonderLog.(
@@ -325,19 +336,34 @@ let _import = result => {
                         test(
                           Log.buildAssertMessage(
                             ~expect=
-                              {j|sceneGameObjectImageUint8ArrayDataMap be empty|j},
+                              {j|sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap, sceneGameObjectCubemapTextureImageUint8ArrayDataMap be empty|j},
                             ~actual={j|not|j},
                           ),
-                          () =>
-                          _sceneGameObjectImageUint8ArrayDataMap
-                          |> WonderCommonlib.ImmutableSparseMapService.length
-                          == 0
+                          () => {
+                            sceneGameObjectBasicSourceTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+
+                            sceneGameObjectCubemapTextureImageUint8ArrayDataMap
+                            |> WonderCommonlib.ImmutableSparseMapService.length
+                            == 0;
+                          },
                         )
                       )
                     )
                   ),
                 StateEditorService.getStateIsDebug(),
               );
+
+              StateEngineService.unsafeGetState()
+              |> ImportPackageRelateSceneSkyboxAndCubemapAssetUtils.setSkyboxCubemap(
+                   ImportPackageRelateSceneSkyboxAndCubemapAssetUtils.getRelatedSkyboxCubemapOptFromCubemapAssets(
+                     skyboxCubemapOpt,
+                     (StateEditorService.getState(), engineState),
+                   ),
+                 )
+              |> StateEngineService.setState
+              |> ignore;
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 HierarchyGameObjectEngineService.getAllGameObjects(
@@ -385,20 +411,55 @@ let _handleIsRun = (dispatchFunc, languageType, editorState) => {
   );
 };
 
-let _readFile = (fileInfo: FileType.fileInfoType, resolve) => {
+let _getUploadPackageType = name => {
+  let extname = FileNameService.getExtName(name);
+
+  switch (extname) {
+  | ".wpk" => LoadWPK
+  | _ =>
+    LoadError(
+      LogUtils.buildErrorMessage(
+        ~description=
+          LanguageUtils.getMessageLanguageDataByType(
+            "load-package-error",
+            LanguageEditorService.unsafeGetType
+            |> StateLogicService.getEditorState,
+          ),
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  };
+};
+
+let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
+  switch (type_) {
+  | LoadWPK => handleWPKFunc()
+  };
+
+let _readPakckageByTypeSync = (reader, fileInfo: FileType.fileInfoType, type_) =>
+  _handlePackageSpecificFuncByTypeSync(type_, () =>
+    FileReader.readAsArrayBuffer(reader, fileInfo.file)
+  );
+
+let _readFile = (fileInfo: FileType.fileInfoType, (resolve, reject)) => {
   let reader = FileReader.createFileReader();
 
   FileReader.onload(reader, result =>
     resolve(.
       {
         name: fileInfo.name,
-        type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
+        type_: _getUploadPackageType(fileInfo.name),
         result,
-      }: NodeAssetType.nodeResultType,
+      }: uploadPackageFileResultType,
     )
   );
 
-  LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
+  switch (_getUploadPackageType(fileInfo.name)) {
+  | LoadError(msg) => reject(. LoadPackageException(msg))
+  | type_ => _readPakckageByTypeSync(reader, fileInfo, type_)
+  };
 };
 
 let _dispatch = dispatchFunc =>
@@ -430,11 +491,11 @@ let importPackage = (dispatchFunc, event) => {
 
         WonderBsMost.Most.fromPromise(
           Js.Promise.make((~resolve, ~reject) =>
-            _readFile(fileInfo, resolve)
+            _readFile(fileInfo, (resolve, reject))
           ),
         )
         |> WonderBsMost.Most.flatMap(
-             (fileResult: NodeAssetType.nodeResultType) =>
+             (fileResult: uploadPackageFileResultType) =>
              _import(fileResult.result)
            )
         |> WonderBsMost.Most.drain

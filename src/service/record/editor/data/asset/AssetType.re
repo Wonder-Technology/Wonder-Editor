@@ -10,11 +10,13 @@ open ImageDataType;
 
 type assetRecord = {
   nodeIndex: int,
-  imageDataMapIndex: int,
+  basicSourceTextureImageDataMapIndex: int,
+  cubemapTextureImageDataMapIndex: int,
   tree: option(tree),
   currentNodeId: option(nodeId),
   selectedFolderNodeIdInAssetTree: option(nodeId),
-  imageDataMap,
+  basicSourceTextureImageDataMap,
+  cubemapTextureImageDataMap,
   geometryData,
   materialData,
 };

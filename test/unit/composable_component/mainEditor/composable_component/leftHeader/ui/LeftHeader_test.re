@@ -90,11 +90,11 @@ let _ =
                    newGameObject,
                  )
               |> OptionService.unsafeGet
-              |>
-              expect == (
-                          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
-                          |> StateLogicService.getEditorState
-                        );
+              |> expect
+              == (
+                   SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+                   |> StateLogicService.getEditorState
+                 );
             },
           );
           test("else, added gameObject should add into scene gameObject", () => {
@@ -396,28 +396,6 @@ let _ =
              ); */
         });
         /* TODO test redo-undo */
-      });
-    });
-
-    describe("test ambient light", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.initState(~sandbox, ());
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
-      });
-
-      test("test change color should set into engine", () => {
-        let newColor = PickColorTool.buildColor1();
-
-        ControllerTool.changeColor(newColor);
-
-        SceneEngineService.getAmbientLightColor
-        |> StateLogicService.getEngineStateToGetData
-        |> Color.getHexString
-        |> expect == newColor##hex;
       });
     });
   });

@@ -9,6 +9,21 @@ let createGameObject = state => {
   );
 };
 
+let getAllFlyCameraControllers = (gameObject, engineState) =>
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+         gameObject,
+         engineState,
+       )
+     );
+
 let getAllArcballCameraControllers = (gameObject, engineState) =>
   HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> Js.Array.filter(gameObject =>

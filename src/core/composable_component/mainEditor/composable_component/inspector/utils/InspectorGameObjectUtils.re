@@ -62,6 +62,18 @@ let _buildGeometry = ((uiState, dispatchFunc), gameObject) =>
 let _buildCameraGroup = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorCameraGroup uiState dispatchFunc />;
 
+let _buildFlyCamera = ((uiState, dispatchFunc), gameObject) =>
+  <MainEditorFlyCameraController
+    uiState
+    dispatchFunc
+    flyCameraController={
+      GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+        gameObject,
+      )
+      |> StateLogicService.getEngineStateToGetData
+    }
+  />;
+
 let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorArcballCameraController
     uiState
@@ -212,6 +224,28 @@ let buildComponentUIComponent =
            gameObject,
            LanguageUtils.getInspectorLanguageDataByType(
              "camera-group-describe",
+             languageType,
+           ),
+         ),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             uiState,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | FlyCameraController =>
+    _buildFlyCamera
+    |> buildComponentBox(
+         (uiState, dispatchFunc),
+         (
+           "FlyCameraController",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "fly-cameraController-describe",
              languageType,
            ),
          ),

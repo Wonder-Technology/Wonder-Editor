@@ -70,19 +70,19 @@ let _setLocalEulerAngleFieldWhenNotExistInMap =
 
 let _getLocalEulerAngle =
     (
-      (valueXInEngineState, valueYInEngineState, valueZInEngineState),
       (valueXInMap, valueYInMap, valueZInMap),
+      (valueXInEngineState, valueYInEngineState, valueZInEngineState),
     ) => (
-  switch (valueXInEngineState) {
-  | None => valueXInMap
+  switch (valueXInMap) {
+  | None => valueXInEngineState
   | Some(value) => value
   },
-  switch (valueYInEngineState) {
-  | None => valueYInMap
+  switch (valueYInMap) {
+  | None => valueYInEngineState
   | Some(value) => value
   },
-  switch (valueZInEngineState) {
-  | None => valueZInMap
+  switch (valueZInMap) {
+  | None => valueZInEngineState
   | Some(value) => value
   },
 );

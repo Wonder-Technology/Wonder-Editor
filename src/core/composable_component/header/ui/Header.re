@@ -3,6 +3,7 @@ type navType =
   | File
   | Edit
   | Publish
+  | Setting
   | Help
   | AssetBundle;
 
@@ -33,6 +34,12 @@ module Method = {
     DomUtils.isSpecificDomChildrenHasTargetDom(
       target,
       DomHelper.getElementsByClassName("section-fileLoad"),
+    );
+
+  let isHeaderSettingSceneModalDom = target =>
+    DomUtils.isSpecificDomChildrenHasTargetDom(
+      target,
+      DomHelper.getElementsByClassName("wonder-settingScene-modal"),
     );
 };
 
@@ -92,6 +99,14 @@ let render =
         toggleShowNavFunc={() => send(ToggleShowNav(Publish))}
         hoverNavFunc={() => send(HoverNav(Publish))}
       />
+      <HeaderSetting
+        uiState
+        dispatchFunc
+        isSettingNav={state.currentSelectNav === Setting}
+        isShowSceneModal=false
+        toggleShowNavFunc={() => send(ToggleShowNav(Setting))}
+        hoverNavFunc={() => send(HoverNav(Setting))}
+      />
       <HeaderHelp
         uiState
         dispatchFunc
@@ -121,7 +136,9 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       e => {
         let target = ReactEventRe.Form.target(e);
 
-        Method.isHeaderDom(target) || Method.isImportPackageDom(target) ?
+        Method.isHeaderDom(target)
+        || Method.isImportPackageDom(target)
+        || Method.isHeaderSettingSceneModalDom(target) ?
           () : send(BlurNav);
       },
     ),

@@ -30,7 +30,7 @@ let insertMaterialNode =
     (
       materialNodeId,
       parentFolderNodeId,
-      (material, imageDataIndex),
+      (material, snapshotImageDataIndex),
       (editorState, engineState),
     ) => (
   editorState
@@ -40,12 +40,12 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
-         ~imageDataIndex,
+         ~snapshotImageDataIndex,
        ),
      )
-  |> ImageDataMapAssetEditorService.setData(
-       imageDataIndex,
-       ImageDataMapAssetService.buildData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
+       snapshotImageDataIndex,
+       BasicSourceTextureImageDataMapAssetService.buildData(
          ~base64=OperateMaterialLogicService.getDefaultSnapshotBase64()->Some,
          ~uint8Array=None,
          ~blobObjectURL=None,
@@ -76,9 +76,9 @@ let insertWDBNode =
          ~imageDataIndex,
        ),
      )
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        imageDataIndex,
-       ImageDataMapAssetService.buildData(
+       BasicSourceTextureImageDataMapAssetService.buildData(
          ~base64=None,
          ~uint8Array=None,
          ~name="material",
@@ -113,9 +113,9 @@ let insertTextureNode =
 
   (
     editorState
-    |> ImageDataMapAssetEditorService.setData(
+    |> BasicSourceTextureImageDataMapAssetEditorService.setData(
          textureComponent,
-         ImageDataMapAssetService.buildData(
+         BasicSourceTextureImageDataMapAssetService.buildData(
            ~base64=Some(imageSrc),
            ~uint8Array=None,
            ~blobObjectURL=None,
@@ -160,3 +160,42 @@ let insertFolderNode =
      ),
   engineState,
 );
+
+let insertCubemapNode =
+    (
+      nodeId,
+      parentFolderNodeId,
+      cubemapName,
+      /* textureComponent, */
+      (editorState, engineState),
+    ) => {
+  /* let (textureComponent, engineState) =
+     TextureUtils.createAndInitTexture(textureName, ".png", engineState); */
+
+  let (engineState, newCubemap) =
+    CubemapTextureEngineService.create(engineState);
+
+  let engineState =
+    engineState
+    |> CubemapTextureEngineService.setCubemapTextureName(
+         cubemapName,
+         newCubemap,
+       )
+    |> CubemapTextureEngineService.initTexture(newCubemap);
+
+  let (editorState, imageDataIndex) =
+    CubemapTextureImageDataMapAssetEditorService.addEmptyData(editorState);
+
+  (
+    editorState
+    |> OperateTreeAssetEditorService.insertNode(
+         parentFolderNodeId,
+         CubemapNodeAssetService.buildNode(
+           ~nodeId,
+           ~textureComponent=newCubemap,
+           ~imageDataIndex,
+         ),
+       ),
+    engineState,
+  );
+};

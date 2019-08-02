@@ -444,22 +444,22 @@ let _ =
         let addedFolderNodeId4 = addedFolderNodeId3 |> succ;
         MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        AssetInspectorTool.Rename.renameAssetFolderNode(
           ~nodeId=addedFolderNodeId1,
           ~name="FFolder",
           (),
         );
-        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        AssetInspectorTool.Rename.renameAssetFolderNode(
           ~nodeId=addedFolderNodeId2,
           ~name="BFolder",
           (),
         );
-        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        AssetInspectorTool.Rename.renameAssetFolderNode(
           ~nodeId=addedFolderNodeId3,
           ~name="ZFolder",
           (),
         );
-        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        AssetInspectorTool.Rename.renameAssetFolderNode(
           ~nodeId=addedFolderNodeId4,
           ~name="AFolder",
           (),

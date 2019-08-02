@@ -508,7 +508,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -741,7 +741,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           className="wonder-direction-light"
         >
           <article
-            className="inspector-item"
+            className="color-pick"
           >
             <div
               className="item-header"
@@ -1328,7 +1328,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"
@@ -1561,7 +1561,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           className="wonder-direction-light"
         >
           <article
-            className="inspector-item"
+            className="color-pick"
           >
             <div
               className="item-header"
@@ -2148,7 +2148,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

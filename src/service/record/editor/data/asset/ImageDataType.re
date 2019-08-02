@@ -6,4 +6,25 @@ type imageData = {
   mimeType: string,
 };
 
-type imageDataMap = WonderCommonlib.ImmutableSparseMapService.t(imageData);
+type basicSourceTextureImageDataIndex = int;
+
+type basicSourceTextureImageData = imageData;
+
+type basicSourceTextureImageDataMap =
+  WonderCommonlib.ImmutableSparseMapService.t(imageData);
+
+type cubemapTextureImageData = {
+  pxImageData: option(imageData),
+  nxImageData: option(imageData),
+  pyImageData: option(imageData),
+  nyImageData: option(imageData),
+  pzImageData: option(imageData),
+  nzImageData: option(imageData),
+};
+
+type cubemapTextureImageDataIndex = int;
+
+type cubemapTextureImageDataMap =
+  WonderCommonlib.ImmutableSparseMapService.t(cubemapTextureImageData);
+
+type cubemapTextureImageUint8ArrayData = Wonderjs.TextureimageUint8ArrayType.cubemapTextureImageUint8ArrayData;

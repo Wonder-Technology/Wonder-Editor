@@ -96,14 +96,14 @@ module Extract = {
       (
         (name, diffuseColor, shininess, textureData),
         material2,
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         engineState,
       ) =>
     RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
       (name, diffuseColor, shininess, textureData),
       material2,
       (
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
           RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
         ),
@@ -158,7 +158,11 @@ module Extract = {
           hasExtractedMaterialAssetMap,
           extractedMaterialAssetDataArr,
         ),
-        (imageUint8ArrayDataMap, defaultMaterialData, materialDataMapData),
+        (
+          basicSourceTextureImageUint8ArrayDataMap,
+          defaultMaterialData,
+          materialDataMapData,
+        ),
         engineState,
       ) => {
     let (
@@ -170,7 +174,7 @@ module Extract = {
       RelateGameObjectAndMaterialAssetUtils.getRelatedMaterialDataFromGameObject(
         gameObject,
         replacedTargetMaterialMap,
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         defaultMaterialData,
         materialDataMapData,
         _isLightMaterialDataEqual,
@@ -210,7 +214,7 @@ module Extract = {
       (
         sourceTexture,
         replacedTargetTextureMap,
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         (hasExtractedTextureAssetMap, extractedTextureAssetDataArr),
         (editorState, engineState),
       ) => {
@@ -223,7 +227,7 @@ module Extract = {
             extractedTextureAssetDataArr
             |> ArrayService.push((
                  sourceTexture,
-                 imageUint8ArrayDataMap
+                 basicSourceTextureImageUint8ArrayDataMap
                  |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
                       sourceTexture,
                     ),
@@ -261,7 +265,7 @@ module Extract = {
   let _extractAndRelateTextureAssets =
       (
         gameObject,
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         (
           replacedTargetTextureMap,
           hasExtractedTextureAssetMap,
@@ -276,7 +280,7 @@ module Extract = {
         (
           replacedTargetTextureMap,
           textureAssetDataMap,
-          imageUint8ArrayDataMap,
+          basicSourceTextureImageUint8ArrayDataMap,
         ),
         (editorState, engineState),
       );
@@ -303,7 +307,7 @@ module Extract = {
       _addExtractedTextureAssetData(
         sourceTexture,
         replacedTargetTextureMap,
-        imageUint8ArrayDataMap,
+        basicSourceTextureImageUint8ArrayDataMap,
         (hasExtractedTextureAssetMap, extractedTextureAssetDataArr),
         (editorState, engineState),
       );
@@ -395,8 +399,53 @@ module Extract = {
     );
   };
 
+  let _extractAndRelateCubemapAssets =
+      (
+        skyboxCubemapFromWDBOpt,
+        cubemapTextureImageUint8ArrayDataMap,
+        (editorState, engineState),
+      ) =>
+    switch (skyboxCubemapFromWDBOpt) {
+    | None => [||]
+    | Some(skyboxCubemapFromWDB) =>
+      let skyboxCubemapDataFromWDB =
+        RelateSceneSkyboxAndCubemapAssetUtils.getCubemapData(
+          skyboxCubemapFromWDB,
+          engineState,
+        );
+
+      switch (
+        CubemapNodeAssetEditorService.getTextureComponents(editorState)
+        |> Js.Array.find(cubemapAssetTextureComponent =>
+             RelateSceneSkyboxAndCubemapAssetUtils.isCubemapDataEqual(
+               skyboxCubemapDataFromWDB,
+               cubemapAssetTextureComponent,
+               engineState,
+             )
+           )
+      ) {
+      | None => [|
+          (
+            skyboxCubemapFromWDB,
+            cubemapTextureImageUint8ArrayDataMap
+            |> WonderCommonlib.MutableSparseMapService.unsafeGet(
+                 skyboxCubemapFromWDB,
+               ),
+          ),
+        |]
+      | Some(cubemapAssetTextureComponent) => [||]
+      };
+    };
+
   let extractAndRelateAssets =
-      (allGameObjects, imageUint8ArrayDataMap, (editorState, engineState)) => {
+      (
+        (allGameObjects, skyboxCubemapFromWDBOpt),
+        (
+          basicSourceTextureImageUint8ArrayDataMap,
+          cubemapTextureImageUint8ArrayDataMap,
+        ),
+        (editorState, engineState),
+      ) => {
     let (
       defaultMaterialData,
       basicMaterialMap,
@@ -407,6 +456,13 @@ module Extract = {
       (scriptEventFunctionAssetHashMap, scriptAttributeAssetHashMap),
     ) =
       _prepareData(editorState, engineState);
+
+    let extractedCubemapAssetDataArr =
+      _extractAndRelateCubemapAssets(
+        skyboxCubemapFromWDBOpt,
+        cubemapTextureImageUint8ArrayDataMap,
+        (editorState, engineState),
+      );
 
     let (
       _,
@@ -466,7 +522,7 @@ module Extract = {
                    extractedMaterialAssetDataArr,
                  ),
                  (
-                   imageUint8ArrayDataMap,
+                   basicSourceTextureImageUint8ArrayDataMap,
                    defaultMaterialData,
                    (basicMaterialDataMap, lightMaterialDataMap),
                  ),
@@ -483,7 +539,7 @@ module Extract = {
                  ) =
                    _extractAndRelateTextureAssets(
                      gameObject,
-                     imageUint8ArrayDataMap,
+                     basicSourceTextureImageUint8ArrayDataMap,
                      (
                        replacedTargetTextureMap,
                        hasExtractedTextureAssetMap,
@@ -543,6 +599,7 @@ module Extract = {
       (
         extractedMaterialAssetDataArr,
         extractedTextureAssetDataArr,
+        extractedCubemapAssetDataArr,
         extractedScriptEventFunctionAssetEntriesArr,
         extractedScriptAttributeAssetEntriesArr,
       ),
@@ -596,7 +653,9 @@ module AssetTree = {
     let (editorState, newNodeId) =
       IdAssetEditorService.generateNodeId(editorState);
     let (editorState, newImageDataIndex) =
-      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+      IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+        editorState,
+      );
 
     editorState
     |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
@@ -605,12 +664,12 @@ module AssetTree = {
            ~nodeId=newNodeId,
            ~type_=MaterialDataAssetType.LightMaterial,
            ~materialComponent=material,
-           ~imageDataIndex=newImageDataIndex,
+           ~snapshotImageDataIndex=newImageDataIndex,
          ),
        )
-    |> ImageDataMapAssetEditorService.setData(
+    |> BasicSourceTextureImageDataMapAssetEditorService.setData(
          newImageDataIndex,
-         ImageDataMapAssetService.buildData(
+         BasicSourceTextureImageDataMapAssetService.buildData(
            ~base64=None,
            ~uint8Array=None,
            ~name=materialName,
@@ -760,7 +819,7 @@ module AssetTree = {
                  setTextureNameFunc(textureName, texture, engineState);
 
                let (editorState, imageDataIndex) =
-                 ImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
+                 BasicSourceTextureImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
                    imageUint8Array,
                    imageName,
                    mimeType,
@@ -777,6 +836,109 @@ module AssetTree = {
                      ~nodeId=textureNodeId,
                      ~textureComponent=texture,
                      ~imageDataIndex,
+                   ),
+                   editorState,
+                 );
+
+               (editorState, engineState);
+             },
+             (editorState, engineState),
+           );
+      };
+
+  let _addCubemapNodeToAssetTree =
+      (
+        extractedCubemapAssetDataArr,
+        selectedFolderNodeInAssetTree,
+        (editorState, engineState),
+      ) =>
+    extractedCubemapAssetDataArr |> Js.Array.length === 0 ?
+      (editorState, engineState) :
+      {
+        let folderName = "Cubemaps";
+
+        let (editorState, folderNode) =
+          _buildFolderNode(
+            folderName,
+            selectedFolderNodeInAssetTree,
+            (editorState, engineState),
+          );
+
+        extractedCubemapAssetDataArr
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (.
+               (editorState, engineState),
+               (
+                 cubemap,
+                 cubemapTextureImageUint8ArrayData: ImageDataType.cubemapTextureImageUint8ArrayData,
+               ),
+             ) => {
+               let cubemapName =
+                 engineState
+                 |> OperateTreeAssetLogicService.getUniqueNodeName(
+                      OperateCubemapLogicService.getName(
+                        ~texture=cubemap,
+                        ~engineState,
+                      ),
+                      folderNode,
+                    );
+
+               let engineState =
+                 engineState
+                 |> CubemapTextureEngineService.setCubemapTextureName(
+                      cubemapName,
+                      cubemap,
+                    )
+                 |> CubemapTextureEngineService.initTexture(cubemap);
+
+               let (editorState, newImageDataIndex) =
+                 editorState
+                 |> CubemapTextureImageDataMapAssetEditorService.addDataWithCubemapTextureImageUint8ArrayData(
+                      (
+                        CubemapTextureEngineService.unsafeGetPXSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                        CubemapTextureEngineService.unsafeGetNXSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                        CubemapTextureEngineService.unsafeGetPYSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                        CubemapTextureEngineService.unsafeGetNYSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                        CubemapTextureEngineService.unsafeGetPZSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                        CubemapTextureEngineService.unsafeGetNZSource(
+                          cubemap,
+                          engineState,
+                        )
+                        |> ImageUtils.getImageName,
+                      ),
+                      cubemapTextureImageUint8ArrayData,
+                    );
+
+               let (editorState, newNodeId) =
+                 IdAssetEditorService.generateNodeId(editorState);
+
+               let editorState =
+                 CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
+                   folderNode,
+                   CubemapNodeAssetService.buildNode(
+                     ~nodeId=newNodeId,
+                     ~textureComponent=cubemap,
+                     ~imageDataIndex=newImageDataIndex,
                    ),
                    editorState,
                  );
@@ -873,6 +1035,7 @@ module AssetTree = {
       (
         extractedMaterialAssetDataArr,
         extractedTextureAssetDataArr,
+        extractedCubemapAssetDataArr,
         extractedScriptEventFunctionAssetEntriesArr,
         extractedScriptAttributeAssetEntriesArr,
         (editorState, engineState),
@@ -888,6 +1051,10 @@ module AssetTree = {
        )
     |> _addTextureNodeToAssetTree(
          extractedTextureAssetDataArr,
+         selectedFolderNodeInAssetTree,
+       )
+    |> _addCubemapNodeToAssetTree(
+         extractedCubemapAssetDataArr,
          selectedFolderNodeInAssetTree,
        )
     |> _addScriptEventFunctionNodeToAssetTree(

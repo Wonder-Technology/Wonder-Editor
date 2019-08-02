@@ -19,7 +19,7 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {
@@ -106,7 +106,7 @@ let _ =
                TextureNodeAssetEditorService.findAllTextureNodes(editorState)
                |> Js.Array.filter(node => {
                     let {uint8Array}: ImageDataType.imageData =
-                      ImageDataMapTool.getDataByTextureNode(
+                      BasicSourceTextureImageDataMapTool.getDataByTextureNode(
                         node,
                         editorState,
                       );
@@ -157,7 +157,7 @@ let _ =
 
             let editorState = StateEditorService.getState();
 
-            let {imageDataIndex}: materialNodeData =
+            let {snapshotImageDataIndex}: materialNodeData =
               editorState
               |> OperateTreeAssetEditorService.unsafeFindNodeById(
                    addedMaterialNodeId,
@@ -165,7 +165,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -207,7 +207,7 @@ let _ =
 
             let editorState = StateEditorService.getState();
 
-            let {imageDataIndex}: materialNodeData =
+            let {snapshotImageDataIndex}: materialNodeData =
               editorState
               |> OperateTreeAssetEditorService.unsafeFindNodeById(
                    addedMaterialNodeId,
@@ -215,7 +215,7 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -265,7 +265,7 @@ let _ =
                    |> WDBNodeAssetService.getNodeData;
 
                  editorState
-                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                 |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
                       imageDataIndex,
                     )
                  |> (

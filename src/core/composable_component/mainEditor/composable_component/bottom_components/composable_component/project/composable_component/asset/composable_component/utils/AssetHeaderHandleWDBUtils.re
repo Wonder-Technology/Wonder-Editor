@@ -29,7 +29,12 @@ let handleAssetWDBType =
   |> then_(
        (
          (
-           (allGameObjects, imageUint8ArrayDataMap),
+           (
+             allGameObjects,
+             skyboxCubemapOpt,
+             basicSourceTextureImageUint8ArrayDataMap,
+             cubemapTextureImageUint8ArrayDataMap,
+           ),
            (editorState, engineState),
          ),
        ) => {
@@ -37,14 +42,18 @@ let handleAssetWDBType =
          (
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
+           extractedCubemapAssetDataArr,
            extractedScriptEventFunctionAssetEntriesArr,
            extractedScriptAttributeAssetEntriesArr,
          ),
          (editorState, engineState),
        ) =
          ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
-           allGameObjects,
-           imageUint8ArrayDataMap,
+           (allGameObjects, skyboxCubemapOpt),
+           (
+             basicSourceTextureImageUint8ArrayDataMap,
+             cubemapTextureImageUint8ArrayDataMap,
+           ),
            (editorState, engineState),
          );
 
@@ -72,6 +81,7 @@ let handleAssetWDBType =
          ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
+           extractedCubemapAssetDataArr,
            extractedScriptEventFunctionAssetEntriesArr,
            extractedScriptAttributeAssetEntriesArr,
            (editorState, engineState),

@@ -159,6 +159,8 @@ let initInspectorEngineState =
   SettingToolEngine.setFakeCanvasToInspectorEngineState();
 
   StateInspectorEngineService.unsafeGetState()
+  |> GPUDetectToolEngine.setMaxTextureUnit(16)
+  |> RenderToolEngine.createActivableTextureUnitArray
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateInspectorEngineService.setState
   |> ignore;
@@ -172,6 +174,17 @@ let prepareGl = sandbox =>
 
 let createDefaultSceneAndNotInit = sandbox => {
   InitEditorJob.initEditorJob([||], StateEngineService.unsafeGetState())
+  |> StateEngineService.setState
+  |> ignore;
+
+  prepareGl(sandbox);
+};
+
+let createDefaultSceneWithArcballCamera = sandbox => {
+  InitEditorJobTool.initEditorWithArcballCamera(
+    [||],
+    StateEngineService.unsafeGetState(),
+  )
   |> StateEngineService.setState
   |> ignore;
 
@@ -250,3 +263,15 @@ let addSceneGameObjectComponentTypeToMap = () =>
     StateEngineService.unsafeGetState(),
   )
   |> StateLogicService.getAndSetEditorState;
+
+module Skybox = {
+  let createCubemapAndSetToSceneSkybox = engineState => {
+    let (engineState, cubemap) =
+      CubemapTextureEngineService.create(engineState);
+
+    let engineState =
+      engineState |> SceneEngineService.setCubemapTexture(cubemap);
+
+    (engineState, cubemap);
+  };
+};

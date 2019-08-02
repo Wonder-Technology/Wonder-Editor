@@ -103,13 +103,13 @@ let _ =
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
       let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
-      let newImageDataMapIndex = ImageDataMapTool.getNewImageDataMapIndex();
+      let newImageDataMapIndex = BasicSourceTextureImageDataMapTool.getNewImageDataMapIndex();
 
       MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
       let editorState = StateEditorService.getState();
 
-      let {imageDataIndex}: NodeAssetType.materialNodeData =
+      let {snapshotImageDataIndex}: NodeAssetType.materialNodeData =
         OperateTreeAssetEditorService.unsafeFindNodeById(
           addedMaterialNodeId,
           editorState,
@@ -117,9 +117,9 @@ let _ =
         |> MaterialNodeAssetService.getNodeData;
 
       (
-        imageDataIndex,
+        snapshotImageDataIndex,
         editorState
-        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> BasicSourceTextureImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isSome,
       )
       |> expect == (newImageDataMapIndex, true);
@@ -155,7 +155,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.Material.getFirstMaterialNodeId(
               assetTreeData,
             );
-          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+          AssetInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId,
             ~name=OperateMaterialLogicService.getDefaultName(),
             (),

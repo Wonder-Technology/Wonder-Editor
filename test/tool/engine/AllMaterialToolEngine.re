@@ -10,7 +10,7 @@ let setPrecision = (precision, state) => {
   },
 };
 
-let preparePrecision = state => setPrecision(GPUDetectType.HIGHP, state);
+let preparePrecision = state => setPrecision(AllGPUDetectType.HIGHP, state);
 
 let pregetGLSLData = state =>
   state |> preparePrecision |> PregetGLSLDataJob.execJob(Obj.magic(1));

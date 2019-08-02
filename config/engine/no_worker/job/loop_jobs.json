@@ -75,5 +75,8 @@
     },
     {
         "name": "update_script"
+    },
+    {
+        "name": "render_skybox"
     }
 ]

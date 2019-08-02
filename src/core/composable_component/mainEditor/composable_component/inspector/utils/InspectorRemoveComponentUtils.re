@@ -5,10 +5,9 @@ open Wonderjs;
 open CameraGroupType;
 
 let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
-  engineState
-  |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+  (editorState, engineState)
+  |> CameraLogicService.unbindCameraControllerEventIfHasComponentGameView(
        currentSceneTreeNode,
-       editorState,
      )
   |> GameObjectLogicService.disposeCameraGroup(
        currentSceneTreeNode,
@@ -21,6 +20,21 @@ let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
          engineState,
        ),
      );
+
+let _removeFlyCameraController =
+    (currentSceneTreeNode, (editorState, engineState)) => {
+  let flyCameraController =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+         currentSceneTreeNode,
+       );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.disposeFlyCameraController(
+       currentSceneTreeNode,
+       flyCameraController,
+     );
+};
 
 let _removeArcballCameraController =
     (currentSceneTreeNode, (editorState, engineState)) => {
@@ -86,6 +100,11 @@ let removeComponentByType =
 
   | CameraGroup =>
     _removeCameraGroup(currentSceneTreeNode, (editorState, engineState))
+  | FlyCameraController =>
+    _removeFlyCameraController(
+      currentSceneTreeNode,
+      (editorState, engineState),
+    )
   | ArcballCameraController =>
     _removeArcballCameraController(
       currentSceneTreeNode,

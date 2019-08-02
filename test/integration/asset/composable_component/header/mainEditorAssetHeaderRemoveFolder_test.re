@@ -90,7 +90,7 @@ let _ =
         let materialNodeId = MainEditorAssetIdTool.getNewAssetId();
         MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-        let {imageDataIndex} =
+        let {snapshotImageDataIndex} =
           StateEditorService.getState()
           |> OperateTreeAssetEditorService.unsafeFindNodeById(materialNodeId)
           |> MaterialNodeAssetService.getNodeData;
@@ -101,7 +101,7 @@ let _ =
         );
 
         StateEditorService.getState()
-        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> BasicSourceTextureImageDataMapAssetEditorService.getData(snapshotImageDataIndex)
         |> Js.Option.isNone
         |> expect == true;
       });

@@ -695,7 +695,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                     className="wonder-light-material"
                   >
                     <article
-                      className="inspector-item"
+                      className="color-pick"
                     >
                       <div
                         className="item-header"

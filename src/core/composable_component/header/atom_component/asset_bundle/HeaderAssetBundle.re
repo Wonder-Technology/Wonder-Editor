@@ -142,16 +142,45 @@ module Method = {
               (currentSelectTreeNodeId, folderTreeMap, selectTree),
               (
                 assetNode,
-                "texture",
+                "basicSourceTexture",
                 (
                   {
                     textureComponent:
                       TextureNodeAssetService.getTextureComponent(assetNode),
                     imageDataIndex:
                       TextureNodeAssetService.getImageDataIndex(assetNode),
-                  }: textureData
+                  }: basicSourceTextureData
                 )
-                |> convertTextureDataToValue,
+                |> convertBasicSourceTextureDataToValue,
+              ),
+              engineState,
+            );
+          },
+        ~cubemapNodeFunc=
+          (
+            parentFolderNode,
+            (currentSelectTreeNodeId, folderTreeMap, selectTree),
+            nodeId,
+            nodeData,
+          ) => {
+            let assetNode =
+              CubemapNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
+
+            SelectTreeUtils.handleFoldAssetNode(
+              parentFolderNode,
+              (currentSelectTreeNodeId, folderTreeMap, selectTree),
+              (
+                assetNode,
+                "cubemapTexture",
+                (
+                  {
+                    textureComponent:
+                      CubemapNodeAssetService.getTextureComponent(assetNode),
+                    imageDataIndex:
+                      CubemapNodeAssetService.getImageDataIndex(assetNode),
+                  }: cubemapTextureData
+                )
+                |> convertCubemapTextureDataToValue,
               ),
               engineState,
             );
@@ -185,8 +214,10 @@ module Method = {
                       MaterialNodeAssetService.getMaterialComponent(
                         assetNode,
                       ),
-                    imageDataIndex:
-                      MaterialNodeAssetService.getImageDataIndex(assetNode),
+                    snapshotImageDataIndex:
+                      MaterialNodeAssetService.getSnapshotImageDataIndex(
+                        assetNode,
+                      ),
                   }: materialData
                 )
                 |> convertMaterialDataToValue,

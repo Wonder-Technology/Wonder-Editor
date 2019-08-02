@@ -79,6 +79,16 @@ let getAllLightMaterials = (allGameObjects, engineState) =>
     engineState,
   );
 
+let getAllFlyCameraControllers = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasFlyCameraControllerComponent,
+      GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent,
+    ),
+    engineState,
+  );
+
 let getAllArcballCameraControllers = (allGameObjects, engineState) =>
   _getAllComponents(
     allGameObjects,

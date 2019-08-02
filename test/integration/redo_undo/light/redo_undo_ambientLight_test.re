@@ -11,11 +11,11 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _changeColorAndPushUndoStack = value => {
-      let sourceColor = ControllerTool.getColor();
+      let sourceColor = HeaderSettingTool.Scene.Ambient.getColor();
 
-      ControllerTool.changeColor(value);
+      HeaderSettingTool.Scene.Ambient.changeColor(value);
 
-      ControllerTool.closeColorPicker(~color=sourceColor, ());
+      HeaderSettingTool.Scene.Ambient.closeColorPicker(~color=sourceColor, ());
     };
 
     let _simulateTwiceChangeAmbientLight = () => {
@@ -70,6 +70,7 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeAmbientLight, _beforeEach, () => ()),
-      BuildComponentForCurryTool.buildController,
-    );
+      ()
+      /* BuildComponentTool.buildHeader(TestTool.buildEmptyAppState()) */
+      => HeaderSettingTool.UI.buildSetting(~isShowSceneModal=true, ()));
   });

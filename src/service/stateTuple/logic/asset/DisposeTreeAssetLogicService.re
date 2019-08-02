@@ -26,7 +26,7 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
 
 let _disposeTextureNodeEditorDataBeforeRemoveNode =
     (
-      {imageDataIndex, textureComponent}: textureNodeData,
+      {imageDataIndex, textureComponent}: NodeAssetType.textureNodeData,
       engineState,
       editorState,
     ) => {
@@ -36,7 +36,10 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
       editorState,
     ) ?
       editorState :
-      editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+      editorState
+      |> BasicSourceTextureImageDataMapAssetEditorService.removeData(
+           imageDataIndex,
+         );
 
   editorState
   |> SourceTextureCacheInspectorCanvasLogicService.removeCache(
@@ -45,9 +48,17 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
      );
 };
 
+let _disposeCubemapNodeEditorDataBeforeRemoveNode =
+    ({imageDataIndex}: NodeAssetType.cubemapNodeData, editorState) =>
+  editorState
+  |> CubemapTextureImageDataMapAssetEditorService.removeData(imageDataIndex);
+
 let _disposeMaterialNodeEditorDataBeforeRemoveNode =
-    ({imageDataIndex}: materialNodeData, editorState) =>
-  editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+    ({snapshotImageDataIndex}: materialNodeData, editorState) =>
+  editorState
+  |> BasicSourceTextureImageDataMapAssetEditorService.removeData(
+       snapshotImageDataIndex,
+     );
 
 let _disposeWDBNodeEditorDataBeforeRemoveNode =
     ({wdbGameObject}, (editorState, engineState)) => {
@@ -73,6 +84,9 @@ let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
           engineState,
           editorState,
         ),
+    ~cubemapNodeFunc=
+      (_, nodeData) =>
+        _disposeCubemapNodeEditorDataBeforeRemoveNode(nodeData, editorState),
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEditorDataBeforeRemoveNode(nodeData, editorState),
@@ -128,8 +142,25 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
        engineState,
      );
 
-let _disposeTextureNodeEngineData = ({textureComponent}, engineState) =>
+let _disposeTextureNodeEngineData =
+    ({textureComponent}: NodeAssetType.textureNodeData, engineState) =>
   engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
+
+let _disposeCubemapFromSceneSkybox = (textureComponent, engineState) =>
+  switch (SceneEngineService.getCubemapTexture(engineState)) {
+  | Some(skyboxCubemapTexture) when skyboxCubemapTexture === textureComponent =>
+    engineState
+    |> SceneEngineService.removeCubemapTexture
+    |> CubemapTextureEngineService.disposeCubemapTexture(
+         textureComponent,
+         false,
+       )
+  | _ => engineState
+  };
+
+let _disposeCubemapNodeEngineData =
+    ({textureComponent}: NodeAssetType.cubemapNodeData, engineState) =>
+  engineState |> _disposeCubemapFromSceneSkybox(textureComponent);
 
 let _disposeMaterialNodeEngineData =
     ({materialComponent, type_}, (editorState, engineState)) => {
@@ -175,6 +206,8 @@ let _disposeNodeEngineData = (node, editorState, engineState) =>
     ~node,
     ~textureNodeFunc=
       (_, nodeData) => _disposeTextureNodeEngineData(nodeData, engineState),
+    ~cubemapNodeFunc=
+      (_, nodeData) => _disposeCubemapNodeEngineData(nodeData, engineState),
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
@@ -226,6 +259,9 @@ let _disposeTreeEngineData = (editorState, engineState) =>
     ~textureNodeFunc=
       (engineState, _, nodeData) =>
         _disposeTextureNodeEngineData(nodeData, engineState),
+    ~cubemapNodeFunc=
+      (engineState, _, nodeData) =>
+        _disposeCubemapNodeEngineData(nodeData, engineState),
     ~materialNodeFunc=
       (engineState, _, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
@@ -251,7 +287,7 @@ let disposeTree = ((editorState, engineState)) => {
     editorState
     |> SourceTextureCacheInspectorCanvasEditorService.clearCache
     |> TreeAssetEditorService.clearTree
-    |> ImageDataMapAssetEditorService.clearMap
+    |> BasicSourceTextureImageDataMapAssetEditorService.clearMap
     |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
     |> CurrentNodeIdAssetEditorService.clearCurrentNodeId,
     engineState,

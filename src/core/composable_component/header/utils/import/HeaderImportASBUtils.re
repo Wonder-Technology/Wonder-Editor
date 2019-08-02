@@ -49,30 +49,47 @@ let importASB = asb => {
 
   HeaderBuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
   |> WonderBsMost.Most.fromPromise
-  |> WonderBsMost.Most.map(((imageMap, imageDataIndexMap, editorState)) => {
+  |> WonderBsMost.Most.map(
+       (
+         (
+           (basicSourceTextureImageMap, cubemapTextureImageMap),
+           (
+             basicSourceTextureImageDataIndexMap,
+             cubemapTextureImageDataIndexMap,
+           ),
+           editorState,
+         ),
+       ) => {
        let (textureMap, (editorState, engineState)) =
          HeaderBuildAssetDataUtils.buildTextureData(
            asbRecord,
-           (imageMap, imageDataIndexMap),
+           (basicSourceTextureImageMap, basicSourceTextureImageDataIndexMap),
+           (editorState, engineState),
+         );
+
+       let (editorState, engineState) =
+         HeaderBuildAssetDataUtils.buildCubemapData(
+           asbRecord,
+           (cubemapTextureImageMap, cubemapTextureImageDataIndexMap),
            (editorState, engineState),
          );
 
        HeaderBuildAssetDataUtils.buildMaterialData(
          asbRecord,
-         (imageDataIndexMap, textureMap),
+         (basicSourceTextureImageDataIndexMap, textureMap),
          (editorState, engineState),
        );
      })
   |> WonderBsMost.Most.flatMap(
        (
          (
-           imageDataIndexMap,
+           basicSourceTextureImageDataIndexMap,
            (basicMaterialMap, lightMaterialMap),
            (editorState, engineState),
          ),
        ) =>
        HeaderBuildAssetDataUtils.buildWDBData(
-         imageDataIndexMap,
+         basicSourceTextureImageDataIndexMap,
          asbRecord,
          buffer,
          (editorState, engineState),
@@ -106,7 +123,7 @@ let importASB = asb => {
             (
               (
                 allWDBGameObjectArr,
-                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
                   editorState,
                 ),
               ),

@@ -87,7 +87,7 @@ let _sendUniformNoMaterialShaderData =
   )
   |> WonderCommonlib.ArrayService.forEach(
        (.
-         {shaderCacheMap, name, pos, getDataFunc, sendDataFunc}: Wonderjs.GLSLSenderType.uniformNoMaterialShaderSendData,
+         {shaderCacheMap, name, pos, getDataFunc, sendDataFunc}: Wonderjs.AllGLSLSenderType.uniformNoMaterialShaderSendData,
        ) =>
        GLSLLocationEngineService.isUniformLocationExist(pos) ?
          /* TODO refactor(extend): need refactor with engine! */

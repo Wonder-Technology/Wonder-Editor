@@ -6,7 +6,7 @@ open NodeAssetType;
    editorState.assetRecord |> TextureNodeMapAssetService.getResult(nodeId); */
 
 let getTextureComponent = (nodeId, editorState) => {
-  let {textureComponent} =
+  let {textureComponent}: NodeAssetType.textureNodeData =
     OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
     |> TextureNodeAssetService.getNodeData;
 
@@ -14,7 +14,7 @@ let getTextureComponent = (nodeId, editorState) => {
 };
 
 let getTextureImageDataIndex = (nodeId, editorState) => {
-  let {imageDataIndex}: textureNodeData =
+  let {imageDataIndex}: NodeAssetType.textureNodeData =
     OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
     |> TextureNodeAssetService.getNodeData;
 
@@ -37,11 +37,11 @@ let setTextureImageName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 
   editorState
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        textureComponent,
        {
          ...
-           ImageDataMapAssetEditorService.unsafeGetData(
+           BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
              textureComponent,
              editorState,
            ),

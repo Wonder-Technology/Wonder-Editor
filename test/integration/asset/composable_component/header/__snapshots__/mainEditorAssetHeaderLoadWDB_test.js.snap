@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract cubemap assets if wdb->cubemap not exist in assets, extract them and add to assets should add "Cubemaps" folder node and add cubemap node into it test load the same wdb once 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        sceneSkyboxCubemap
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets fix bug if wdb gameObjects share the same material, should only extrace the shared material once 1`] = `
 <article
   className="wonder-asset-assetChildren"
@@ -324,7 +351,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
       className="item-text "
     >
       <span>
-        texture_0
+        basicSourceTexture_0
       </span>
     </div>
   </article>
@@ -351,7 +378,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
       className="item-text "
     >
       <span>
-        texture_0
+        basicSourceTexture_0
       </span>
     </div>
   </article>
@@ -371,14 +398,14 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="texture1img"
+        src="object_url1"
       />
     </div>
     <div
       className="item-text "
     >
       <span>
-        texture_0
+        basicSourceTexture_0
       </span>
     </div>
   </article>
@@ -391,14 +418,14 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="object_url1"
+        src="texture1img"
       />
     </div>
     <div
       className="item-text "
     >
       <span>
-        texture_0 1
+        texture_0
       </span>
     </div>
   </article>

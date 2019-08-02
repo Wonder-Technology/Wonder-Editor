@@ -1,18 +1,17 @@
-exception LoadException(string);
+exception LoadAssetException(string);
 
-type uploadFileType =
+type uploadAssetFileType =
   | LoadWDB
   | LoadGLB
   | LoadZip
   | LoadGLTFZip
   | LoadTexture
   | LoadAssetBundle
-  | LoadWPK
-  | LoadError;
+  | LoadError(string);
 
-type nodeResultType = {
+type uploadAssetFileResultType = {
   name: string,
-  type_: uploadFileType,
+  type_: uploadAssetFileType,
   result: FileReader.resultType,
 };
 
@@ -26,13 +25,24 @@ type wdbNodeData = {
 
 type textureNodeData = {
   textureComponent: int,
-  imageDataIndex: int,
+  imageDataIndex: ImageDataType.basicSourceTextureImageDataIndex,
+};
+
+type cubemapNodeData = {
+  textureComponent: int,
+  imageDataIndex: ImageDataType.cubemapTextureImageDataIndex,
+  /* pxImageDataIndex: option(int),
+     nxImageDataIndex: option(int),
+     pyImageDataIndex: option(int),
+     nyImageDataIndex: option(int),
+     pzImageDataIndex: option(int),
+     nzImageDataIndex: option(int), */
 };
 
 type materialNodeData = {
   type_: MaterialDataAssetType.materialType,
   materialComponent: int,
-  imageDataIndex: int,
+  snapshotImageDataIndex: int,
 };
 
 type scriptEventFunctionNodeData = {

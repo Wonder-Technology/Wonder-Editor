@@ -2,7 +2,7 @@ open Js.Promise;
 
 let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.tap(((gameObject, _)) =>
+  |> WonderBsMost.Most.tap((((gameObject, _), _)) =>
        StateEngineService.unsafeGetState()
        |> ShaderEngineService.clearInitShaderCache
        |> GameObjectEngineService.initAllGameObjects(gameObject)
@@ -17,7 +17,7 @@ let _getUploadAssetType = name => {
   switch (extname) {
   | ".wdb" => LoadWDB
   | _ =>
-    ConsoleUtils.error(
+    LoadError(
       LogUtils.buildErrorMessage(
         ~description={j|the loaded type is error|j},
         ~reason="",
@@ -25,9 +25,6 @@ let _getUploadAssetType = name => {
         ~params={j||j},
       ),
     )
-    |> StateLogicService.getEditorState;
-
-    LoadError;
   };
 };
 
@@ -74,7 +71,7 @@ let load = (dispatchFunc, event) => {
            }),
          )
        )
-    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType) =>
+    |> WonderBsMost.Most.flatMap((wdbResult: uploadAssetFileResultType) =>
          wdbResult.result
          |> FileReader.convertResultToArrayBuffer
          |> handleSceneWDB

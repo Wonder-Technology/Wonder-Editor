@@ -1,0 +1,167 @@
+.wonder-settingScene-modal {
+    position: fixed;
+    z-index: 200;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    top: 20%;
+    display: flex;
+    justify-content: center;
+
+    .modal-item {
+        width: 470px;
+        height: 400px;
+        position: relative;
+        background: #c1c1c1;
+        border-radius: 5px;
+        z-index: 150;
+
+        .setting-scene-ambient {
+            // flex: initial;
+            // width: 18%;
+            // height: 100%;
+
+
+            .content-field {
+                width: 100%;
+                height: 24px;
+                display: flex;
+
+                .color-pick {
+                    width: 100%;
+                    display: flex;
+
+                    .item-header {
+                        width: 40%;
+                        text-align: center;
+                        height: 24px;
+                        line-height: 24px;
+
+                    }
+
+                    .item-content {
+                        margin: 0 auto;
+                        display: flex;
+
+                        a {
+                            white-space: nowrap;
+                        }
+
+                        .color-hex {
+                            border-radius: 10px;
+                            width: 40px;
+                            height: 15px;
+                        }
+
+                        .color-select {
+                            margin-left: 10px;
+
+                            img {
+                                width: 15px;
+                                height: 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        .setting-scene-skybox {
+            display: flex;
+
+            .item-header {
+                width: 40%;
+                text-align: center;
+                height: 24px;
+                line-height: 24px;
+            }
+
+            .item-content {
+                display: flex;
+                margin: 0 auto;
+
+                .cubemap-img {
+                    width: 23px;
+                    height: 23px;
+                    border: 2px solid #a7a5a5;
+                    box-sizing: border-box;
+
+                    img {
+                        width: 23px;
+                        height: 23px;
+                    }
+                }
+                span {
+                    height: 24px;
+                    line-height: 24px;
+                    margin-left: 10px;
+                }
+
+                .cubemap-remove {
+                    margin-left: 10px
+                }
+            }
+        }
+
+
+        .modal-item-header {
+            width: 100%;
+            height: 22px;
+            line-height: 22px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 5px 0px 2px 0px;
+            border-bottom: 1px solid #868686;
+            background: #555454;
+            position: relative;
+
+            img {
+                position: absolute;
+                top: 8px;
+                cursor: hand;
+                right: 20px;
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .modal-item-content {
+            @import "../../utils/scrollBarUtils";
+            color: #000;
+            height: 314px;
+            overflow-y: auto;
+            width: 90%;
+            margin-left: 5%;
+            padding-top: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+
+            .content-field {
+                width: 100%;
+                height: 24px;
+                display: flex;
+                @import "../../utils/modalUtils";
+            }
+        }
+
+        .modal-item-footer {
+            height: 50px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            position: relative;
+
+            .footer-submit {
+                width: 100px;
+                position: absolute;
+                top: 5px;
+                right: 30px;
+                padding-top: 5px;
+            }
+        }
+    }
+}

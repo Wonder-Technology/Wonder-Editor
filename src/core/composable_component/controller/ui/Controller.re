@@ -26,44 +26,6 @@ module Method = {
       DomHelper.locationReload(.);
     };
 
-  let changeColor = value =>
-    value
-    |> convertColorObjToColorPickType
-    |> getEngineColorRgbArr
-    |> SceneEngineService.setAmbientLightColor
-    |> StateLogicService.getAndRefreshEngineStateWithFunc;
-
-  let getColor = () =>
-    SceneEngineService.getAmbientLightColor
-    |> StateLogicService.getEngineStateToGetData
-    |> getHexString;
-
-  let closeColorPick = ControllerAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
-
-  let buildAmbientLightComponent = (uiState, dispatchFunc, languageType) =>
-    <div className="header-item">
-      <div className="component-item">
-        <PickColorComponent
-          key={DomHelper.getRandomKey()}
-          label={
-            LanguageUtils.getControllerLanguageDataByType(
-              "controller-ambient",
-              languageType,
-            )
-          }
-          title={
-            LanguageUtils.getControllerLanguageDataByType(
-              "ambient-describe",
-              languageType,
-            )
-          }
-          getColorFunc=getColor
-          changeColorFunc=changeColor
-          closeColorPickFunc={closeColorPick((uiState, dispatchFunc), ())}
-        />
-      </div>
-    </div>;
-
   let handleChangeCurrentTransformGizmoType = (dispatchFunc, type_) => {
     open SceneViewType;
 
@@ -178,15 +140,6 @@ let render =
 
   <article key="controller" className="wonder-controller-component">
     <div className="header-controller">
-      <div className="controller-ambient">
-        {
-          Method.buildAmbientLightComponent(
-            uiState,
-            dispatchFunc,
-            languageType,
-          )
-        }
-      </div>
       <div className="controller-transform">
         {Method.buildTransformComponent(uiState, dispatchFunc, languageType)}
       </div>

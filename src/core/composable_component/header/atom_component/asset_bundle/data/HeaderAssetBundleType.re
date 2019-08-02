@@ -2,14 +2,16 @@ open SelectTreeType;
 
 type materialData = {
   materialComponent: int,
-  imageDataIndex: int,
+  snapshotImageDataIndex: int,
 };
 
-type textureData = Wonderjs.RABType.textureData;
+type basicSourceTextureData = Wonderjs.RABType.ResourceData.basicSourceTextureData;
 
-type scriptEventFunctionData = Wonderjs.RABType.scriptEventFunctionData;
+type cubemapTextureData = Wonderjs.RABType.ResourceData.cubemapTextureData;
 
-type scriptAttributeData = Wonderjs.RABType.scriptAttributeData;
+type scriptEventFunctionData = Wonderjs.RABType.ResourceData.scriptEventFunctionData;
+
+type scriptAttributeData = Wonderjs.RABType.ResourceData.scriptAttributeData;
 
 type assetBundleData = {
   assetBundle: Js.Typed_array.ArrayBuffer.t,
@@ -17,9 +19,15 @@ type assetBundleData = {
   type_: NodeAssetType.assetBundleType,
 };
 
-type imageData = Wonderjs.RABType.imageData;
+type imageData = Wonderjs.RABType.ResourceData.imageData;
 
-type imageDataMap = Wonderjs.RABType.imageDataMap;
+type basicSourceTextureImageData = Wonderjs.RABType.ResourceData.basicSourceTextureImageData;
+
+type basicSourceTextureImageDataMap = Wonderjs.RABType.ResourceData.basicSourceTextureImageDataMap;
+
+type cubemapTextureImageData = Wonderjs.RABType.ResourceData.cubemapTextureImageData;
+
+type cubemapTextureImageDataMap = Wonderjs.RABType.ResourceData.cubemapTextureImageDataMap;
 
 external convertMaterialDataToValue: materialData => value = "%identity";
 
@@ -29,9 +37,17 @@ external convertGeometryComponentToValue: int => value = "%identity";
 
 external convertValueToGeometryComponent: value => int = "%identity";
 
-external convertTextureDataToValue: textureData => value = "%identity";
+external convertBasicSourceTextureDataToValue: basicSourceTextureData => value =
+  "%identity";
 
-external convertValueToTextureData: value => textureData = "%identity";
+external convertValueToBasicSourceTextureData: value => basicSourceTextureData =
+  "%identity";
+
+external convertCubemapTextureDataToValue: cubemapTextureData => value =
+  "%identity";
+
+external convertValueToCubemapTextureData: value => cubemapTextureData =
+  "%identity";
 
 external convertScriptEventFunctionDataToValue:
   scriptEventFunctionData => value =

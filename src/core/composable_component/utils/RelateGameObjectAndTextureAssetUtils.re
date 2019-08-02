@@ -4,7 +4,7 @@ let _isTextureNameEqual = (name1, texture2, engineState) =>
     texture2,
     (
       BasicSourceTextureEngineService.getBasicSourceTextureName,
-      ConverterEngineService.isDefaultTextureName,
+      ConverterEngineService.isDefaultBasicSourceTextureName,
     ),
     engineState,
   );
@@ -189,7 +189,7 @@ let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
     editorState,
   )
   |> Js.Option.map((. {imageDataIndex}: NodeAssetType.textureNodeData) =>
-       ImageDataMapAssetEditorService.unsafeGetUint8Array(
+       BasicSourceTextureImageDataMapAssetEditorService.unsafeGetUint8Array(
          imageDataIndex,
          editorState,
        )

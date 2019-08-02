@@ -75,7 +75,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="wonder-basic-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"
@@ -186,7 +186,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="wonder-basic-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"
@@ -297,7 +297,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"

@@ -18,13 +18,12 @@ let _getArrayBuffer =
      );
 };
 
-let buildImageData =
-    ({images, bufferViews}: ExportAssetType.assets, buffer, editorState) =>
+let _loadBasicSourceTextureImages = (buffer, bufferViews, images) =>
   images
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          streamArr,
-         {name, bufferView, mimeType}: ExportAssetType.image,
+         {name, bufferView, mimeType}: ExportAssetType.basicSourceTextureImage,
          imageIndex,
        ) => {
          let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
@@ -45,20 +44,276 @@ let buildImageData =
                    image;
                  })
               |> WonderBsMost.Most.map(image =>
-                   (image, blobObjectURL, imageIndex, name, mimeType)
+                   (
+                     image,
+                     blobObjectURL,
+                     imageIndex,
+                     name,
+                     mimeType,
+                     Uint8Array.fromBuffer(arrayBuffer),
+                   )
                  ),
             );
        },
        [||],
      )
-  |> WonderBsMost.Most.mergeArray
+  |> WonderBsMost.Most.mergeArray;
+
+let _loadCubemapTextureFaceImage =
+    (faceImage, imageIndex, buffer, bufferViews) =>
+  OptionService.isJsonSerializedValueNone(faceImage) ?
+    WonderBsMost.Most.just(None) :
+    {
+      let {name, bufferView, mimeType}: ExportAssetType.image =
+        faceImage |> OptionService.unsafeGetJsonSerializedValue;
+
+      let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
+      let blob = Blob.newBlobFromArrayBuffer(arrayBuffer, mimeType);
+      let blobObjectURL = blob |> Blob.createObjectURL;
+
+      _buildLoadImageStream(
+        blob,
+        blobObjectURL,
+        mimeType,
+        {j|load image error. imageIndex: $imageIndex|j},
+      )
+      |> WonderBsMost.Most.map(image => {
+           ImageUtils.setImageName(image, name);
+
+           image;
+         })
+      |> WonderBsMost.Most.map(image =>
+           (
+             image,
+             blobObjectURL,
+             imageIndex,
+             name,
+             mimeType,
+             Uint8Array.fromBuffer(arrayBuffer),
+           )
+           ->Some
+         );
+    };
+
+let _loadCubemapTextureImages = (buffer, bufferViews, images) =>
+  images
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         streamArr,
+         {pxImage, nxImage, pyImage, nyImage, pzImage, nzImage}: ExportAssetType.cubemapTextureImage,
+         imageIndex,
+       ) =>
+         streamArr
+         |> ArrayService.push(
+              Wonderjs.MostUtils.concatArray([|
+                _loadCubemapTextureFaceImage(
+                  pxImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+                _loadCubemapTextureFaceImage(
+                  nxImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+                _loadCubemapTextureFaceImage(
+                  pyImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+                _loadCubemapTextureFaceImage(
+                  nyImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+                _loadCubemapTextureFaceImage(
+                  pzImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+                _loadCubemapTextureFaceImage(
+                  nzImage,
+                  imageIndex,
+                  buffer,
+                  bufferViews,
+                ),
+              |])
+              |> WonderBsMost.Most.reduce(
+                   (
+                     loadedCubemapTextureImageDataArr,
+                     imageDataOpt: option(BuildAssetDataType.loadedImageData),
+                   ) =>
+                     loadedCubemapTextureImageDataArr
+                     |> ArrayService.push(imageDataOpt),
+                   [||],
+                 )
+              |> then_(loadedCubemapTextureImageDataArr =>
+                   (
+                     {
+                       imageIndex,
+                       pxImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           0,
+                         ),
+                       nxImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           1,
+                         ),
+                       pyImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           2,
+                         ),
+                       nyImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           3,
+                         ),
+                       pzImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           4,
+                         ),
+                       nzImageData:
+                         Array.unsafe_get(
+                           loadedCubemapTextureImageDataArr,
+                           5,
+                         ),
+                     }: BuildAssetDataType.loadedCubemapTextureImageData
+                   )
+                   |> resolve
+                 )
+              |> WonderBsMost.Most.fromPromise,
+            ),
+       [||],
+     )
+  |> WonderBsMost.Most.mergeArray;
+
+let _convertLoadedImageDataToImage = ((image, _, _, _, _, _)) => image;
+
+let _convertLoadedCubemapTextureImageDataToCubemapImageMapData =
+    (
+      {
+        pxImageData,
+        nxImageData,
+        pyImageData,
+        nyImageData,
+        pzImageData,
+        nzImageData,
+      }: BuildAssetDataType.loadedCubemapTextureImageData,
+    )
+    : BuildAssetDataType.cubemapImageMapData => {
+  pxImage:
+    pxImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+  nxImage:
+    nxImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+  pyImage:
+    pyImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+  nyImage:
+    nyImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+  pzImage:
+    pzImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+  nzImage:
+    nzImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImage(loadedImageData)
+       ),
+};
+
+let _convertLoadedImageDataToImageData =
+    ((image, blobObjectURL, _, name, mimeType, uint8Array)) =>
+  CubemapTextureImageDataMapAssetService.buildImageData(
+    ~base64=None,
+    ~uint8Array=Some(uint8Array),
+    ~blobObjectURL=Some(blobObjectURL),
+    ~name,
+    ~mimeType,
+    (),
+  );
+
+let _convertLoadedCubemapTextureImageDataToCubemapTextureImageData =
+    (
+      {
+        pxImageData,
+        nxImageData,
+        pyImageData,
+        nyImageData,
+        pzImageData,
+        nzImageData,
+      }: BuildAssetDataType.loadedCubemapTextureImageData,
+    )
+    : ImageDataType.cubemapTextureImageData => {
+  pxImageData:
+    pxImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+  nxImageData:
+    nxImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+  pyImageData:
+    pyImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+  nyImageData:
+    nyImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+  pzImageData:
+    pzImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+  nzImageData:
+    nzImageData
+    |> Js.Option.map((. loadedImageData) =>
+         _convertLoadedImageDataToImageData(loadedImageData)
+       ),
+};
+
+let buildImageData =
+    (
+      {basicSourceTextureImages, cubemapTextureImages, bufferViews}: ExportAssetType.assets,
+      buffer,
+      editorState,
+    ) =>
+  basicSourceTextureImages
+  |> _loadBasicSourceTextureImages(buffer, bufferViews)
   |> WonderBsMost.Most.reduce(
        (
          (imageMap, imageDataIndexMap, editorState),
-         (image, blobObjectURL, imageIndex, name, mimeType),
+         (image, blobObjectURL, imageIndex, name, mimeType, uint8Array),
        ) => {
          let (editorState, imageDataIndex) =
-           IndexAssetEditorService.generateImageDataMapIndex(editorState);
+           IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex(
+             editorState,
+           );
 
          (
            imageMap
@@ -69,11 +324,12 @@ let buildImageData =
                 imageDataIndex,
               ),
            editorState
-           |> ImageDataMapAssetEditorService.setData(
+           |> BasicSourceTextureImageDataMapAssetEditorService.setData(
                 imageDataIndex,
-                ImageDataMapAssetService.buildData(
+                /* TODO set uint8Array here? */
+                BasicSourceTextureImageDataMapAssetService.buildData(
                   ~base64=None,
-                  ~uint8Array=None,
+                  ~uint8Array=Some(uint8Array),
                   ~blobObjectURL=Some(blobObjectURL),
                   ~name,
                   ~mimeType,
@@ -87,6 +343,83 @@ let buildImageData =
          WonderCommonlib.ImmutableSparseMapService.createEmpty(),
          editorState,
        ),
+     )
+  |> then_(
+       (
+         (
+           basicSourceTextureImageMap,
+           basicSourceTextureImageDataIndexMap,
+           editorState,
+         ),
+       ) =>
+       cubemapTextureImages
+       |> _loadCubemapTextureImages(buffer, bufferViews)
+       |> WonderBsMost.Most.reduce(
+            (
+              (imageMap, imageDataIndexMap, editorState),
+              (
+                {
+                  imageIndex,
+                  pxImageData,
+                  nxImageData,
+                  pyImageData,
+                  nyImageData,
+                  pzImageData,
+                  nzImageData,
+                }: BuildAssetDataType.loadedCubemapTextureImageData
+              ) as loadedCubemapTextureImageData,
+            ) => {
+              let (editorState, imageDataIndex) =
+                IndexAssetEditorService.generateCubemapTextureImageDataMapIndex(
+                  editorState,
+                );
+
+              (
+                imageMap
+                |> WonderCommonlib.ImmutableSparseMapService.set(
+                     imageIndex,
+                     _convertLoadedCubemapTextureImageDataToCubemapImageMapData(
+                       loadedCubemapTextureImageData,
+                     ),
+                   ),
+                imageDataIndexMap
+                |> WonderCommonlib.ImmutableSparseMapService.set(
+                     imageIndex,
+                     imageDataIndex,
+                   ),
+                editorState
+                |> CubemapTextureImageDataMapAssetEditorService.setData(
+                     imageDataIndex,
+                     _convertLoadedCubemapTextureImageDataToCubemapTextureImageData(
+                       loadedCubemapTextureImageData,
+                     ),
+                   ),
+              );
+            },
+            (
+              WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+              WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+              editorState,
+            ),
+          )
+       |> then_(
+            (
+              (
+                cubemapTextureImageMap,
+                cubemapTextureImageDataIndexMap,
+                editorState,
+              ),
+            ) =>
+            (
+              (basicSourceTextureImageMap, cubemapTextureImageMap),
+              (
+                basicSourceTextureImageDataIndexMap,
+                cubemapTextureImageDataIndexMap,
+              ),
+              editorState,
+            )
+            |> resolve
+          )
      );
 
 let buildTextureData =
@@ -223,6 +556,176 @@ let buildTextureData =
        ),
      );
 
+let _setFaceSource =
+    ((cubemap, source), faceImageOpt, setSourceFunc, engineState) =>
+  switch (faceImageOpt) {
+  | None => engineState
+  | Some(faceImage) =>
+    engineState
+    |> setSourceFunc(faceImage |> ImageType.convertDomToImageElement, cubemap)
+  };
+
+let buildCubemapData =
+    (
+      {cubemaps}: ExportAssetType.assets,
+      (
+        imageMap: BuildAssetDataType.cubemapImageMap,
+        imageDataIndexMap: BuildAssetDataType.cubemapImageDataIndexMap,
+      ),
+      (editorState, engineState),
+    ) =>
+  cubemaps
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (editorState, engineState),
+         {
+           path,
+           source,
+           name,
+           magFilter,
+           minFilter,
+           wrapS,
+           wrapT,
+           flipY,
+           pxFormat,
+           nxFormat,
+           pyFormat,
+           nyFormat,
+           pzFormat,
+           nzFormat,
+           pxType,
+           nxType,
+           pyType,
+           nyType,
+           pzType,
+           nzType,
+         }: ExportAssetType.cubemap,
+         cubemapIndex,
+       ) => {
+         let (engineState, cubemap) =
+           CubemapTextureEngineService.create(engineState);
+
+         let engineState =
+           engineState
+           |> CubemapTextureEngineService.setWrapS(
+                wrapS |> TextureTypeUtils.convertIntToWrap,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setWrapT(
+                wrapT |> TextureTypeUtils.convertIntToWrap,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setMagFilter(
+                magFilter |> TextureTypeUtils.convertIntToFilter,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setMinFilter(
+                minFilter |> TextureTypeUtils.convertIntToFilter,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPXFormat(
+                pxFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNXFormat(
+                nxFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPYFormat(
+                pyFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNYFormat(
+                nyFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPZFormat(
+                pzFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setNZFormat(
+                nzFormat |> TextureTypeUtils.convertIntToFormat,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.setPXType(pxType, cubemap)
+           |> CubemapTextureEngineService.setNXType(nxType, cubemap)
+           |> CubemapTextureEngineService.setPYType(pyType, cubemap)
+           |> CubemapTextureEngineService.setNYType(nyType, cubemap)
+           |> CubemapTextureEngineService.setPZType(pzType, cubemap)
+           |> CubemapTextureEngineService.setNZType(nzType, cubemap)
+           |> CubemapTextureEngineService.setFlipY(flipY, cubemap)
+           |> CubemapTextureEngineService.setCubemapTextureName(
+                name,
+                cubemap,
+              )
+           |> CubemapTextureEngineService.initTexture(cubemap);
+
+         let imageMapData =
+           imageMap
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source);
+
+         let engineState =
+           engineState
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.pxImage,
+                CubemapTextureEngineService.setPXSource,
+              )
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.nxImage,
+                CubemapTextureEngineService.setNXSource,
+              )
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.pyImage,
+                CubemapTextureEngineService.setPYSource,
+              )
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.nyImage,
+                CubemapTextureEngineService.setNYSource,
+              )
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.pzImage,
+                CubemapTextureEngineService.setPZSource,
+              )
+           |> _setFaceSource(
+                (cubemap, source),
+                imageMapData.nzImage,
+                CubemapTextureEngineService.setNZSource,
+              );
+
+         let (editorState, assetNodeId) =
+           IdAssetEditorService.generateNodeId(editorState);
+
+         let (editorState, parentFolderNode) =
+           OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+             path,
+             (editorState, engineState),
+           );
+
+         let editorState =
+           editorState
+           |> CubemapNodeAssetEditorService.addCubemapNodeToAssetTree(
+                parentFolderNode,
+                CubemapNodeAssetService.buildNode(
+                  ~nodeId=assetNodeId,
+                  ~textureComponent=cubemap,
+                  ~imageDataIndex=
+                    imageDataIndexMap
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                         source,
+                       ),
+                ),
+              );
+
+         (editorState, engineState);
+       },
+       (editorState, engineState),
+     );
+
 let _addMaterialToAssetTree =
     (
       (material, path, type_),
@@ -245,7 +748,7 @@ let _addMaterialToAssetTree =
          ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
-         ~imageDataIndex=
+         ~snapshotImageDataIndex=
            imageDataIndexMap
            |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(snapshot),
        ),
@@ -648,6 +1151,7 @@ let buildWDBData =
            path,
            (editorState, engineState),
          );
+
        HeaderImportASBWDBUtils.importWDB(
          (imageDataIndexMap, snapshot, name, arrayBuffer),
          (assetNodeId, parentFolderNode),
@@ -656,7 +1160,12 @@ let buildWDBData =
        |> then_(
             (
               (
-                (allGameObjects, _wdbImageUint8ArrayDataMap),
+                (
+                  allGameObjects,
+                  skyboxCubemapOpt,
+                  wdbBasicSourceTextureImageUint8ArrayDataMap,
+                  wdbCubemapTextureImageUint8ArrayDataMap,
+                ),
                 (editorState, engineState),
               ),
             ) => {
@@ -667,13 +1176,19 @@ let buildWDBData =
                     Operators.(
                       test(
                         Log.buildAssertMessage(
-                          ~expect={j|wdbImageUint8ArrayDataMap be empty|j},
+                          ~expect=
+                            {j|wdbBasicSourceTextureImageUint8ArrayDataMap, wdbCubemapTextureImageUint8ArrayDataMap be empty|j},
                           ~actual={j|not|j},
                         ),
-                        () =>
-                        _wdbImageUint8ArrayDataMap
-                        |> WonderCommonlib.ImmutableSparseMapService.length
-                        == 0
+                        () => {
+                          wdbBasicSourceTextureImageUint8ArrayDataMap
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0;
+
+                          wdbCubemapTextureImageUint8ArrayDataMap
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0;
+                        },
                       )
                     )
                   )

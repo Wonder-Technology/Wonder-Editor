@@ -1,4 +1,12 @@
 open Wonderjs;
+
+let setCubemapTexture = SceneAPI.setCubemapTexture;
+
+let removeCubemapTexture = SceneAPI.removeCubemapTexture;
+
+let getCubemapTexture = state =>
+  SkyboxSceneMainService.getCubemapTexture(state);
+
 let getAmbientLightColor = SceneAPI.getAmbientLightColor;
 
 let setAmbientLightColor = SceneAPI.setAmbientLightColor;

@@ -11,6 +11,14 @@ type action =
   | ToggleAddableComponent;
 
 module Method = {
+  let _isGameObjectHasUniqueCameraController = (gameObject, engineState) =>
+    switch (
+      CameraControllerUtils.getCameraControllerType(gameObject, engineState)
+    ) {
+    | Some(cameraControllerType) => true
+    | None => false
+    };
+
   let addSpecificComponent =
       ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let type_ =
@@ -18,6 +26,7 @@ module Method = {
         type_,
         StateEditorService.getState(),
       );
+    let engineState = StateEngineService.unsafeGetState();
 
     InspectorHasComponentUtils.isHasSpecificComponentByType(
       type_,
@@ -32,11 +41,23 @@ module Method = {
         ),
       )
       |> StateLogicService.getEditorState :
-      AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (uiState, dispatchFunc),
+      _isGameObjectHasUniqueCameraController(
         currentSceneTreeNode,
-        type_,
-      );
+        engineState,
+      ) ?
+        ConsoleUtils.warn(
+          LanguageUtils.getMessageLanguageDataByType(
+            "add-component-camera-duplicate",
+            LanguageEditorService.unsafeGetType
+            |> StateLogicService.getEditorState,
+          ),
+        )
+        |> StateLogicService.getEditorState :
+        AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+          (uiState, dispatchFunc),
+          currentSceneTreeNode,
+          type_,
+        );
   };
 
   let buildGameObjectAddableComponent =

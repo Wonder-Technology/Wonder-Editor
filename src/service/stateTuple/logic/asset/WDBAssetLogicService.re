@@ -3,7 +3,7 @@ open Js.Promise;
 let _createWDBNodeAndSnapshot =
     (parentFolderNode, (wdbNodeId, name, gameObject), editorState) => {
   let (editorState, newImageDataIndex) =
-    editorState |> IndexAssetEditorService.generateImageDataMapIndex;
+    editorState |> IndexAssetEditorService.generateBasicSourceTextureImageDataMapIndex;
 
   editorState
   |> OperateTreeAssetEditorService.insertNode(
@@ -15,9 +15,9 @@ let _createWDBNodeAndSnapshot =
          ~imageDataIndex=newImageDataIndex,
        ),
      )
-  |> ImageDataMapAssetEditorService.setData(
+  |> BasicSourceTextureImageDataMapAssetEditorService.setData(
        newImageDataIndex,
-       ImageDataMapAssetService.buildData(
+       BasicSourceTextureImageDataMapAssetService.buildData(
          ~base64=None,
          ~uint8Array=None,
          ~blobObjectURL=None,
@@ -92,7 +92,10 @@ let importAssetWDB =
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
-  let imageUint8ArrayDataMapRef =
+  let skyboxCubemapOptRef = ref(None);
+  let basicSourceTextureImageUint8ArrayDataMapRef =
+    ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
+  let cubemapTextureImageUint8ArrayDataMapRef =
     ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
 
   engineState
@@ -105,7 +108,19 @@ let importAssetWDB =
        isLoadImage,
      )
   |> WonderBsMost.Most.tap(
-       ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
+       (
+         (
+           engineState,
+           (
+             (
+               basicSourceTextureImageUint8ArrayDataMap,
+               cubemapTextureImageUint8ArrayDataMap,
+             ),
+             _,
+           ),
+           (gameObject, skyboxCubemapOpt),
+         ),
+       ) => {
        let allGameObjects =
          HierarchyGameObjectEngineService.getAllGameObjects(
            gameObject,
@@ -127,12 +142,21 @@ let importAssetWDB =
        |> ignore;
 
        allGameObjectsRef := allGameObjects;
-       imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
+       skyboxCubemapOptRef := skyboxCubemapOpt;
+       basicSourceTextureImageUint8ArrayDataMapRef :=
+         basicSourceTextureImageUint8ArrayDataMap;
+       cubemapTextureImageUint8ArrayDataMapRef :=
+         cubemapTextureImageUint8ArrayDataMap;
      })
   |> WonderBsMost.Most.drain
   |> then_(_ =>
        resolve((
-         (allGameObjectsRef^, imageUint8ArrayDataMapRef^),
+         (
+           allGameObjectsRef^,
+           skyboxCubemapOptRef^,
+           basicSourceTextureImageUint8ArrayDataMapRef^,
+           cubemapTextureImageUint8ArrayDataMapRef^,
+         ),
          (StateEditorService.getState(), StateEngineService.unsafeGetState()),
        ))
      );

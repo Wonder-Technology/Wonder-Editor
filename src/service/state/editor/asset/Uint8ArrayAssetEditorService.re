@@ -1,4 +1,4 @@
-let buildImageUint8ArrayMap = editorState =>
+let buildBasicSourceTextureImageUint8ArrayMap = editorState =>
   TextureNodeAssetEditorService.findAllTextureNodes(editorState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. map, textureNode) => {
@@ -6,7 +6,7 @@ let buildImageUint8ArrayMap = editorState =>
            TextureNodeAssetService.getNodeData(textureNode);
 
          let {uint8Array, mimeType}: ImageDataType.imageData =
-           ImageDataMapAssetEditorService.unsafeGetData(
+           BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
              imageDataIndex,
              editorState,
            );

@@ -1,5 +1,5 @@
 let getProgram = (shaderIndex, engineState: Wonderjs.StateDataMainType.state) =>
-  Wonderjs.ProgramService.unsafeGetProgram(
+  Wonderjs.AllProgramService.unsafeGetProgram(
     shaderIndex,
     engineState.programRecord,
   );

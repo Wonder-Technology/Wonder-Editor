@@ -34,39 +34,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -155,7 +123,7 @@ let _ =
                   let editorState = StateEditorService.getState();
                   let engineState = StateEngineService.unsafeGetState();
 
-                  let {imageDataIndex}: NodeAssetType.materialNodeData =
+                  let {snapshotImageDataIndex}: NodeAssetType.materialNodeData =
                     OperateTreeAssetLogicService.findNodeByName(
                       newMaterialName,
                       (editorState, engineState),
@@ -164,8 +132,8 @@ let _ =
                     |> MaterialNodeAssetService.getNodeData;
 
                   editorState
-                  |> ImageDataMapAssetEditorService.unsafeGetData(
-                       imageDataIndex,
+                  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+                       snapshotImageDataIndex,
                      )
                   |> (
                     ({blobObjectURL}) =>
@@ -381,7 +349,7 @@ let _ =
 
         testPromise("test format", () =>
           _test(
-            Wonderjs.SourceTextureType.Luminance,
+            Wonderjs.TextureType.Luminance,
             (
               BasicSourceTextureEngineService.getFormat,
               BasicSourceTextureEngineService.setFormat,
@@ -406,6 +374,272 @@ let _ =
             ),
           )
         );
+      });
+
+      describe("should set data to basicSourceTextureImageDataMap", () =>
+        testPromise("should set uint8Array", () =>
+          MainEditorAssetUploadTool.loadOneTexture()
+          |> then_(uploadedTextureNodeId =>
+               ImportPackageTool.testImportPackage(
+                 ~testFunc=
+                   () =>
+                     BasicSourceTextureImageDataMapTool.getDataByTextureNode(
+                       ImportPackageTool.getImportedTextureAssetNodes()
+                       |> ArrayService.unsafeGetFirst,
+                     )
+                     |> StateLogicService.getEditorState
+                     |> (
+                       ({uint8Array}: ImageDataType.imageData) =>
+                       {
+                         uint8Array
+                         |> OptionService.unsafeGet
+                         |> Uint8Array.length
+                         |> expect == 3
+                         |> resolve
+                       }
+                     ),
+                 (),
+               )
+             )
+        )
+      );
+    });
+
+    describe("test import cubemap assets", () => {
+      beforeEach(() => MainEditorSceneTool.prepareScene(sandbox));
+
+      testPromise("should add cubemap assets to asset tree", () => {
+        let _ =
+          ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+        ImportPackageTool.testImportPackage(
+          ~testFunc=
+            () =>
+              BuildComponentTool.buildAssetChildrenNode()
+              |> ReactTestTool.createSnapshotAndMatch
+              |> resolve,
+          (),
+        );
+      });
+
+      describe("should keep cubemap data not change", () => {
+        let _prepare = (value, setValueFunc) => {
+          let (
+            (source1, source2, source3, source4, source5, source6),
+            (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+            addedCubemapNodeId1,
+          ) =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          let texture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=addedCubemapNodeId1,
+              (),
+            );
+
+          setValueFunc(value, texture)
+          |> StateLogicService.getAndSetEngineState;
+
+          (
+            (source1, source2, source3, source4, source5, source6),
+            (base64_1, base64_2, base64_3, base64_4, base64_5, base64_6),
+          );
+        };
+
+        let _test = (value, (getValueFunc, setValueFunc)) => {
+          let _ = _prepare(value, setValueFunc);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                let textureComponent =
+                  ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                  |> ArrayService.unsafeGetFirst;
+
+                getValueFunc(textureComponent, engineState)
+                |> expect == value
+                |> resolve;
+              },
+            (),
+          );
+        };
+
+        testPromise("test source", () => {
+          let newSourceName = "b3.png";
+
+          let newSource =
+            CubemapTextureToolEngine.buildSource(~name=newSourceName, ());
+
+          let (_, _, addedCubemapNodeId1) =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          let texture =
+            MainEditorAssetCubemapNodeTool.getCubemapTextureComponent(
+              ~nodeId=addedCubemapNodeId1,
+              (),
+            );
+
+          MainEditorAssetCubemapNodeTool.changeFaceSource(
+            ~textureComponent=texture,
+            ~faceSource=newSource,
+            ~setSourceFunc=CubemapTextureEngineService.setPYSource,
+            ~setFaceImageDataFunc=CubemapTextureImageDataMapAssetEditorService.setPYImageData,
+            (),
+          );
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                let textureComponent =
+                  ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                  |> ArrayService.unsafeGetFirst;
+
+                Obj.magic(
+                  CubemapTextureEngineService.unsafeGetPYSource(
+                    textureComponent,
+                    engineState,
+                  ),
+                )##name
+                |> expect == newSourceName
+                |> resolve;
+              },
+            (),
+          );
+        });
+        testPromise("test format", () =>
+          _test(
+            Wonderjs.TextureType.Luminance,
+            (
+              CubemapTextureEngineService.getPYFormat,
+              CubemapTextureEngineService.setPYFormat,
+            ),
+          )
+        );
+        testPromise("test type_", () =>
+          _test(
+            3,
+            (
+              CubemapTextureEngineService.getNZType,
+              CubemapTextureEngineService.setNZType,
+            ),
+          )
+        );
+        testPromise("test flipY", () =>
+          _test(
+            false,
+            (
+              CubemapTextureEngineService.getFlipY,
+              CubemapTextureEngineService.setFlipY,
+            ),
+          )
+        );
+      });
+
+      describe("should set data to cubemapTextureImageDataMap", () =>
+        testPromise("should set uint8Array", () => {
+          let _ =
+            ImportPackageTool.Cubemap.prepareForAddOneCubemapAsset(sandbox);
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                CubemapTextureImageDataMapTool.getPXImageData(
+                  MainEditorAssetCubemapNodeTool.getImageDataIndexByTextureComponent(
+                    ~textureComponent=
+                      ImportPackageTool.Cubemap.getImportedCubemapAssetCubemapComponents()
+                      |> ArrayService.unsafeGetFirst,
+                    (),
+                  ),
+                )
+                |> StateLogicService.getEditorState
+                |> OptionService.unsafeGet
+                |> (
+                  ({uint8Array}: ImageDataType.imageData) =>
+                    uint8Array
+                    |> OptionService.unsafeGet
+                    |> Uint8Array.length
+                    |> expect == 156
+                    |> resolve
+                ),
+            (),
+          );
+        })
+      );
+
+      describe("fix bug", () => {
+        testPromise("support cubemap asset with no sources", () => {
+          WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addCubemap();
+
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () =>
+                BuildComponentTool.buildAssetChildrenNode()
+                |> ReactTestTool.createSnapshotAndMatch
+                |> resolve,
+            (),
+          );
+        });
+
+        describe("export asb->wdb shouldn't contain skybox data", () => {
+          let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
+          beforeAll(() =>
+            sceneWDBArrayBuffer :=
+              WDBTool.Cubemap.generateWDBWithBasicSourceTextureAndSkyboxCubemap()
+          );
+
+          beforeEach(() => {
+            MainEditorAssetTool.buildFakeFileReader();
+
+            LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+            LoadTool.buildFakeURL(sandbox^);
+
+            LoadTool.buildFakeLoadImage(.);
+          });
+
+          testPromise(
+            {|
+            load wdb w1 with skybox data;
+            set w1->cubemap to scene skybox;
+            export;
+            import;
+
+            shouldn't error;
+            |},
+            () => {
+              WDBTool.prepareFakeCanvas(sandbox) |> ignore;
+              TestTool.openContractCheck();
+              ConsoleTool.notShowMessage();
+              let errorStub =
+                createMethodStub(sandbox^, ConsoleTool.console, "error");
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=sceneWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   HeaderSettingTool.Scene.Skybox.setCubemapTextureToSceneSkybox(
+                     WDBTool.Cubemap.findSkyboxCubemapFromLoadedWDB
+                     |> StateLogicService.getEditorState,
+                   );
+
+                   ImportPackageTool.testImportPackage(
+                     ~testFunc=
+                       () => ConsoleTool.judgeNotError(errorStub) |> resolve,
+                     (),
+                   );
+                 });
+            },
+          );
+        });
       });
     });
 
@@ -462,37 +696,7 @@ let _ =
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
             (),
           );
-          MainEditorSceneTool.initInspectorEngineState(
-            ~sandbox,
-            ~isInitJob=false,
-            ~noWorkerJobRecord=
-              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-                ~initPipelines=
-                  {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-                ~initJobs=
-                  {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-                (),
-              ),
-            (),
-          );
-
-          StateInspectorEngineService.unsafeGetState()
-          |> MainUtils._handleInspectorEngineState
-          |> StateInspectorEngineService.setState
-          |> ignore;
+          MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
           MainEditorSceneTool.createDefaultComponents();
 
@@ -597,7 +801,7 @@ let _ =
               let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-              AssetTreeInspectorTool.Rename.renameAssetScriptEventFunctionNode(
+              AssetInspectorTool.Rename.renameAssetScriptEventFunctionNode(
                 ~nodeId=addedNodeId,
                 ~name=scriptEventFunctionDataNameRef^,
                 (),
@@ -708,7 +912,7 @@ let _ =
                   (),
                 );
 
-                AssetTreeInspectorTool.Rename.renameAssetScriptAttributeNode(
+                AssetInspectorTool.Rename.renameAssetScriptAttributeNode(
                   ~nodeId=addedNodeId,
                   ~name=scriptAttributeNameRef^,
                   (),

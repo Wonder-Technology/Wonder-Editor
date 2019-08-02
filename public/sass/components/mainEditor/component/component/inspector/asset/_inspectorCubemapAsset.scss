@@ -1,0 +1,41 @@
+.wonder-cubemap-inspector {
+    .wonder-cubemap-inspector-faceSource {
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        .item-header {
+            width: 32%;
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 100px;
+        }
+
+        .item-content {
+            .texture-img {
+                position: relative;
+                width: 100px;
+                height: 100px;
+                border: 2px solid #a7a5a5;
+                box-sizing: border-box;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                    box-sizing: border-box;
+                }
+
+                input {
+                    width: 100px;
+                    height: 100px;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}

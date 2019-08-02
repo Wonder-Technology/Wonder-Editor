@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`header import package test import cubemap assets fix bug support cubemap asset with no sources 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`header import package test import cubemap assets should add cubemap assets to asset tree 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/cubemap.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Cubemap
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`header import package test import material assets fix bug 
           1.add material asset m1;
           2.export;
@@ -14,7 +68,7 @@ exports[`header import package test import material assets fix bug
   className="wonder-inspector-component"
 >
   <article
-    className="wonder-inspector-assetTree"
+    className="wonder-inspector-asset"
   >
     <article
       className="wonder-material-inspector"
@@ -77,7 +131,7 @@ exports[`header import package test import material assets fix bug
         className="wonder-light-material"
       >
         <article
-          className="inspector-item"
+          className="color-pick"
         >
           <div
             className="item-header"
