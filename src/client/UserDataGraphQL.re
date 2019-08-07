@@ -1,0 +1,19 @@
+let getUserData = userId => {j|
+        {
+          loginUser(id:$userId){
+            user_name
+            email
+          }
+          userInfo(userId:$userId){
+            profile_picture
+            nick_name
+            hash_code
+          }
+          userRepos(userId:$userId){
+            id
+            name
+            description
+            file_path
+          }
+        }
+    |j};

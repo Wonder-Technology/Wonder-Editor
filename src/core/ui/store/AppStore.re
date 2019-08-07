@@ -8,6 +8,7 @@ open BottomShowComponentStore;
 
 type appState = {
   isInitEngine: bool,
+  isUserLogin: bool,
   mapState,
   updateState,
   inspectorState,
@@ -19,6 +20,7 @@ type ReduxThunk.thunk('a) +=
 
 type ReduxThunk.thunk(_) +=
   | InitEngineAction
+  | CheckUserLoginAction
   | MapAction(mapAction(componentsMap))
   | InspectorAction(inspectorAction(int, bool))
   | UpdateAction(updateAction(updateComponentTypeArr))
@@ -26,6 +28,7 @@ type ReduxThunk.thunk(_) +=
 
 let state: appState = {
   isInitEngine: false,
+  isUserLogin: false,
   mapState: {
     componentsMap: None,
   },
@@ -43,6 +46,7 @@ let state: appState = {
 let appReducter = (state: appState, action) =>
   switch (action) {
   | InitEngineAction => {...state, isInitEngine: true}
+  | CheckUserLoginAction => {...state, isUserLogin: true}
   | MapAction(action) => {
       ...state,
       mapState: mapReducer(state.mapState, action),

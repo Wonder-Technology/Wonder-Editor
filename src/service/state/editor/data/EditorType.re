@@ -28,7 +28,10 @@ open InspectorCanvasType;
 
 open ImgCanvasType;
 
+open UserDataType;
+
 type editorState = {
+  userDataRecord,
   inspectorCanvasRecord,
   imgCanvasRecord,
   uiRecord,

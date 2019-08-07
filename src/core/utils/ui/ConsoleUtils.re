@@ -1,8 +1,8 @@
 let _console = (message, editorState, (messageConsoleFunc, logConsoleFunc)) => {
-  DebugSettingEditorService.isNotShowMessage(editorState) ?
-    () :
+  /* DebugSettingEditorService.isNotShowMessage(editorState) ?
+    () : */
     editorState
-    |> messageConsoleFunc(message, 4000)
+    |> messageConsoleFunc(message, 6000)
     |> StateEditorService.setState
     |> ignore;
 

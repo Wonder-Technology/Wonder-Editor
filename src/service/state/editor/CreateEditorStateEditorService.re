@@ -1,6 +1,13 @@
 open EditorType;
 
 let create = () => {
+  userDataRecord: {
+    userName: None,
+    profilePath: None,
+    email: None,
+    currentRepo: None,
+    userRepos: None,
+  },
   inspectorCanvasRecord: {
     containerGameObject: None,
     basicSourceTextureCacheMap:
@@ -22,8 +29,10 @@ let create = () => {
     tree: None,
     currentNodeId: None,
     selectedFolderNodeIdInAssetTree: None,
-    basicSourceTextureImageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-    cubemapTextureImageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    basicSourceTextureImageDataMap:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    cubemapTextureImageDataMap:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),
