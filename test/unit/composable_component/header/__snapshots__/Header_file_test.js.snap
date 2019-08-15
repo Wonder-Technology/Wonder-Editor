@@ -35,6 +35,16 @@ exports[`Header File test File test Controls test modal content else, shouldn't 
       <span
         className="section-header"
       >
+        Save Scene
+      </span>
+    </div>
+    <div
+      className="content-section"
+      onClick={[Function]}
+    >
+      <span
+        className="section-header"
+      >
         Undo
       </span>
     </div>
@@ -147,6 +157,16 @@ exports[`Header File test File test Controls test modal content if os is mac, sh
         className="section-header"
       >
         New Scene
+      </span>
+    </div>
+    <div
+      className="content-section"
+      onClick={[Function]}
+    >
+      <span
+        className="section-header"
+      >
+        Save Scene
       </span>
     </div>
     <div

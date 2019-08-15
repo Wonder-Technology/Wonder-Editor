@@ -18,7 +18,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test operate gameObject", () => {
-      beforeEach(() =>
+      beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
@@ -39,8 +39,11 @@ let _ =
               (),
             ),
           (),
-        )
-      );
+        );
+
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+      });
 
       describe("test add gameObject", () => {
         beforeEach(() =>

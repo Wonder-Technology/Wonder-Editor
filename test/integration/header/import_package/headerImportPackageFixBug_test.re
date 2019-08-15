@@ -32,6 +32,9 @@ let _ =
       sandbox := createSandbox();
 
       ImportPackageTool.prepareLoad(sandbox);
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

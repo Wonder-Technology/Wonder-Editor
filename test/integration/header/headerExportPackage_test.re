@@ -19,7 +19,8 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithArcballCameraController();
+      sceneWDBArrayBuffer :=
+        WDBTool.generateSceneWDBWithArcballCameraController();
     });
 
     beforeEach(() => {
@@ -59,6 +60,9 @@ let _ =
       |> ignore;
 
       MainEditorSceneTool.prepareScene(sandbox);
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -76,9 +80,7 @@ let _ =
 
         warn
         |> expect
-        |> toCalledWith([|
-             "should operate when stop, but now is run!",
-           |]);
+        |> toCalledWith([|"should operate when stop, but now is run!"|]);
       })
     );
 
@@ -164,7 +166,9 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+                 snapshotImageDataIndex,
+               )
             |> (
               ({base64, uint8Array}) =>
                 uint8Array
@@ -214,7 +218,9 @@ let _ =
               |> MaterialNodeAssetService.getNodeData;
 
             editorState
-            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+            |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+                 snapshotImageDataIndex,
+               )
             |> (
               ({base64, uint8Array}) =>
                 uint8Array

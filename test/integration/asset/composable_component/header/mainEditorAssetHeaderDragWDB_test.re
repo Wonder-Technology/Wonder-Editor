@@ -63,6 +63,9 @@ let _ =
       LoadTool.buildFakeURL(sandbox^);
 
       LoadTool.buildFakeLoadImage(.);
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

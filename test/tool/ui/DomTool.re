@@ -1,10 +1,13 @@
-let buildFakeDiv = firstChild => {
-  "offsetWidth": 100,
-  "offsetHeight": 100,
+let buildFakeDiv = (~offsetWidth=100, ~offsetHeight=100, ~child="", ()) => {
+  "offsetWidth": offsetWidth,
+  "offsetHeight": offsetHeight,
   "setAttribute": (dom, src) => (),
   "appendChild": (parent, child) => (),
   "innerHTML": "",
-  "firstChild": firstChild,
+  "firstChild": child,
+  "style": {
+    "display": "block",
+  },
 };
 
 let stubFakeDomForQuerySelector = (sandbox, fakeDomId, fakeDom) => {

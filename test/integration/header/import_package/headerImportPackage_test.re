@@ -61,6 +61,9 @@ let _ =
           MainEditorSceneTool.prepareScene(sandbox);
 
           DirectorToolEngine.prepareAndInitAllEnginState();
+
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
         });
 
         testPromise("test", () => {

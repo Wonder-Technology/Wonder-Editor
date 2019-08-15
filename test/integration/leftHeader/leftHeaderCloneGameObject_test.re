@@ -18,6 +18,9 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

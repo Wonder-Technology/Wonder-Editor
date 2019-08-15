@@ -22,6 +22,9 @@ let _ =
       MainEditorSceneTool.prepareScene(sandbox);
 
       MainEditorAssetTool.buildFakeFileReader();
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

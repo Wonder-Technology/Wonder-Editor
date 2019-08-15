@@ -47,6 +47,9 @@ let _ =
         (),
       );
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

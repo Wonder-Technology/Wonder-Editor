@@ -24,6 +24,9 @@ let _ =
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

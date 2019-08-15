@@ -29,16 +29,6 @@ module Drag = {
   };
 };
 
-let _getParentDom = (offsetWidth, offsetHeight) =>
-  {
-    "offsetWidth": offsetWidth,
-    "offsetHeight": offsetHeight,
-    "style": {
-      "display": "block",
-    },
-  }
-  |> Obj.magic;
-
 let stubMainCanvasAndInspectorCanvasDom =
     (
       ~sandbox,
@@ -57,7 +47,7 @@ let stubMainCanvasAndInspectorCanvasDom =
     ) => {
   open Sinon;
 
-  let mainParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let mainParentDom = DomTool.buildFakeDiv(~offsetWidth, ~offsetHeight, ());
   let mainCanvasDom =
     BuildCanvasTool.getFakeCanvasDom(
       "a",
@@ -65,7 +55,9 @@ let stubMainCanvasAndInspectorCanvasDom =
       sandbox,
     );
 
-  let inspectorParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let inspectorParentDom =
+    DomTool.buildFakeDiv(~offsetWidth, ~offsetHeight, ());
+
   let inspectorCanvasDom =
     BuildCanvasTool.getFakeCanvasDom(
       "a",
@@ -92,6 +84,12 @@ let stubMainCanvasAndInspectorCanvasDom =
   getElementStub
   |> withOneArg("inspector-canvas")
   |> returns(inspectorCanvasDom)
+  |> stubToJsObj
+  |> ignore;
+
+  getElementStub
+  |> withOneArg("appMessage")
+  |> returns(DomTool.buildFakeDiv())
   |> stubToJsObj
   |> ignore;
 
@@ -154,7 +152,6 @@ let prepareInspectorCanvasAndImgCanvas = sandbox => {
 
   let imgCanvasDom = stubImgCanvasDom(~sandbox, ~getElementStub, ());
   let imgCanvasFakeBase64Str = BuildCanvasTool.getImgCanvasFakeBase64Str();
-
 
   inspectorCanvasDom##toDataURL
   |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());

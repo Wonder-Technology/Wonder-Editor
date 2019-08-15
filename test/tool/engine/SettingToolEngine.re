@@ -58,7 +58,7 @@ let setFakeCanvasToInspectorEngineState = (~width=1., ~height=1., ()) => {
 let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);
-  let div = DomTool.buildFakeDiv(canvasDom);
+  let div = DomTool.buildFakeDiv(~child=canvasDom |> Obj.magic, ());
   let body = {
     "prepend": createEmptyStub(refJsObjToSandbox(sandbox^)),
     "style": {
@@ -83,12 +83,6 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
   |> withOneArg("body")
   |> returns([body])
   |> ignore;
-
-  DomTool.stubFakeDomForGetElementById(
-    sandbox,
-    "appMessage",
-    DomTool.buildFakeDiv(""),
-  );
 
   (canvasDom, fakeGl, div, body);
 };

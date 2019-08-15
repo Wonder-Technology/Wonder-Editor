@@ -48,7 +48,7 @@ let buildFakeDomForPassCanvasId = (~id="webgl", sandbox) => {
 let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);
-  let div = DomTool.buildFakeDiv(canvasDom);
+  let div = DomTool.buildFakeDiv(~child=canvasDom |> Obj.magic, ());
   let body = {
     "prepend": createEmptyStub(refJsObjToSandbox(sandbox^)),
     "style": {
