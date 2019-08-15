@@ -36,7 +36,7 @@ module Method = {
                              blobObjectURL:
                                Some(
                                  Blob.newBlobFromArrayBuffer(
-                                   uint8Array,
+                                   uint8Array |> OptionService.unsafeGet,
                                    mimeType,
                                  )
                                  |> Blob.createObjectURL,

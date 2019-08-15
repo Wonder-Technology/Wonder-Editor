@@ -1,5 +1,9 @@
 open UserDataType;
 
+let unsafeGetUserId = ({userId}) => userId |> OptionService.unsafeGet;
+
+let setUserId = (userId, record) => {...record, userId: Some(userId)};
+
 let unsafeGetUserName = ({userName}) => userName |> OptionService.unsafeGet;
 
 let setUserName = (userName, record) => {

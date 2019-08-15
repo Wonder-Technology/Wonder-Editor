@@ -11,18 +11,6 @@ module Method = {
       |> StateHistoryService.getAndRefreshStateForHistory :
       ();
 
-  /* let _handleNewScene = engineState =>
-       {
-
-         let engineState = engineState
-       |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
-       |> JobEngineService.execDisposeJob;
-
-
-
-
-     }; */
-
   let buildFileComponentSelectNav =
       (send, uiState, dispatchFunc, languageType) =>
     <div className="item-content">
@@ -38,6 +26,25 @@ module Method = {
             DomHelper.textEl(
               LanguageUtils.getHeaderLanguageDataByType(
                 "file-new-scene",
+                languageType,
+              ),
+            )
+          }
+        </span>
+      </div>
+      <div
+        className="content-section"
+        onClick={
+          _e =>
+            HeaderFileSaveUtils.savePackage(Fetch.fetchWithInit)
+            |> WonderBsMost.Most.drain
+            |> ignore
+        }>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-save",
                 languageType,
               ),
             )

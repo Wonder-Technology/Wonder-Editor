@@ -8,7 +8,7 @@ let handleAssetWDBType =
     ) => {
   StateEngineService.unsafeGetState()
   |> ProgressUtils.show
-  |> ProgressUtils.changePercent(0)
+  |> ProgressUtils.changePercent(99)
   |> StateEngineService.setState
   |> ignore;
 

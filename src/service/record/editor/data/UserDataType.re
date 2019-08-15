@@ -6,6 +6,7 @@ type repoRecord = {
 };
 
 type userDataRecord = {
+  userId: option(int),
   userName: option(string),
   profilePath: option(string),
   email: option(string),

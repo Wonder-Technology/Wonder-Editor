@@ -232,7 +232,7 @@ let _init = allWDBGameObjectArrRef => {
      );
 };
 
-let _import = result => {
+let loadSceneWithWpkFile = wpk => {
   _disposeAssets();
 
   StateEngineService.unsafeGetState()
@@ -246,8 +246,6 @@ let _import = result => {
 
   PickingEditorService.clearSphereShape
   |> StateLogicService.getAndSetEditorState;
-
-  let wpk = result |> FileReader.convertResultToArrayBuffer;
 
   let dataView = DataViewUtils.create(wpk);
 
@@ -496,7 +494,9 @@ let importPackage = (dispatchFunc, event) => {
         )
         |> WonderBsMost.Most.flatMap(
              (fileResult: uploadPackageFileResultType) =>
-             _import(fileResult.result)
+             loadSceneWithWpkFile(
+               fileResult.result |> FileReader.convertResultToArrayBuffer,
+             )
            )
         |> WonderBsMost.Most.drain
         |> then_(_ => {

@@ -1,8 +1,14 @@
 open BlobType;
 
+let slice: (int, int, blob) => blob = [%raw
+  (start, end_, blob) => {|
+   return blob.slice( start, end_)
+  |}
+];
+
 let newBlobFromArrayBuffer = [%raw
   (arrayBuffer, type_) => {|
-return new Blob([arrayBuffer], {type: type_})
+    return new Blob([arrayBuffer], {type: type_})
   |}
 ];
 

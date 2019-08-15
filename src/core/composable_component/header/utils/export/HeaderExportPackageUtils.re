@@ -21,7 +21,7 @@ let _buildBasicSourceTextureImageDataUint8ArrayToMap = editorState =>
      )
   |> BasicSourceTextureImageDataMapAssetEditorService.setMap(_, editorState);
 
-let _export = () => {
+let export = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -74,7 +74,7 @@ let exportPackage = packageName => {
     } :
     Console.tryCatch(
       () => {
-        let wpkArrayBuffer = _export();
+        let wpkArrayBuffer = export();
 
         HeaderExportUtils.download(
           wpkArrayBuffer,

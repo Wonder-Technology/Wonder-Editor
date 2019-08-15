@@ -30,6 +30,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "file-save",
+    language: {
+      zh: {j|保存场景|j},
+      en: "Save Scene",
+    },
+  },
+  {
     title: "file-new-scene",
     language: {
       zh: {j|创建新的场景|j},

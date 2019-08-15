@@ -103,18 +103,19 @@ let initStateWithJob =
 
   SettingToolEngine.setFakeCanvasToEngineState();
 
-  StateEditorService.setState(
-    CreateEditorStateEditorService.create()
-    |> SettingTool.initSetting
-    |> TreeAssetEditorService.createTree
-    |> ImgContextImgCanvasEditorService.setImgContext(
-         (
-           BuildCanvasTool.getFakeCanvasDom("img-canvas", (0, 0), sandbox)
-           |> Obj.magic
-         )##getContext(),
-       ),
-  )
+  CreateEditorStateEditorService.create()
+  |> SettingTool.initSetting
+  |> TreeAssetEditorService.createTree
+  |> ImgContextImgCanvasEditorService.setImgContext(
+       (
+         BuildCanvasTool.getFakeCanvasDom("img-canvas", (0, 0), sandbox)
+         |> Obj.magic
+       )##getContext(),
+     )
+  |> StateEditorService.setState
   |> ignore;
+
+  StateEditorService.setIsUserLogin(false);
 
   TestTool.setLanguageTypeToEn();
 

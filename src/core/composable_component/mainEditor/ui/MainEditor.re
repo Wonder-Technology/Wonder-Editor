@@ -1,5 +1,7 @@
 open WonderBsMost;
 
+open UserDataType;
+
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
@@ -119,7 +121,6 @@ module Method = {
         </div>
       </div>
       <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
-      <Progress />
     </article>;
 
   let onResize = domElement => {
@@ -151,23 +152,22 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   didMount: _self => {
     Js.Promise.(
       MainUtils.initEngine()
-      |> then_(_ => {
-           (
-             editorState =>
-               editorState
-               |> TreeAssetEditorService.createTree
-               |> ImgContextImgCanvasEditorService.setImgContext(
-                    DomHelper.getElementById("img-canvas")
-                    |> CanvasType.getCanvasContext,
-                  )
-           )
-           |> StateLogicService.getAndSetEditorState;
-
+      |> Most.map(_ =>
+           StateEditorService.getState()
+           |> TreeAssetEditorService.createTree
+           |> ImgContextImgCanvasEditorService.setImgContext(
+                DomHelper.getElementById("img-canvas")
+                |> CanvasType.getCanvasContext,
+              )
+           |> StateEditorService.setState
+         )
+      |> Most.tap(_ => {
            StateEngineService.unsafeGetState()
            |> Method.startLoopForCameraChangeDirection(0.);
 
-           dispatchFunc(AppStore.InitEngineAction) |> resolve;
+           dispatchFunc(AppStore.InitEngineAction) |> ignore;
          })
+      |> Most.drain
       |> ignore
     );
 

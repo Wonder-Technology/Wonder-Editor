@@ -108,11 +108,12 @@ let reducer = (action, state) =>
       percent: value,
     })
   | Show =>
+    Js.log("show progress");
     ReasonReact.Update({
       ...state,
       visibleStyle:
         ReactUtils.addStyleProp("display", "flex", state.visibleStyle),
-    })
+    });
   | Hide =>
     ReasonReact.Update({
       ...state,
@@ -146,6 +147,6 @@ let make = _children => {
   render: _self => render(_self),
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     Method.didMount(send),
-  willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-    Method.willUnmount(),
+  /* willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+     Method.willUnmount(), */
 };

@@ -13,7 +13,7 @@ module Method = {
   let importPackage = ((uiState, dispatchFunc), closeNavFunc, event) => {
     StateEngineService.unsafeGetState()
     |> ProgressUtils.show
-    |> ProgressUtils.changePercent(0)
+    |> ProgressUtils.changePercent(99)
     |> StateEngineService.setState
     |> ignore;
 

@@ -1,5 +1,13 @@
 open EditorType;
 
+let unsafeGetUserId = ({userDataRecord}) =>
+  UserDataService.unsafeGetUserId(userDataRecord);
+
+let setUserId = (value, {userDataRecord} as editorState) => {
+  ...editorState,
+  userDataRecord: UserDataService.setUserId(value, userDataRecord),
+};
+
 let unsafeGetUserName = ({userDataRecord}) =>
   UserDataService.unsafeGetUserName(userDataRecord);
 

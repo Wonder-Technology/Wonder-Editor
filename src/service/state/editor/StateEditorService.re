@@ -5,10 +5,10 @@ let getStateIsDebug = () => StateDataEditor.editorStateData.isDebug;
 let setStateIsDebug = isDebug =>
   StateDataEditor.editorStateData.isDebug = isDebug;
 
-let getIsNeedLogin = () => StateDataEditor.editorStateData.isNeedLogin;
+let getIsUserLogin = () => StateDataEditor.editorStateData.isUserLogin;
 
-let setIsNeedLogin = isNeedLogin =>
-  StateDataEditor.editorStateData.isNeedLogin = isNeedLogin;
+let setIsUserLogin = isUserLogin =>
+  StateDataEditor.editorStateData.isUserLogin = isUserLogin;
 
 let getIsRun = () => StateDataEditor.editorStateData.isRun;
 

@@ -58,7 +58,7 @@ let setFakeCanvasToInspectorEngineState = (~width=1., ~height=1., ()) => {
 let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);
-  let div = {"innerHTML": "", "firstChild": canvasDom};
+  let div = DomTool.buildFakeDiv(canvasDom);
   let body = {
     "prepend": createEmptyStub(refJsObjToSandbox(sandbox^)),
     "style": {
@@ -66,7 +66,7 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
     },
   };
 
- SinonTool.createMethodStub(
+  SinonTool.createMethodStub(
     refJsObjToSandbox(sandbox^),
     DomHelper.document |> Obj.magic,
     "createElement",

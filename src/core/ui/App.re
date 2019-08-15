@@ -6,7 +6,7 @@ open UserDataType;
 
 module Method = {
   let setUserDataToEditorState =
-      ((loginUser, userInfo, userRepos), repoId: int, editorState) => {
+      ((loginUser, userInfo, userRepos), userId, repoId: int, editorState) => {
     let userRepoRecordArray =
       userRepos
       |> Js.Array.map(repoItem =>
@@ -19,16 +19,13 @@ module Method = {
          );
 
     editorState
+    |> UserDataEditorService.setUserId(userId)
     |> UserDataEditorService.setUserName(loginUser##user_name)
     |> UserDataEditorService.setEmail(loginUser##email)
     |> UserDataEditorService.setProfilePath(userInfo##profile_picture)
     |> UserDataEditorService.setCurrentRepo(
          userRepoRecordArray
-         |> Js.Array.filter(repoItem => {
-              Js.log((repoItem, repoId));
-
-              repoItem.id === repoId;
-            })
+         |> Js.Array.filter(repoItem => repoItem.id === repoId)
          |> ArrayService.unsafeGetFirst,
        )
     |> UserDataEditorService.setUserRepos(userRepoRecordArray);
@@ -78,7 +75,7 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
 
     let editorState = StateEditorService.getState();
 
-    StateEditorService.getIsNeedLogin() ?
+    StateEditorService.getIsUserLogin() ?
       {
         let param = DomHelper.locationSearch(.);
         let userId = param##userId;
@@ -116,14 +113,11 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
                    {
                      Method.setUserDataToEditorState(
                        (loginUser, userInfo, resultObjData##userRepos),
+                       userId,
                        repoId |> int_of_string,
                        editorState,
                      )
                      |> StateEditorService.setState;
-
-                     StateEditorService.getState()
-                     |> UserDataEditorService.unsafeGetCurrentRepo
-                     |> Js.log;
 
                      dispatch(AppStore.CheckUserLoginAction);
                    } :

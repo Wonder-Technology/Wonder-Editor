@@ -1,3 +1,12 @@
+let buildFakeDiv = firstChild => {
+  "offsetWidth": 100,
+  "offsetHeight": 100,
+  "setAttribute": (dom, src) => (),
+  "appendChild": (parent, child) => (),
+  "innerHTML": "",
+  "firstChild": firstChild,
+};
+
 let stubFakeDomForQuerySelector = (sandbox, fakeDomId, fakeDom) => {
   open Sinon;
 

@@ -4,5 +4,5 @@ let editorStateData = {
   editorState: CreateEditorStateEditorService.create(),
   isDebug: true,
   isRun: false,
-  isNeedLogin: true,
+  isUserLogin: true,
 };

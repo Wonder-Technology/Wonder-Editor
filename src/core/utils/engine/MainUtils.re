@@ -1,5 +1,7 @@
 open Js.Promise;
 
+open WonderBsMost;
+
 let _getLoadEngineData = () => {
   let engineConfigDir = "./config/engine/";
 
@@ -97,7 +99,7 @@ let _registerJobForInspectorEngine = engineState =>
      );
 
 let _handleEngineState = engineState => {
-  let engineState = _registerJobForEngine(engineState);
+  let engineState = engineState |> _registerJobForEngine;
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
@@ -121,7 +123,7 @@ let _handleInspectorEngineState = inspectorEngineState => {
 let initEngine = () =>
   Wonderjs.StateDataMainType.(
     _getLoadEngineData()
-    |> WonderBsMost.Most.flatMap(engineState =>
+    |> Most.flatMap(engineState =>
          LoaderManagerEngineService.loadIMGUIAsset(
            "./public/font/empty.fnt",
            "./public/font/empty.png",
@@ -133,36 +135,32 @@ let initEngine = () =>
            (_, _) => (),
            engineState,
          )
-         |> WonderBsMost.Most.fromPromise
+         |> Most.fromPromise
        )
-    |> WonderBsMost.Most.flatMap(engineState =>
+    |> Most.flatMap(engineState =>
          Fetch.fetch("./config/editor/setting.json")
-         |> then_(response =>
-              response
-              |> Fetch.Response.json
-              |> then_(json => {
-                   json
-                   |> ParseSettingService.convertToRecord
-                   |> SetSettingEditorService.setSetting(
-                        _,
-                        StateEditorService.getState(),
-                      )
-                   |> StateEditorService.setState
-                   |> ignore;
-
-                   resolve(engineState);
-                 })
+         |> Most.fromPromise
+         |> Most.flatMap(response =>
+              response |> Fetch.Response.json |> Most.fromPromise
             )
-         |> WonderBsMost.Most.fromPromise
+         |> Most.map(jsonResult => {
+              jsonResult
+              |> ParseSettingService.convertToRecord
+              |> SetSettingEditorService.setSetting(
+                   _,
+                   StateEditorService.getState(),
+                 )
+              |> StateEditorService.setState
+              |> ignore;
+
+              engineState;
+            })
        )
-    |> WonderBsMost.Most.tap(engineState =>
-         engineState |> _handleEngineState |> ignore
-       )
-    |> WonderBsMost.Most.flatMap(_ =>
+    |> Most.tap(engineState => _handleEngineState(engineState) |> ignore)
+    |> Most.flatMap(_ =>
          _getLoadInspectorEngineData()
          |> WonderBsMost.Most.tap(inspectorEngineState =>
               inspectorEngineState |> _handleInspectorEngineState |> ignore
             )
        )
-    |> WonderBsMost.Most.drain
   );
