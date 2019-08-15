@@ -93,10 +93,19 @@ let savePackage = fetchFunc => {
                   |> Most.flatMap(fetchResponse =>
                        fetchResponse |> Fetch.Response.json |> Most.fromPromise
                      )
-                  |> Most.tap(result =>
-                       ConsoleUtils.log({j|保存成功|j})
-                       |> StateLogicService.getEditorState
-                     )
+                  |> Most.tap(result => {
+                       let resultObj = result |> JsonType.convertToJsObj;
+
+                       resultObj##status === 0 ?
+                         ConsoleUtils.log({j|保存成功|j})
+                         |> StateLogicService.getEditorState :
+                         {
+                           let errorMsg = resultObj##msg;
+
+                           ConsoleUtils.error({j|保存失败: $errorMsg|j})
+                           |> StateLogicService.getEditorState;
+                         };
+                     })
                   |> MostUtils.ignore
                 ),
               )

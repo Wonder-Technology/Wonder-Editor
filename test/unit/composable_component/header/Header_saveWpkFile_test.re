@@ -31,19 +31,19 @@ let _ =
       beforeEach(() => StateEditorService.setIsUserLogin(true));
 
       describe("store user data to editorState", () => {
-        beforeEach(() =>
-          UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
-        );
+        beforeEach(() => {
+          UserDataTool.setUserData |> StateLogicService.getAndSetEditorState;
+
+          DomTool.stubFakeDomForGetElementById(
+            sandbox,
+            "appMessage",
+            DomTool.buildFakeDiv(""),
+          );
+        });
 
         describe("if is run", () => {
           beforeEach(() => ControllerTool.setIsRun(true));
-
           testPromise("log warn message", () => {
-            DomTool.stubFakeDomForGetElementById(
-              sandbox,
-              "appMessage",
-              DomTool.buildFakeDiv(""),
-            );
             let fetchFunc =
               BuildFetchTool.buildFakeFetchWithInit(
                 BuildFetchTool.buildFakeFetchSucessResponse,
@@ -61,36 +61,29 @@ let _ =
           });
         });
 
-        describe("else", () =>
-          describe("convert wpk file save to server", () =>
-            testPromise("load wpk file", () => {
-              MainEditorLeftHeaderTool.addCube();
-              let wpkArrayBuffer = ExportPackageTool.exportWPK();
+        describe("else", () => {
+          beforeEach(() => ControllerTool.setIsRun(false));
 
-              let fetchFunc =
-                BuildFetchTool.buildFakeFetch(
-                  BuildFetchTool.buildFakeFetchResponse(wpkArrayBuffer),
-                );
-              let editorState = StateEditorService.getState();
-              let dispatchFuncStub =
-                ReactTool.createDispatchFuncStub(sandbox);
+          testPromise("convert wpk file save to server", () => {
+            let fetchFunc =
+              BuildFetchTool.buildFakeFetchWithInit(
+                BuildFetchTool.buildFakeFetchSucessResponse,
+              );
 
-              Header.Method.loadUserRepoWpkFile(
-                dispatchFuncStub,
-                fetchFunc,
-                editorState,
-              )
-              |> WonderBsMost.Most.drain
-              |> Js.Promise.then_(_ =>
-                   BuildComponentTool.buildSceneTree(
-                     TestTool.buildEmptyAppState(),
-                   )
-                   |> ReactTestTool.createSnapshotAndMatch
-                   |> resolve
-                 );
-            })
-          )
-        );
+            CryptoTool.stubCrypto(.);
+
+            let log =
+              createMethodStubWithJsObjSandbox(
+                sandbox,
+                ConsoleTool.console,
+                "log",
+              );
+
+            HeaderFileSaveUtils.savePackage(fetchFunc)
+            |> WonderBsMost.Most.drain
+            |> Js.Promise.then_(_ => log |> expect |> toCalledTwice |> resolve);
+          });
+        });
       });
     });
   });
