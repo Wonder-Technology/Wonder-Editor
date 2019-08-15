@@ -6,8 +6,6 @@ let getUserName = () => "amy";
 
 let getEmail = () => "340606700@qq.com";
 
-let getProfilePath = () => "/image/default.png";
-
 let getUserRepoArray = () => [|
   {
     id: 1,
@@ -34,7 +32,6 @@ let setUserData = editorState =>
   |> UserDataEditorService.setUserId(getUserId())
   |> UserDataEditorService.setUserName(getUserName())
   |> UserDataEditorService.setEmail(getEmail())
-  |> UserDataEditorService.setProfilePath(getProfilePath())
   |> UserDataEditorService.setCurrentRepo(
        getUserRepoArray()
        |> Js.Array.filter(repoItem => repoItem.id === 1)

@@ -16,14 +16,6 @@ let setUserName = (value, {userDataRecord} as editorState) => {
   userDataRecord: UserDataService.setUserName(value, userDataRecord),
 };
 
-let unsafeGetProfilePath = ({userDataRecord}) =>
-  UserDataService.unsafeGetProfilePath(userDataRecord);
-
-let setProfilePath = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setProfilePath(value, userDataRecord),
-};
-
 let unsafeGetEmail = ({userDataRecord}) =>
   UserDataService.unsafeGetEmail(userDataRecord);
 

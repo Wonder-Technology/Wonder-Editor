@@ -145,6 +145,9 @@ let render =
       </div>
       {Method.renderRunAndStop(uiState, dispatchFunc, languageType)}
       <div className="controller-other">
+
+      <div className=""></div>
+
         <div
           className="other-language"
           onClick={_e => Method.changeLanguage(languageType)}>

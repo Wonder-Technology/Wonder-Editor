@@ -721,7 +721,7 @@ html, body {
       display: flex; }
       .wonder-app-component .wonder-controller-component .header-controller .controller-transform {
         flex: initial;
-        width: 30%;
+        width: 48%;
         height: 100%; }
         .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item {
           display: flex;

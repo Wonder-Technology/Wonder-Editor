@@ -4,7 +4,6 @@ let create = () => {
   userDataRecord: {
     userId: None,
     userName: None,
-    profilePath: None,
     email: None,
     currentRepo: None,
     userRepos: None,

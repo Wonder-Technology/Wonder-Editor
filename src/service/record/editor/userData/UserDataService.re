@@ -11,14 +11,6 @@ let setUserName = (userName, record) => {
   userName: Some(userName),
 };
 
-let unsafeGetProfilePath = ({profilePath}) =>
-  profilePath |> OptionService.unsafeGet;
-
-let setProfilePath = (profilePath, record) => {
-  ...record,
-  profilePath: Some(profilePath),
-};
-
 let unsafeGetEmail = ({email}) => email |> OptionService.unsafeGet;
 
 let setEmail = (email, record) => {...record, email: Some(email)};

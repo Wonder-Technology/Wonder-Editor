@@ -8,7 +8,6 @@ type repoRecord = {
 type userDataRecord = {
   userId: option(int),
   userName: option(string),
-  profilePath: option(string),
   email: option(string),
   currentRepo: option(repoRecord),
   userRepos: option(array(repoRecord)),

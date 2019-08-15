@@ -22,7 +22,6 @@ module Method = {
     |> UserDataEditorService.setUserId(userId)
     |> UserDataEditorService.setUserName(loginUser##user_name)
     |> UserDataEditorService.setEmail(loginUser##email)
-    |> UserDataEditorService.setProfilePath(userInfo##profile_picture)
     |> UserDataEditorService.setCurrentRepo(
          userRepoRecordArray
          |> Js.Array.filter(repoItem => repoItem.id === repoId)
