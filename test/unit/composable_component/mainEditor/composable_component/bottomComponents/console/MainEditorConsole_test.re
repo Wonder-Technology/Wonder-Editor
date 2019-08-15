@@ -13,7 +13,6 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.prepareScene(sandbox);
 
-      ConsoleTool.notShowMessage();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

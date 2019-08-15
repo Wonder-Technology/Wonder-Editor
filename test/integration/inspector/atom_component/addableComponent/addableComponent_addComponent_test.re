@@ -333,7 +333,6 @@ let _ =
       describe(
         "test InspectorAddComponentUtils addComponentByType function", () =>
         test("test add unaddable component should throw error", () => {
-          ConsoleTool.notShowMessage();
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 
@@ -351,7 +350,6 @@ let _ =
       describe(
         "test InspectorHasComponentUtils isHasSpecificComponentByType", () =>
         test("test has sourceInstance component, should throw error", () => {
-          ConsoleTool.notShowMessage();
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 

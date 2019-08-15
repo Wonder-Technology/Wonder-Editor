@@ -74,6 +74,7 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
   |> withOneArg("div")
   |> returns(div)
   |> ignore;
+
   createMethodStub(
     refJsObjToSandbox(sandbox^),
     DomHelper.document |> Obj.magic,
@@ -82,6 +83,13 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
   |> withOneArg("body")
   |> returns([body])
   |> ignore;
+
+  DomTool.stubFakeDomForGetElementById(
+    sandbox,
+    "appMessage",
+    DomTool.buildFakeDiv(""),
+  );
+
   (canvasDom, fakeGl, div, body);
 };
 

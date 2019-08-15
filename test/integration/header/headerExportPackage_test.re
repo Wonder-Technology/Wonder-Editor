@@ -64,7 +64,6 @@ let _ =
 
     describe("if is run", () =>
       test("warn", () => {
-        ConsoleTool.notShowMessage();
         let warn =
           createMethodStubWithJsObjSandbox(
             sandbox,

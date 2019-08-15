@@ -12,7 +12,6 @@ let convertToRecord = setting => {
            field("debug", json =>
              {
                isDebug: json |> field("is_debug", bool),
-               showMessage: json |> field("show_message", bool),
              }
            ),
          ),

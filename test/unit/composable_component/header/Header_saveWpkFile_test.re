@@ -31,15 +31,9 @@ let _ =
       beforeEach(() => StateEditorService.setIsUserLogin(true));
 
       describe("store user data to editorState", () => {
-        beforeEach(() => {
-          UserDataTool.setUserData |> StateLogicService.getAndSetEditorState;
-
-          DomTool.stubFakeDomForGetElementById(
-            sandbox,
-            "appMessage",
-            DomTool.buildFakeDiv(""),
-          );
-        });
+        beforeEach(() =>
+          UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
+        );
 
         describe("if is run", () => {
           beforeEach(() => ControllerTool.setIsRun(true));

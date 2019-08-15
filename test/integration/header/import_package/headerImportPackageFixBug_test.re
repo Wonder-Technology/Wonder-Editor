@@ -90,7 +90,6 @@ let _ =
 
         _prepareFakeCanvas(sandbox);
         MainEditorSceneTool.prepareScene(sandbox);
-        ConsoleTool.notShowMessage();
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~arrayBuffer=boxTexturedWDBArrayBuffer^,
@@ -119,7 +118,6 @@ let _ =
                     (),
                   );
                   MainEditorSceneTool.prepareScene(sandbox);
-                  ConsoleTool.notShowMessage();
 
                   ImportPackageTool.testImportPackageWithoutExport(
                     ~wpkArrayBuffer=cubeTextuedAndStoveWPKArrayBuffer,

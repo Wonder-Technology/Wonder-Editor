@@ -39,6 +39,8 @@ let buildFakeDom = [%bs.raw
       getContext: function() {
          return {}
       },
+      appendChild :function(){}, 
+      setAttirbute :function(){}, 
       toDataURL: function(){
          return "data:image/png;base64 for img-canvas"
       }

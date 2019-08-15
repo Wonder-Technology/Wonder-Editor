@@ -118,8 +118,6 @@ let initStateWithJob =
   StateEditorService.setIsUserLogin(false);
 
   TestTool.setLanguageTypeToEn();
-
-  ConsoleTool.notShowMessage();
 };
 let initState =
     (

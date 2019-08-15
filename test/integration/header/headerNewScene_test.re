@@ -51,7 +51,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     test("if is run, warn", () => {
-      ConsoleTool.notShowMessage();
       let warn =
         createMethodStubWithJsObjSandbox(
           sandbox,

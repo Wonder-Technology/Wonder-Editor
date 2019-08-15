@@ -25,7 +25,6 @@ let _ =
       test(
         "if type is basicMaterial, rename to default basic material name should not work",
         () => {
-          ConsoleTool.notShowMessage();
 
           let addedMaterialNodeId = MaterialAssetTool.addOneBasicMaterial();
 
@@ -52,7 +51,6 @@ let _ =
       test(
         "if type is lightMaterial, rename to default light material name should not work",
         () => {
-          ConsoleTool.notShowMessage();
 
           let addedMaterialNodeId = MaterialAssetTool.addOneLightMaterial();
 
@@ -79,7 +77,6 @@ let _ =
 
       describe("fix bug", () => {
         test("if rename to the same name, should warn", () => {
-          ConsoleTool.notShowMessage();
 
           let warn =
             createMethodStubWithJsObjSandbox(

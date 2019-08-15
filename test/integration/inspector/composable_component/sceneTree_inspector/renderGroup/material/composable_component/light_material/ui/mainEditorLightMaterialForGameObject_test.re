@@ -233,7 +233,6 @@ let _ =
                   "if gameObject->geometry has no texCoords, warn and can't set",
                   () =>
                   _prepare((uploadedTextureNodeId, assetTreeData) => {
-                    ConsoleTool.notShowMessage();
                     let warn =
                       createMethodStubWithJsObjSandbox(
                         sandbox,

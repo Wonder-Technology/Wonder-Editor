@@ -1567,7 +1567,6 @@ let _ =
                 (),
               );
               MainEditorSceneTool.prepareScene(sandbox);
-              ConsoleTool.notShowMessage();
               let warn =
                 createMethodStubWithJsObjSandbox(
                   sandbox,
@@ -1704,7 +1703,6 @@ let _ =
               CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
               MainEditorSceneTool.prepareScene(sandbox);
-              ConsoleTool.notShowMessage();
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~arrayBuffer=stoveWDBArrayBuffer^,

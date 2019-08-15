@@ -388,7 +388,6 @@ let _ =
       describe(
         "test InspectorRemoveComponentUtils removeComponentByType function", () =>
         test("remove unRemovable component should throw error", () => {
-          ConsoleTool.notShowMessage();
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 

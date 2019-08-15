@@ -5,7 +5,7 @@ open SettingType;
 let setSetting =
     (
       ~editorState=StateEditorService.getState(),
-      ~debug=Some({isDebug: true, showMessage: true}),
+      ~debug=Some({isDebug: true}),
       ~redoUndo=Some({maxStackSize: 50}),
       ~hotKeys=[|
                  {name: "translation", values: [|"1"|]},

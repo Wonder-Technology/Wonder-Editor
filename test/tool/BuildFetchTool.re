@@ -10,7 +10,7 @@ let buildFakeFetchArrayBufferResponse = (sandbox, arrayBuffer) =>
   |> Js.Promise.resolve;
 
 let buildFakeFetchSucessResponse = () =>
-  {"json": () => Js.Promise.resolve("success fetch reponse")}
+  {"json": () => Js.Promise.resolve({"status": 0, "msg": "ok"})}
   |> convertToResponse;
 
 let buildFakeFetchResponse = (arrayBuffer, ()) =>

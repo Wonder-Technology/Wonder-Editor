@@ -13,18 +13,3 @@ let unsafeGetMaxStackSize = ({redoUndo}) => {
 
   maxStackSize;
 };
-
-let isShowMessage = ({debug}) => {
-  let {showMessage} = debug |> OptionService.unsafeGet;
-
-  showMessage;
-};
-
-let setIsShowMessage = (isShowMessage, {debug} as record) => {
-  ...record,
-  debug:
-    Some({
-      ...record.debug |> OptionService.unsafeGet,
-      showMessage: isShowMessage,
-    }),
-};

@@ -390,13 +390,11 @@ let _ =
                      |> StateLogicService.getEditorState
                      |> (
                        ({uint8Array}: ImageDataType.imageData) =>
-                       {
                          uint8Array
                          |> OptionService.unsafeGet
                          |> Uint8Array.length
                          |> expect == 3
                          |> resolve
-                       }
                      ),
                  (),
                )
@@ -617,7 +615,6 @@ let _ =
             () => {
               WDBTool.prepareFakeCanvas(sandbox) |> ignore;
               TestTool.openContractCheck();
-              ConsoleTool.notShowMessage();
               let errorStub =
                 createMethodStub(sandbox^, ConsoleTool.console, "error");
 

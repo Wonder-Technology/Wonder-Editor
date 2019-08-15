@@ -185,7 +185,6 @@ let _ =
               StateLogicService.getAndSetEngineState(
                 MainUtils._handleEngineState,
               );
-              ConsoleTool.notShowMessage();
               let error =
                 createMethodStubWithJsObjSandbox(
                   sandbox,

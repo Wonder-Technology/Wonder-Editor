@@ -99,10 +99,7 @@ let _ =
           )
         );
 
-        describe("deal with specific cases", () => {
-          beforeEach(() => ConsoleTool.notShowMessage());
-          afterEach(() => ConsoleTool.showMessage());
-
+        describe("deal with specific cases", () =>
           test(
             "if target light type is maxCount, not change to it and warn", () => {
             let engineState = StateEngineService.unsafeGetState();
@@ -137,8 +134,8 @@ let _ =
                  ),
             )
             |> expect == (true, false);
-          });
-        });
+          })
+        );
       });
 
       describe("deal with specific cases", () =>

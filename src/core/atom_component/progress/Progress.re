@@ -108,7 +108,6 @@ let reducer = (action, state) =>
       percent: value,
     })
   | Show =>
-    Js.log("show progress");
     ReasonReact.Update({
       ...state,
       visibleStyle:

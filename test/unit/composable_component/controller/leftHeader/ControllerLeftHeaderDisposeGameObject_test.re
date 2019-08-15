@@ -380,7 +380,6 @@ let _ =
         });
 
         test("test", () => {
-          ConsoleTool.notShowMessage();
           let error =
             createMethodStubWithJsObjSandbox(
               sandbox,
