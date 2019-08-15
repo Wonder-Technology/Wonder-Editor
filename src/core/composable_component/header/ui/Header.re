@@ -1,6 +1,3 @@
-open WonderBsMost;
-
-open UserDataType;
 
 type navType =
   | None
@@ -28,39 +25,6 @@ module Method = {
      let addExtension = text =>
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
-  let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
-    StateEngineService.unsafeGetState()
-    |> ProgressUtils.show
-    |> ProgressUtils.changePercent(99)
-    |> StateEngineService.setState
-    |> ignore;
-
-    let {id, name, description, filePath} =
-      UserDataEditorService.unsafeGetCurrentRepo(editorState);
-
-    fetchFunc(ClientConfig.getServerPath() ++ filePath)
-    |> Most.fromPromise
-    |> Most.flatMap(response =>
-         response |> Fetch.Response.arrayBuffer |> Most.fromPromise
-       )
-    |> Most.flatMap(fileArrayBuffer => {
-         let wpk =
-           fileArrayBuffer |> FetchService.convertResponseToArrayBuffer;
-
-         HeaderImportPackageUtils.loadSceneWithWpkFile(wpk);
-       })
-    |> WonderBsMost.Most.concat(
-         MostUtils.callFunc(() => {
-           ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
-
-           dispatchFunc(
-             AppStore.UpdateAction(
-               Update([|UpdateStore.Project, UpdateStore.SceneTree|]),
-             ),
-           );
-         }),
-       );
-  };
 
   let isHeaderDom = target =>
     DomUtils.isSpecificDomChildrenHasTargetDom(
@@ -114,7 +78,6 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="header" className="wonder-header-component">
-    <Progress />
     <div className="header-nav">
       <HeaderFile
         uiState
@@ -168,7 +131,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {isSelectNav: false, currentSelectNav: None},
   reducer,
-  didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) => {
+  didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     EventHelper.addEventListener(
       DomHelper.document,
       "click",
@@ -180,14 +143,6 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
         || Method.isHeaderSettingSceneModalDom(target) ?
           () : send(BlurNav);
       },
-    );
-
-    StateEditorService.getIsUserLogin() ?
-      Method.loadUserRepoWpkFile(dispatchFunc, Fetch.fetch)
-      |> StateLogicService.getEditorState
-      |> Most.drain
-      |> ignore :
-      ();
-  },
+    ),
   render: self => render(uiState, dispatchFunc, self),
 };

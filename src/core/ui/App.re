@@ -6,7 +6,7 @@ open UserDataType;
 
 module Method = {
   let setUserDataToEditorState =
-      ((loginUser, userInfo, userRepos), userId, repoId: int, editorState) => {
+      ((loginUser, userInfo, userRepos), userId, repoId, code, editorState) => {
     let userRepoRecordArray =
       userRepos
       |> Js.Array.map(repoItem =>
@@ -22,6 +22,7 @@ module Method = {
     |> UserDataEditorService.setUserId(userId)
     |> UserDataEditorService.setUserName(loginUser##user_name)
     |> UserDataEditorService.setEmail(loginUser##email)
+    |> UserDataEditorService.setHashCode(code)
     |> UserDataEditorService.setCurrentRepo(
          userRepoRecordArray
          |> Js.Array.filter(repoItem => repoItem.id === repoId)
@@ -114,6 +115,7 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
                        (loginUser, userInfo, resultObjData##userRepos),
                        userId,
                        repoId |> int_of_string,
+                       code,
                        editorState,
                      )
                      |> StateEditorService.setState;

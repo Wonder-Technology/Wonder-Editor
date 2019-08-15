@@ -4,7 +4,15 @@ open ColorType;
 
 open Color;
 
+open UserDataType;
+
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
+
+type state = {isShowRepoList: bool};
+
+type action =
+  | ShowRepoList
+  | HideRepoList;
 
 module Method = {
   /* let buildOperateExtensionComponent = () =>
@@ -125,9 +133,75 @@ module Method = {
           <img src="./public/img/run.png" />
       }
     </div>;
+
+  let renderRepoListComponent = send => {
+    let editorState = StateEditorService.getState();
+
+    let {id, name, description, filePath} =
+      UserDataEditorService.unsafeGetCurrentRepo(editorState);
+    let userRepoArray = UserDataEditorService.unsafeGetUserRepos(editorState);
+    let userId = UserDataEditorService.unsafeGetUserId(editorState);
+    let hashCode = UserDataEditorService.unsafeGetHashCode(editorState);
+
+    <Modal
+      title={j|项目列表|j}
+      closeFunc={() => send(HideRepoList)}
+      content={
+        userRepoArray
+        |> Js.Array.map(({id, name, description, filePath}) => {
+             let url =
+               ClientConfig.getEditorPath()
+               ++ {j|/?userId=$userId&repoId=$id&code=$hashCode|j};
+
+             <div
+               className="content-repo"
+               key=name
+               onClick={_e => DomHelper.locationHref(url)}>
+               <div className="repo-name">
+                 {DomHelper.textEl({j|项目名称: $name|j})}
+               </div>
+               <div className="repo-description">
+                 {DomHelper.textEl({j|项目描述: $description|j})}
+               </div>
+             </div>;
+           })
+      }
+    />;
+  };
+
+  let renderCurrentRepo = () => {
+    let {id, name, description, filePath} =
+      UserDataEditorService.unsafeGetCurrentRepo
+      |> StateLogicService.getEditorState;
+
+    <span className="currentRepo-name">
+      {DomHelper.textEl({j|$name|j})}
+    </span>;
+  };
 };
 
-let component = ReasonReact.statelessComponentWithRetainedProps("Controller");
+let component = ReasonReact.reducerComponentWithRetainedProps("Controller");
+
+let reducer = (dispatchFunc, action, state) =>
+  switch (action) {
+  | ShowRepoList =>
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, isShowRepoList: true}, _state =>
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.Controller|])),
+      )
+      |> ignore
+    )
+
+  | HideRepoList =>
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, isShowRepoList: false}, _state =>
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.Controller|])),
+      )
+      |> ignore
+    )
+  };
 
 let render =
     (
@@ -145,9 +219,18 @@ let render =
       </div>
       {Method.renderRunAndStop(uiState, dispatchFunc, languageType)}
       <div className="controller-other">
-
-      <div className=""></div>
-
+        <div className="other-currentRepo">
+          <a href={ClientConfig.getHostPlatformPath()} target="view_window">
+            <img src="./public/img/userHome.png" />
+            {Method.renderCurrentRepo()}
+          </a>
+        </div>
+        <div className="other-repoList" onClick={_e => send(ShowRepoList)}>
+          <img src="./public/img/repoList.png" />
+          <span className="repoList-name">
+            {DomHelper.textEl({j|项目列表|j})}
+          </span>
+        </div>
         <div
           className="other-language"
           onClick={_e => Method.changeLanguage(languageType)}>
@@ -160,6 +243,10 @@ let render =
         </div>
       </div>
     </div>
+    {
+      state.isShowRepoList ?
+        Method.renderRepoListComponent(send) : ReasonReact.null
+    }
   </article>;
 };
 
@@ -173,6 +260,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   retainedProps: {
     updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
+  initialState: () => {isShowRepoList: false},
+  reducer: reducer(dispatchFunc),
   shouldUpdate,
   render: self => render(uiState, dispatchFunc, self),
 };

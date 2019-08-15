@@ -14,6 +14,7 @@ let getUserData = userId => {j|
             name
             description
             file_path
+            art_picture
           }
         }
     |j};

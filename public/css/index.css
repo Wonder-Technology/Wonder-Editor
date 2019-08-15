@@ -779,6 +779,52 @@ html, body {
         display: flex;
         align-items: center;
         position: relative; }
+        .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-repoList {
+          flex: 1;
+          position: absolute;
+          right: 110px;
+          width: 90px;
+          height: 25px;
+          text-align: center;
+          border-radius: 5px;
+          border: 1px solid #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-repoList:hover {
+            cursor: pointer; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-repoList img {
+            width: 15px;
+            height: 15px; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-repoList span {
+            margin-left: 8px; }
+        .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-currentRepo {
+          flex: 1;
+          right: 220px;
+          height: 25px;
+          position: absolute;
+          text-align: center;
+          border-radius: 5px;
+          border: 1px solid #fff;
+          padding: 0 10px 0 10px; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-currentRepo:hover {
+            cursor: pointer; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-currentRepo a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-currentRepo a img {
+              width: 15px;
+              height: 15px; }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-currentRepo a .currentRepo-name {
+              margin-left: 8px;
+              max-width: 200px;
+              color: #fff;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap; }
         .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-language {
           flex: 1;
           position: absolute;
@@ -790,6 +836,26 @@ html, body {
           border-radius: 5px;
           border: 1px solid #fff; }
           .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-language:hover {
+            cursor: pointer; }
+    .wonder-app-component .wonder-controller-component .wonder-modal .modal-item {
+      height: 450px; }
+      .wonder-app-component .wonder-controller-component .wonder-modal .modal-item .modal-item-content {
+        height: 370px; }
+        .wonder-app-component .wonder-controller-component .wonder-modal .modal-item .modal-item-content .content-repo {
+          width: 100%;
+          height: 60px;
+          border-bottom: 1px solid #D5D9D8;
+          padding: 5px 0 5px 0;
+          color: #3e4849; }
+          .wonder-app-component .wonder-controller-component .wonder-modal .modal-item .modal-item-content .content-repo .repo-name {
+            height: 35px;
+            line-height: 35px;
+            font-size: 17px; }
+          .wonder-app-component .wonder-controller-component .wonder-modal .modal-item .modal-item-content .content-repo .repo-description {
+            height: 25px;
+            line-height: 25px;
+            font-size: 14px; }
+          .wonder-app-component .wonder-controller-component .wonder-modal .modal-item .modal-item-content .content-repo:hover {
             cursor: pointer; }
   .wonder-app-component .wonder-mainEditor-component {
     width: 100%;

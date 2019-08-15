@@ -47,7 +47,7 @@ let _ =
             let editorState = StateEditorService.getState();
             let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
 
-            Header.Method.loadUserRepoWpkFile(
+            LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
               dispatchFuncStub,
               fetch,
               editorState,

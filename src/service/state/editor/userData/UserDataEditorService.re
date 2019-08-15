@@ -16,6 +16,14 @@ let setUserName = (value, {userDataRecord} as editorState) => {
   userDataRecord: UserDataService.setUserName(value, userDataRecord),
 };
 
+let unsafeGetHashCode = ({userDataRecord}) =>
+  UserDataService.unsafeGetHashCode(userDataRecord);
+
+let setHashCode = (value, {userDataRecord} as editorState) => {
+  ...editorState,
+  userDataRecord: UserDataService.setHashCode(value, userDataRecord),
+};
+
 let unsafeGetEmail = ({userDataRecord}) =>
   UserDataService.unsafeGetEmail(userDataRecord);
 

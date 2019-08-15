@@ -85,6 +85,7 @@ module Method = {
 
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
     <article key="mainEditor" className="wonder-mainEditor-component">
+      <Progress key="main-progress" />
       <div key="leftComponent" className="left-component">
         <div className="top-widget">
           <MainEditorLeftComponents uiState dispatchFunc />
@@ -150,26 +151,35 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   },
   didUpdate: oldNewSelf => Method.didUpdate(oldNewSelf),
   didMount: _self => {
-    Js.Promise.(
-      MainUtils.initEngine()
-      |> Most.map(_ =>
-           StateEditorService.getState()
-           |> TreeAssetEditorService.createTree
-           |> ImgContextImgCanvasEditorService.setImgContext(
-                DomHelper.getElementById("img-canvas")
-                |> CanvasType.getCanvasContext,
-              )
-           |> StateEditorService.setState
-         )
-      |> Most.tap(_ => {
-           StateEngineService.unsafeGetState()
-           |> Method.startLoopForCameraChangeDirection(0.);
+    MainUtils.initEngine()
+    |> Most.map(_ =>
+         StateEditorService.getState()
+         |> TreeAssetEditorService.createTree
+         |> ImgContextImgCanvasEditorService.setImgContext(
+              DomHelper.getElementById("img-canvas")
+              |> CanvasType.getCanvasContext,
+            )
+         |> StateEditorService.setState
+       )
+    |> Most.tap(_ => {
+         StateEngineService.unsafeGetState()
+         |> Method.startLoopForCameraChangeDirection(0.);
 
-           dispatchFunc(AppStore.InitEngineAction) |> ignore;
-         })
-      |> Most.drain
-      |> ignore
-    );
+         dispatchFunc(AppStore.InitEngineAction) |> ignore;
+       })
+    |> Most.tap(_ =>
+         StateEditorService.getIsUserLogin() ?
+           LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
+             dispatchFunc,
+             Fetch.fetch,
+           )
+           |> StateLogicService.getEditorState
+           |> Most.drain
+           |> ignore :
+           ()
+       )
+    |> Most.drain
+    |> ignore;
 
     EventHelper.onresize(() =>
       DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize

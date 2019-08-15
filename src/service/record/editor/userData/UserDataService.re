@@ -11,6 +11,14 @@ let setUserName = (userName, record) => {
   userName: Some(userName),
 };
 
+let unsafeGetHashCode = ({hashCode}) =>
+  hashCode |> OptionService.unsafeGet;
+
+let setHashCode = (hashCode, record) => {
+  ...record,
+  hashCode: Some(hashCode),
+};
+
 let unsafeGetEmail = ({email}) => email |> OptionService.unsafeGet;
 
 let setEmail = (email, record) => {...record, email: Some(email)};

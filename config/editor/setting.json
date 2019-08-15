@@ -1,7 +1,6 @@
 {
     "debug": {
-        "is_debug": true,
-        "show_message": true
+        "is_debug": true
     },
     "redo_undo": {
         "max_stack_size": 50
