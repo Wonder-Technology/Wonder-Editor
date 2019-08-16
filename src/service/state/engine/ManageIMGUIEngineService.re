@@ -4,12 +4,22 @@ let getIMGUIFunc = ManageIMGUIMainService.getIMGUIFunc;
 
 let setIMGUIFunc = ManageIMGUIAPI.setIMGUIFunc;
 
-let getSetting = ManageIMGUIAPI.getSetting;
+let sendCustomTextureProgramUniformProjectionMatData = (canvasSize, state) =>
+  ManageIMGUIAPI.sendCustomTextureProgramUniformProjectionMatData(
+    DeviceManagerEngineService.unsafeGetGl(state),
+    canvasSize,
+    state,
+  );
 
-let setSetting = ManageIMGUIAPI.setSetting;
+let sendFontTextureProgramUniformProjectionMatData = (canvasSize, state) =>
+  ManageIMGUIAPI.sendFontTextureProgramUniformProjectionMatData(
+    DeviceManagerEngineService.unsafeGetGl(state),
+    canvasSize,
+    state,
+  );
 
-let sendUniformProjectionMatData = (canvasSize, state) =>
-  ManageIMGUIAPI.sendUniformProjectionMatData(
+let sendNoTextureProgramUniformProjectionMatData = (canvasSize, state) =>
+  ManageIMGUIAPI.sendNoTextureProgramUniformProjectionMatData(
     DeviceManagerEngineService.unsafeGetGl(state),
     canvasSize,
     state,
