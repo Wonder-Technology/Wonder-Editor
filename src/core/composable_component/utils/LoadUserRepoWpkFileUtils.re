@@ -26,7 +26,6 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
        MostUtils.callFunc(() => {
          ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
 
-         /* TODO remove this */
          dispatchFunc(
            AppStore.UpdateAction(
              Update([|UpdateStore.Project, UpdateStore.SceneTree|]),

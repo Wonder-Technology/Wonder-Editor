@@ -120,8 +120,7 @@ let _handleInspectorEngineState = inspectorEngineState => {
   |> StateInspectorEngineService.setState;
 };
 
-let initEngine = () => {
-  Js.log("engine");
+let initEngine = () =>
   Wonderjs.StateDataMainType.(
     _getLoadEngineData()
     |> Most.flatMap(engineState =>
@@ -146,11 +145,8 @@ let initEngine = () => {
             )
        )
   );
-};
 
-let initEditor = () => {
-  Js.log("editor");
-
+let initEditor = () =>
   Fetch.fetch("./config/editor/setting.json")
   |> Most.fromPromise
   |> Most.flatMap(response =>
@@ -175,4 +171,3 @@ let initEditor = () => {
        |> StateEditorService.setState
        |> ignore
      );
-};

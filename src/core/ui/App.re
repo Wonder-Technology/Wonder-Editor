@@ -38,23 +38,4 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
 
     ServiceWorker.registerServiceWorker();
   },
-  /* TODO
-             |> WonderBsMost.Most.subscribe({
-               .
-               "next": (_) => (),
-               "error": (err) => {
-
-               Method.showErrorMsgAndGoToHostPlatform(
-                 err##message,
-                 get editorState,
-               )
-               |> WonderBsMost.Most.drain
-               |> ignore
-               },
-               "complete": () => {
-     dispatch(AppStore.CheckUserLoginAction)
-               }
-             })
-             |> ignore
-             */
 };

@@ -149,78 +149,54 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   },
   didUpdate: oldNewSelf => Method.didUpdate(oldNewSelf),
   didMount: _self => {
-    /*
-         TODO all in stream
-         1.initEngine
-         ////catchError
-         2.judge is test local:
-         if true, end;
-         if else:
-         load user data
-         load user repo wpk file
-         end
-
-
-         initEngine
-         |> Most.flatMap((_) => {
-           if(true){
-             empty()
-           }
-           else{
-     load, ...
-     return stream
-           }
-         })
-
-
-         ////catchError
-
-         end:
-         error:
-         message error
-
-         judge is test local:
-         if true, nothing;
-         if else: jump to host website
-
-
-
-         complete:
-         dispatchFunc(AppStore.InitEngineAction) |> ignore;
-
-
-      */
+    /* complete:
+          dispatchFunc(AppStore.InitEngineAction) |> ignore;
+       */
 
     EventHelper.onresize(() =>
       DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize
     );
 
     MainUtils.initEditor()
-    |> Most.concat(MainUtils.initEngine())
-    |> Most.concat(
-         MostUtils.callFunc(() => {
-           Js.log("fck ");
-           StateEngineService.unsafeGetState()
-           |> Method.startLoopForCameraChangeDirection(0.);
+    |> Most.flatMap(_ => MainUtils.initEngine())
+    |> Most.map(_ => {
+         StateEngineService.unsafeGetState()
+         |> Method.startLoopForCameraChangeDirection(0.);
 
-           dispatchFunc(AppStore.InitEngineAction) |> ignore;
-         }),
-       )
-    /* |> Most.tap(_
-       /* TODO check dispatchFunc exec last one? */
-       /* Js.log; */
-       =>
-         StateEditorService.getIsUserLogin() ?
+         dispatchFunc(AppStore.InitEngineAction);
+       })
+    |> Most.flatMap(_ => {
+         let editorState = StateEditorService.getState();
+
+         DebugSettingEditorService.getIsTestLocal(editorState) ?
+           UserDataUtils.handleFetchUserDataStoreEditorState(editorState) :
+           Most.just();
+       })
+    |> Most.flatMap(_ => {
+         let editorState = StateEditorService.getState();
+
+         DebugSettingEditorService.getIsTestLocal(editorState) ?
            LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
              dispatchFunc,
              Fetch.fetch,
-           )
-           |> StateLogicService.getEditorState
-           |> Most.drain
-           |> ignore :
-           ()
-       ) */
-    |> Most.drain
+             editorState,
+           ) :
+           Most.just();
+       })
+    |> MostUtils.subscribe(
+         ~stream=_,
+         ~errorFunc=
+           errMsg => {
+             let editorState = StateEditorService.getState();
+
+             DebugSettingEditorService.getIsTestLocal(editorState) ?
+               UserDataUtils.showErrorMsgAndGoToHostPlatform(errMsg)
+               |> StateLogicService.getEditorState :
+               ConsoleUtils.error(errMsg, editorState);
+           },
+         ~completeFunc=() => Js.log(1),
+         (),
+       )
     |> ignore;
   },
   render: self => render(uiState, dispatchFunc, self),

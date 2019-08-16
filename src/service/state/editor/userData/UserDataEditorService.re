@@ -3,6 +3,11 @@ open EditorType;
 let unsafeGetUserDataRecord = state =>
   state.userDataRecord |> OptionService.unsafeGet;
 
+let setUserDataRecord = (userDataRecord, state) => {
+  ...state,
+  userDataRecord: Some(userDataRecord),
+};
+
 let getUserId = state =>
   unsafeGetUserDataRecord(state) |> UserDataService.getUserId;
 
