@@ -1,49 +1,68 @@
 open EditorType;
 
-let unsafeGetUserId = ({userDataRecord}) =>
-  UserDataService.unsafeGetUserId(userDataRecord);
+let unsafeGetUserDataRecord = state =>
+  state.userDataRecord |> OptionService.unsafeGet;
 
-let setUserId = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setUserId(value, userDataRecord),
+let getUserId = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getUserId;
+
+let setUserId = (value, state) => {
+  ...state,
+  userDataRecord:
+    Some(
+      unsafeGetUserDataRecord(state) |> UserDataService.setUserId(value),
+    ),
 };
 
-let unsafeGetUserName = ({userDataRecord}) =>
-  UserDataService.unsafeGetUserName(userDataRecord);
+let getUserName = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getUserName;
 
-let setUserName = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setUserName(value, userDataRecord),
+let setUserName = (value, {userDataRecord} as state) => {
+  ...state,
+  userDataRecord:
+    Some(
+      unsafeGetUserDataRecord(state) |> UserDataService.setUserName(value),
+    ),
 };
 
-let unsafeGetHashCode = ({userDataRecord}) =>
-  UserDataService.unsafeGetHashCode(userDataRecord);
+let getHashCode = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getHashCode;
 
-let setHashCode = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setHashCode(value, userDataRecord),
+let setHashCode = (value, {userDataRecord} as state) => {
+  ...state,
+  userDataRecord:
+    Some(
+      unsafeGetUserDataRecord(state) |> UserDataService.setHashCode(value),
+    ),
 };
 
-let unsafeGetEmail = ({userDataRecord}) =>
-  UserDataService.unsafeGetEmail(userDataRecord);
+let getEmail = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getEmail;
 
-let setEmail = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setEmail(value, userDataRecord),
+let setEmail = (value, {userDataRecord} as state) => {
+  ...state,
+  userDataRecord:
+    Some(unsafeGetUserDataRecord(state) |> UserDataService.setEmail(value)),
 };
 
-let unsafeGetCurrentRepo = ({userDataRecord}) =>
-  UserDataService.unsafeGetCurrentRepo(userDataRecord);
+let getCurrentRepo = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getCurrentRepo;
 
-let setCurrentRepo = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setCurrentRepo(value, userDataRecord),
+let setCurrentRepo = (value, {userDataRecord} as state) => {
+  ...state,
+  userDataRecord:
+    Some(
+      unsafeGetUserDataRecord(state) |> UserDataService.setCurrentRepo(value),
+    ),
 };
 
-let unsafeGetUserRepos = ({userDataRecord}) =>
-  UserDataService.unsafeGetUserRepos(userDataRecord);
+let getUserRepos = state =>
+  unsafeGetUserDataRecord(state) |> UserDataService.getUserRepos;
 
-let setUserRepos = (value, {userDataRecord} as editorState) => {
-  ...editorState,
-  userDataRecord: UserDataService.setUserRepos(value, userDataRecord),
+let setUserRepos = (value, {userDataRecord} as state) => {
+  ...state,
+  userDataRecord:
+    Some(
+      unsafeGetUserDataRecord(state) |> UserDataService.setUserRepos(value),
+    ),
 };

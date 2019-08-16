@@ -1,40 +1,25 @@
 open UserDataType;
 
-let unsafeGetUserId = ({userId}) => userId |> OptionService.unsafeGet;
+let getUserId = ({userId}) => userId;
 
-let setUserId = (userId, record) => {...record, userId: Some(userId)};
+let setUserId = (userId, record) => {...record, userId};
 
-let unsafeGetUserName = ({userName}) => userName |> OptionService.unsafeGet;
+let getUserName = ({userName}) => userName;
 
-let setUserName = (userName, record) => {
-  ...record,
-  userName: Some(userName),
-};
+let setUserName = (userName, record) => {...record, userName};
 
-let unsafeGetHashCode = ({hashCode}) =>
-  hashCode |> OptionService.unsafeGet;
+let getHashCode = ({hashCode}) => hashCode;
 
-let setHashCode = (hashCode, record) => {
-  ...record,
-  hashCode: Some(hashCode),
-};
+let setHashCode = (hashCode, record) => {...record, hashCode};
 
-let unsafeGetEmail = ({email}) => email |> OptionService.unsafeGet;
+let getEmail = ({email}) => email;
 
-let setEmail = (email, record) => {...record, email: Some(email)};
+let setEmail = (email, record) => {...record, email};
 
-let unsafeGetCurrentRepo = ({currentRepo}) =>
-  currentRepo |> OptionService.unsafeGet;
+let getCurrentRepo = ({currentRepo}) => currentRepo;
 
-let setCurrentRepo = (currentRepo, record) => {
-  ...record,
-  currentRepo: Some(currentRepo),
-};
+let setCurrentRepo = (currentRepo, record) => {...record, currentRepo};
 
-let unsafeGetUserRepos = ({userRepos}) =>
-  userRepos |> OptionService.unsafeGet;
+let getUserRepos = ({userRepos}) => userRepos;
 
-let setUserRepos = (userRepos, record) => {
-  ...record,
-  userRepos: Some(userRepos),
-};
+let setUserRepos = (userRepos, record) => {...record, userRepos};

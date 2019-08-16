@@ -39,15 +39,20 @@ let setAttribute = [%raw
 "
 ];
 
+/* TODO reloadLocationFromCacheFirst */
 let locationReload = [%raw param => "
 window.location.reload();
 "];
+
+/* TODO setLocationHref */
 
 let locationHref: string => unit = [%raw
   url => "
 window.location.href = url;
 "
 ];
+
+/* TODO getLocationSearchString */
 let locationSearchString = [%raw
   (.) => {|
   let query = window.location.search;
@@ -55,6 +60,7 @@ let locationSearchString = [%raw
   |}
 ];
 
+/* TODO rename: getGetRequestParams */
 let locationSearch: (. unit) => Js.t({..}) = [%raw
   (.) => {|
   let query = window.location.search.substring(1);
@@ -70,6 +76,8 @@ let locationSearch: (. unit) => Js.t({..}) = [%raw
 |}
 ];
 
+
+/* TODO reloadLocationFromServerFirst */
 let locationReload = [%raw param => "
   window.location.reload(true);
 "];

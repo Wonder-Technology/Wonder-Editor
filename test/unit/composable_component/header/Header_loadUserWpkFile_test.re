@@ -11,6 +11,9 @@ open Header;
 open Js.Promise;
 
 let _ =
+  /* TODO rename file: LoadUserRepoWpkFileUtils_test.re */
+  /* TODO rename to LoadUserRepoWpkFileUtils */
+  /* TODO move file to mainEditor/ */
   describe("Header load user wpk file", () => {
     let sandbox = getSandboxDefaultVal();
 
@@ -21,22 +24,30 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      /* TODO use empty scene */
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    /* TODO remove this */
     describe("set editorState isUserLogin to be true", () => {
       beforeEach(() => StateEditorService.setIsUserLogin(true));
 
-      describe("store user data to editorState", () => {
+      describe("load and import user repo wpk file from server", () => {
         beforeEach(() =>
           UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
         );
 
-        describe("fetch get user repo wpk file from server", () =>
-          testPromise("load wpk file", () => {
+        testPromise(
+          {|
+            export fake wpk w1;
+            load and import w1;
+
+            sceneTree should has w1->gameObjects;
+            |},
+          () => {
             MainEditorLeftHeaderTool.addCube();
             let wpkArrayBuffer = ExportPackageTool.exportWPK();
 
@@ -60,7 +71,7 @@ let _ =
                  |> ReactTestTool.createSnapshotAndMatch
                  |> resolve
                );
-          })
+          },
         );
       });
     });

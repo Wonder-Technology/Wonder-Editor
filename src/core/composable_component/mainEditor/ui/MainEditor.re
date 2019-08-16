@@ -80,7 +80,6 @@ module Method = {
           </div>
         </div>
       </div>
-      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
@@ -121,7 +120,6 @@ module Method = {
           />
         </div>
       </div>
-      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
   let onResize = domElement => {
@@ -151,23 +149,67 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   },
   didUpdate: oldNewSelf => Method.didUpdate(oldNewSelf),
   didMount: _self => {
-    MainUtils.initEngine()
-    |> Most.map(_ =>
-         StateEditorService.getState()
-         |> TreeAssetEditorService.createTree
-         |> ImgContextImgCanvasEditorService.setImgContext(
-              DomHelper.getElementById("img-canvas")
-              |> CanvasType.getCanvasContext,
-            )
-         |> StateEditorService.setState
-       )
-    |> Most.tap(_ => {
-         StateEngineService.unsafeGetState()
-         |> Method.startLoopForCameraChangeDirection(0.);
+    /*
+         TODO all in stream
+         1.initEngine
+         ////catchError
+         2.judge is test local:
+         if true, end;
+         if else:
+         load user data
+         load user repo wpk file
+         end
 
+
+         initEngine
+         |> Most.flatMap((_) => {
+           if(true){
+             empty()
+           }
+           else{
+     load, ...
+     return stream
+           }
+         })
+
+
+         ////catchError
+
+         end:
+         error:
+         message error
+
+         judge is test local:
+         if true, nothing;
+         if else: jump to host website
+
+
+
+         complete:
          dispatchFunc(AppStore.InitEngineAction) |> ignore;
-       })
-    |> Most.tap(_ =>
+
+
+      */
+
+    EventHelper.onresize(() =>
+      DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize
+    );
+
+    MainUtils.initEditor()
+    |> Most.concat(MainUtils.initEngine())
+    |> Most.concat(
+         MostUtils.callFunc(() => {
+           Js.log("fck ");
+           StateEngineService.unsafeGetState()
+           |> Method.startLoopForCameraChangeDirection(0.);
+
+           dispatchFunc(AppStore.InitEngineAction) |> ignore;
+         }),
+       )
+    /* |> Most.tap(_
+       /* TODO check dispatchFunc exec last one? */
+       /* Js.log; */
+       =>
          StateEditorService.getIsUserLogin() ?
            LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
              dispatchFunc,
@@ -177,13 +219,9 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
            |> Most.drain
            |> ignore :
            ()
-       )
+       ) */
     |> Most.drain
     |> ignore;
-
-    EventHelper.onresize(() =>
-      DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize
-    );
   },
   render: self => render(uiState, dispatchFunc, self),
 };

@@ -138,10 +138,10 @@ module Method = {
     let editorState = StateEditorService.getState();
 
     let {id, name, description, filePath} =
-      UserDataEditorService.unsafeGetCurrentRepo(editorState);
-    let userRepoArray = UserDataEditorService.unsafeGetUserRepos(editorState);
-    let userId = UserDataEditorService.unsafeGetUserId(editorState);
-    let hashCode = UserDataEditorService.unsafeGetHashCode(editorState);
+      UserDataEditorService.getCurrentRepo(editorState);
+    let userRepoArray = UserDataEditorService.getUserRepos(editorState);
+    let userId = UserDataEditorService.getUserId(editorState);
+    let hashCode = UserDataEditorService.getHashCode(editorState);
 
     <Modal
       title={j|项目列表|j}
@@ -171,7 +171,7 @@ module Method = {
 
   let renderCurrentRepo = () => {
     let {id, name, description, filePath} =
-      UserDataEditorService.unsafeGetCurrentRepo
+      UserDataEditorService.getCurrentRepo
       |> StateLogicService.getEditorState;
 
     <span className="currentRepo-name">
@@ -219,7 +219,7 @@ let render =
       </div>
       {Method.renderRunAndStop(uiState, dispatchFunc, languageType)}
       <div className="controller-other">
-        <div className="other-currentRepo">
+        /* <div className="other-currentRepo">
           <a href={ClientConfig.getHostPlatformPath()} target="view_window">
             <img src="./public/img/userHome.png" />
             {Method.renderCurrentRepo()}
@@ -230,7 +230,7 @@ let render =
           <span className="repoList-name">
             {DomHelper.textEl({j|项目列表|j})}
           </span>
-        </div>
+        </div> */
         <div
           className="other-language"
           onClick={_e => Method.changeLanguage(languageType)}>

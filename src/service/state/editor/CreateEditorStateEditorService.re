@@ -1,14 +1,7 @@
 open EditorType;
 
 let create = () => {
-  userDataRecord: {
-    userId: None,
-    userName: None,
-    hashCode: None,
-    email: None,
-    currentRepo: None,
-    userRepos: None,
-  },
+  userDataRecord: None,
   inspectorCanvasRecord: {
     containerGameObject: None,
     basicSourceTextureCacheMap:

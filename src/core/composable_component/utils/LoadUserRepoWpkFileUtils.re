@@ -10,7 +10,7 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
   |> ignore;
 
   let {id, name, description, filePath} =
-    UserDataEditorService.unsafeGetCurrentRepo(editorState);
+    UserDataEditorService.getCurrentRepo(editorState);
 
   fetchFunc(ClientConfig.getServerPath() ++ filePath)
   |> Most.fromPromise
@@ -22,10 +22,11 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
 
        HeaderImportPackageUtils.loadSceneWithWpkFile(wpk);
      })
-  |> WonderBsMost.Most.concat(
+  |> Most.concat(
        MostUtils.callFunc(() => {
          ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
 
+         /* TODO remove this */
          dispatchFunc(
            AppStore.UpdateAction(
              Update([|UpdateStore.Project, UpdateStore.SceneTree|]),

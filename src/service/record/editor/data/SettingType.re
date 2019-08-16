@@ -1,4 +1,7 @@
-type debug = {isDebug: bool};
+type debug = {
+  isDebug: bool,
+  isTestLocal: bool,
+};
 
 type redoUndo = {maxStackSize: int};
 

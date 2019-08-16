@@ -232,6 +232,7 @@ let _init = allWDBGameObjectArrRef => {
      );
 };
 
+/* TODO rename to importPackage */
 let loadSceneWithWpkFile = wpk => {
   _disposeAssets();
 
@@ -463,6 +464,7 @@ let _readFile = (fileInfo: FileType.fileInfoType, (resolve, reject)) => {
 let _dispatch = dispatchFunc =>
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])));
 
+  /* TODO rename to uploadAndImportPackage */
 let importPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();
   let languageType =

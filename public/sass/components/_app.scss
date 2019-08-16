@@ -10,4 +10,9 @@
     @import "controller/controller";
     @import "mainEditor/mainEditor";
     @import "ui/appShell";
+    #img-canvas{
+        width:50px;
+        height:50px;
+        display: none;
+    }
 }

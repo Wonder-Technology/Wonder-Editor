@@ -31,7 +31,7 @@ open ImgCanvasType;
 open UserDataType;
 
 type editorState = {
-  userDataRecord,
+  userDataRecord: option(userDataRecord),
   inspectorCanvasRecord,
   imgCanvasRecord,
   uiRecord,

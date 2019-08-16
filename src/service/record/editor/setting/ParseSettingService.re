@@ -12,6 +12,7 @@ let convertToRecord = setting => {
            field("debug", json =>
              {
                isDebug: json |> field("is_debug", bool),
+               isTestLocal: json |> field("is_test_local", bool),
              }
            ),
          ),

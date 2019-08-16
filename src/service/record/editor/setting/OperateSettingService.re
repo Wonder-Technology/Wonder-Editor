@@ -8,6 +8,12 @@ let unsafeGetIsDebug = ({debug}) => {
   isDebug;
 };
 
+let unsafeGetIsTestLocal = ({debug}) => {
+  let {isTestLocal} = debug |> OptionService.unsafeGet;
+
+  isTestLocal;
+};
+
 let unsafeGetMaxStackSize = ({redoUndo}) => {
   let {maxStackSize} = redoUndo |> OptionService.unsafeGet;
 

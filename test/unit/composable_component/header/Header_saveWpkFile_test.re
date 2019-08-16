@@ -10,6 +10,8 @@ open Header;
 
 open Js.Promise;
 
+/* TODO rename file: HeaderFileSaveUtils_test */
+/* TODO rename describe to HeaderFileSaveUtils */
 let _ =
   describe("Header save wpk file", () => {
     let sandbox = getSandboxDefaultVal();
@@ -21,6 +23,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      /* TODO use empty scene */
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
@@ -29,6 +32,16 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
+    /* TODO fix like loadUserWpkFile test */
+
+    /* describe(
+    "save wpk file to server",
+    () => {
+    
+     }
+    ); */
+
 
     describe("set editorState isUserLogin to be true", () => {
       beforeEach(() => StateEditorService.setIsUserLogin(true));
@@ -61,7 +74,7 @@ let _ =
         describe("else", () => {
           beforeEach(() => ControllerTool.setIsRun(false));
 
-          testPromise("convert wpk file save to server", () => {
+          testPromise("should log save status", () => {
             let fetchFunc =
               BuildFetchTool.buildFakeFetchWithInit(
                 BuildFetchTool.buildFakeFetchSucessResponse,

@@ -4,8 +4,7 @@ let registerServiceWorker = [%raw
         navigator.serviceWorker
         .register('./service-worker.js')
         .then(function (registration) {
-            console.log('Service Worker Registered'); 
+            console.log('Service Worker Registered ! ');
         });
-    }
-"
+    }"
 ];

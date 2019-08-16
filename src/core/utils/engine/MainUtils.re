@@ -120,7 +120,8 @@ let _handleInspectorEngineState = inspectorEngineState => {
   |> StateInspectorEngineService.setState;
 };
 
-let initEngine = () =>
+let initEngine = () => {
+  Js.log("engine");
   Wonderjs.StateDataMainType.(
     _getLoadEngineData()
     |> Most.flatMap(engineState =>
@@ -137,30 +138,41 @@ let initEngine = () =>
          )
          |> Most.fromPromise
        )
-    |> Most.flatMap(engineState =>
-         Fetch.fetch("./config/editor/setting.json")
-         |> Most.fromPromise
-         |> Most.flatMap(response =>
-              response |> Fetch.Response.json |> Most.fromPromise
-            )
-         |> Most.map(jsonResult => {
-              jsonResult
-              |> ParseSettingService.convertToRecord
-              |> SetSettingEditorService.setSetting(
-                   _,
-                   StateEditorService.getState(),
-                 )
-              |> StateEditorService.setState
-              |> ignore;
-
-              engineState;
-            })
-       )
     |> Most.tap(engineState => _handleEngineState(engineState) |> ignore)
     |> Most.flatMap(_ =>
          _getLoadInspectorEngineData()
-         |> WonderBsMost.Most.tap(inspectorEngineState =>
+         |> WonderBsMost.Most.map(inspectorEngineState =>
               inspectorEngineState |> _handleInspectorEngineState |> ignore
             )
        )
   );
+};
+
+let initEditor = () => {
+  Js.log("editor");
+
+  Fetch.fetch("./config/editor/setting.json")
+  |> Most.fromPromise
+  |> Most.flatMap(response =>
+       response |> Fetch.Response.json |> Most.fromPromise
+     )
+  |> Most.map(jsonResult =>
+       jsonResult
+       |> ParseSettingService.convertToRecord
+       |> SetSettingEditorService.setSetting(
+            _,
+            StateEditorService.getState(),
+          )
+       |> StateEditorService.setState
+     )
+  |> Most.map(editorState =>
+       editorState
+       |> TreeAssetEditorService.createTree
+       |> ImgContextImgCanvasEditorService.setImgContext(
+            DomHelper.getElementById("img-canvas")
+            |> CanvasType.getCanvasContext,
+          )
+       |> StateEditorService.setState
+       |> ignore
+     );
+};

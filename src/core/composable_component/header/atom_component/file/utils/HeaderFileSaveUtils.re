@@ -18,15 +18,16 @@ let savePackage = fetchFunc => {
     )
     |> Most.just :
     {
+      /* TODO use language */
       ConsoleUtils.log({j|正在保存|j}) |> StateLogicService.getEditorState;
 
       let wpkArrayBuffer = HeaderExportPackageUtils.export();
       let chunkSize = ClientConfig.getFileChunkSize();
       let fileSize = Js.Typed_array.ArrayBuffer.byteLength(wpkArrayBuffer);
 
-      let userId = UserDataEditorService.unsafeGetUserId(editorState);
-      let userName = UserDataEditorService.unsafeGetUserName(editorState);
-      let userRepo = UserDataEditorService.unsafeGetCurrentRepo(editorState);
+      let userId = UserDataEditorService.getUserId(editorState);
+      let userName = UserDataEditorService.getUserName(editorState);
+      let userRepo = UserDataEditorService.getCurrentRepo(editorState);
 
       wpkArrayBuffer
       |> Crypto.getHashValue
@@ -96,7 +97,9 @@ let savePackage = fetchFunc => {
                   |> Most.tap(result => {
                        let resultObj = result |> JsonType.convertToJsObj;
 
+                       /* TODO move to func */
                        resultObj##status === 0 ?
+                       /* TODO use language */
                          ConsoleUtils.log({j|保存成功|j})
                          |> StateLogicService.getEditorState :
                          {
@@ -109,6 +112,6 @@ let savePackage = fetchFunc => {
                   |> MostUtils.ignore
                 ),
               )
-         );
+         ) ;
     };
 };
