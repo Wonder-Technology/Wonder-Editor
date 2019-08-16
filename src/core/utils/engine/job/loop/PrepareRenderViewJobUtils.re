@@ -54,7 +54,18 @@ let prepareRenderViewJob =
   |> DeviceManagerEngineService.setScissorTest(true)
   |> DeviceManagerEngineService.setScissor(viewRect)
   |> _activeViewCameraFunc
-  |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height));
+  |> ManageIMGUIEngineService.sendCustomTextureProgramUniformProjectionMatData((
+       width,
+       height,
+     ))
+  |> ManageIMGUIEngineService.sendFontTextureProgramUniformProjectionMatData((
+       width,
+       height,
+     ))
+  |> ManageIMGUIEngineService.sendNoTextureProgramUniformProjectionMatData((
+       width,
+       height,
+     ));
 
 let markIsRenderSceneViewGameObjects = (isRender, editorState, engineState) => (
   editorState,
