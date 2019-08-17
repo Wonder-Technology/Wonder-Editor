@@ -32,9 +32,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     /* TODO remove this */
-    describe("set editorState isUserLogin to be true", () => {
-      beforeEach(() => StateEditorService.setIsUserLogin(true));
-
+    describe("set editorState isUserLogin to be true", () =>
       describe("load and import user repo wpk file from server", () => {
         beforeEach(() =>
           UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
@@ -73,6 +71,6 @@ let _ =
                );
           },
         );
-      });
-    });
+      })
+    );
   });

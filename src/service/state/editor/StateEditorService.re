@@ -5,11 +5,6 @@ let getStateIsDebug = () => StateDataEditor.editorStateData.isDebug;
 let setStateIsDebug = isDebug =>
   StateDataEditor.editorStateData.isDebug = isDebug;
 
-let getIsUserLogin = () => StateDataEditor.editorStateData.isUserLogin;
-
-let setIsUserLogin = isUserLogin =>
-  StateDataEditor.editorStateData.isUserLogin = isUserLogin;
-
 let getIsRun = () => StateDataEditor.editorStateData.isRun;
 
 let setIsRun = isRun => StateDataEditor.editorStateData.isRun = isRun;
@@ -20,3 +15,11 @@ let setState = state => {
   StateDataEditor.editorStateData.editorState = state;
   state;
 };
+
+let getEventEngineState = () =>
+  StateDataEditor.editorStateData.eventEngineState;
+
+let setEventEngineState = (eventEngineState) => {
+  StateDataEditor.editorStateData.eventEngineState = eventEngineState;
+  eventEngineState
+}

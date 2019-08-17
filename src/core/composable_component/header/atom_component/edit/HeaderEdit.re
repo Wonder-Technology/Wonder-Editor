@@ -11,10 +11,10 @@ type action =
 
 module Method = {
   let importPackage = ((uiState, dispatchFunc), closeNavFunc, event) => {
-    StateEngineService.unsafeGetState()
+    StateEditorService.getEventEngineState()
     |> ProgressUtils.show
     |> ProgressUtils.changePercent(99)
-    |> StateEngineService.setState
+    |> StateEditorService.setEventEngineState
     |> ignore;
 
     StateHistoryService.getStateForHistory()
@@ -22,12 +22,18 @@ module Method = {
 
     HeaderImportPackageUtils.importPackage(dispatchFunc, event)
     |> Js.Promise.then_(_ => {
-         ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+         StateEditorService.getEventEngineState()
+         |> ProgressUtils.finish
+         |> StateEditorService.setEventEngineState
+         |> ignore;
 
          closeNavFunc() |> Js.Promise.resolve;
        })
     |> Js.Promise.catch(e => {
-         ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+         StateEditorService.getEventEngineState()
+         |> ProgressUtils.finish
+         |> StateEditorService.setEventEngineState
+         |> ignore;
 
          let e = Obj.magic(e);
          let editorState = StateEditorService.getState();

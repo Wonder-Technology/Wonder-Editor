@@ -6,10 +6,10 @@ let handleAssetWDBType =
       (wdbNodeId, selectedFolderNodeInAssetTree),
       (editorState, engineState),
     ) => {
-  StateEngineService.unsafeGetState()
+  StateEditorService.getEventEngineState()
   |> ProgressUtils.show
   |> ProgressUtils.changePercent(99)
-  |> StateEngineService.setState
+  |> StateEditorService.setEventEngineState
   |> ignore;
 
   WDBAssetLogicService.importAssetWDB(
@@ -87,7 +87,10 @@ let handleAssetWDBType =
            (editorState, engineState),
          );
 
-       ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+       StateEditorService.getEventEngineState()
+       |> ProgressUtils.finish
+       |> StateEditorService.setEventEngineState
+       |> ignore;
 
        (editorState, engineState) |> resolve;
      });

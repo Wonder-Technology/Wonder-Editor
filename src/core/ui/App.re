@@ -21,12 +21,8 @@ let render =
         </> :
         <AppShell />
     }
-    /* TODO move Progress here
-
-       TODO editor state data add eventEngineState
-
-       TODO Progress depend on eventEngineState */
     <MainEditor uiState dispatchFunc />
+    <Progress key="main-progress" />
     <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
   </article>;
 

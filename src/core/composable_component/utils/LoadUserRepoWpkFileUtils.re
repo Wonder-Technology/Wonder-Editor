@@ -3,10 +3,10 @@ open WonderBsMost;
 open UserDataType;
 
 let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
-  StateEngineService.unsafeGetState()
+  StateEditorService.getEventEngineState()
   |> ProgressUtils.show
   |> ProgressUtils.changePercent(99)
-  |> StateEngineService.setState
+  |> StateEditorService.setEventEngineState
   |> ignore;
 
   let {id, name, description, filePath} =
@@ -24,7 +24,10 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
      })
   |> Most.concat(
        MostUtils.callFunc(() => {
-         ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+         StateEditorService.getEventEngineState()
+         |> ProgressUtils.finish
+         |> StateEditorService.setEventEngineState
+         |> ignore;
 
          dispatchFunc(
            AppStore.UpdateAction(

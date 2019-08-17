@@ -4,43 +4,43 @@ let getProgressShowCustomGlobalEventName = () => "wd_editor_progress_show";
 
 let getProgressHideCustomGlobalEventName = () => "wd_editor_progress_hide";
 
-let show = engineState => {
-  let (engineState, _) =
+let show = eventEngineState => {
+  let (eventEngineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         getProgressShowCustomGlobalEventName(),
         None,
       ),
-      engineState,
+      eventEngineState,
     );
 
-  engineState;
+  eventEngineState;
 };
 
-let hide = engineState => {
-  let (engineState, _) =
+let hide = eventEngineState => {
+  let (eventEngineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         getProgressHideCustomGlobalEventName(),
         None,
       ),
-      engineState,
+      eventEngineState,
     );
 
-  engineState;
+  eventEngineState;
 };
 
-let changePercent = (percent, engineState) => {
-  let (engineState, _) =
+let changePercent = (percent, eventEngineState) => {
+  let (eventEngineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         getProgressChangePercentCustomGlobalEventName(),
         Some(percent |> EventType.convertIntToUserData),
       ),
-      engineState,
+      eventEngineState,
     );
 
-  engineState;
+  eventEngineState;
 };
 
-let finish = engineState => engineState |> changePercent(100) |> hide;
+let finish = eventEngineState => eventEngineState |> changePercent(100) |> hide;

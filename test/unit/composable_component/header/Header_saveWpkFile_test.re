@@ -36,16 +36,13 @@ let _ =
     /* TODO fix like loadUserWpkFile test */
 
     /* describe(
-    "save wpk file to server",
-    () => {
-    
-     }
-    ); */
+       "save wpk file to server",
+       () => {
 
+        }
+       ); */
 
-    describe("set editorState isUserLogin to be true", () => {
-      beforeEach(() => StateEditorService.setIsUserLogin(true));
-
+    describe("set editorState isUserLogin to be true", () =>
       describe("store user data to editorState", () => {
         beforeEach(() =>
           UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
@@ -94,6 +91,6 @@ let _ =
             |> Js.Promise.then_(_ => log |> expect |> toCalledTwice |> resolve);
           });
         });
-      });
-    });
+      })
+    );
   });

@@ -19,14 +19,14 @@ module Method = {
   let buildWidthPercentStr = percent => (percent |> string_of_int) ++ "%";
 
   let didMount = send => {
-    let engineState = StateEngineService.unsafeGetState();
+    let eventEngineState = StateEditorService.getEventEngineState();
 
-    let engineState =
+    let eventEngineState =
       ManageEventEngineService.onCustomGlobalEvent(
         ~eventName=
           ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
         ~handleFunc=
-          (. event, engineState) => {
+          (. event, eventEngineState) => {
             send(
               ChangePercent(
                 event.userData
@@ -35,60 +35,60 @@ module Method = {
               ),
             );
 
-            (engineState, event);
+            (eventEngineState, event);
           },
-        ~state=engineState,
+        ~state=eventEngineState,
         (),
       );
 
-    let engineState =
+    let eventEngineState =
       ManageEventEngineService.onCustomGlobalEvent(
         ~eventName=ProgressUtils.getProgressShowCustomGlobalEventName(),
         ~handleFunc=
-          (. event, engineState) => {
+          (. event, eventEngineState) => {
             send(Show);
 
-            (engineState, event);
+            (eventEngineState, event);
           },
-        ~state=engineState,
+        ~state=eventEngineState,
         (),
       );
 
-    let engineState =
+    let eventEngineState =
       ManageEventEngineService.onCustomGlobalEvent(
         ~eventName=ProgressUtils.getProgressHideCustomGlobalEventName(),
         ~handleFunc=
-          (. event, engineState) => {
+          (. event, eventEngineState) => {
             send(Hide);
 
-            (engineState, event);
+            (eventEngineState, event);
           },
-        ~state=engineState,
+        ~state=eventEngineState,
         (),
       );
 
-    engineState |> StateEngineService.setState |> ignore;
+    eventEngineState |> StateEngineService.setState |> ignore;
   };
 
   let willUnmount = () => {
-    let engineState =
+    let eventengineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=
           ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
         ~state=StateEngineService.unsafeGetState(),
       );
-    let engineState =
+    let eventengineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=ProgressUtils.getProgressShowCustomGlobalEventName(),
-        ~state=engineState,
+        ~state=eventengineState,
       );
-    let engineState =
+    let eventengineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=ProgressUtils.getProgressHideCustomGlobalEventName(),
-        ~state=engineState,
+        ~state=eventengineState,
       );
 
-    engineState |> StateEngineService.setState |> ignore;
+    eventengineState |> StateEngineService.setState |> ignore;
   };
 };
 
@@ -112,7 +112,7 @@ let reducer = (action, state) =>
       ...state,
       visibleStyle:
         ReactUtils.addStyleProp("display", "flex", state.visibleStyle),
-    });
+    })
   | Hide =>
     ReasonReact.Update({
       ...state,

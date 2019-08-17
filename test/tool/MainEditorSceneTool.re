@@ -115,8 +115,6 @@ let initStateWithJob =
   |> StateEditorService.setState
   |> ignore;
 
-  StateEditorService.setIsUserLogin(false);
-
   TestTool.setLanguageTypeToEn();
 };
 let initState =

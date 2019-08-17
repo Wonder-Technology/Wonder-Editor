@@ -29,22 +29,30 @@ let _ =
         test("bind change percent event", () => {
           let send = ProgressTool.didMount(sandbox);
 
-          ProgressUtils.changePercent(10)
-          |> StateLogicService.getAndSetEngineState;
+          StateEditorService.getEventEngineState()
+          |> ProgressUtils.changePercent(10)
+          |> StateEditorService.setEventEngineState
+          |> ignore;
 
           send |> expect |> toCalledWith([|Progress.ChangePercent(10)|]);
         });
         test("bind show event", () => {
           let send = ProgressTool.didMount(sandbox);
 
-          ProgressUtils.show |> StateLogicService.getAndSetEngineState;
+          StateEditorService.getEventEngineState()
+          |> ProgressUtils.show
+          |> StateEditorService.setEventEngineState
+          |> ignore;
 
           send |> expect |> toCalledWith([|Progress.Show|]);
         });
         test("bind hide event", () => {
           let send = ProgressTool.didMount(sandbox);
 
-          ProgressUtils.show |> StateLogicService.getAndSetEngineState;
+          StateEditorService.getEventEngineState()
+          |> ProgressUtils.show
+          |> StateEditorService.setEventEngineState
+          |> ignore;
 
           send |> expect |> toCalledWith([|Progress.Show|]);
         });
@@ -56,7 +64,10 @@ let _ =
             let send = ProgressTool.didMount(sandbox);
             ProgressTool.willUnmount();
 
-            ProgressUtils.show |> StateLogicService.getAndSetEngineState;
+            StateEditorService.getEventEngineState()
+            |> ProgressUtils.show
+            |> StateEditorService.setEventEngineState
+            |> ignore;
 
             send |> expect |> not_ |> toCalledWith([|Progress.Show|]);
           })

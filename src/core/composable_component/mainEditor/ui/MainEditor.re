@@ -84,7 +84,6 @@ module Method = {
 
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
     <article key="mainEditor" className="wonder-mainEditor-component">
-      <Progress key="main-progress" />
       <div key="leftComponent" className="left-component">
         <div className="top-widget">
           <MainEditorLeftComponents uiState dispatchFunc />
