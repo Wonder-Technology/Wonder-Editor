@@ -17,7 +17,7 @@ let render =
       uiState.isInitEngine ?
         <>
           <Header uiState dispatchFunc />
-          <Controller uiState dispatchFunc />
+          <Controller uiState dispatchFunc isShowRepoList=false />
         </> :
         <AppShell />
     }

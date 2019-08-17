@@ -54,8 +54,34 @@ let _ =
         CurrentTransformGizmoSceneViewEditorService.markScale
         |> StateLogicService.getAndSetEditorState;
 
-        BuildComponentTool.buildController()
+        BuildComponentTool.buildController(false)
         |> ReactTestTool.createSnapshotAndMatch;
       })
     );
+
+    describe("test controller -> currentRepo and repoList component", () => {
+      beforeEach(() => {
+        SettingTool.setSetting(
+          ~debug=Some({isDebug: true, isTestLocal: true}),
+          (),
+        )
+        |> StateEditorService.setState
+        |> ignore;
+
+        UserDataTool.setUserData |> StateLogicService.getAndSetEditorState;
+      });
+
+      describe("if not show repo list modal", () =>
+        test("test snapshot", () =>
+          BuildComponentTool.buildController(false)
+          |> ReactTestTool.createSnapshotAndMatch
+        )
+      );
+      describe("else, show repo list modal", () =>
+        test("test snapshot", () =>
+          BuildComponentTool.buildController(true)
+          |> ReactTestTool.createSnapshotAndMatch
+        )
+      );
+    });
   });

@@ -71,3 +71,288 @@ exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo t
   </div>
 </article>
 `;
+
+exports[`controller test controller -> currentRepo and repoList component else, show repo list modal test snapshot 1`] = `
+<article
+  className="wonder-controller-component"
+>
+  <div
+    className="header-controller"
+  >
+    <div
+      className="controller-transform"
+    >
+      <div
+        className="header-item"
+      >
+        <div
+          className="component-item"
+        >
+          <article
+            className="transform-gizmo-switch"
+          >
+            <div
+              className="translation select"
+              onClick={[Function]}
+              title="set to translation gizmo"
+            />
+            <div
+              className="rotation not-select"
+              onClick={[Function]}
+              title="set to rotation gizmo"
+            />
+            <div
+              className="scale not-select"
+              onClick={[Function]}
+              title="set to scale gizmo"
+            />
+          </article>
+          <article
+            className="transform-gizmo-coordinate-system-switch"
+          >
+            <button
+              disabled={false}
+              onClick={[Function]}
+              title="switch gizmo's coordinate system"
+            >
+              World
+            </button>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div
+      className="controller-runAndStop"
+      onClick={[Function]}
+      title="run/stop scene"
+    >
+      <img
+        src="./public/img/run.png"
+      />
+    </div>
+    <div
+      className="controller-other"
+    >
+      <div
+        className="other-currentRepo"
+      >
+        <a
+          href="http://localhost:5555"
+          target="view_window"
+        >
+          <img
+            src="./public/img/userHome.png"
+          />
+          <span
+            className="currentRepo-name"
+          >
+            fist demo
+          </span>
+        </a>
+      </div>
+      <div
+        className="other-repoList"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/repoList.png"
+        />
+        <span
+          className="repoList-name"
+        >
+          项目列表
+        </span>
+      </div>
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
+  </div>
+  <article
+    className="wonder-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        项目列表
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="content-repo repo-notHover"
+          onClick={[Function]}
+        >
+          <div
+            className="repo-name"
+          >
+            项目名称: fist demo
+          </div>
+          <div
+            className="repo-description"
+          >
+            项目描述: this is demo
+          </div>
+          <div
+            className="repo-current"
+          >
+            CURRENT
+          </div>
+        </div>
+        <div
+          className="content-repo "
+          onClick={[Function]}
+        >
+          <div
+            className="repo-name"
+          >
+            项目名称: second demo
+          </div>
+          <div
+            className="repo-description"
+          >
+            项目描述: this is demo
+          </div>
+        </div>
+        <div
+          className="content-repo "
+          onClick={[Function]}
+        >
+          <div
+            className="repo-name"
+          >
+            项目名称: third demo
+          </div>
+          <div
+            className="repo-description"
+          >
+            项目描述: this is demo
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`controller test controller -> currentRepo and repoList component if not show repo list modal test snapshot 1`] = `
+<article
+  className="wonder-controller-component"
+>
+  <div
+    className="header-controller"
+  >
+    <div
+      className="controller-transform"
+    >
+      <div
+        className="header-item"
+      >
+        <div
+          className="component-item"
+        >
+          <article
+            className="transform-gizmo-switch"
+          >
+            <div
+              className="translation select"
+              onClick={[Function]}
+              title="set to translation gizmo"
+            />
+            <div
+              className="rotation not-select"
+              onClick={[Function]}
+              title="set to rotation gizmo"
+            />
+            <div
+              className="scale not-select"
+              onClick={[Function]}
+              title="set to scale gizmo"
+            />
+          </article>
+          <article
+            className="transform-gizmo-coordinate-system-switch"
+          >
+            <button
+              disabled={false}
+              onClick={[Function]}
+              title="switch gizmo's coordinate system"
+            >
+              World
+            </button>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div
+      className="controller-runAndStop"
+      onClick={[Function]}
+      title="run/stop scene"
+    >
+      <img
+        src="./public/img/run.png"
+      />
+    </div>
+    <div
+      className="controller-other"
+    >
+      <div
+        className="other-currentRepo"
+      >
+        <a
+          href="http://localhost:5555"
+          target="view_window"
+        >
+          <img
+            src="./public/img/userHome.png"
+          />
+          <span
+            className="currentRepo-name"
+          >
+            fist demo
+          </span>
+        </a>
+      </div>
+      <div
+        className="other-repoList"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/repoList.png"
+        />
+        <span
+          className="repoList-name"
+        >
+          项目列表
+        </span>
+      </div>
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
+  </div>
+</article>
+`;

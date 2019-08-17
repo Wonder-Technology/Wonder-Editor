@@ -127,5 +127,6 @@ let buildController = () =>
     <Controller
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
+      isShowRepoList=false
     />,
   );

@@ -134,10 +134,12 @@ module Method = {
       }
     </div>;
 
+  let _isCurrentRepo = (currentId, targetId) => currentId === targetId;
+
   let renderRepoListComponent = send => {
     let editorState = StateEditorService.getState();
 
-    let {id, name, description, filePath} =
+    let {id as currentId} =
       UserDataEditorService.getCurrentRepo(editorState);
     let userRepoArray = UserDataEditorService.getUserRepos(editorState);
     let userId = UserDataEditorService.getUserId(editorState);
@@ -154,29 +156,61 @@ module Method = {
                ++ {j|/?userId=$userId&repoId=$id&code=$hashCode|j};
 
              <div
-               className="content-repo"
-               key=name
-               onClick={_e => DomHelper.setLocationHref(url)}>
+               className={
+                 "content-repo "
+                 ++ (_isCurrentRepo(currentId, id) ? "repo-notHover" : "")
+               }
+               key={id |> string_of_int}
+               onClick={
+                 _e =>
+                   _isCurrentRepo(currentId, id) ?
+                     () : DomHelper.setLocationHref(url)
+               }>
                <div className="repo-name">
                  {DomHelper.textEl({j|项目名称: $name|j})}
                </div>
                <div className="repo-description">
                  {DomHelper.textEl({j|项目描述: $description|j})}
                </div>
+               {
+                 _isCurrentRepo(currentId, id) ?
+                   <div className="repo-current">
+                     {DomHelper.textEl("CURRENT")}
+                   </div> :
+                   ReasonReact.null
+               }
              </div>;
            })
       }
     />;
   };
 
-  let renderCurrentRepo = () => {
-    let {id, name, description, filePath} =
-      UserDataEditorService.getCurrentRepo
-      |> StateLogicService.getEditorState;
+  let renderUserRepoComponent = send => {
+    let editorState = StateEditorService.getState();
 
-    <span className="currentRepo-name">
-      {DomHelper.textEl({j|$name|j})}
-    </span>;
+    DebugSettingEditorService.getIsTestLocal(editorState)
+    |> WonderLog.Log.print ?
+      {
+        let {id, name, description, filePath} =
+          UserDataEditorService.getCurrentRepo(editorState);
+        <>
+          <div className="other-currentRepo">
+            <a href={ClientConfig.getHostPlatformPath()} target="view_window">
+              <img src="./public/img/userHome.png" />
+              <span className="currentRepo-name">
+                {DomHelper.textEl({j|$name|j})}
+              </span>
+            </a>
+          </div>
+          <div className="other-repoList" onClick={_e => send(ShowRepoList)}>
+            <img src="./public/img/repoList.png" />
+            <span className="repoList-name">
+              {DomHelper.textEl({j|项目列表|j})}
+            </span>
+          </div>
+        </>;
+      } :
+      ReasonReact.null;
   };
 };
 
@@ -219,18 +253,7 @@ let render =
       </div>
       {Method.renderRunAndStop(uiState, dispatchFunc, languageType)}
       <div className="controller-other">
-        /* <div className="other-currentRepo">
-          <a href={ClientConfig.getHostPlatformPath()} target="view_window">
-            <img src="./public/img/userHome.png" />
-            {Method.renderCurrentRepo()}
-          </a>
-        </div>
-        <div className="other-repoList" onClick={_e => send(ShowRepoList)}>
-          <img src="./public/img/repoList.png" />
-          <span className="repoList-name">
-            {DomHelper.textEl({j|项目列表|j})}
-          </span>
-        </div> */
+        {Method.renderUserRepoComponent(send)}
         <div
           className="other-language"
           onClick={_e => Method.changeLanguage(languageType)}>
@@ -255,12 +278,13 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.Controller);
 
-let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
+let make =
+    (~uiState: AppStore.appState, ~dispatchFunc, ~isShowRepoList, _children) => {
   ...component,
   retainedProps: {
     updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
-  initialState: () => {isShowRepoList: false},
+  initialState: () => {isShowRepoList: isShowRepoList},
   reducer: reducer(dispatchFunc),
   shouldUpdate,
   render: self => render(uiState, dispatchFunc, self),

@@ -49,7 +49,7 @@ var AssetTool = (function () {
         ) {
             var loadingPercentStr = String(computeLoadingPercent(
 
-                loadedIMGUIByteLength,
+                Exporting projects is an Organization Account feature. Upgrade to be able to export projects. loadedIMGUIByteLength,
                 totalByteLength
             )) + '%';
 

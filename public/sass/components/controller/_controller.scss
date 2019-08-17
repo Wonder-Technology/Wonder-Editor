@@ -157,22 +157,41 @@
                 height: 370px;
                 .content-repo{
                     width:100%;
-                    height:60px;
+                    height:50px;
                     border-bottom: 1px solid #D5D9D8;
                     padding: 5px 0 5px 0;
                     color:#3e4849;
+                    position: relative;
                     .repo-name{
-                        height:35px;
-                        line-height:35px;
-                        font-size:17px;
+                        height:30px;
+                        line-height:30px;
+                        font-size:15px;
                     }
                     .repo-description{
-                        height:25px;
-                        line-height:25px;
-                        font-size:14px;
+                        height:20px;
+                        line-height:20px;
+                        font-size:13px;
                     }
                     &:hover{
                         cursor: pointer;
+                    }
+                    .repo-current{
+                        width: 80px;
+                        line-height: 20px;
+                        height:20px;
+                        text-align: center;
+                        background: #f60;
+                        color:#364346;
+                        position: absolute;
+                        bottom:10px;
+                        right:0px;
+                        font-size:14px;
+
+                    }
+                }
+                .repo-notHover{
+                    &:hover{
+                        cursor: default;
                     }
                 }
             }

@@ -224,11 +224,12 @@ let buildAssetChildrenNode = (~debounceTime=10, ()) =>
     />,
   );
 
-let buildController = () =>
+let buildController = isShowRepoList =>
   ReactTestRenderer.create(
     <Controller
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
+      isShowRepoList
     />,
   );
 
