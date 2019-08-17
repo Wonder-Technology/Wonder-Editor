@@ -21,8 +21,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      /* TODO use empty scene */
-      /* MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox); */
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
 
@@ -31,64 +30,53 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    /* TODO fix like loadUserWpkFile test */
+    describe("save wpk file to server", () => {
+      beforeEach(() =>
+        UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
+      );
 
-    /* describe(
-       "save wpk file to server",
-       () => {
+      describe("if is run", () => {
+        beforeEach(() => ControllerTool.setIsRun(true));
+        testPromise("log warn message", () => {
+          let fetchFunc =
+            BuildFetchTool.buildFakeFetchWithInit(
+              BuildFetchTool.buildFakeFetchSucessResponse,
+            );
+          let warn =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "warn",
+            );
 
-        }
-       ); */
-
-    describe("set editorState isUserLogin to be true", () =>
-      describe("store user data to editorState", () => {
-        beforeEach(() =>
-          UserDataTool.setUserData |> StateLogicService.getAndSetEditorState
-        );
-
-        describe("if is run", () => {
-          beforeEach(() => ControllerTool.setIsRun(true));
-          testPromise("log warn message", () => {
-            let fetchFunc =
-              BuildFetchTool.buildFakeFetchWithInit(
-                BuildFetchTool.buildFakeFetchSucessResponse,
-              );
-            let warn =
-              createMethodStubWithJsObjSandbox(
-                sandbox,
-                ConsoleTool.console,
-                "warn",
-              );
-
-            HeaderFileSaveUtils.savePackage(fetchFunc)
-            |> WonderBsMost.Most.drain
-            |> Js.Promise.then_(_ => warn |> expect |> toCalledOnce |> resolve);
-          });
+          HeaderFileSaveUtils.savePackage(fetchFunc)
+          |> WonderBsMost.Most.drain
+          |> Js.Promise.then_(_ => warn |> expect |> toCalledOnce |> resolve);
         });
+      });
 
-        describe("else", () => {
-          beforeEach(() => ControllerTool.setIsRun(false));
+      describe("else", () => {
+        beforeEach(() => ControllerTool.setIsRun(false));
 
-          testPromise("should log save status", () => {
-            let fetchFunc =
-              BuildFetchTool.buildFakeFetchWithInit(
-                BuildFetchTool.buildFakeFetchSucessResponse,
-              );
+        testPromise("should log save status", () => {
+          let fetchFunc =
+            BuildFetchTool.buildFakeFetchWithInit(
+              BuildFetchTool.buildFakeFetchSucessResponse,
+            );
 
-            CryptoTool.stubCrypto(.);
+          CryptoTool.stubCrypto(.);
 
-            let log =
-              createMethodStubWithJsObjSandbox(
-                sandbox,
-                ConsoleTool.console,
-                "log",
-              );
+          let log =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "log",
+            );
 
-            HeaderFileSaveUtils.savePackage(fetchFunc)
-            |> WonderBsMost.Most.drain
-            |> Js.Promise.then_(_ => log |> expect |> toCalledTwice |> resolve);
-          });
+          HeaderFileSaveUtils.savePackage(fetchFunc)
+          |> WonderBsMost.Most.drain
+          |> Js.Promise.then_(_ => log |> expect |> toCalledTwice |> resolve);
         });
-      })
-    );
+      });
+    });
   });
