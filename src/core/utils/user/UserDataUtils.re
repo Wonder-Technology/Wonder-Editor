@@ -8,7 +8,7 @@ let showErrorMsgAndGoToHostPlatform = (msg, editorState) => {
   Most.just(-1)
   |> Most.delay(6000)
   |> Most.tap(_ =>
-       DomHelper.setLocationHref("https://hostPlatform.wonder-3d.com")
+       DomHelper.setLocationHref(ClientConfig.getHostPlatformPath())
      )
   |> Most.drain
   |> ignore;

@@ -1,0 +1,1 @@
+let isResponseSuccess = resultObj => resultObj##status === 0;

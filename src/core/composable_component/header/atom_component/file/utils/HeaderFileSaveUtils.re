@@ -18,7 +18,6 @@ let savePackage = fetchFunc => {
     )
     |> Most.just :
     {
-      /* TODO use language */
       ConsoleUtils.log({j|正在保存|j}) |> StateLogicService.getEditorState;
 
       let wpkArrayBuffer = HeaderExportPackageUtils.export();
@@ -97,9 +96,7 @@ let savePackage = fetchFunc => {
                   |> Most.tap(result => {
                        let resultObj = result |> JsonType.convertToJsObj;
 
-                       /* TODO move to func */
-                       resultObj##status === 0 ?
-                       /* TODO use language */
+                       ResponseUtils.isResponseSuccess(resultObj) ?
                          ConsoleUtils.log({j|保存成功|j})
                          |> StateLogicService.getEditorState :
                          {
@@ -112,6 +109,6 @@ let savePackage = fetchFunc => {
                   |> MostUtils.ignore
                 ),
               )
-         ) ;
+         );
     };
 };
