@@ -23,17 +23,11 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
        HeaderImportPackageUtils.loadSceneWithWpkFile(wpk);
      })
   |> Most.concat(
-       MostUtils.callFunc(() => {
+       MostUtils.callFunc(() =>
          StateEditorService.getEventEngineState()
          |> ProgressUtils.finish
          |> StateEditorService.setEventEngineState
-         |> ignore;
-
-         dispatchFunc(
-           AppStore.UpdateAction(
-             Update([|UpdateStore.Project, UpdateStore.SceneTree|]),
-           ),
-         );
-       }),
+         |> ignore
+       ),
      );
 };

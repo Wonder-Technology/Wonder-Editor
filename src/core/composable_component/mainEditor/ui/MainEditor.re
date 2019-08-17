@@ -148,22 +148,12 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   },
   didUpdate: oldNewSelf => Method.didUpdate(oldNewSelf),
   didMount: _self => {
-    /* complete:
-          dispatchFunc(AppStore.InitEngineAction) |> ignore;
-       */
-
     EventHelper.onresize(() =>
       DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize
     );
 
     MainUtils.initEditor()
     |> Most.flatMap(_ => MainUtils.initEngine())
-    |> Most.map(_ => {
-         StateEngineService.unsafeGetState()
-         |> Method.startLoopForCameraChangeDirection(0.);
-
-         dispatchFunc(AppStore.InitEngineAction);
-       })
     |> Most.flatMap(_ => {
          let editorState = StateEditorService.getState();
 
@@ -175,11 +165,15 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
          let editorState = StateEditorService.getState();
 
          DebugSettingEditorService.getIsTestLocal(editorState) ?
-           LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
-             dispatchFunc,
-             Fetch.fetch,
-             editorState,
-           ) :
+           {
+             ResizeUtils.resizeMainCanvasScreen();
+
+             LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
+               dispatchFunc,
+               Fetch.fetch,
+               editorState,
+             );
+           } :
            Most.just();
        })
     |> MostUtils.subscribe(
@@ -193,7 +187,13 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateLogicService.getEditorState :
                ConsoleUtils.error(errMsg, editorState);
            },
-         ~completeFunc=() => Js.log(1),
+         ~completeFunc=
+           () => {
+             StateEngineService.unsafeGetState()
+             |> Method.startLoopForCameraChangeDirection(0.);
+
+             dispatchFunc(AppStore.InitEngineAction);
+           },
          (),
        )
     |> ignore;
