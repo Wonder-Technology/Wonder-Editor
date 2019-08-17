@@ -32,6 +32,6 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   didMount: _self => {
     WonderLog.Wonder_Console.makeObjInToWindow();
 
-    ServiceWorker.registerServiceWorker();
+    ServiceWorker.registerServiceWorker() |> ignore;
   },
 };

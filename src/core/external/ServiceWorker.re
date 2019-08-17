@@ -1,10 +1,14 @@
-let registerServiceWorker = [%raw
-  param => "
+let registerServiceWorker: unit => Js.Promise.t(unit) = [%raw
+  param => {|
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
+        return navigator.serviceWorker
         .register('./service-worker.js')
         .then(function (registration) {
             console.log('Service Worker Registered ! ');
         });
-    }"
+    }
+    else{
+        return new Promise();
+    }
+    |}
 ];
