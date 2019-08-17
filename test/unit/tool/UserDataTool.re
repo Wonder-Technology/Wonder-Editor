@@ -6,6 +6,8 @@ let getUserName = () => "amy";
 
 let getEmail = () => "340606700@qq.com";
 
+let getHashCode = () => "KLJHKJHFIUEHIUHEFUILHEFIULHFU";
+
 let getUserRepoArray = () => [|
   {
     id: 1,
@@ -29,12 +31,14 @@ let getUserRepoArray = () => [|
 
 let setUserData = editorState =>
   editorState
-  |> UserDataEditorService.setUserId(getUserId())
-  |> UserDataEditorService.setUserName(getUserName())
-  |> UserDataEditorService.setEmail(getEmail())
-  |> UserDataEditorService.setCurrentRepo(
-       getUserRepoArray()
-       |> Js.Array.filter(repoItem => repoItem.id === 1)
-       |> ArrayService.unsafeGetFirst,
-     )
-  |> UserDataEditorService.setUserRepos(getUserRepoArray());
+  |> UserDataEditorService.setUserDataRecord({
+       userId: getUserId(),
+       userName: getUserName(),
+       hashCode: getHashCode(),
+       email: getEmail(),
+       currentRepo:
+         getUserRepoArray()
+         |> Js.Array.filter(repoItem => repoItem.id === 1)
+         |> ArrayService.unsafeGetFirst,
+       userRepos: getUserRepoArray(),
+     });

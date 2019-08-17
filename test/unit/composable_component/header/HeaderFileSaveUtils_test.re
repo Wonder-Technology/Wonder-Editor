@@ -10,10 +10,8 @@ open Header;
 
 open Js.Promise;
 
-/* TODO rename file: HeaderFileSaveUtils_test */
-/* TODO rename describe to HeaderFileSaveUtils */
 let _ =
-  describe("Header save wpk file", () => {
+  describe("HeaderFileSaveUtils", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -24,7 +22,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
 
       /* TODO use empty scene */
-      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+      /* MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox); */
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
 
