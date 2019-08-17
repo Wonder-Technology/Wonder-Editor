@@ -20,7 +20,7 @@ let loadUserRepoWpkFile = (dispatchFunc, fetchFunc, editorState) => {
   |> Most.flatMap(fileArrayBuffer => {
        let wpk = fileArrayBuffer |> FetchService.convertResponseToArrayBuffer;
 
-       HeaderImportPackageUtils.loadSceneWithWpkFile(wpk);
+       HeaderImportPackageUtils.importPackage(wpk);
      })
   |> Most.concat(
        MostUtils.callFunc(() =>

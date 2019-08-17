@@ -28,10 +28,10 @@ module Method = {
     switch (languageType) {
     | EN =>
       LocalStorage.setValue("language", "ZH");
-      DomHelper.locationReload(.);
+      DomHelper.reloadLocationFromCacheFirst(.);
     | ZH =>
       LocalStorage.setValue("language", "EN");
-      DomHelper.locationReload(.);
+      DomHelper.reloadLocationFromCacheFirst(.);
     };
 
   let handleChangeCurrentTransformGizmoType = (dispatchFunc, type_) => {
@@ -156,7 +156,7 @@ module Method = {
              <div
                className="content-repo"
                key=name
-               onClick={_e => DomHelper.locationHref(url)}>
+               onClick={_e => DomHelper.setLocationHref(url)}>
                <div className="repo-name">
                  {DomHelper.textEl({j|项目名称: $name|j})}
                </div>

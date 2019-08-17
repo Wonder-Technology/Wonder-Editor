@@ -20,7 +20,7 @@ module Method = {
     StateHistoryService.getStateForHistory()
     |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(uiState);
 
-    HeaderImportPackageUtils.importPackage(dispatchFunc, event)
+    HeaderImportPackageUtils.uploadAndImportPackage(dispatchFunc, event)
     |> Js.Promise.then_(_ => {
          StateEditorService.getEventEngineState()
          |> ProgressUtils.finish

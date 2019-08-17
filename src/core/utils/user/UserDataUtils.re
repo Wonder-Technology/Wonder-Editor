@@ -8,7 +8,7 @@ let showErrorMsgAndGoToHostPlatform = (msg, editorState) => {
   Most.just(-1)
   |> Most.delay(6000)
   |> Most.tap(_ =>
-       DomHelper.locationHref("https://hostPlatform.wonder-3d.com")
+       DomHelper.setLocationHref("https://hostPlatform.wonder-3d.com")
      )
   |> Most.drain
   |> ignore;
@@ -86,7 +86,7 @@ let _fetchUserDataStoreEditorState = (userId, repoId, code, editorState) =>
      });
 
 let handleFetchUserDataStoreEditorState = editorState => {
-  let param = DomHelper.locationSearch(.);
+  let param = DomHelper.getRequestParams(.);
   let userId = param##userId;
   let repoId = param##repoId;
   let code = param##code;

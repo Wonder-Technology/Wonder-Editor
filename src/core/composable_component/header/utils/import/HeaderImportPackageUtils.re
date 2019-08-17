@@ -232,8 +232,7 @@ let _init = allWDBGameObjectArrRef => {
      );
 };
 
-/* TODO rename to importPackage */
-let loadSceneWithWpkFile = wpk => {
+let importPackage = wpk => {
   _disposeAssets();
 
   StateEngineService.unsafeGetState()
@@ -464,8 +463,7 @@ let _readFile = (fileInfo: FileType.fileInfoType, (resolve, reject)) => {
 let _dispatch = dispatchFunc =>
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])));
 
-  /* TODO rename to uploadAndImportPackage */
-let importPackage = (dispatchFunc, event) => {
+let uploadAndImportPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
@@ -496,7 +494,7 @@ let importPackage = (dispatchFunc, event) => {
         )
         |> WonderBsMost.Most.flatMap(
              (fileResult: uploadPackageFileResultType) =>
-             loadSceneWithWpkFile(
+             importPackage(
                fileResult.result |> FileReader.convertResultToArrayBuffer,
              )
            )
