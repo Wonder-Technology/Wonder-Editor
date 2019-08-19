@@ -153,29 +153,33 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
     );
 
     MainUtils.initEditor()
-    |> Most.flatMap(_ => MainUtils.initEngine())
-    |> Most.flatMap(_ => {
-         let editorState = StateEditorService.getState();
+    |> Most.merge(MainUtils.initEngine())
+    |> Most.concat(
+         MostUtils.callStreamFunc(() => {
+           let editorState = StateEditorService.getState();
 
-         DebugSettingEditorService.getIsTestLocal(editorState) ?
-           UserDataUtils.handleFetchUserDataStoreEditorState(editorState) :
-           Most.just();
-       })
-    |> Most.flatMap(_ => {
-         let editorState = StateEditorService.getState();
+           DebugSettingEditorService.getIsTestLocal(editorState) ?
+             UserDataUtils.handleFetchUserDataStoreEditorState(editorState) :
+             Most.just();
+         }),
+       )
+    |> Most.concat(
+         MostUtils.callStreamFunc(() => {
+           let editorState = StateEditorService.getState();
 
-         DebugSettingEditorService.getIsTestLocal(editorState) ?
-           {
-             ResizeUtils.resizeMainCanvasScreen();
+           DebugSettingEditorService.getIsTestLocal(editorState) ?
+             {
+               ResizeUtils.resizeMainCanvasScreen();
 
-             LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
-               dispatchFunc,
-               Fetch.fetch,
-               editorState,
-             );
-           } :
-           Most.just();
-       })
+               LoadUserRepoWpkFileUtils.loadUserRepoWpkFile(
+                 dispatchFunc,
+                 Fetch.fetch,
+                 editorState,
+               );
+             } :
+             Most.just();
+         }),
+       )
     |> MostUtils.subscribe(
          ~stream=_,
          ~errorFunc=

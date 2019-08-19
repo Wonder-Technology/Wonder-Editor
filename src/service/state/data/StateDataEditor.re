@@ -2,7 +2,7 @@ open EditorStateDataType;
 
 let editorStateData = {
   editorState: CreateEditorStateEditorService.create(),
-  eventEngineState: Wonderjs.StateAPI.createState(),
+  eventEngineState: StateEngineService.createState(),
   isDebug: true,
   isRun: false,
 };

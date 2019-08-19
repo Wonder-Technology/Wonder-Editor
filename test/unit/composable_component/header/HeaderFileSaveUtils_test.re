@@ -21,7 +21,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+      MainEditorSceneTool.prepareScene(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
 
