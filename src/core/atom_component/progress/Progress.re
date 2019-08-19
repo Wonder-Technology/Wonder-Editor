@@ -67,29 +67,28 @@ module Method = {
         (),
       );
 
-    /* TODO all fix: set to editor state data */
-    eventEngineState |> StateEngineService.setState |> ignore;
+    eventEngineState |> StateEditorService.setEventEngineState |> ignore;
   };
 
   let willUnmount = () => {
-    let eventengineState =
+    let eventEngineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=
           ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-        ~state=StateEngineService.unsafeGetState(),
+        ~state=StateEditorService.getEventEngineState(),
       );
-    let eventengineState =
+    let eventEngineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=ProgressUtils.getProgressShowCustomGlobalEventName(),
-        ~state=eventengineState,
+        ~state=eventEngineState,
       );
-    let eventengineState =
+    let eventEngineState =
       ManageEventEngineService.offCustomGlobalEventByEventName(
         ~eventName=ProgressUtils.getProgressHideCustomGlobalEventName(),
-        ~state=eventengineState,
+        ~state=eventEngineState,
       );
 
-    eventengineState |> StateEngineService.setState |> ignore;
+    eventEngineState |> StateEditorService.setEventEngineState |> ignore;
   };
 };
 
@@ -147,6 +146,6 @@ let make = _children => {
   render: _self => render(_self),
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     Method.didMount(send),
-  /* willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-     Method.willUnmount(), */
+  willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    Method.willUnmount(),
 };
