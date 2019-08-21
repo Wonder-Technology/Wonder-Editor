@@ -41,12 +41,8 @@ let _activeGameViewCamera = engineState => {
   engineState;
 };
 
-let _setEmptyIMGUIFunc = engineState =>
-  engineState
-  |> ManageIMGUIEngineService.setIMGUIFunc(
-       Obj.magic(-1),
-       Obj.magic((. _, apiJsObj, engineState) => engineState),
-     );
+let _clearExecFuncDataArr = engineState =>
+  engineState |> ManageIMGUIEngineService.clearExecFuncDataArr;
 
 let prepareRenderGameViewJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
@@ -64,22 +60,24 @@ let prepareRenderGameViewJob = (_, engineState) => {
        )
     |> (
       ((editorState, engineState)) =>
-        IMGUIEditorService.hasGameViewIMGUIData(editorState) ?
-          (
-            editorState,
-            engineState
-            |> ManageIMGUIEngineService.setIMGUIFunc(
-                 Obj.magic(
-                   IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
-                     editorState,
-                   ),
-                 ),
-                 Obj.magic(
-                   IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState),
-                 ),
-               ),
-          ) :
-          (editorState, _setEmptyIMGUIFunc(engineState))
+        /* TODO fix after add imgui func assets */
+        /* IMGUIEditorService.hasGameViewIMGUIData(editorState) ?
+           (
+             editorState,
+             engineState
+             |> ManageIMGUIEngineService.setIMGUIFunc(
+                  Obj.magic(
+                    IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
+                      editorState,
+                    ),
+                  ),
+                  Obj.magic(
+                    IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState),
+                  ),
+                ),
+           ) :
+           (editorState, _clearExecFuncDataArr(engineState)) */
+        (editorState, _clearExecFuncDataArr(engineState))
     );
 
   StateEditorService.setState(editorState) |> ignore;

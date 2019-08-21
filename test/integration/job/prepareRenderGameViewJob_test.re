@@ -65,36 +65,38 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test imgui", () =>
-      describe("test imgui func", () =>
-        test("set empty func", () => {
-          PrepareRenderViewJobTool.prepare(_prepareState);
+    /* TODO test after add imgui func assets
 
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+       describe("test imgui", () =>
+         describe("test imgui func", () =>
+           test("set empty func", () => {
+             PrepareRenderViewJobTool.prepare(_prepareState);
 
-          let engineState = StateEngineService.unsafeGetState();
-          let str =
-            IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-            |> StringTool.removeNewLinesAndSpaces;
-          TestCoverageTool.isTestCoverage(str) ?
-            true |> expect == true :
-            IMGUITool.containMultiline(
-              str,
-              [
-                {|
-                function (param, apiJsObj, engineState) {
-                  return engineState;
-                }
-      |}
-                |> StringTool.removeNewLinesAndSpaces,
-              ],
-            )
-            |> expect == true;
-        })
-      )
-    );
+             StateLogicService.getAndSetEngineState(
+               DirectorToolEngine.runWithDefaultTime,
+             );
+
+             let engineState = StateEngineService.unsafeGetState();
+             let str =
+               IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+               |> StringTool.removeNewLinesAndSpaces;
+             TestCoverageTool.isTestCoverage(str) ?
+               true |> expect == true :
+               IMGUITool.containMultiline(
+                 str,
+                 [
+                   {|
+                   function (param, apiJsObj, engineState) {
+                     return engineState;
+                   }
+         |}
+                   |> StringTool.removeNewLinesAndSpaces,
+                 ],
+               )
+               |> expect == true;
+           })
+         )
+       ); */
 
     describe("test current camera", () => {
       describe("if scene has active camera", () =>
@@ -108,10 +110,10 @@ let _ =
           let engineState = StateEngineService.unsafeGetState();
           BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
           |> OptionService.unsafeGet
-          |>
-          expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
-                      engineState,
-                    );
+          |> expect
+          == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
+               engineState,
+             );
         })
       );
 

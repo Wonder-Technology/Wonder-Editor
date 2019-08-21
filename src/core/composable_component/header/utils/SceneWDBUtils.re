@@ -1,25 +1,25 @@
-let _setIMGUIData = (hasWDBIMGUIFunc, editorState, engineState) => {
-  let wdbImguiFunc =
-    hasWDBIMGUIFunc ?
-      ManageIMGUIEngineService.getIMGUIFunc(engineState) : None;
+/* let _setIMGUIData = (hasWDBIMGUIFunc, editorState, engineState) => {
+     let wdbImguiFunc =
+       hasWDBIMGUIFunc ?
+         ManageIMGUIEngineService.getIMGUIFunc(engineState) : None;
 
-  (
-    switch (wdbImguiFunc) {
-    | None =>
-      editorState
-      |> IMGUIEditorService.removeGameViewIMGUIFunc
-      |> IMGUIEditorService.removeGameViewIMGUICustomData
-    | Some(wdbImguiFunc) =>
-      editorState
-      |> IMGUIEditorService.setGameViewIMGUIFunc(wdbImguiFunc)
-      |> IMGUIEditorService.setGameViewIMGUICustomData(
-           ManageIMGUIEngineService.getCustomData(engineState)
-           |> OptionService.unsafeGet,
-         )
-    },
-    engineState,
-  );
-};
+     (
+       switch (wdbImguiFunc) {
+       | None =>
+         editorState
+         |> IMGUIEditorService.removeGameViewIMGUIFunc
+         |> IMGUIEditorService.removeGameViewIMGUICustomData
+       | Some(wdbImguiFunc) =>
+         editorState
+         |> IMGUIEditorService.setGameViewIMGUIFunc(wdbImguiFunc)
+         |> IMGUIEditorService.setGameViewIMGUICustomData(
+              ManageIMGUIEngineService.getCustomData(engineState)
+              |> OptionService.unsafeGet,
+            )
+       },
+       engineState,
+     );
+   }; */
 
 let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
@@ -41,8 +41,9 @@ let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
       )
     };
 
-  let (editorState, engineState) =
-    _setIMGUIData(hasWDBIMGUIFunc, editorState, engineState);
+  /* TODO fix after add imgui func assets */
+  /* let (editorState, engineState) =
+     _setIMGUIData(hasWDBIMGUIFunc, editorState, engineState); */
 
   /* let (assetTree, editorState) = */
   let editorState =

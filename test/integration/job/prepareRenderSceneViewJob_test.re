@@ -65,129 +65,131 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test imgui", () => {
-      describe("send imgui->uniform projection mat data", () =>
-        test("test", () => {
-          PrepareRenderViewJobTool.prepare(_prepareState);
-
-          PrepareRenderViewJobTool.setViewRect(~width=11, ~height=20, ());
-          let gl = FakeGlToolEngine.getEngineStateGl();
-          let pos1 = 10;
-          gl##getUniformLocation
-          |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
-          |> returns(pos1);
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
-
-          gl##uniformMatrix4fv
-          |> SinonTool.calledWithArg3(
-               _,
-               pos1,
-               Sinon.matchAny,
-               Js.Typed_array.Float32Array.make([|
-                 0.4000000059604645,
-                 0.,
-                 0.,
-                 0.,
-                 0.,
-                 (-0.10000000149011612),
-                 0.,
-                 0.,
-                 0.,
-                 0.,
-                 (-1.),
-                 0.,
-                 (-1.),
-                 1.,
-                 0.,
-                 1.,
-               |]),
-             )
-          |> expect == true;
-        })
-      );
-
-      describe("test imgui func", () => {
-        describe("if game view imgui exist", () =>
-          test("should set game view imgui + gizmo imgui", () => {
+    describe("test imgui", () =>
+      describe("send imgui->uniform projection mat data", ()
+        =>
+          test("test", () => {
             PrepareRenderViewJobTool.prepare(_prepareState);
 
-            let editorState = StateEditorService.getState();
-            let gameViewIMGUIFunc =
-              Obj.magic((. _, apiJsObj, engineState) => {
-                let label = apiJsObj##label;
-                let engineState =
-                  label(. (100., 30., 300., 200.), "imgui", 0, engineState);
+            PrepareRenderViewJobTool.setViewRect(~width=11, ~height=20, ());
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            let pos1 = 10;
+            gl##getUniformLocation
+            |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
+            |> returns(pos1);
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
 
-                engineState;
-              });
-            let gameViewIMGUICustomData = Obj.magic(10);
-
-            editorState
-            |> IMGUIEditorService.setGameViewIMGUIFunc(gameViewIMGUIFunc)
-            |> IMGUIEditorService.setGameViewIMGUICustomData(
-                 gameViewIMGUICustomData,
+            gl##uniformMatrix4fv
+            |> SinonTool.calledWithArg3(
+                 _,
+                 pos1,
+                 Sinon.matchAny,
+                 Js.Typed_array.Float32Array.make([|
+                   0.4000000059604645,
+                   0.,
+                   0.,
+                   0.,
+                   0.,
+                   (-0.10000000149011612),
+                   0.,
+                   0.,
+                   0.,
+                   0.,
+                   (-1.),
+                   0.,
+                   (-1.),
+                   1.,
+                   0.,
+                   1.,
+                 |]),
                )
-            |> StateEditorService.setState
-            |> ignore;
-
-            StateLogicService.getAndSetEngineState(
-              DirectorToolEngine.runWithDefaultTime,
-            );
-
-            let engineState = StateEngineService.unsafeGetState();
-            let str =
-              IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-              |> StringTool.removeNewLinesAndSpaces;
-            TestCoverageTool.isTestCoverage(str) ?
-              "" |> expect == "" :
-              str
-              |>
-              expect == (
-                          {|function (param, apiJsObj, engineState) {
-                var match = param[1];
-                var match$1 = param[0];
-                var engineState$1 = match$1[1](match$1[0], apiJsObj, engineState);
-                return match[0](match[1], apiJsObj, engineState$1);
-              }|}
-                          |> StringTool.removeNewLinesAndSpaces
-                        );
-          })
-        );
-
-        describe("else", () =>
-          test("should set gizmo imgui", () => {
-            PrepareRenderViewJobTool.prepare(_prepareState);
-
-            let editorState = StateEditorService.getState();
-
-            editorState
-            |> IMGUIEditorService.removeGameViewIMGUIFunc
-            |> IMGUIEditorService.removeGameViewIMGUICustomData
-            |> StateEditorService.setState
-            |> ignore;
-
-            StateLogicService.getAndSetEngineState(
-              DirectorToolEngine.runWithDefaultTime,
-            );
-
-            let engineState = StateEngineService.unsafeGetState();
-            IMGUITool.containMultiline(
-              IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-              |> StringTool.removeNewLinesAndSpaces,
-              [
-                {|
-                  var imageFunc = apiJsObj.image;
-      |}
-                |> StringTool.removeNewLinesAndSpaces,
-              ],
-            )
             |> expect == true;
           })
-        );
-      });
-    });
+        )
+        /* TODO test after add imgui func assets
+
+           describe("test imgui func", () => {
+             describe("if game view imgui exist", () =>
+               test("should set game view imgui + gizmo imgui", () => {
+                 PrepareRenderViewJobTool.prepare(_prepareState);
+
+                 let editorState = StateEditorService.getState();
+                 let gameViewIMGUIFunc =
+                   Obj.magic((. _, apiJsObj, engineState) => {
+                     let label = apiJsObj##label;
+                     let engineState =
+                       label(. (100., 30., 300., 200.), "imgui", 0, engineState);
+
+                     engineState;
+                   });
+                 let gameViewIMGUICustomData = Obj.magic(10);
+
+                 editorState
+                 |> IMGUIEditorService.setGameViewIMGUIFunc(gameViewIMGUIFunc)
+                 |> IMGUIEditorService.setGameViewIMGUICustomData(
+                      gameViewIMGUICustomData,
+                    )
+                 |> StateEditorService.setState
+                 |> ignore;
+
+                 StateLogicService.getAndSetEngineState(
+                   DirectorToolEngine.runWithDefaultTime,
+                 );
+
+                 let engineState = StateEngineService.unsafeGetState();
+                 let str =
+                   IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+                   |> StringTool.removeNewLinesAndSpaces;
+                 TestCoverageTool.isTestCoverage(str) ?
+                   "" |> expect == "" :
+                   str
+                   |>
+                   expect == (
+                               {|function (param, apiJsObj, engineState) {
+                     var match = param[1];
+                     var match$1 = param[0];
+                     var engineState$1 = match$1[1](match$1[0], apiJsObj, engineState);
+                     return match[0](match[1], apiJsObj, engineState$1);
+                   }|}
+                               |> StringTool.removeNewLinesAndSpaces
+                             );
+               })
+             );
+
+             describe("else", () =>
+               test("should set gizmo imgui", () => {
+                 PrepareRenderViewJobTool.prepare(_prepareState);
+
+                 let editorState = StateEditorService.getState();
+
+                 editorState
+                 |> IMGUIEditorService.removeGameViewIMGUIFunc
+                 |> IMGUIEditorService.removeGameViewIMGUICustomData
+                 |> StateEditorService.setState
+                 |> ignore;
+
+                 StateLogicService.getAndSetEngineState(
+                   DirectorToolEngine.runWithDefaultTime,
+                 );
+
+                 let engineState = StateEngineService.unsafeGetState();
+                 IMGUITool.containMultiline(
+                   IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+                   |> StringTool.removeNewLinesAndSpaces,
+                   [
+                     {|
+                       var imageFunc = apiJsObj.image;
+           |}
+                     |> StringTool.removeNewLinesAndSpaces,
+                   ],
+                 )
+                 |> expect == true;
+               })
+             );
+           }); */
+    );
 
     describe("test viewport", () =>
       test("test viewport data", () => {
@@ -252,11 +254,11 @@ let _ =
         let engineState = StateEngineService.unsafeGetState();
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
-        |>
-        expect == MainEditorCameraTool.getEditCameraBasicCameraView(
-                    StateEditorService.getState(),
-                    engineState,
-                  );
+        |> expect
+        == MainEditorCameraTool.getEditCameraBasicCameraView(
+             StateEditorService.getState(),
+             engineState,
+           );
       });
 
       describe("test aspect", () =>

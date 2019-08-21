@@ -27,4 +27,4 @@ type cubemapTextureImageDataIndex = int;
 type cubemapTextureImageDataMap =
   WonderCommonlib.ImmutableSparseMapService.t(cubemapTextureImageData);
 
-type cubemapTextureImageUint8ArrayData = Wonderjs.TextureimageUint8ArrayType.cubemapTextureImageUint8ArrayData;
+type cubemapTextureImageUint8ArrayData = Wonderjs.TextureImageUint8ArrayDataType.cubemapTextureImageUint8ArrayData;

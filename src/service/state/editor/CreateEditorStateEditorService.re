@@ -57,10 +57,6 @@ let create = () => {
     eventTarget: EditorEventTargetType.Other,
     inspectorEventTarget: InspectorEventTargetType.Other,
   },
-  imguiRecord: {
-    gameViewIMGUIFunc: None,
-    gameViewCustomData: None,
-  },
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },

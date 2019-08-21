@@ -1,16 +1,15 @@
-let unsafeGetIMGUIFuncStr = engineState =>
-  ManageIMGUIEngineService.getIMGUIFunc(engineState)
-  |> OptionService.unsafeGet
+let unsafeGetIMGUIFuncStr = (name, engineState) =>
+  ManageIMGUIEngineService.getExecFunc(name, engineState)
   |> Obj.magic
   |> Wonderjs.SerializeService.serializeFunction;
 
-let unsafeGetIMGUIFuncStrFromEditorState = editorState =>
-  IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState)
-  |> Obj.magic
-  |> Wonderjs.SerializeService.serializeFunction;
+/* let unsafeGetIMGUIFuncStrFromEditorState = editorState =>
+   IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState)
+   |> Obj.magic
+   |> Wonderjs.SerializeService.serializeFunction; */
 
-let getCustomData = engineState =>
-  ManageIMGUIEngineService.getCustomData(engineState);
+let getCustomData = (name, engineState) =>
+  ManageIMGUIEngineService.getCustomData(name, engineState);
 
 let containMultiline = (source: string, targetLineArray: list(string)) =>
   targetLineArray
