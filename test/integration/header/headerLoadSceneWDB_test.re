@@ -161,81 +161,83 @@ let _ =
         );
       });
 
-      describe("test imgui", () =>
-        describe("test engineState", () => {
-          describe("if scene wdb's imgui exist", () =>
-            testPromise(
-              "should save scene wdb's imgui func and customData to editorState",
-              () => {
-              let fileName = "Scene";
+      /* TODO test after add imgui func assets
 
-              LoadSceneWDBTool.loadSceneWDB(
-                ~fileName,
-                ~arrayBuffer=sceneWDBArrayBuffer^,
-                (),
-              )
-              |> then_(_ => {
-                   let editorState = StateEditorService.getState();
+         describe("test imgui", () =>
+           describe("test engineState", () => {
+             describe("if scene wdb's imgui exist", () =>
+               testPromise(
+                 "should save scene wdb's imgui func and customData to editorState",
+                 () => {
+                 let fileName = "Scene";
 
-                   (
-                     IMGUITool.unsafeGetIMGUIFuncStrFromEditorState(
-                       editorState,
-                     )
-                     |> StringTool.removeNewLinesAndSpaces,
-                     IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
-                       editorState,
-                     ),
-                   )
-                   |> expect
-                   == (
-                        {|function(param,apiJsObj,engineState){
-        var label = apiJsObj.label;
-        return label(/*tuple*/[100,30,300,200], "imgui", 0, engineState);
-                               }|}
-                        |> StringTool.removeNewLinesAndSpaces,
-                        Obj.magic(Js.Nullable.null),
-                      )
-                   |> resolve;
-                 });
-            })
-          );
+                 LoadSceneWDBTool.loadSceneWDB(
+                   ~fileName,
+                   ~arrayBuffer=sceneWDBArrayBuffer^,
+                   (),
+                 )
+                 |> then_(_ => {
+                      let editorState = StateEditorService.getState();
 
-          describe("else", () =>
-            testPromise(
-              "should remove scene wdb's imgui func and customData from editorState",
-              () => {
-              let fileName = "Scene";
-
-              LoadSceneWDBTool.loadSceneWDB(
-                ~fileName,
-                ~arrayBuffer=sceneWDBArrayBuffer^,
-                (),
-              )
-              |> then_(_ => {
-                   let fileName = "BoxTextured";
-
-                   LoadSceneWDBTool.loadSceneWDB(
-                     ~fileName,
-                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                     (),
-                   )
-                   |> then_(_ => {
-                        let editorState = StateEditorService.getState();
-
-                        (
-                          IMGUIEditorService.getGameViewIMGUIFunc(editorState),
-                          IMGUIEditorService.getGameViewIMGUICustomData(
-                            editorState,
-                          ),
+                      (
+                        IMGUITool.unsafeGetIMGUIFuncStrFromEditorState(
+                          editorState,
                         )
-                        |> expect == (None, None)
-                        |> resolve;
-                      });
-                 });
-            })
-          );
-        })
-      );
+                        |> StringTool.removeNewLinesAndSpaces,
+                        IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
+                          editorState,
+                        ),
+                      )
+                      |> expect
+                      == (
+                           {|function(param,apiJsObj,engineState){
+           var label = apiJsObj.label;
+           return label(/*tuple*/[100,30,300,200], "imgui", 0, engineState);
+                                  }|}
+                           |> StringTool.removeNewLinesAndSpaces,
+                           Obj.magic(Js.Nullable.null),
+                         )
+                      |> resolve;
+                    });
+               })
+             );
+
+             describe("else", () =>
+               testPromise(
+                 "should remove scene wdb's imgui func and customData from editorState",
+                 () => {
+                 let fileName = "Scene";
+
+                 LoadSceneWDBTool.loadSceneWDB(
+                   ~fileName,
+                   ~arrayBuffer=sceneWDBArrayBuffer^,
+                   (),
+                 )
+                 |> then_(_ => {
+                      let fileName = "BoxTextured";
+
+                      LoadSceneWDBTool.loadSceneWDB(
+                        ~fileName,
+                        ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                        (),
+                      )
+                      |> then_(_ => {
+                           let editorState = StateEditorService.getState();
+
+                           (
+                             IMGUIEditorService.getGameViewIMGUIFunc(editorState),
+                             IMGUIEditorService.getGameViewIMGUICustomData(
+                               editorState,
+                             ),
+                           )
+                           |> expect == (None, None)
+                           |> resolve;
+                         });
+                    });
+               })
+             );
+           })
+         ); */
 
       describe("test bind fly event", () =>
         testPromise(

@@ -1,8 +1,12 @@
 open Wonderjs;
 
-let getIMGUIFunc = ManageIMGUIMainService.getIMGUIFunc;
+let getExecFunc = ManageIMGUIMainService.getExecFunc;
 
-let setIMGUIFunc = ManageIMGUIAPI.setIMGUIFunc;
+let addExecFuncData = ManageIMGUIAPI.addExecFuncData;
+
+let removeExecFuncData = ManageIMGUIAPI.removeExecFuncData;
+
+let clearExecFuncDataArr = ManageIMGUIAPI.clearExecFuncDataArr;
 
 let sendCustomTextureProgramUniformProjectionMatData = (canvasSize, state) =>
   ManageIMGUIAPI.sendCustomTextureProgramUniformProjectionMatData(

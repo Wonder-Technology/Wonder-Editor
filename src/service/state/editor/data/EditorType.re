@@ -10,8 +10,6 @@ open GameViewType;
 
 open EventType;
 
-open IMGUIType;
-
 open InspectorType;
 
 open ConsoleType;
@@ -38,7 +36,6 @@ type editorState = {
   sceneViewRecord,
   gameViewRecord,
   eventRecord,
-  imguiRecord,
   inspectorRecord,
   consoleRecord,
   transformRecord,

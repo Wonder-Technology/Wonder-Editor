@@ -265,12 +265,20 @@ let _generateWDBWithCameraType =
     (createCameraControllerFunc, bindEventFunc, addCameraControllerFunc) =>
   generateWDB((editorState, engineState) => {
     let engineState =
-      ManageIMGUIEngineService.setIMGUIFunc(
+      ManageIMGUIEngineService.addExecFuncData(
+        "e1",
         Obj.magic(Js.Nullable.null),
+        0,
         Obj.magic((. _, apiJsObj, engineState) => {
           let label = apiJsObj##label;
+          let color = [|1., 1., 1.|];
           let engineState =
-            label(. (100., 30., 300., 200.), "imgui", 0, engineState);
+            label(.
+              (100., 30., 300., 200.),
+              "imgui",
+              (color, 0),
+              engineState,
+            );
 
           engineState;
         }),
