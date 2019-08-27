@@ -1,8 +1,13 @@
-type state = {isShowLocalModal: bool};
+type state = {
+  isShowLocalModal: bool,
+  isShowHostPlatformModal: bool,
+};
 
 type action =
   | ShowLocalModal
-  | HideLocalModal;
+  | HideLocalModal
+  | ShowHostPlatformModal
+  | HideHostPlatformModal;
 
 module Method = {
   let buildPublishComponentSelectNav = (send, languageType) =>
@@ -19,6 +24,20 @@ module Method = {
           }
         </span>
       </div>
+      <div
+        className="content-section"
+        onClick={_e => send(ShowHostPlatformModal)}>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "publish-hostPlatform",
+                languageType,
+              ),
+            )
+          }
+        </span>
+      </div>
     </div>;
 };
 
@@ -27,8 +46,11 @@ let component = ReasonReact.reducerComponent("HeaderPublish");
 let reducer = (action, state) =>
   switch (action) {
   | ShowLocalModal => ReasonReact.Update({...state, isShowLocalModal: true})
-
   | HideLocalModal => ReasonReact.Update({...state, isShowLocalModal: false})
+  | ShowHostPlatformModal =>
+    ReasonReact.Update({...state, isShowHostPlatformModal: true})
+  | HideHostPlatformModal =>
+    ReasonReact.Update({...state, isShowHostPlatformModal: false})
   };
 
 let render =
@@ -60,6 +82,33 @@ let render =
     {
       isPublishNav ?
         Method.buildPublishComponentSelectNav(send, languageType) :
+        ReasonReact.null
+    }
+    {
+      state.isShowHostPlatformModal ?
+        <PublishHostPlatformModal
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "publish-hostPlatform",
+              languageType,
+            )
+          }
+          defaultUseWorker=false
+          defaultUseAssetBundle=false
+          closeFunc={() => send(HideHostPlatformModal)}
+          submitFunc={
+            (useWorker, (useAssetBundle, selectTreeForAssetBundle)) => {
+              HeaderPublishHostPlatformUtils.publishToHostPlatform(
+                useWorker,
+                useAssetBundle,
+                selectTreeForAssetBundle,
+                FetchUtils.fetch,
+              );
+
+              send(HideHostPlatformModal);
+            }
+          }
+        /> :
         ReasonReact.null
     }
     {
@@ -103,7 +152,10 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {isShowLocalModal: false},
+  initialState: () => {
+    isShowLocalModal: false,
+    isShowHostPlatformModal: false,
+  },
   reducer,
   render: self =>
     render(

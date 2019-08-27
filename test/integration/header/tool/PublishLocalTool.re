@@ -7,7 +7,7 @@ open Js.Promise;
 let getFetchPackageContentWithoutAssetCountWithDefault = () => 13;
 
 let exportScene = (editorState, engineState) =>
-  HeaderPublishLocalUtils.Publish._generateSceneWDB(editorState, engineState);
+  HeaderPublishLocalUtils.Publish.generateSceneWDB(editorState, engineState);
 
 let buildFakeFetch =
     (

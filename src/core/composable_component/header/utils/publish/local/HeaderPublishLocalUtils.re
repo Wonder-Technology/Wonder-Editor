@@ -238,7 +238,7 @@ module Publish = {
 
   open WonderBsMost;
 
-  let _generateAssetBundleData = selectTree =>
+  let generateAssetBundleData = selectTree =>
     IterateTreeSelectTreeService.fold(
       ~tree=selectTree,
       ~acc=WonderCommonlib.ArrayService.createEmpty(),
@@ -257,7 +257,7 @@ module Publish = {
               | type_ =>
                 WonderLog.Log.fatal(
                   WonderLog.Log.buildFatalMessage(
-                    ~title="_generateAssetBundleData",
+                    ~title="generateAssetBundleData",
                     ~description={j|unknown type_: $type_|j},
                     ~reason="",
                     ~solution={j||j},
@@ -276,17 +276,15 @@ module Publish = {
     useAssetBundle ?
       createZipStream
       |> Most.map(zip =>
-           _generateAssetBundleData(selectTreeForAssetBundle)
+           generateAssetBundleData(selectTreeForAssetBundle)
            |> WonderCommonlib.ArrayService.reduceOneParam(
                 (. zip, (relativePath, ab)) =>
-                  zip
-                  ->(
-                      Zip.write(
-                        ~options=Options.makeWriteOptions(~binary=true, ()),
-                        relativePath,
-                        `trustme(ab |> TypeArrayType.newBlobFromArrayBuffer),
-                      )
-                    ),
+                  Zip.write(
+                    zip,
+                    ~options=Options.makeWriteOptions(~binary=true, ()),
+                    relativePath,
+                    `trustme(ab |> TypeArrayType.newBlobFromArrayBuffer),
+                  ),
                 zip,
               )
          ) :
@@ -322,12 +320,14 @@ module Publish = {
          Most.fromPromise(LoadData.loadAndWriteJsData(fetchFunc, zip))
        );
 
-  let _generateSceneWDB = (editorState, engineState) =>
+  let generateSceneWDB = (editorState, engineState) =>
     HeaderExportSceneWDBUtils.generateSceneWDB(
       false,
       GenerateSceneGraphEngineService.generateSceneWDB,
       Js.Nullable.return(
-        Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(editorState),
+        Uint8ArrayAssetEditorService.buildBasicSourceTextureImageUint8ArrayMap(
+          editorState,
+        ),
       ),
       engineState,
     );
@@ -356,7 +356,7 @@ module Publish = {
       } :
       {
         let (engineState, sceneGraphArrayBuffer) =
-          _generateSceneWDB(editorState, engineState);
+          generateSceneWDB(editorState, engineState);
 
         engineState |> StateEngineService.setState;
 

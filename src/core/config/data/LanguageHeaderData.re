@@ -86,6 +86,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "publish-hostPlatform",
+    language: {
+      zh: {j|托管平台|j},
+      en: "HostPlatform",
+    },
+  },
+  {
     title: "header-setting",
     language: {
       zh: {j|设置|j},
