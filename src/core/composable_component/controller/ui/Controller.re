@@ -188,14 +188,18 @@ module Method = {
   let renderUserRepoComponent = send => {
     let editorState = StateEditorService.getState();
 
-    DebugSettingEditorService.getIsTestLocal(editorState)
-    |> WonderLog.Log.print ?
+    DebugSettingEditorService.getIsTestLocal(editorState) ?
       {
         let {id, name, description, filePath} =
           UserDataEditorService.getCurrentRepo(editorState);
         <>
           <div className="other-currentRepo">
-            <a href={ClientConfig.getHostPlatformPath()} target="view_window">
+            <a
+              href={
+                ClientConfig.getHostPlatformPath()
+                ++ {j|/targetProject?repoId=$id|j}
+              }
+              target="view_window">
               <img src="./public/img/userHome.png" />
               <span className="currentRepo-name">
                 {DomHelper.textEl({j|$name|j})}
