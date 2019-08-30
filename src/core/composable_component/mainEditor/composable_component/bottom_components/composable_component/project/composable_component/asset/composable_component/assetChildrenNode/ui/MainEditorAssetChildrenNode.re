@@ -57,7 +57,7 @@ module Method = {
   };
 
   let _buildImageDataObjectURLIfNoBase64 = editorState =>
-    TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+    TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
     |> Js.Array.map(textureNode =>
          TextureNodeAssetService.getNodeData(textureNode).imageDataIndex
        )
@@ -258,7 +258,8 @@ module Method = {
                  |> Result.SameDataResult.success,
              ~wdbNodeFunc=
                (nodeId, {imageDataIndex} as nodeData) => {
-                 let fileName = WDBNodeAssetService.getNodeName(nodeData);
+                 let fileName =
+                   WDBNodeAssetService.getNodeNameByData(nodeData);
 
                  let imgSrc =
                    ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
@@ -292,9 +293,109 @@ module Method = {
                    isSelected
                  />
                  |> Result.SameDataResult.success,
+             ~imguiExecFuncDataNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName =
+                   IMGUIExecFuncDataNodeAssetService.getNodeNameByData(
+                     nodeData,
+                   );
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/imguiExecFuncData.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~imguiSkinNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName =
+                   IMGUISkinNodeAssetService.getNodeNameByData(nodeData);
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/imguiSkin.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~imguiCustomControlNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName =
+                   IMGUICustomControlNodeAssetService.getNodeNameByData(
+                     nodeData,
+                   );
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/imguiCustomControl.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~textNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName =
+                   TextNodeAssetService.getNodeNameByData(nodeData);
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/text.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~jsonNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName =
+                   JsonNodeAssetService.getNodeNameByData(nodeData);
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/json.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
              ~folderNodeFunc=
                (nodeId, nodeData, children) => {
-                 let name = FolderNodeAssetService.getNodeName(nodeData);
+                 let name =
+                   FolderNodeAssetService.getNodeNameByData(nodeData);
 
                  <FolderBox
                    key

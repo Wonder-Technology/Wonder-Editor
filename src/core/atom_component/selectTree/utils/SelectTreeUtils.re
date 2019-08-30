@@ -54,7 +54,7 @@ let handleFoldFolderAssetNode =
   let newSelectTreeFolderNode =
     FolderNodeSelectTreeService.buildNode(
       ~nodeId=newNodeId,
-      ~name=FolderNodeAssetService.getNodeName(nodeData),
+      ~name=FolderNodeAssetService.getNodeNameByData(nodeData),
       ~isSelect=false,
       ~children=[||],
       (),
@@ -117,6 +117,13 @@ let buildSelectTreeForAssetBundle =
       ~folderNodeFunc=handleFoldFolderAssetNode,
       ~textureNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
       ~cubemapNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~imguiExecFuncDataNodeFunc=
+        (parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~imguiSkinNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~imguiCustomControlNodeFunc=
+        (parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~textNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+      ~jsonNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
       ~assetBundleNodeFunc=
         (
           parentFolderNode,

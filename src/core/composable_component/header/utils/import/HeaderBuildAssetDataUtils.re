@@ -501,6 +501,8 @@ let buildTextureData =
                 parentFolderNode,
                 TextureNodeAssetService.buildNode(
                   ~nodeId=assetNodeId,
+                  ~type_=NodeAssetType.BasicSource,
+                  ~textureContentIndex=None,
                   ~textureComponent=texture,
                   ~imageDataIndex=
                     imageDataIndexMap

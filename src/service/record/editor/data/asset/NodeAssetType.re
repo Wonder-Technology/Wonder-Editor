@@ -23,8 +23,21 @@ type wdbNodeData = {
   imageDataIndex: int,
 };
 
+type textureContentIndex = int;
+
+type imguiCustomImageTextureContent = {id: WonderImgui.IMGUIType.id};
+
+type imguiCustomImageTextureContentMap =
+  WonderCommonlib.ImmutableSparseMapService.t(imguiCustomImageTextureContent);
+
+type textureType =
+  | BasicSource
+  | IMGUICustomImage;
+
 type textureNodeData = {
-  textureComponent: int,
+  type_: textureType,
+  textureContentIndex: option(textureContentIndex),
+  textureComponent: Wonderjs.BasicSourceTextureType.basicSourceTexture,
   imageDataIndex: ImageDataType.basicSourceTextureImageDataIndex,
 };
 
@@ -66,7 +79,45 @@ type assetBundleNodeData = {
   assetBundle: Js.Typed_array.ArrayBuffer.t,
 };
 
+type imguiExecFuncDataNodeData = {
+  name: string,
+  execFuncData: Wonderjs.ExecIMGUIType.execFuncData,
+};
+
+type imguiSkinNodeData = {
+  name: string,
+  singleSkinData: WonderImgui.SkinType.singleSkinData,
+};
+
+type imguiCustomControlNodeData = {
+  name: string,
+  customControlFunc: Wonderjs.ExtendIMGUIType.customControlFunc,
+};
+
+type textType =
+  | Fnt;
+
+type textNodeData = {
+  name: string,
+  content: string,
+  type_: textType,
+};
+
+/* type jsonType =
+   | IMGUI; */
+
+/* TODO remove jsonNodeData */
+type jsonNodeData = {
+  name: string,
+  jsonStr: string,
+  /* type_: jsonType, */
+};
+
 type folderNodeData = {name: string};
+
+external convertTextureTypeToInt: textureType => int = "%identity";
+
+external convertIntToTextureType: int => textureType = "%identity";
 
 external convertAssetBundleTypeToInt: assetBundleType => int = "%identity";
 

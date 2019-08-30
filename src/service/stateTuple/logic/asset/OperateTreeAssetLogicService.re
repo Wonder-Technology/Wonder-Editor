@@ -164,45 +164,77 @@ let rec getUniqueNodeName = (name, parentFolderNode, engineState) =>
 
 let rec getUniqueScriptEventFunctionNodeName =
         (name, parentFolderNode, (editorState, engineState)) =>
-  isNodeChildHasTargetName(name, parentFolderNode, engineState) ?
+  isNodeChildHasTargetName(name, parentFolderNode, engineState)
+  || ScriptEventFunctionNodeAssetEditorService.isTreeScriptEventFunctionNodesHasTargetName(
+       name,
+       editorState,
+     ) ?
     getUniqueScriptEventFunctionNodeName(
       _buildUniqueName(name),
       parentFolderNode,
       (editorState, engineState),
     ) :
-    ScriptEventFunctionNodeAssetEditorService.isTreeScriptEventFunctionNodesHasTargetName(
-      name,
-      editorState,
-    ) ?
-      getUniqueScriptEventFunctionNodeName(
-        _buildUniqueName(name),
-        parentFolderNode,
-        (editorState, engineState),
-      ) :
-      name;
+    name;
 
 let rec getUniqueScriptAttributeNodeName =
         (name, parentFolderNode, (editorState, engineState)) =>
-  isNodeChildHasTargetName(name, parentFolderNode, engineState) ?
+  isNodeChildHasTargetName(name, parentFolderNode, engineState)
+  || ScriptAttributeNodeAssetEditorService.isTreeScriptAttributeNodesHasTargetName(
+       name,
+       editorState,
+     ) ?
     getUniqueScriptAttributeNodeName(
       _buildUniqueName(name),
       parentFolderNode,
       (editorState, engineState),
     ) :
-    ScriptAttributeNodeAssetEditorService.isTreeScriptAttributeNodesHasTargetName(
-      name,
-      editorState,
-    ) ?
-      getUniqueScriptAttributeNodeName(
-        _buildUniqueName(name),
-        parentFolderNode,
-        (editorState, engineState),
-      ) :
-      name;
+    name;
 
 let rec getUniqueScriptAttributeFieldName = (name, attribute) =>
   ScriptAttributeEngineService.hasScriptAttributeField(name, attribute) ?
     getUniqueScriptAttributeFieldName(_buildUniqueName(name), attribute) :
+    name;
+
+let rec getUniqueIMGUIExecFuncDataNodeName =
+        (name, parentFolderNode, (editorState, engineState)) =>
+  isNodeChildHasTargetName(name, parentFolderNode, engineState)
+  || IMGUIExecFuncDataNodeAssetEditorService.isTreeIMGUIExecFuncDataNodesHasTargetName(
+       name,
+       editorState,
+     ) ?
+    getUniqueIMGUIExecFuncDataNodeName(
+      _buildUniqueName(name),
+      parentFolderNode,
+      (editorState, engineState),
+    ) :
+    name;
+
+let rec getUniqueIMGUISkinNodeName =
+        (name, parentFolderNode, (editorState, engineState)) =>
+  isNodeChildHasTargetName(name, parentFolderNode, engineState)
+  || IMGUISkinNodeAssetEditorService.isTreeIMGUISkinNodesHasTargetName(
+       name,
+       editorState,
+     ) ?
+    getUniqueIMGUISkinNodeName(
+      _buildUniqueName(name),
+      parentFolderNode,
+      (editorState, engineState),
+    ) :
+    name;
+
+let rec getUniqueIMGUICustomControlNodeName =
+        (name, parentFolderNode, (editorState, engineState)) =>
+  isNodeChildHasTargetName(name, parentFolderNode, engineState)
+  || IMGUICustomControlNodeAssetEditorService.isTreeIMGUICustomControlNodesHasTargetName(
+       name,
+       editorState,
+     ) ?
+    getUniqueIMGUICustomControlNodeName(
+      _buildUniqueName(name),
+      parentFolderNode,
+      (editorState, engineState),
+    ) :
     name;
 
 let findNodeByName = (targetNodeName, (editorState, engineState)) => {

@@ -23,7 +23,7 @@ module Method = {
 
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let buildFolderComponent = (state, send, languageType, currentNodeId, _, _) =>
+  let buildFolderInspector = (state, send, languageType, currentNodeId, _, _) =>
     <div className="inspector-asset-folder">
       <h1>
         {
@@ -58,7 +58,7 @@ module Method = {
       </div>
     </div>;
 
-  let buildTextureComponent =
+  let buildTextureInspector =
       (
         (uiState, dispatchFunc),
         state,
@@ -68,6 +68,7 @@ module Method = {
     <TextureInspector
       uiState
       dispatchFunc
+      nodeId=currentNodeId
       name={state.inputValue}
       textureComponent
       renameFunc={
@@ -75,7 +76,7 @@ module Method = {
       }
     />;
 
-  let buildCubemapComponent =
+  let buildCubemapInspector =
       (
         (uiState, dispatchFunc),
         state,
@@ -92,7 +93,7 @@ module Method = {
       }
     />;
 
-  let buildMaterialComponent =
+  let buildMaterialInspector =
       (
         (uiState, dispatchFunc),
         state,
@@ -111,7 +112,7 @@ module Method = {
       }
     />;
 
-  let buildScriptEventFunctionComponent =
+  let buildScriptEventFunctionInspector =
       (
         (uiState, dispatchFunc),
         state,
@@ -129,7 +130,7 @@ module Method = {
       }
     />;
 
-  let buildScriptAttributeComponent =
+  let buildScriptAttributeInspector =
       (
         (uiState, dispatchFunc),
         state,
@@ -147,7 +148,7 @@ module Method = {
       }
     />;
 
-  let buildWDBComponent =
+  let buildWDBInspector =
       (
         (uiState, dispatchFunc),
         (state, send),
@@ -163,7 +164,7 @@ module Method = {
       dispatchFunc
     />;
 
-  let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
+  let buildAssetBundleInspector = ((state, send), currentNodeId, nodeData) =>
     <AssetBundleInspector
       name={state.inputValue}
       type_={AssetBundleNodeAssetService.getTypeStr(nodeData)}
@@ -171,7 +172,103 @@ module Method = {
       onBlurFunc={_e => send(Blur)}
     />;
 
-  let showAssetNodeComponent =
+  let buildIMGUIExecFuncDataInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) =>
+    <IMGUIExecFuncDataInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      zIndex={IMGUIExecFuncDataNodeAssetService.getZIndex(nodeData)}
+      execFunc={IMGUIExecFuncDataNodeAssetService.getExecFunc(nodeData)}
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
+  let buildIMGUICustomControlInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) =>
+    <IMGUICustomControlInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      customControlFunc={
+        IMGUICustomControlNodeAssetService.getCustomControlFunc(nodeData)
+      }
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
+  let buildIMGUISkinInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
+    let name = state.inputValue;
+
+    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
+      ExtendIMGUIEngineService.unsafeGetSkinData(name)
+      |> StateLogicService.getEngineStateToGetData;
+
+    <IMGUISkinInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      buttonSkinData
+      allCustomStyleData
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+  };
+
+  /* TODO use true text inspector! */
+  let buildTextInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
+    let nodeData = Obj.magic(nodeData);
+    let name = state.inputValue;
+
+    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
+      ExtendIMGUIEngineService.unsafeGetSkinData(name)
+      |> StateLogicService.getEngineStateToGetData;
+
+    <IMGUISkinInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      buttonSkinData
+      allCustomStyleData
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+  };
+
+  /* TODO remove this after remove json inspector */
+  let buildJsonInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
+    let nodeData = Obj.magic(nodeData);
+    let name = state.inputValue;
+
+    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
+      ExtendIMGUIEngineService.unsafeGetSkinData(name)
+      |> StateLogicService.getEngineStateToGetData;
+
+    <IMGUISkinInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      buttonSkinData
+      allCustomStyleData
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+  };
+
+  let showAssetNodeInspector =
       (
         reduxTuple,
         currentNode,
@@ -180,20 +277,28 @@ module Method = {
       ) =>
     NodeAssetService.handleNode(
       ~node=currentNode,
-      ~textureNodeFunc=buildTextureComponent(reduxTuple, state),
-      ~cubemapNodeFunc=buildCubemapComponent(reduxTuple, state),
-      ~materialNodeFunc=buildMaterialComponent(reduxTuple, state),
+      ~textureNodeFunc=buildTextureInspector(reduxTuple, state),
+      ~cubemapNodeFunc=buildCubemapInspector(reduxTuple, state),
+      ~materialNodeFunc=buildMaterialInspector(reduxTuple, state),
       ~scriptEventFunctionNodeFunc=
-        buildScriptEventFunctionComponent(reduxTuple, state),
+        buildScriptEventFunctionInspector(reduxTuple, state),
       ~scriptAttributeNodeFunc=
-        buildScriptAttributeComponent(reduxTuple, state),
-      ~wdbNodeFunc=buildWDBComponent(reduxTuple, (state, send)),
-      ~assetBundleNodeFunc=buildAssetBundleComponent((state, send)),
-      ~folderNodeFunc=buildFolderComponent(state, send, languageType),
+        buildScriptAttributeInspector(reduxTuple, state),
+      ~wdbNodeFunc=buildWDBInspector(reduxTuple, (state, send)),
+      ~assetBundleNodeFunc=buildAssetBundleInspector((state, send)),
+      ~imguiExecFuncDataNodeFunc=
+        buildIMGUIExecFuncDataInspector(reduxTuple, state),
+      ~imguiCustomControlNodeFunc=
+        buildIMGUICustomControlInspector(reduxTuple, state),
+      ~imguiSkinNodeFunc=buildIMGUISkinInspector(reduxTuple, state),
+      ~textNodeFunc=buildTextInspector(reduxTuple, state),
+      ~jsonNodeFunc=buildJsonInspector(reduxTuple, state),
+      ~folderNodeFunc=buildFolderInspector(state, send, languageType),
     );
 
   let initFolderName = (currentNodeId, currentNodeData, _) => {
-    let folderName = FolderNodeAssetService.getNodeName(currentNodeData);
+    let folderName =
+      FolderNodeAssetService.getNodeNameByData(currentNodeData);
 
     {inputValue: folderName, originalName: folderName};
   };
@@ -258,7 +363,40 @@ module Method = {
   };
 
   let initAssetBundleName = (_currentNodeId, currentNodeData) => {
-    let baseName = AssetBundleNodeAssetService.getNodeName(currentNodeData);
+    let baseName =
+      AssetBundleNodeAssetService.getNodeNameByData(currentNodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initIMGUIExecFuncDataName = (engineState, _, nodeData) => {
+    let baseName =
+      IMGUIExecFuncDataNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initIMGUISkinName = (engineState, _, nodeData) => {
+    let baseName = IMGUISkinNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initIMGUICustomControlName = (engineState, _, nodeData) => {
+    let baseName =
+      IMGUICustomControlNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initTextName = (engineState, _, nodeData) => {
+    let baseName = TextNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initJsonName = (engineState, _, nodeData) => {
+    let baseName = JsonNodeAssetService.getNodeNameByData(nodeData);
 
     {inputValue: baseName, originalName: baseName};
   };
@@ -297,7 +435,7 @@ let render = ((uiState, dispatchFunc), currentNode, self) => {
 
   <article key="AssetInspector" className="wonder-inspector-asset">
     {
-      Method.showAssetNodeComponent(
+      Method.showAssetNodeInspector(
         (uiState, dispatchFunc),
         currentNode,
         languageType,
@@ -325,6 +463,13 @@ let make =
         Method.initScriptAttributeNodeName(engineState),
       ~wdbNodeFunc=Method.initWDBName,
       ~assetBundleNodeFunc=Method.initAssetBundleName,
+      ~imguiExecFuncDataNodeFunc=
+        Method.initIMGUIExecFuncDataName(engineState),
+      ~imguiSkinNodeFunc=Method.initIMGUISkinName(engineState),
+      ~imguiCustomControlNodeFunc=
+        Method.initIMGUICustomControlName(engineState),
+      ~textNodeFunc=Method.initTextName(engineState),
+      ~jsonNodeFunc=Method.initJsonName(engineState),
       ~folderNodeFunc=Method.initFolderName,
     );
   },

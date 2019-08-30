@@ -1,5 +1,5 @@
 let getName = (nodeId, editorState) =>
-  AssetBundleNodeAssetService.getNodeName(
+  AssetBundleNodeAssetService.getNodeNameByData(
     OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
     |> AssetBundleNodeAssetService.getNodeData,
   );

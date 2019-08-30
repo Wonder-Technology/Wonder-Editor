@@ -6,13 +6,32 @@ let getNodeName =
     ({textureComponent}: NodeAssetType.textureNodeData, getTextureNameFunc) =>
   getTextureNameFunc(~texture=textureComponent);
 
-let buildNodeData = (~textureComponent, ~imageDataIndex): textureNodeData => {
+let buildNodeData =
+    (~type_, ~textureContentIndex, ~textureComponent, ~imageDataIndex)
+    : textureNodeData => {
+  type_,
+  textureContentIndex,
   textureComponent,
   imageDataIndex,
 };
 
-let buildNode = (~nodeId, ~textureComponent, ~imageDataIndex) =>
-  TextureNode(nodeId, buildNodeData(~textureComponent, ~imageDataIndex));
+let buildNode =
+    (
+      ~nodeId,
+      ~textureContentIndex,
+      ~type_,
+      ~textureComponent,
+      ~imageDataIndex,
+    ) =>
+  TextureNode(
+    nodeId,
+    buildNodeData(
+      ~type_,
+      ~textureContentIndex,
+      ~textureComponent,
+      ~imageDataIndex,
+    ),
+  );
 
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   TextureNode(nodeId, nodeData);
@@ -48,3 +67,23 @@ let getImageDataIndex = node => {
 
   imageDataIndex;
 };
+
+let getType = node => {
+  let {type_}: NodeAssetType.textureNodeData = getNodeData(node);
+
+  type_;
+};
+
+let getTextureContentIndex = node => {
+  let {textureContentIndex}: NodeAssetType.textureNodeData =
+    getNodeData(node);
+
+  textureContentIndex;
+};
+
+let unsafeGetTextureContentIndex = node =>
+  getTextureContentIndex(node) |> OptionService.unsafeGet;
+
+let isBasicSourceType = node => getType(node) === BasicSource;
+
+let isIMGUICustomImageType = node => getType(node) === IMGUICustomImage;

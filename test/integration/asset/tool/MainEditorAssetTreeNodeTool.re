@@ -128,6 +128,8 @@ let insertTextureNode =
          parentFolderNodeId,
          TextureNodeAssetService.buildNode(
            ~nodeId=textureNodeId,
+           ~type_=NodeAssetType.BasicSource,
+           ~textureContentIndex=None,
            ~textureComponent,
            ~imageDataIndex=textureComponent,
          ),

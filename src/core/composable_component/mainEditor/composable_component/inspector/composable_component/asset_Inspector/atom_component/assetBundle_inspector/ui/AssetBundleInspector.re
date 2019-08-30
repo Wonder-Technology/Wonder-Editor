@@ -3,7 +3,7 @@ module Method = {};
 let component = ReasonReact.statelessComponent("AssetBundleInspector");
 
 let render = (name, type_, (onChangeFunc, onBlurFunc), _self) =>
-  <article className="inspector-asset-wdb">
+  <article className="inspector-asset-assetBundle">
     <h1> {DomHelper.textEl("AssetBundle")} </h1>
     <hr />
     <div className="inspector-item">

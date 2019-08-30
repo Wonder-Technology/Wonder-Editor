@@ -265,7 +265,7 @@ let _generateWDBWithCameraType =
     (createCameraControllerFunc, bindEventFunc, addCameraControllerFunc) =>
   generateWDB((editorState, engineState) => {
     let engineState =
-      ManageIMGUIEngineService.addExecFuncData(
+      ExecIMGUIEngineService.addExecFuncData(
         "e1",
         Obj.magic(Js.Nullable.null),
         0,

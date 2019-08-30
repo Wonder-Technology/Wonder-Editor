@@ -47,7 +47,7 @@ let getDataByTextureComponent = (targetTextureComponent, editorState) =>
   )
   |> Js.Option.map((. node) => TextureNodeAssetService.getNodeData(node));
 
-let findAllTextureNodes = editorState =>
+let _findAllTextureNodes = editorState =>
   IterateTreeAssetEditorService.filter(
     ~acc=[||],
     ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
@@ -56,9 +56,25 @@ let findAllTextureNodes = editorState =>
     (),
   );
 
-let getTextureComponents = editorState =>
+let _findAllTextureNodesByType = (isTypeFunc, editorState) =>
+  _findAllTextureNodes(editorState)
+  |> Js.Array.filter(node => isTypeFunc(node));
+
+let findAllBasicSourceTypeTextureNodes = editorState =>
+  _findAllTextureNodesByType(
+    TextureNodeAssetService.isBasicSourceType,
+    editorState,
+  );
+
+let findAllIMGUICustomImageTypeTextureNodes = editorState =>
+  _findAllTextureNodesByType(
+    TextureNodeAssetService.isIMGUICustomImageType,
+    editorState,
+  );
+
+let getTextureComponentsOfBasicSourceTypeTextureNode = editorState =>
   editorState
-  |> findAllTextureNodes
+  |> findAllBasicSourceTypeTextureNodes
   |> Js.Array.map(node => {
        let {textureComponent}: NodeAssetType.textureNodeData =
          TextureNodeAssetService.getNodeData(node);

@@ -17,6 +17,7 @@ type assetRecord = {
   selectedFolderNodeIdInAssetTree: option(nodeId),
   basicSourceTextureImageDataMap,
   cubemapTextureImageDataMap,
+  imguiCustomImageTextureContentMap,
   geometryData,
   materialData,
 };

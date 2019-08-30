@@ -29,6 +29,6 @@ let isWDBNode = node =>
 
 let rename = (~name, ~nodeData): wdbNodeData => {...nodeData, name};
 
-let getNodeName = ({name}: wdbNodeData) => name;
+let getNodeNameByData = ({name}: wdbNodeData) => name;
 
 let getWDBGameObject = node => getNodeData(node).wdbGameObject;

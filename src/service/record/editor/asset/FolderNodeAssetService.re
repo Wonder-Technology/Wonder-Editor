@@ -43,7 +43,7 @@ let getChildrenNodes = folderNode =>
 
 let rename = (~name, ~nodeData): folderNodeData => {...nodeData, name};
 
-let getNodeName = ({name}: folderNodeData) => name;
+let getNodeNameByData = ({name}: folderNodeData) => name;
 
 let getIsShowChildren = folderNode =>
   switch (folderNode) {

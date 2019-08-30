@@ -38,6 +38,31 @@ let rec cata =
                                    ~nodeId,
                                    ~nodeData,
                                  ),
+          ~imguiExecFuncDataNodeFunc=(nodeId, nodeData) =>
+                                       IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData(
+                                         ~nodeId,
+                                         ~nodeData,
+                                       ),
+          ~imguiSkinNodeFunc=(nodeId, nodeData) =>
+                               IMGUISkinNodeAssetService.buildNodeByNodeData(
+                                 ~nodeId,
+                                 ~nodeData,
+                               ),
+          ~imguiCustomControlNodeFunc=(nodeId, nodeData) =>
+                                        IMGUICustomControlNodeAssetService.buildNodeByNodeData(
+                                          ~nodeId,
+                                          ~nodeData,
+                                        ),
+          ~textNodeFunc=(nodeId, nodeData) =>
+                          TextNodeAssetService.buildNodeByNodeData(
+                            ~nodeId,
+                            ~nodeData,
+                          ),
+          ~jsonNodeFunc=(nodeId, nodeData) =>
+                          JsonNodeAssetService.buildNodeByNodeData(
+                            ~nodeId,
+                            ~nodeData,
+                          ),
           ~folderNodeFunc=(nodeId, nodeData, children) =>
                             FolderNodeAssetService.buildNodeByNodeData(
                               ~nodeId,
@@ -56,6 +81,11 @@ let rec cata =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
     );
 
@@ -73,6 +103,14 @@ let rec cata =
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(nodeId, imguiExecFuncDataNodeData)
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(nodeId, imguiCustomControlNodeData)
+  | TextNode(nodeId, textNodeData) => textNodeFunc(nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) => jsonNodeFunc(nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(
       nodeId,
@@ -96,6 +134,11 @@ let rec fold =
           ~scriptAttributeNodeFunc=(acc, _, _) => acc,
           ~wdbNodeFunc=(acc, _, _) => acc,
           ~assetBundleNodeFunc=(acc, _, _) => acc,
+          ~imguiExecFuncDataNodeFunc=(acc, _, _) => acc,
+          ~imguiSkinNodeFunc=(acc, _, _) => acc,
+          ~imguiCustomControlNodeFunc=(acc, _, _) => acc,
+          ~textNodeFunc=(acc, _, _) => acc,
+          ~jsonNodeFunc=(acc, _, _) => acc,
           (),
         )
         : 'r => {
@@ -111,6 +154,11 @@ let rec fold =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
       (),
     );
@@ -129,6 +177,14 @@ let rec fold =
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(acc, nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(acc, nodeId, imguiExecFuncDataNodeData)
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(acc, nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(acc, nodeId, imguiCustomControlNodeData)
+  | TextNode(nodeId, textNodeData) => textNodeFunc(acc, nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) => jsonNodeFunc(acc, nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
 
@@ -149,6 +205,11 @@ let rec foldWithParentFolderNode =
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
           ~wdbNodeFunc=(_, acc, _, _) => acc,
           ~assetBundleNodeFunc=(_, acc, _, _) => acc,
+          ~imguiExecFuncDataNodeFunc=(_, acc, _, _) => acc,
+          ~imguiSkinNodeFunc=(_, acc, _, _) => acc,
+          ~imguiCustomControlNodeFunc=(_, acc, _, _) => acc,
+          ~textNodeFunc=(_, acc, _, _) => acc,
+          ~jsonNodeFunc=(_, acc, _, _) => acc,
           ~parentFolderNode=None,
           (),
         )
@@ -164,6 +225,11 @@ let rec foldWithParentFolderNode =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
       ~parentFolderNode,
       (),
@@ -194,6 +260,26 @@ let rec foldWithParentFolderNode =
     wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(parentFolderNode, acc, nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      imguiExecFuncDataNodeData,
+    )
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(parentFolderNode, acc, nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      imguiCustomControlNodeData,
+    )
+  | TextNode(nodeId, textNodeData) =>
+    textNodeFunc(parentFolderNode, acc, nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) =>
+    jsonNodeFunc(parentFolderNode, acc, nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum =
       folderNodeFunc(parentFolderNode, acc, nodeId, folderNodeData, children);
@@ -228,6 +314,11 @@ let rec foldWithParentFolderNodeWithoutRootNode =
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
           ~wdbNodeFunc=(_, acc, _, _) => acc,
           ~assetBundleNodeFunc=(_, acc, _, _) => acc,
+          ~imguiExecFuncDataNodeFunc=(_, acc, _, _) => acc,
+          ~imguiSkinNodeFunc=(_, acc, _, _) => acc,
+          ~imguiCustomControlNodeFunc=(_, acc, _, _) => acc,
+          ~textNodeFunc=(_, acc, _, _) => acc,
+          ~jsonNodeFunc=(_, acc, _, _) => acc,
           ~parentFolderNode=RootTreeAssetService.getRootNode(tree),
           (),
         )
@@ -243,6 +334,11 @@ let rec foldWithParentFolderNodeWithoutRootNode =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
       ~parentFolderNode,
       (),
@@ -273,9 +369,29 @@ let rec foldWithParentFolderNodeWithoutRootNode =
     wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(parentFolderNode, acc, nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      imguiExecFuncDataNodeData,
+    )
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(parentFolderNode, acc, nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      imguiCustomControlNodeData,
+    )
+  | TextNode(nodeId, textNodeData) =>
+    textNodeFunc(parentFolderNode, acc, nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) =>
+    jsonNodeFunc(parentFolderNode, acc, nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum =
-      FolderNodeAssetService.getNodeName(folderNodeData)
+      FolderNodeAssetService.getNodeNameByData(folderNodeData)
       === RootTreeAssetService.getAssetTreeRootName() ?
         acc :
         folderNodeFunc(
@@ -312,6 +428,11 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
           ~scriptAttributeNodeFunc,
           ~wdbNodeFunc,
           ~assetBundleNodeFunc,
+          ~imguiExecFuncDataNodeFunc,
+          ~imguiSkinNodeFunc,
+          ~imguiCustomControlNodeFunc,
+          ~textNodeFunc,
+          ~jsonNodeFunc,
           ~folderNodeFunc,
           ~handleBeforeFoldChildrenFunc,
           ~handleAfterFoldChildrenFunc,
@@ -330,6 +451,11 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
       ~handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc,
@@ -351,6 +477,14 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(acc, nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(acc, nodeId, imguiExecFuncDataNodeData)
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(acc, nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(acc, nodeId, imguiCustomControlNodeData)
+  | TextNode(nodeId, textNodeData) => textNodeFunc(acc, nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) => jsonNodeFunc(acc, nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
 
@@ -373,6 +507,11 @@ let filter =
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predAssetBundleNodeFunc=node => false,
+      ~predIMGUIExecFuncDataNodeFunc=node => false,
+      ~predIMGUISkinNodeFunc=node => false,
+      ~predIMGUICustomControlNodeFunc=node => false,
+      ~predTextNodeFunc=node => false,
+      ~predJsonNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -424,6 +563,42 @@ let filter =
       AssetBundleNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
       predAssetBundleNodeFunc,
     );
+  let _imguiExecFuncDataNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData(
+        ~nodeId,
+        ~nodeData,
+      ),
+      predIMGUIExecFuncDataNodeFunc,
+    );
+  let _imguiSkinNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      IMGUISkinNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predIMGUISkinNodeFunc,
+    );
+  let _imguiCustomControlNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      IMGUICustomControlNodeAssetService.buildNodeByNodeData(
+        ~nodeId,
+        ~nodeData,
+      ),
+      predIMGUICustomControlNodeFunc,
+    );
+  let _textNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      TextNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predTextNodeFunc,
+    );
+  let _jsonNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      JsonNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predJsonNodeFunc,
+    );
   let _folderNodeFunc = (acc, nodeId, nodeData, children) =>
     _nodeFunc(
       acc,
@@ -445,6 +620,11 @@ let filter =
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
     ~assetBundleNodeFunc=_assetBundleNodeFunc,
+    ~imguiExecFuncDataNodeFunc=_imguiExecFuncDataNodeFunc,
+    ~imguiSkinNodeFunc=_imguiSkinNodeFunc,
+    ~imguiCustomControlNodeFunc=_imguiCustomControlNodeFunc,
+    ~textNodeFunc=_textNodeFunc,
+    ~jsonNodeFunc=_jsonNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );
@@ -460,6 +640,11 @@ let find =
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predAssetBundleNodeFunc=node => false,
+      ~predIMGUIExecFuncDataNodeFunc=node => false,
+      ~predIMGUISkinNodeFunc=node => false,
+      ~predIMGUICustomControlNodeFunc=node => false,
+      ~predTextNodeFunc=node => false,
+      ~predJsonNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -476,6 +661,11 @@ let find =
       ~predScriptAttributeNodeFunc,
       ~predWDBNodeFunc,
       ~predAssetBundleNodeFunc,
+      ~predIMGUIExecFuncDataNodeFunc,
+      ~predIMGUISkinNodeFunc,
+      ~predIMGUICustomControlNodeFunc,
+      ~predTextNodeFunc,
+      ~predJsonNodeFunc,
       ~predFolderNodeFunc,
       (),
     )
@@ -494,6 +684,11 @@ let findOne =
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predAssetBundleNodeFunc=node => false,
+      ~predIMGUIExecFuncDataNodeFunc=node => false,
+      ~predIMGUISkinNodeFunc=node => false,
+      ~predIMGUICustomControlNodeFunc=node => false,
+      ~predTextNodeFunc=node => false,
+      ~predJsonNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -507,6 +702,11 @@ let findOne =
     ~predScriptAttributeNodeFunc,
     ~predWDBNodeFunc,
     ~predAssetBundleNodeFunc,
+    ~predIMGUIExecFuncDataNodeFunc,
+    ~predIMGUISkinNodeFunc,
+    ~predIMGUICustomControlNodeFunc,
+    ~predTextNodeFunc,
+    ~predJsonNodeFunc,
     ~predFolderNodeFunc,
     (),
   )
@@ -523,6 +723,11 @@ let rec map =
           ~scriptAttributeNodeFunc=(_, nodeData) => nodeData,
           ~wdbNodeFunc=(_, nodeData) => nodeData,
           ~assetBundleNodeFunc=(_, nodeData) => nodeData,
+          ~imguiExecFuncDataNodeFunc=(_, nodeData) => nodeData,
+          ~imguiSkinNodeFunc=(_, nodeData) => nodeData,
+          ~imguiCustomControlNodeFunc=(_, nodeData) => nodeData,
+          ~textNodeFunc=(_, nodeData) => nodeData,
+          ~jsonNodeFunc=(_, nodeData) => nodeData,
           (),
         )
         : 'r => {
@@ -535,6 +740,11 @@ let rec map =
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
       ~folderNodeFunc,
       (),
     );
@@ -560,6 +770,22 @@ let rec map =
     WDBNode(nodeId, wdbNodeFunc(nodeId, wdbNodeData))
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     AssetBundleNode(nodeId, assetBundleNodeFunc(nodeId, assetBundleNodeData))
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    IMGUIExecFuncDataNode(
+      nodeId,
+      imguiExecFuncDataNodeFunc(nodeId, imguiExecFuncDataNodeData),
+    )
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    IMGUISkinNode(nodeId, imguiSkinNodeFunc(nodeId, imguiSkinNodeData))
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    IMGUICustomControlNode(
+      nodeId,
+      imguiCustomControlNodeFunc(nodeId, imguiCustomControlNodeData),
+    )
+  | TextNode(nodeId, textNodeData) =>
+    TextNode(nodeId, textNodeFunc(nodeId, textNodeData))
+  | JsonNode(nodeId, jsonNodeData) =>
+    JsonNode(nodeId, jsonNodeFunc(nodeId, jsonNodeData))
   | FolderNode(nodeId, folderNodeData, children) =>
     let (changeStateType, nodeData) = folderNodeFunc(nodeId, folderNodeData);
 

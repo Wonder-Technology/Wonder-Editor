@@ -31,6 +31,11 @@ let findNodeById = (targetNodeId, tree) => {
     ~predScriptAttributeNodeFunc=predNodeFunc,
     ~predWDBNodeFunc=predNodeFunc,
     ~predAssetBundleNodeFunc=predNodeFunc,
+    ~predIMGUIExecFuncDataNodeFunc=predNodeFunc,
+    ~predIMGUISkinNodeFunc=predNodeFunc,
+    ~predIMGUICustomControlNodeFunc=predNodeFunc,
+    ~predTextNodeFunc=predNodeFunc,
+    ~predJsonNodeFunc=predNodeFunc,
     ~predFolderNodeFunc=predNodeFunc,
     (),
   );
@@ -147,6 +152,28 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
       nodeData,
       AssetBundleNodeAssetService.buildNodeByNodeData,
     );
+  let _imguiExecFuncDataNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData,
+    );
+  let _imguiSkinNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      IMGUISkinNodeAssetService.buildNodeByNodeData,
+    );
+  let _imguiCustomControlNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      IMGUICustomControlNodeAssetService.buildNodeByNodeData,
+    );
+  let _textNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(nodeId, nodeData, TextNodeAssetService.buildNodeByNodeData);
+  let _jsonNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(nodeId, nodeData, JsonNodeAssetService.buildNodeByNodeData);
   let _folderNodeFunc = (nodeId, nodeData, children) =>
     _nodeFunc(
       nodeId,
@@ -163,6 +190,11 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
     ~assetBundleNodeFunc=_assetBundleNodeFunc,
+    ~imguiExecFuncDataNodeFunc=_imguiExecFuncDataNodeFunc,
+    ~imguiSkinNodeFunc=_imguiSkinNodeFunc,
+    ~imguiCustomControlNodeFunc=_imguiCustomControlNodeFunc,
+    ~textNodeFunc=_textNodeFunc,
+    ~jsonNodeFunc=_jsonNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );
@@ -260,14 +292,12 @@ let _mergeTreeByFolderNodeName =
       };
     };
 
-  /* let (parentFolderNodeInNewTree, newTree) = */
   IterateTreeAssetService.fold(
     ~acc=(None, tree1),
     ~tree=onlyFolderNodeTree,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );
-  /* newTree; */
 };
 
 let _unsafeFindFolderNodeByName = (targetFolderNodeName, tree) =>
@@ -275,7 +305,7 @@ let _unsafeFindFolderNodeByName = (targetFolderNodeName, tree) =>
     ~tree,
     ~predFolderNodeFunc=
       node =>
-        FolderNodeAssetService.getNodeName(
+        FolderNodeAssetService.getNodeNameByData(
           FolderNodeAssetService.getNodeData(node),
         )
         === targetFolderNodeName,

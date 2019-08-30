@@ -32,13 +32,13 @@ let _setSceneViewIMGUIFunc = (editorState, engineState) => {
   /* let engineState =
      switch (IMGUIEditorService.getGameViewIMGUIFunc(editorState)) {
      | None =>
-       ManageIMGUIEngineService.setIMGUIFunc(
+       ExecIMGUIEngineService.setIMGUIFunc(
          engineStateCustomData |> Obj.magic,
          Obj.magic(engineStateImguiFunc),
          engineState,
        )
      | Some(gameViewIMGUIFunc) =>
-       ManageIMGUIEngineService.setIMGUIFunc(
+       ExecIMGUIEngineService.setIMGUIFunc(
          (
            (engineStateCustomData, engineStateImguiFunc),
            (
@@ -70,7 +70,7 @@ let _setSceneViewIMGUIFunc = (editorState, engineState) => {
      }; */
 
   let engineState =
-    ManageIMGUIEngineService.addExecFuncData(
+    ExecIMGUIEngineService.addExecFuncData(
       "e1",
       engineStateCustomData |> Obj.magic,
       0,

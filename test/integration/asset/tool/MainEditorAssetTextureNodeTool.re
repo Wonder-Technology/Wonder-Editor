@@ -50,12 +50,17 @@ let setTextureImageName = (nodeId, name, editorState) => {
      );
 };
 
-let hasTextureComponent = (texture, editorState) =>
-  TextureNodeAssetEditorService.getTextureComponents(editorState)
+let hasTextureComponentOfBasicSourceTypeNode = (texture, editorState) =>
+  TextureNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+    editorState,
+  )
   |> Js.Array.includes(texture);
 
-let findTextureNodeIdByTextureComponent = (texture, editorState) =>
-  TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+let findBasicSourceTypeTextureNodeIdByTextureComponent =
+    (texture, editorState) =>
+  TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+    editorState,
+  )
   |> Js.Array.find(node => {
        let {textureComponent}: NodeAssetType.textureNodeData =
          TextureNodeAssetService.getNodeData(node);

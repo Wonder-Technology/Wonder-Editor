@@ -9,7 +9,7 @@ let getRelatedSkyboxCubemapOptFromCubemapAssets =
          );
 
        switch (
-         CubemapNodeAssetEditorService.getTextureComponents(editorState)
+         CubemapNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(editorState)
          |> Js.Array.find(cubemapAssetTextureComponent =>
               RelateSceneSkyboxAndCubemapAssetUtils.isCubemapDataEqual(
                 skyboxCubemapDataFromSceneWDB,

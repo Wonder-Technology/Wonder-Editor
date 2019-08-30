@@ -267,7 +267,7 @@ let _ =
                  MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                    ~textureNodeId=
                      boxTexturedMeshDiffuseMap
-                     |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
+                     |> MainEditorAssetTextureNodeTool.findBasicSourceTypeTextureNodeIdByTextureComponent(
                           _,
                           editorState,
                         )

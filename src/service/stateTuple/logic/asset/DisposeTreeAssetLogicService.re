@@ -75,7 +75,7 @@ let _disposeWDBNodeEditorDataBeforeRemoveNode =
 };
 
 let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
-  NodeAssetService.handleNode(
+  NodeAssetService.handleNode2(
     ~node,
     ~textureNodeFunc=
       (_, nodeData) =>
@@ -202,7 +202,7 @@ let _removeScriptAttributeFromScriptComponents =
   ScriptEngineService.removeAttributeInAllScriptComponents(name, engineState);
 
 let _disposeNodeEngineData = (node, editorState, engineState) =>
-  NodeAssetService.handleNode(
+  NodeAssetService.handleNode2(
     ~node,
     ~textureNodeFunc=
       (_, nodeData) => _disposeTextureNodeEngineData(nodeData, engineState),
