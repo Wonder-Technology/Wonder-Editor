@@ -59,7 +59,6 @@ let getNodeId = (~node) =>
   | IMGUISkinNode(nodeId, _) => nodeId
   | IMGUICustomControlNode(nodeId, _) => nodeId
   | TextNode(nodeId, _) => nodeId
-  | JsonNode(nodeId, _) => nodeId
   | FolderNode(nodeId, _, _) => nodeId
   };
 
@@ -111,7 +110,6 @@ let handleNode =
       ~imguiSkinNodeFunc,
       ~imguiCustomControlNodeFunc,
       ~textNodeFunc,
-      ~jsonNodeFunc,
       ~folderNodeFunc,
     ) =>
   switch (node) {
@@ -135,7 +133,6 @@ let handleNode =
   | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
     imguiCustomControlNodeFunc(nodeId, imguiCustomControlNodeData)
   | TextNode(nodeId, textNodeData) => textNodeFunc(nodeId, textNodeData)
-  | JsonNode(nodeId, jsonNodeData) => jsonNodeFunc(nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(nodeId, folderNodeData, children)
   };

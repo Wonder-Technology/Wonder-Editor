@@ -123,7 +123,6 @@ let buildSelectTreeForAssetBundle =
       ~imguiCustomControlNodeFunc=
         (parentFolderNode, acc, nodeId, nodeData) => acc,
       ~textNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
-      ~jsonNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
       ~assetBundleNodeFunc=
         (
           parentFolderNode,

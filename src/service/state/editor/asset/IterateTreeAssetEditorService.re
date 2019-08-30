@@ -14,7 +14,6 @@ let filter =
       ~predIMGUISkinNodeFunc=node => false,
       ~predIMGUICustomControlNodeFunc=node => false,
       ~predTextNodeFunc=node => false,
-      ~predJsonNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -34,7 +33,6 @@ let filter =
     ~predIMGUISkinNodeFunc,
     ~predIMGUICustomControlNodeFunc,
     ~predTextNodeFunc,
-    ~predJsonNodeFunc,
     ~predFolderNodeFunc,
     (),
   );
