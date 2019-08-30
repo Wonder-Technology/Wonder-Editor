@@ -34,7 +34,7 @@ let findNodeById = (targetNodeId, tree) => {
     ~predIMGUIExecFuncDataNodeFunc=predNodeFunc,
     ~predIMGUISkinNodeFunc=predNodeFunc,
     ~predIMGUICustomControlNodeFunc=predNodeFunc,
-    ~predTextNodeFunc=predNodeFunc,
+    ~predFntNodeFunc=predNodeFunc,
     ~predFolderNodeFunc=predNodeFunc,
     (),
   );
@@ -169,8 +169,8 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
       nodeData,
       IMGUICustomControlNodeAssetService.buildNodeByNodeData,
     );
-  let _textNodeFunc = (nodeId, nodeData) =>
-    _nodeFunc(nodeId, nodeData, TextNodeAssetService.buildNodeByNodeData);
+  let _fntNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(nodeId, nodeData, FntNodeAssetService.buildNodeByNodeData);
   let _folderNodeFunc = (nodeId, nodeData, children) =>
     _nodeFunc(
       nodeId,
@@ -190,7 +190,7 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     ~imguiExecFuncDataNodeFunc=_imguiExecFuncDataNodeFunc,
     ~imguiSkinNodeFunc=_imguiSkinNodeFunc,
     ~imguiCustomControlNodeFunc=_imguiCustomControlNodeFunc,
-    ~textNodeFunc=_textNodeFunc,
+    ~fntNodeFunc=_fntNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );

@@ -94,13 +94,9 @@ type imguiCustomControlNodeData = {
   customControlFunc: Wonderjs.ExtendIMGUIType.customControlFunc,
 };
 
-type textType =
-  | Fnt;
-
-type textNodeData = {
+type fntNodeData = {
   name: string,
-  content: string,
-  type_: textType,
+  fntContent: string,
 };
 
 type folderNodeData = {name: string};

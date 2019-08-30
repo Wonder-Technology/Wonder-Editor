@@ -58,7 +58,7 @@ let getNodeId = (~node) =>
   | IMGUIExecFuncDataNode(nodeId, _) => nodeId
   | IMGUISkinNode(nodeId, _) => nodeId
   | IMGUICustomControlNode(nodeId, _) => nodeId
-  | TextNode(nodeId, _) => nodeId
+  | FntNode(nodeId, _) => nodeId
   | FolderNode(nodeId, _, _) => nodeId
   };
 
@@ -109,7 +109,7 @@ let handleNode =
       ~imguiExecFuncDataNodeFunc,
       ~imguiSkinNodeFunc,
       ~imguiCustomControlNodeFunc,
-      ~textNodeFunc,
+      ~fntNodeFunc,
       ~folderNodeFunc,
     ) =>
   switch (node) {
@@ -132,7 +132,7 @@ let handleNode =
     imguiSkinNodeFunc(nodeId, imguiSkinNodeData)
   | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
     imguiCustomControlNodeFunc(nodeId, imguiCustomControlNodeData)
-  | TextNode(nodeId, textNodeData) => textNodeFunc(nodeId, textNodeData)
+  | FntNode(nodeId, fntNodeData) => fntNodeFunc(nodeId, fntNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(nodeId, folderNodeData, children)
   };

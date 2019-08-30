@@ -26,7 +26,7 @@ let getNodeName =
     IMGUISkinNodeAssetService.getNodeNameByData(nodeData)
   | IMGUICustomControlNode(_, nodeData) =>
     IMGUICustomControlNodeAssetService.getNodeNameByData(nodeData)
-  | TextNode(_, nodeData) => TextNodeAssetService.getNodeNameByData(nodeData)
+  | FntNode(_, nodeData) => FntNodeAssetService.getNodeNameByData(nodeData)
   | FolderNode(_, nodeData, _) =>
     FolderNodeAssetService.getNodeNameByData(nodeData)
   };

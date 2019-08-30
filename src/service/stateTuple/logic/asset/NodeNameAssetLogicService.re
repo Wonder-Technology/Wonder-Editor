@@ -137,12 +137,12 @@ let updateNodeName = (node, name, engineState) =>
             IMGUICustomControlNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
-    ~textNodeFunc=
+    ~fntNodeFunc=
       (nodeId, nodeData) => (
         engineState,
-        TextNodeAssetService.buildNodeByNodeData(
+        FntNodeAssetService.buildNodeByNodeData(
           ~nodeId,
-          ~nodeData=TextNodeAssetService.rename(~name, ~nodeData),
+          ~nodeData=FntNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~folderNodeFunc=
