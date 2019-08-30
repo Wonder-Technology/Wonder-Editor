@@ -145,14 +145,6 @@ let updateNodeName = (node, name, engineState) =>
           ~nodeData=TextNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
-    ~jsonNodeFunc=
-      (nodeId, nodeData) => (
-        engineState,
-        JsonNodeAssetService.buildNodeByNodeData(
-          ~nodeId,
-          ~nodeData=JsonNodeAssetService.rename(~name, ~nodeData),
-        ),
-      ),
     ~folderNodeFunc=
       (nodeId, nodeData, children) => (
         engineState,

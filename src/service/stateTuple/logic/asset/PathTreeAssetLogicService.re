@@ -124,10 +124,6 @@ let _textNodeFunc =
     (targetNodeId, acc, nodeId, {name}: NodeAssetType.textNodeData) =>
   _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
 
-let _jsonNodeFunc =
-    (targetNodeId, acc, nodeId, {name}: NodeAssetType.jsonNodeData) =>
-  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
-
 let _folderNodeFunc = (targetNodeId, acc, nodeId, nodeData, children) =>
   _handleFolderNodeFunc(
     acc,
@@ -180,7 +176,6 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ~imguiSkinNodeFunc=_imguiSkinNodeFunc(targetNodeId),
       ~imguiCustomControlNodeFunc=_imguiCustomControlNodeFunc(targetNodeId),
       ~textNodeFunc=_textNodeFunc(targetNodeId),
-      ~jsonNodeFunc=_jsonNodeFunc(targetNodeId),
       ~folderNodeFunc=_folderNodeFunc(targetNodeId),
       ~handleBeforeFoldChildrenFunc=_handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc=_handleAfterFoldChildrenFunc,

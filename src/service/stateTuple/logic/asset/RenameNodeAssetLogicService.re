@@ -472,41 +472,6 @@ let _textNodeFunc =
   (result, newTree, engineState);
 };
 
-let _jsonNodeFunc =
-    (
-      (targetNodeId, name),
-      parentFolderNode,
-      (result, tree, engineState),
-      nodeId,
-      nodeData,
-    ) => {
-  let (result, newTree, engineState) =
-    result
-    |> Result.RelationResult.isSuccess
-    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-      {
-        let (result, newTree) =
-          switch (_checkParentNode(parentFolderNode, name, engineState)) {
-          | Success () as result => (
-              result,
-              OperateTreeAssetService.updateNode(
-                nodeId,
-                JsonNodeAssetService.rename(~name, ~nodeData),
-                JsonNodeAssetService.buildNodeByNodeData,
-                tree,
-              ),
-            )
-
-          | Fail(msg) as result => (result, tree)
-          };
-
-        (result, newTree, engineState);
-      } :
-      (result, tree, engineState);
-
-  (result, newTree, engineState);
-};
-
 let _folderNodeFunc =
     (
       (targetNodeId, name),
@@ -563,7 +528,6 @@ let renameNode =
       ~imguiCustomControlNodeFunc=
         _imguiCustomControlNodeFunc((targetNodeId, name)),
       ~textNodeFunc=_textNodeFunc((targetNodeId, name)),
-      ~jsonNodeFunc=_jsonNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
       ~parentFolderNode=None,
       ~tree,

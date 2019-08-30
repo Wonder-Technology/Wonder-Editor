@@ -373,25 +373,6 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
-             ~jsonNodeFunc=
-               (nodeId, nodeData) => {
-                 let fileName =
-                   JsonNodeAssetService.getNodeNameByData(nodeData);
-
-                 <FileBox
-                   key
-                   uiState
-                   dispatchFunc
-                   dragImg
-                   effectAllowd="move"
-                   imgSrc="./public/img/json.png"
-                   nodeId
-                   fileName
-                   widget
-                   isSelected
-                 />
-                 |> Result.SameDataResult.success;
-               },
              ~folderNodeFunc=
                (nodeId, nodeData, children) => {
                  let name =

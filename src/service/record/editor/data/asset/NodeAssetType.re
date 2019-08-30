@@ -103,16 +103,6 @@ type textNodeData = {
   type_: textType,
 };
 
-/* type jsonType =
-   | IMGUI; */
-
-/* TODO remove jsonNodeData */
-type jsonNodeData = {
-  name: string,
-  jsonStr: string,
-  /* type_: jsonType, */
-};
-
 type folderNodeData = {name: string};
 
 external convertTextureTypeToInt: textureType => int = "%identity";

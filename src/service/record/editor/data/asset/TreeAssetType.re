@@ -12,7 +12,6 @@ type tree =
   | IMGUISkinNode(nodeId, imguiSkinNodeData)
   | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData)
   | TextNode(nodeId, textNodeData)
-  | JsonNode(nodeId, jsonNodeData)
   | FolderNode(
       nodeId,
       folderNodeData,

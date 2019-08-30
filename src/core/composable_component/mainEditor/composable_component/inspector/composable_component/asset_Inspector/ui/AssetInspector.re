@@ -245,29 +245,6 @@ module Method = {
     />;
   };
 
-  /* TODO remove this after remove json inspector */
-  let buildJsonInspector =
-      ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
-    let nodeData = Obj.magic(nodeData);
-    let name = state.inputValue;
-
-    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
-      ExtendIMGUIEngineService.unsafeGetSkinData(name)
-      |> StateLogicService.getEngineStateToGetData;
-
-    <IMGUISkinInspector
-      uiState
-      dispatchFunc
-      currentNodeId
-      name
-      buttonSkinData
-      allCustomStyleData
-      renameFunc={
-        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
-      }
-    />;
-  };
-
   let showAssetNodeInspector =
       (
         reduxTuple,
@@ -292,7 +269,6 @@ module Method = {
         buildIMGUICustomControlInspector(reduxTuple, state),
       ~imguiSkinNodeFunc=buildIMGUISkinInspector(reduxTuple, state),
       ~textNodeFunc=buildTextInspector(reduxTuple, state),
-      ~jsonNodeFunc=buildJsonInspector(reduxTuple, state),
       ~folderNodeFunc=buildFolderInspector(state, send, languageType),
     );
 
@@ -394,12 +370,6 @@ module Method = {
 
     {inputValue: baseName, originalName: baseName};
   };
-
-  let initJsonName = (engineState, _, nodeData) => {
-    let baseName = JsonNodeAssetService.getNodeNameByData(nodeData);
-
-    {inputValue: baseName, originalName: baseName};
-  };
 };
 
 let component = ReasonReact.reducerComponent("AssetInspector");
@@ -469,7 +439,6 @@ let make =
       ~imguiCustomControlNodeFunc=
         Method.initIMGUICustomControlName(engineState),
       ~textNodeFunc=Method.initTextName(engineState),
-      ~jsonNodeFunc=Method.initJsonName(engineState),
       ~folderNodeFunc=Method.initFolderName,
     );
   },
