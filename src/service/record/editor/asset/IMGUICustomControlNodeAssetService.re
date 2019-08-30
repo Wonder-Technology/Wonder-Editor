@@ -30,11 +30,6 @@ let isNode = node =>
   | _ => false
   };
 
-let rename = (~name, ~nodeData): imguiCustomControlNodeData => {
-  ...nodeData,
-  name,
-};
-
 let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = ({name}: NodeAssetType.imguiCustomControlNodeData) => name;

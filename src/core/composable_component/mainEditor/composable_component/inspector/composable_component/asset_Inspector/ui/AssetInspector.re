@@ -222,28 +222,16 @@ module Method = {
     />;
   };
 
-  /* TODO use true text inspector! */
-  let buildTextInspector =
-      ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
-    let nodeData = Obj.magic(nodeData);
-    let name = state.inputValue;
-
-    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
-      ExtendIMGUIEngineService.unsafeGetSkinData(name)
-      |> StateLogicService.getEngineStateToGetData;
-
-    <IMGUISkinInspector
-      uiState
-      dispatchFunc
+  let buildFntInspector =
+      ((uiState, dispatchFunc), state, currentNodeId, nodeData) =>
+    <FntInspector
       currentNodeId
-      name
-      buttonSkinData
-      allCustomStyleData
+      name={state.inputValue}
+      fntContent={nodeData |> FntNodeAssetService.getFntContent}
       renameFunc={
         renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
       }
     />;
-  };
 
   let showAssetNodeInspector =
       (
@@ -268,7 +256,7 @@ module Method = {
       ~imguiCustomControlNodeFunc=
         buildIMGUICustomControlInspector(reduxTuple, state),
       ~imguiSkinNodeFunc=buildIMGUISkinInspector(reduxTuple, state),
-      ~fntNodeFunc=buildTextInspector(reduxTuple, state),
+      ~fntNodeFunc=buildFntInspector(reduxTuple, state),
       ~folderNodeFunc=buildFolderInspector(state, send, languageType),
     );
 

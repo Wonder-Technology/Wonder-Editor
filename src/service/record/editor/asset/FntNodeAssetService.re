@@ -31,6 +31,8 @@ let isNode = node =>
   | _ => false
   };
 
-let rename = (~name, ~nodeData): fntNodeData => {...nodeData, name};
+let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = ({name}: fntNodeData) => name;
+
+let getFntContent = ({fntContent}: fntNodeData) => fntContent;

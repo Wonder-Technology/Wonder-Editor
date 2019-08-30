@@ -117,7 +117,7 @@ let updateNodeName = (node, name, engineState) =>
         IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData(
           ~nodeId,
           ~nodeData=
-            IMGUIExecFuncDataNodeAssetService.rename(~name, ~nodeData),
+            IMGUIExecFuncDataNodeNameAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~imguiSkinNodeFunc=
@@ -125,7 +125,7 @@ let updateNodeName = (node, name, engineState) =>
         engineState,
         IMGUISkinNodeAssetService.buildNodeByNodeData(
           ~nodeId,
-          ~nodeData=IMGUISkinNodeAssetService.rename(~name, ~nodeData),
+          ~nodeData=IMGUISkinNodeNameAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~imguiCustomControlNodeFunc=
@@ -134,7 +134,7 @@ let updateNodeName = (node, name, engineState) =>
         IMGUICustomControlNodeAssetService.buildNodeByNodeData(
           ~nodeId,
           ~nodeData=
-            IMGUICustomControlNodeAssetService.rename(~name, ~nodeData),
+            IMGUICustomControlNodeNameAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~fntNodeFunc=
@@ -142,7 +142,7 @@ let updateNodeName = (node, name, engineState) =>
         engineState,
         FntNodeAssetService.buildNodeByNodeData(
           ~nodeId,
-          ~nodeData=FntNodeAssetService.rename(~name, ~nodeData),
+          ~nodeData=FntNodeNameAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~folderNodeFunc=

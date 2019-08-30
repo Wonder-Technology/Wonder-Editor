@@ -167,7 +167,7 @@ module Method = {
     </div>;
 
   let _renderDependencyRelationInput = ((state, send)) =>
-    <UserInputJs
+    <TextAreaInput
       label="relation"
       defaultInputValue={state.dependencyRelationInputValue}
       changeInputValueFunc={e => send(_changeDependencyRelation(e))}
