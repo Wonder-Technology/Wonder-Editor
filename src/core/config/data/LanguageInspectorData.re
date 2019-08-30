@@ -512,4 +512,39 @@ let inspector_language_array = [|
       en: "Add Component",
     },
   },
+  {
+    title: "imguiExecFuncData-name-describe",
+    language: {
+      zh: {j|IMGUI执行函数数据的名字|j},
+      en: "imgui exec func data's name",
+    },
+  },
+  {
+    title: "imguiExecFuncData-zIndex",
+    language: {
+      zh: {j|执行顺序|j},
+      en: "exec order",
+    },
+  },
+  {
+    title: "imguiCustomControl-name-describe",
+    language: {
+      zh: {j|IMGUI自定义控件的名字|j},
+      en: "imgui custom control's name",
+    },
+  },
+  {
+    title: "imguiSkin-name-describe",
+    language: {
+      zh: {j|IMGUI皮肤的名字|j},
+      en: "imgui skin's name",
+    },
+  },
+  {
+    title: "fnt-name-describe",
+    language: {
+      zh: {j|fnt的名字|j},
+      en: "fnt's name",
+    },
+  },
 |];
