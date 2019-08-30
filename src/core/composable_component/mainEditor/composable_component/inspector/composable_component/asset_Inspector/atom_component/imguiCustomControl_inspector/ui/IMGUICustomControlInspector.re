@@ -85,7 +85,7 @@ let render =
   <article
     key="IMGUICustomControlInspector"
     className="wonder-imguiCustomControl-inspector">
-    <h1> {DomHelper.textEl("IMGUI Exec Func Data")} </h1>
+    <h1> {DomHelper.textEl("IMGUI Custom Control")} </h1>
     <hr />
     <StringInput
       label="Name"

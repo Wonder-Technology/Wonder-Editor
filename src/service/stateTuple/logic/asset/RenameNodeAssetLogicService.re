@@ -444,33 +444,35 @@ let _fntNodeFunc =
       (result, tree, engineState),
       nodeId,
       nodeData,
-    ) => {
-  let (result, newTree, engineState) =
-    result
-    |> Result.RelationResult.isSuccess
-    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-      {
-        let (result, newTree) =
-          switch (_checkParentNode(parentFolderNode, name, engineState)) {
-          | Success () as result => (
-              result,
-              OperateTreeAssetService.updateNode(
-                nodeId,
-                FntNodeAssetService.rename(~name, ~nodeData),
-                FntNodeAssetService.buildNodeByNodeData,
-                tree,
-              ),
-            )
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, newTree) =
+        switch (
+          _hasTargetName(
+            (name, engineState),
+            (parentFolderNode, tree),
+            "asset-rename-imguiSkin",
+            FntNodeNameAssetService.isTreeFntNodesHasTargetName,
+          )
+        ) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              FntNodeNameAssetService.rename(~name, ~nodeData),
+              FntNodeAssetService.buildNodeByNodeData,
+              tree,
+            ),
+          )
+        | Fail(msg) as result => (result, tree)
+        };
 
-          | Fail(msg) as result => (result, tree)
-          };
-
-        (result, newTree, engineState);
-      } :
-      (result, tree, engineState);
-
-  (result, newTree, engineState);
-};
+      (result, newTree, engineState);
+    } :
+    (result, tree, engineState);
 
 let _folderNodeFunc =
     (

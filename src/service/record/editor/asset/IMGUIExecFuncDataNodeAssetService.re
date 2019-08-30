@@ -40,11 +40,6 @@ let isNode = node =>
   | _ => false
   };
 
-let rename = (~name, ~nodeData): imguiExecFuncDataNodeData => {
-  ...nodeData,
-  name,
-};
-
 let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = ({name}: NodeAssetType.imguiExecFuncDataNodeData) => name;

@@ -1,12 +1,12 @@
 type buttonSkinData = WonderImgui.SkinType.buttonSkinData;
 
-type userInputValue = string;
+type textAreaInputValue = string;
 
 type allCustomStyleData = WonderImgui.SkinType.allCustomStyleData;
 
 type state = {
   buttonSkinData,
-  allCustomStyleDataStr: userInputValue,
+  allCustomStyleDataStr: textAreaInputValue,
   skinName: string,
   originSkinName: string,
 };
@@ -14,7 +14,7 @@ type state = {
 type action =
   | ChangeSkinName(string)
   | ChangeButtonSkin(buttonSkinData)
-  | ChangeAllCustomStyle(userInputValue)
+  | ChangeAllCustomStyle(textAreaInputValue)
   | Submit(string);
 
 module Method = {
@@ -141,7 +141,7 @@ let render =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="IMGUISkinInspector" className="wonder-imguiSkin-inspector">
-    <h1> {DomHelper.textEl("IMGUI Exec Func Data")} </h1>
+    <h1> {DomHelper.textEl("IMGUI Skin")} </h1>
     <hr />
     <StringInput
       label="Name"
@@ -167,7 +167,7 @@ let render =
       buttonSkinData={state.buttonSkinData}
       submitFunc={Method.submitButtonSkin(send)}
     />
-    <UserInputJs
+    <TextAreaInput
       label="AllCustomStyleData"
       defaultInputValue={Method.buildDefaultAllCustomStyleDataInputValue()}
       changeInputValueFunc={Method.submitAllCustomStyle(send)}

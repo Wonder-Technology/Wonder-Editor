@@ -5,10 +5,10 @@ module Method = {
     );
 };
 
-let component = ReasonReact.statelessComponent("UserInputJs");
+let component = ReasonReact.statelessComponent("TextAreaInput");
 
 let render = (label, defaultInputValue, changeInputValueFunc) =>
-  <article className="wonder-userInputJs">
+  <article className="wonder-textAreaInput">
     <div className="content-field content-textarea">
       <div className="field-title"> {DomHelper.textEl(label)} </div>
       <div className="field-content">

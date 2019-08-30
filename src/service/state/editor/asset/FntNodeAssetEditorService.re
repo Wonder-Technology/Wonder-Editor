@@ -1,3 +1,11 @@
+let setNodeData = (nodeId, nodeData, editorState) =>
+  NodeAssetEditorService.setNodeData(
+    nodeId,
+    nodeData,
+    FntNodeAssetService.buildNodeByNodeData,
+    editorState,
+  );
+
 let addFntNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(
     targetTreeNode,
@@ -5,7 +13,7 @@ let addFntNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
     editorState,
   );
 
-let findAllTexts = editorState =>
+let findAllFnts = editorState =>
   IterateTreeAssetEditorService.filter(
     ~acc=[||],
     ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
