@@ -354,10 +354,10 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
-             ~textNodeFunc=
+             ~fntNodeFunc=
                (nodeId, nodeData) => {
                  let fileName =
-                   TextNodeAssetService.getNodeNameByData(nodeData);
+                   FntNodeAssetService.getNodeNameByData(nodeData);
 
                  <FileBox
                    key

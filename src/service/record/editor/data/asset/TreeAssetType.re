@@ -11,7 +11,7 @@ type tree =
   | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData)
   | IMGUISkinNode(nodeId, imguiSkinNodeData)
   | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData)
-  | TextNode(nodeId, textNodeData)
+  | FntNode(nodeId, fntNodeData)
   | FolderNode(
       nodeId,
       folderNodeData,

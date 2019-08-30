@@ -1,4 +1,4 @@
-let addTextNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
+let addFntNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(
     targetTreeNode,
     newNode,
@@ -10,6 +10,6 @@ let findAllTexts = editorState =>
     ~acc=[||],
     ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
     ~editorState,
-    ~predTextNodeFunc=node => true,
+    ~predFntNodeFunc=node => true,
     (),
   );

@@ -17,14 +17,13 @@ module CustomEventHandler = {
           |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
         let editorState =
-          TextNodeAssetEditorService.addTextNodeToAssetTree(
+          FntNodeAssetEditorService.addFntNodeToAssetTree(
             targetTreeNode,
-            TextNodeAssetService.buildNode(
+            FntNodeAssetService.buildNode(
               ~nodeId,
-              ~content="",
-              ~type_=NodeAssetType.Fnt,
+              ~fntContent="",
               ~name=
-                TextNodeAssetService.getNewName()
+                FntNodeAssetService.getNewName()
                 ->(
                     OperateTreeAssetLogicService.getUniqueNodeName(
                       targetTreeNode,

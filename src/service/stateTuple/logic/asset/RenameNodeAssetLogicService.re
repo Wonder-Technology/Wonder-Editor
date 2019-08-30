@@ -437,7 +437,7 @@ let _imguiCustomControlNodeFunc =
     } :
     (result, tree, engineState);
 
-let _textNodeFunc =
+let _fntNodeFunc =
     (
       (targetNodeId, name),
       parentFolderNode,
@@ -456,8 +456,8 @@ let _textNodeFunc =
               result,
               OperateTreeAssetService.updateNode(
                 nodeId,
-                TextNodeAssetService.rename(~name, ~nodeData),
-                TextNodeAssetService.buildNodeByNodeData,
+                FntNodeAssetService.rename(~name, ~nodeData),
+                FntNodeAssetService.buildNodeByNodeData,
                 tree,
               ),
             )
@@ -527,7 +527,7 @@ let renameNode =
       ~imguiSkinNodeFunc=_imguiSkinNodeFunc((targetNodeId, name)),
       ~imguiCustomControlNodeFunc=
         _imguiCustomControlNodeFunc((targetNodeId, name)),
-      ~textNodeFunc=_textNodeFunc((targetNodeId, name)),
+      ~fntNodeFunc=_fntNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
       ~parentFolderNode=None,
       ~tree,

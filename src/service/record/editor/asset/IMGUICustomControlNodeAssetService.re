@@ -16,7 +16,7 @@ let getNodeData = node =>
   | _ =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
-        ~description={j|should be wdb node|j},
+        ~description={j|should be imgui custom control node|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

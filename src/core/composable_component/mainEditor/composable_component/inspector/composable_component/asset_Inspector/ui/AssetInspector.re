@@ -268,7 +268,7 @@ module Method = {
       ~imguiCustomControlNodeFunc=
         buildIMGUICustomControlInspector(reduxTuple, state),
       ~imguiSkinNodeFunc=buildIMGUISkinInspector(reduxTuple, state),
-      ~textNodeFunc=buildTextInspector(reduxTuple, state),
+      ~fntNodeFunc=buildTextInspector(reduxTuple, state),
       ~folderNodeFunc=buildFolderInspector(state, send, languageType),
     );
 
@@ -366,7 +366,7 @@ module Method = {
   };
 
   let initTextName = (engineState, _, nodeData) => {
-    let baseName = TextNodeAssetService.getNodeNameByData(nodeData);
+    let baseName = FntNodeAssetService.getNodeNameByData(nodeData);
 
     {inputValue: baseName, originalName: baseName};
   };
@@ -438,7 +438,7 @@ let make =
       ~imguiSkinNodeFunc=Method.initIMGUISkinName(engineState),
       ~imguiCustomControlNodeFunc=
         Method.initIMGUICustomControlName(engineState),
-      ~textNodeFunc=Method.initTextName(engineState),
+      ~fntNodeFunc=Method.initTextName(engineState),
       ~folderNodeFunc=Method.initFolderName,
     );
   },
