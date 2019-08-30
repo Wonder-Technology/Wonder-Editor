@@ -4,7 +4,7 @@ let hasRootNode = tree =>
   tree
   |> FolderNodeSelectTreeService .isFolderNode;
   /* &&
-  FolderNodeAssetService.getNodeName(
+  FolderNodeAssetService.getNodeNameByData(
     FolderNodeAssetService.getNodeData(tree),
   )
    === getAssetTreeRootName(); */

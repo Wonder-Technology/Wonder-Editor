@@ -39,7 +39,7 @@ module Method = {
       "AssetBundles/",
       assetPath
       ++ "/"
-      ++ AssetBundleNodeAssetService.getNodeName(assetNodeData)
+      ++ AssetBundleNodeAssetService.getNodeNameByData(assetNodeData)
       ++ "."
       ++ (
         AssetBundleNodeAssetService.getTypeStr(assetNodeData)

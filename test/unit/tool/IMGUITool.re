@@ -1,5 +1,5 @@
 let unsafeGetIMGUIFuncStr = (name, engineState) =>
-  ManageIMGUIEngineService.getExecFunc(name, engineState)
+  ExecIMGUIEngineService.getExecFunc(name, engineState)
   |> Obj.magic
   |> Wonderjs.SerializeService.serializeFunction;
 
@@ -9,7 +9,7 @@ let unsafeGetIMGUIFuncStr = (name, engineState) =>
    |> Wonderjs.SerializeService.serializeFunction; */
 
 let getCustomData = (name, engineState) =>
-  ManageIMGUIEngineService.getCustomData(name, engineState);
+  ExecIMGUIEngineService.getCustomData(name, engineState);
 
 let containMultiline = (source: string, targetLineArray: list(string)) =>
   targetLineArray

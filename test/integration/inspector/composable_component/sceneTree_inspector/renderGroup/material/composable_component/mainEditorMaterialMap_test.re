@@ -195,6 +195,7 @@ let _ =
                 currentTextureComponent: Some(textureComponent),
               },
               (() => ()) |> Obj.magic,
+              TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes,
             ),
           )
           |> ReactTestTool.createSnapshotAndMatch;

@@ -326,6 +326,187 @@ let _assetBundleNodeFunc =
   (result, newTree, engineState);
 };
 
+let _imguiExecFuncDataNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, newTree) =
+        switch (
+          _hasTargetName(
+            (name, engineState),
+            (parentFolderNode, tree),
+            "asset-rename-imguiExecFuncData",
+            IMGUIExecFuncDataNodeNameAssetService.isTreeIMGUIExecFuncDataNodesHasTargetName,
+          )
+        ) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              IMGUIExecFuncDataNodeNameAssetService.rename(~name, ~nodeData),
+              IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData,
+              tree,
+            ),
+          )
+        | Fail(msg) as result => (result, tree)
+        };
+
+      (result, newTree, engineState);
+    } :
+    (result, tree, engineState);
+
+let _imguiSkinNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, newTree) =
+        switch (
+          _hasTargetName(
+            (name, engineState),
+            (parentFolderNode, tree),
+            "asset-rename-imguiSkin",
+            IMGUISkinNodeNameAssetService.isTreeIMGUISkinNodesHasTargetName,
+          )
+        ) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              IMGUISkinNodeNameAssetService.rename(~name, ~nodeData),
+              IMGUISkinNodeAssetService.buildNodeByNodeData,
+              tree,
+            ),
+          )
+        | Fail(msg) as result => (result, tree)
+        };
+
+      (result, newTree, engineState);
+    } :
+    (result, tree, engineState);
+
+let _imguiCustomControlNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, newTree) =
+        switch (
+          _hasTargetName(
+            (name, engineState),
+            (parentFolderNode, tree),
+            "asset-rename-imguiCustomControl",
+            IMGUICustomControlNodeNameAssetService.isTreeIMGUICustomControlNodesHasTargetName,
+          )
+        ) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              IMGUICustomControlNodeNameAssetService.rename(~name, ~nodeData),
+              IMGUICustomControlNodeAssetService.buildNodeByNodeData,
+              tree,
+            ),
+          )
+        | Fail(msg) as result => (result, tree)
+        };
+
+      (result, newTree, engineState);
+    } :
+    (result, tree, engineState);
+
+let _textNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          switch (_checkParentNode(parentFolderNode, name, engineState)) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                TextNodeAssetService.rename(~name, ~nodeData),
+                TextNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
+
+let _jsonNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          switch (_checkParentNode(parentFolderNode, name, engineState)) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                JsonNodeAssetService.rename(~name, ~nodeData),
+                JsonNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
+
 let _folderNodeFunc =
     (
       (targetNodeId, name),
@@ -376,6 +557,13 @@ let renameNode =
       ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc((targetNodeId, name)),
       ~wdbNodeFunc=_wdbNodeFunc((targetNodeId, name)),
       ~assetBundleNodeFunc=_assetBundleNodeFunc((targetNodeId, name)),
+      ~imguiExecFuncDataNodeFunc=
+        _imguiExecFuncDataNodeFunc((targetNodeId, name)),
+      ~imguiSkinNodeFunc=_imguiSkinNodeFunc((targetNodeId, name)),
+      ~imguiCustomControlNodeFunc=
+        _imguiCustomControlNodeFunc((targetNodeId, name)),
+      ~textNodeFunc=_textNodeFunc((targetNodeId, name)),
+      ~jsonNodeFunc=_jsonNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
       ~parentFolderNode=None,
       ~tree,

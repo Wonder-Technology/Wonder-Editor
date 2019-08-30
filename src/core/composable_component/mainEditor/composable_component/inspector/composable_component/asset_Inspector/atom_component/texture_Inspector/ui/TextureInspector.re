@@ -48,6 +48,7 @@ module Method = {
           )
       }
     />;
+
   let renderMagFilterSelect = (dispatchFunc, textureComponent, languageType) =>
     <Select
       label="Mag Filter"
@@ -97,11 +98,99 @@ module Method = {
           )
       }
     />;
+
+  let getTextureTypeOptions = (): array(SelectType.optionItem) => [|
+    {
+      key: NodeAssetType.BasicSource |> NodeAssetType.convertTextureTypeToInt,
+      value: "basic_source",
+    },
+    {
+      key:
+        NodeAssetType.IMGUICustomImage |> NodeAssetType.convertTextureTypeToInt,
+      value: "imgui_custom_image",
+    },
+  |];
+
+  let _getTextureNode = (nodeId, editorState) =>
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState);
+
+  let getCurrentTextureType = nodeId => {
+    let editorState = StateEditorService.getState();
+
+    _getTextureNode(nodeId, editorState) |> TextureNodeAssetService.getType;
+  };
+
+  /* TODO add to redo/undo */
+  let changeTextureType = (dispatchFunc, nodeId, value) => {
+    let editorState = StateEditorService.getState();
+
+    let editorState =
+      TextureNodeAssetEditorService.setNodeData(
+        nodeId,
+        {
+          ...
+            TextureNodeAssetEditorService.unsafeGetNodeData(
+              nodeId,
+              editorState,
+            ),
+          type_: value |> NodeAssetType.convertIntToTextureType,
+        },
+        editorState,
+      );
+
+    editorState |> StateEditorService.setState |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
+  };
+
+  let renderTextureContent = (nodeId, languageType) => {
+    let editorState = StateEditorService.getState();
+
+    let node = _getTextureNode(nodeId, editorState);
+
+    <div className="content-imgui-custom-image">
+      {
+        switch (node |> TextureNodeAssetService.getType) {
+        | NodeAssetType.BasicSource => <> </>
+        | NodeAssetType.IMGUICustomImage =>
+          let textureContentIndex =
+            TextureNodeAssetService.unsafeGetTextureContentIndex(node);
+
+          <StringInput
+            label="Id"
+            title={
+              LanguageUtils.getInspectorLanguageDataByType(
+                "texture-content-imguiCustomImage-id-describe",
+                languageType,
+              )
+            }
+            defaultValue={
+              IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
+                textureContentIndex,
+                editorState,
+              )
+            }
+            onBlur=(
+              value =>
+                IMGUICustomImageTextureContentMapAssetEditorService.setId(
+                  textureContentIndex,
+                  value,
+                )
+                |> StateLogicService.getAndSetEditorState
+            )
+            canBeNull=false
+          />;
+        }
+      }
+    </div>;
+  };
 };
 
 let component = ReasonReact.statelessComponent("TextureInspector");
 
-let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) => {
+let render =
+    ((dispatchFunc, renameFunc), (nodeId, name, textureComponent), _self) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
@@ -120,6 +209,24 @@ let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) => {
       onBlur=renameFunc
       canBeNull=false
     />
+    <Select
+      label="Texture Type"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-type-describe",
+          languageType,
+        )
+      }
+      options={Method.getTextureTypeOptions()}
+      selectedKey={
+        Method.getCurrentTextureType(nodeId)
+        |> NodeAssetType.convertTextureTypeToInt
+      }
+      onChange={
+        value => Method.changeTextureType(dispatchFunc, nodeId, value)
+      }
+    />
+    {Method.renderTextureContent(nodeId, languageType)}
     {Method.renderWrapSSelect(dispatchFunc, textureComponent, languageType)}
     {Method.renderWrapTSelect(dispatchFunc, textureComponent, languageType)}
     {
@@ -144,11 +251,16 @@ let make =
       ~uiState,
       ~dispatchFunc,
       ~name,
+      ~nodeId,
       ~textureComponent,
       ~renameFunc,
       _children,
     ) => {
   ...component,
   render: self =>
-    render((dispatchFunc, renameFunc), name, textureComponent, self),
+    render(
+      (dispatchFunc, renameFunc),
+      (nodeId, name, textureComponent),
+      self,
+    ),
 };

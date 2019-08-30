@@ -2,7 +2,7 @@ open TreeAssetType;
 
 open NodeAssetType;
 
-let getNodeName = ({name}: assetBundleNodeData) => name;
+let getNodeNameByData = ({name}: assetBundleNodeData) => name;
 
 let getTypeStr = ({type_}: assetBundleNodeData) =>
   switch (type_) {

@@ -51,6 +51,7 @@ let reducer = (onSubmitFunc, action) =>
         }
     )
   };
+
 let render = (buttonText, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-file-input">
     {

@@ -55,13 +55,19 @@ let getNodeId = (~node) =>
   | MaterialNode(nodeId, _) => nodeId
   | WDBNode(nodeId, _) => nodeId
   | AssetBundleNode(nodeId, _) => nodeId
+  | IMGUIExecFuncDataNode(nodeId, _) => nodeId
+  | IMGUISkinNode(nodeId, _) => nodeId
+  | IMGUICustomControlNode(nodeId, _) => nodeId
+  | TextNode(nodeId, _) => nodeId
+  | JsonNode(nodeId, _) => nodeId
   | FolderNode(nodeId, _, _) => nodeId
   };
 
 let isNodeEqualById = (~sourceNode, ~targetNode) =>
   isNodeEqual((isIdEqual, getNodeId), sourceNode, targetNode);
 
-let handleNode =
+/* TODO remove this */
+let handleNode2 =
     (
       ~node,
       ~textureNodeFunc,
@@ -87,6 +93,49 @@ let handleNode =
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData) =>
     assetBundleNodeFunc(nodeId, assetBundleNodeData)
+  | FolderNode(nodeId, folderNodeData, children) =>
+    folderNodeFunc(nodeId, folderNodeData, children)
+  };
+
+let handleNode =
+    (
+      ~node,
+      ~textureNodeFunc,
+      ~cubemapNodeFunc,
+      ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
+      ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
+      ~imguiExecFuncDataNodeFunc,
+      ~imguiSkinNodeFunc,
+      ~imguiCustomControlNodeFunc,
+      ~textNodeFunc,
+      ~jsonNodeFunc,
+      ~folderNodeFunc,
+    ) =>
+  switch (node) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(nodeId, scriptEventFunctionNodeData)
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData)
+  | TextureNode(nodeId, textureNodeData) =>
+    textureNodeFunc(nodeId, textureNodeData)
+  | CubemapNode(nodeId, cubemapNodeData) =>
+    cubemapNodeFunc(nodeId, cubemapNodeData)
+  | MaterialNode(nodeId, materialNodeData) =>
+    materialNodeFunc(nodeId, materialNodeData)
+  | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData) =>
+    imguiExecFuncDataNodeFunc(nodeId, imguiExecFuncDataNodeData)
+  | IMGUISkinNode(nodeId, imguiSkinNodeData) =>
+    imguiSkinNodeFunc(nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData) =>
+    imguiCustomControlNodeFunc(nodeId, imguiCustomControlNodeData)
+  | TextNode(nodeId, textNodeData) => textNodeFunc(nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData) => jsonNodeFunc(nodeId, jsonNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(nodeId, folderNodeData, children)
   };

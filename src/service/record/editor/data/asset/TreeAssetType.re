@@ -8,6 +8,11 @@ type tree =
   | MaterialNode(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData)
   | AssetBundleNode(nodeId, assetBundleNodeData)
+  | IMGUIExecFuncDataNode(nodeId, imguiExecFuncDataNodeData)
+  | IMGUISkinNode(nodeId, imguiSkinNodeData)
+  | IMGUICustomControlNode(nodeId, imguiCustomControlNodeData)
+  | TextNode(nodeId, textNodeData)
+  | JsonNode(nodeId, jsonNodeData)
   | FolderNode(
       nodeId,
       folderNodeData,

@@ -167,17 +167,11 @@ module Method = {
     </div>;
 
   let _renderDependencyRelationInput = ((state, send)) =>
-    <div className="content-field content-textarea">
-      <div className="field-title"> {DomHelper.textEl("relation")} </div>
-      <div className="field-content">
-        <textarea
-          className="input-component"
-          type_="text"
-          value={state.dependencyRelationInputValue}
-          onChange={_e => send(_changeDependencyRelation(_e))}
-        />
-      </div>
-    </div>;
+    <UserInputJs
+      label="relation"
+      defaultInputValue={state.dependencyRelationInputValue}
+      changeInputValueFunc={e => send(_changeDependencyRelation(e))}
+    />;
 
   let renderGenerateAllABModal =
       ((state, send), languageType, (closeFunc, submitFunc)) =>

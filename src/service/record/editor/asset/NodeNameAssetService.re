@@ -17,11 +17,19 @@ let getNodeName =
     CubemapNodeAssetService.getNodeName(nodeData, getCubemapNameFunc)
   | MaterialNode(_, nodeData) =>
     MaterialNodeAssetService.getNodeName(nodeData, getMaterialNameFunc)
-  | WDBNode(_, nodeData) => WDBNodeAssetService.getNodeName(nodeData)
+  | WDBNode(_, nodeData) => WDBNodeAssetService.getNodeNameByData(nodeData)
   | AssetBundleNode(_, nodeData) =>
-    AssetBundleNodeAssetService.getNodeName(nodeData)
+    AssetBundleNodeAssetService.getNodeNameByData(nodeData)
+  | IMGUIExecFuncDataNode(_, nodeData) =>
+    IMGUIExecFuncDataNodeAssetService.getNodeNameByData(nodeData)
+  | IMGUISkinNode(_, nodeData) =>
+    IMGUISkinNodeAssetService.getNodeNameByData(nodeData)
+  | IMGUICustomControlNode(_, nodeData) =>
+    IMGUICustomControlNodeAssetService.getNodeNameByData(nodeData)
+  | TextNode(_, nodeData) => TextNodeAssetService.getNodeNameByData(nodeData)
+  | JsonNode(_, nodeData) => JsonNodeAssetService.getNodeNameByData(nodeData)
   | FolderNode(_, nodeData, _) =>
-    FolderNodeAssetService.getNodeName(nodeData)
+    FolderNodeAssetService.getNodeNameByData(nodeData)
   };
 
 let isNodeEqualByName =

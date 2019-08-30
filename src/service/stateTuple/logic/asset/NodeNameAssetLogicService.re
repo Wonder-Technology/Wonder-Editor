@@ -1,10 +1,12 @@
 let getFolderNodeName = node =>
-  FolderNodeAssetService.getNodeName(
+  FolderNodeAssetService.getNodeNameByData(
     FolderNodeAssetService.getNodeData(node),
   );
 
 let getWDBNodeName = node =>
-  WDBNodeAssetService.getNodeName(WDBNodeAssetService.getNodeData(node));
+  WDBNodeAssetService.getNodeNameByData(
+    WDBNodeAssetService.getNodeData(node),
+  );
 
 let getTextureNodeName = (~texture, ~engineState) =>
   OperateTextureLogicService.getName(~texture, ~engineState);
@@ -107,6 +109,48 @@ let updateNodeName = (node, name, engineState) =>
         AssetBundleNodeAssetService.buildNodeByNodeData(
           ~nodeId,
           ~nodeData=AssetBundleNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~imguiExecFuncDataNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        IMGUIExecFuncDataNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=
+            IMGUIExecFuncDataNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~imguiSkinNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        IMGUISkinNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=IMGUISkinNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~imguiCustomControlNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        IMGUICustomControlNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=
+            IMGUICustomControlNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~textNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        TextNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=TextNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~jsonNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        JsonNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=JsonNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~folderNodeFunc=

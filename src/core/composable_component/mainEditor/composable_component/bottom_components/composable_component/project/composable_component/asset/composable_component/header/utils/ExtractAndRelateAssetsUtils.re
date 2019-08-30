@@ -372,7 +372,9 @@ module Extract = {
       );
 
     let textureAssetDataMap =
-      TextureNodeAssetEditorService.getTextureComponents(editorState)
+      TextureNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+        editorState,
+      )
       |> ImmutableSparseMapType.arrayToImmutableSparseMap
       |> WonderCommonlib.ImmutableSparseMapService.mapValid(
            (. textureComponent) =>
@@ -415,7 +417,9 @@ module Extract = {
         );
 
       switch (
-        CubemapNodeAssetEditorService.getTextureComponents(editorState)
+        CubemapNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+          editorState,
+        )
         |> Js.Array.find(cubemapAssetTextureComponent =>
              RelateSceneSkyboxAndCubemapAssetUtils.isCubemapDataEqual(
                skyboxCubemapDataFromWDB,
@@ -834,6 +838,8 @@ module AssetTree = {
                    folderNode,
                    TextureNodeAssetService.buildNode(
                      ~nodeId=textureNodeId,
+                     ~type_=NodeAssetType.BasicSource,
+                     ~textureContentIndex=None,
                      ~textureComponent=texture,
                      ~imageDataIndex,
                    ),

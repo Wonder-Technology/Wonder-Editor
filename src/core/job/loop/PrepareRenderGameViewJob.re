@@ -42,7 +42,7 @@ let _activeGameViewCamera = engineState => {
 };
 
 let _clearExecFuncDataArr = engineState =>
-  engineState |> ManageIMGUIEngineService.clearExecFuncDataArr;
+  engineState |> ExecIMGUIEngineService.clearExecFuncDataArr;
 
 let prepareRenderGameViewJob = (_, engineState) => {
   let editorState = StateEditorService.getState();

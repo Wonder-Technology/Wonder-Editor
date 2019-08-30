@@ -10,6 +10,11 @@ let filter =
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predAssetBundleNodeFunc=node => false,
+      ~predIMGUIExecFuncDataNodeFunc=node => false,
+      ~predIMGUISkinNodeFunc=node => false,
+      ~predIMGUICustomControlNodeFunc=node => false,
+      ~predTextNodeFunc=node => false,
+      ~predJsonNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -25,6 +30,11 @@ let filter =
     ~predScriptAttributeNodeFunc,
     ~predWDBNodeFunc,
     ~predAssetBundleNodeFunc,
+    ~predIMGUIExecFuncDataNodeFunc,
+    ~predIMGUISkinNodeFunc,
+    ~predIMGUICustomControlNodeFunc,
+    ~predTextNodeFunc,
+    ~predJsonNodeFunc,
     ~predFolderNodeFunc,
     (),
   );

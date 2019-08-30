@@ -98,6 +98,36 @@ let _assetBundleNodeFunc =
     (targetNodeId, acc, nodeId, {name}: NodeAssetType.assetBundleNodeData) =>
   _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
 
+let _imguiExecFuncDataNodeFunc =
+    (
+      targetNodeId,
+      acc,
+      nodeId,
+      {name}: NodeAssetType.imguiExecFuncDataNodeData,
+    ) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
+let _imguiSkinNodeFunc =
+    (targetNodeId, acc, nodeId, {name}: NodeAssetType.imguiSkinNodeData) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
+let _imguiCustomControlNodeFunc =
+    (
+      targetNodeId,
+      acc,
+      nodeId,
+      {name}: NodeAssetType.imguiCustomControlNodeData,
+    ) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
+let _textNodeFunc =
+    (targetNodeId, acc, nodeId, {name}: NodeAssetType.textNodeData) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
+let _jsonNodeFunc =
+    (targetNodeId, acc, nodeId, {name}: NodeAssetType.jsonNodeData) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
 let _folderNodeFunc = (targetNodeId, acc, nodeId, nodeData, children) =>
   _handleFolderNodeFunc(
     acc,
@@ -146,6 +176,11 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc(targetNodeId),
       ~wdbNodeFunc=_wdbNodeFunc(targetNodeId),
       ~assetBundleNodeFunc=_assetBundleNodeFunc(targetNodeId),
+      ~imguiExecFuncDataNodeFunc=_imguiExecFuncDataNodeFunc(targetNodeId),
+      ~imguiSkinNodeFunc=_imguiSkinNodeFunc(targetNodeId),
+      ~imguiCustomControlNodeFunc=_imguiCustomControlNodeFunc(targetNodeId),
+      ~textNodeFunc=_textNodeFunc(targetNodeId),
+      ~jsonNodeFunc=_jsonNodeFunc(targetNodeId),
       ~folderNodeFunc=_folderNodeFunc(targetNodeId),
       ~handleBeforeFoldChildrenFunc=_handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc=_handleAfterFoldChildrenFunc,

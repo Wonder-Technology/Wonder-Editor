@@ -42,11 +42,11 @@ module Method = {
     folderNodes
     |> Js.Array.sortInPlaceWith((node1, node2) =>
          Js.String.localeCompare(
-           FolderNodeAssetService.getNodeName(
+           FolderNodeAssetService.getNodeNameByData(
              FolderNodeAssetService.getNodeData(node2),
            )
            |> Js.String.charAt(0),
-           FolderNodeAssetService.getNodeName(
+           FolderNodeAssetService.getNodeNameByData(
              FolderNodeAssetService.getNodeData(node1),
            )
            |> Js.String.charAt(0),
@@ -72,7 +72,7 @@ module Method = {
     |> Js.Array.map(folderNode => {
          let nodeId = NodeAssetService.getNodeId(~node=folderNode);
          let name =
-           FolderNodeAssetService.getNodeName(
+           FolderNodeAssetService.getNodeNameByData(
              FolderNodeAssetService.getNodeData(folderNode),
            );
 

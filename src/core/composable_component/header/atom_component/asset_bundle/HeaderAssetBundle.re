@@ -111,7 +111,7 @@ module Method = {
       "",
       assetPath
       ++ "/"
-      ++ AssetBundleNodeAssetService.getNodeName(assetNodeData)
+      ++ AssetBundleNodeAssetService.getNodeNameByData(assetNodeData)
       ++ "."
       ++ (
         AssetBundleNodeAssetService.getTypeStr(assetNodeData)
@@ -119,6 +119,7 @@ module Method = {
       ),
     );
 
+  /* TODO handle imgui nodes */
   let buildSelectTreeForGenerateSingleRAB = ((editorState, engineState)) => {
     open HeaderAssetBundleType;
 
