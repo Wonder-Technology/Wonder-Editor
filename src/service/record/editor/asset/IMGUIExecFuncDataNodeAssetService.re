@@ -4,18 +4,18 @@ open NodeAssetType;
 
 let buildEmptyCustomData = () => Obj.magic(Js.Nullable.null);
 
-let buildNodeData = (~name, ~execFunc, ~zIndex) => {
+let buildNodeData = (~name, ~execFunc, ~execOrder) => {
   name,
   execFuncData: {
     name,
     execFunc,
     customData: buildEmptyCustomData(),
-    zIndex,
+    execOrder,
   },
 };
 
-let buildNode = (~nodeId, ~name, ~execFunc, ~zIndex) =>
-  IMGUIExecFuncDataNode(nodeId, buildNodeData(~name, ~execFunc, ~zIndex));
+let buildNode = (~nodeId, ~name, ~execFunc, ~execOrder) =>
+  IMGUIExecFuncDataNode(nodeId, buildNodeData(~name, ~execFunc, ~execOrder));
 
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   IMGUIExecFuncDataNode(nodeId, nodeData);
@@ -44,8 +44,8 @@ let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = ({name}: NodeAssetType.imguiExecFuncDataNodeData) => name;
 
-let getZIndex = ({execFuncData}: NodeAssetType.imguiExecFuncDataNodeData) =>
-  execFuncData.zIndex;
+let getExecOrder = ({execFuncData}: NodeAssetType.imguiExecFuncDataNodeData) =>
+  execFuncData.execOrder;
 
 let getExecFunc = ({execFuncData}: NodeAssetType.imguiExecFuncDataNodeData) =>
   execFuncData.execFunc;

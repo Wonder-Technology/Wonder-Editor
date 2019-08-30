@@ -520,7 +520,7 @@ let inspector_language_array = [|
     },
   },
   {
-    title: "imguiExecFuncData-zIndex",
+    title: "imguiExecFuncData-execOrder",
     language: {
       zh: {j|执行顺序|j},
       en: "exec order",
