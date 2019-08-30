@@ -29,10 +29,10 @@ let isTreeIMGUIExecFuncDataNodesHasTargetName = (name, editorState) =>
     TreeAssetEditorService.unsafeGetTree(editorState),
   );
 
-let getZIndex = (nodeId, editorState) =>
+let getExecOrder = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
   |> IMGUIExecFuncDataNodeAssetService.getNodeData
-  |> IMGUIExecFuncDataNodeAssetService.getZIndex;
+  |> IMGUIExecFuncDataNodeAssetService.getExecOrder;
 
 let getExecFunc = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)

@@ -17,13 +17,13 @@ let updateExecFuncData =
       oldExecFuncName,
       newExecFuncName,
       customData,
-      zIndex,
+      execOrder,
       func: ExecIMGUIType.execFunc,
       state,
     ) =>
   state
   |> removeExecFuncData(oldExecFuncName)
-  |> addExecFuncData(newExecFuncName, customData, zIndex, func);
+  |> addExecFuncData(newExecFuncName, customData, execOrder, func);
 
 let clearExecFuncDataArr = ExecIMGUIAPI.clearExecFuncDataArr;
 
@@ -31,6 +31,6 @@ let getCustomData = ExecIMGUIMainService.getCustomData;
 
 let unsafeGetCustomData = ExecIMGUIMainService.unsafeGetCustomData;
 
-let getZIndex = ExecIMGUIMainService.getZIndex;
+let getExecOrder = ExecIMGUIMainService.getExecOrder;
 
-let unsafeGetZIndex = ExecIMGUIMainService.unsafeGetZIndex;
+let unsafeGetExecOrder = ExecIMGUIMainService.unsafeGetExecOrder;

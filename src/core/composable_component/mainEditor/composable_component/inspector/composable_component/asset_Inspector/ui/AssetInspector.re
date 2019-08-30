@@ -179,7 +179,7 @@ module Method = {
       dispatchFunc
       currentNodeId
       name={state.inputValue}
-      zIndex={IMGUIExecFuncDataNodeAssetService.getZIndex(nodeData)}
+      execOrder={IMGUIExecFuncDataNodeAssetService.getExecOrder(nodeData)}
       execFunc={IMGUIExecFuncDataNodeAssetService.getExecFunc(nodeData)}
       renameFunc={
         renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)

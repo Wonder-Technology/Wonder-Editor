@@ -21,7 +21,7 @@ module CustomEventHandler = {
             targetTreeNode,
             IMGUIExecFuncDataNodeAssetService.buildNode(
               ~nodeId,
-              ~zIndex=0,
+              ~execOrder=0,
               ~execFunc=ExecIMGUIEngineService.createEmptyExecFunc(),
               ~name=
                 IMGUIExecFuncDataNodeNameAssetService.getNewName()

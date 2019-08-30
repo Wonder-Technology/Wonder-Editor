@@ -1,13 +1,13 @@
 type state = {
   execFunc: Wonderjs.ExecIMGUIType.execFunc,
-  zIndex: int,
+  execOrder: int,
   execFuncName: string,
   originExecFuncName: string,
 };
 
 type action =
   | ChangeExecFunc(Wonderjs.ExecIMGUIType.execFunc)
-  | ChangeZIndex(int)
+  | ChangeExecOrder(int)
   | ChangeExecFuncName(string)
   | Submit(string);
 
@@ -23,7 +23,7 @@ module Method = {
       ChangeExecFunc(execFuncStr |> SerializeService.deserializeFunction),
     );
 
-  let changeZIndex = (zIndex, sendFunc) => sendFunc(ChangeZIndex(zIndex));
+  let changeExecOrder = (execOrder, sendFunc) => sendFunc(ChangeExecOrder(execOrder));
 
   /* TODO test:
            originExecFuncName,
@@ -32,7 +32,7 @@ module Method = {
   let submit =
       (
         nodeId,
-        {execFunc, zIndex, execFuncName, originExecFuncName},
+        {execFunc, execOrder, execFuncName, originExecFuncName},
         sendFunc,
       ) => {
     IMGUIExecFuncDataNodeAssetEditorService.setNodeData(
@@ -40,7 +40,7 @@ module Method = {
       IMGUIExecFuncDataNodeAssetService.buildNodeData(
         ~name=execFuncName,
         ~execFunc,
-        ~zIndex,
+        ~execOrder,
       ),
     )
     |> StateLogicService.getAndSetEditorState;
@@ -52,7 +52,7 @@ module Method = {
           originExecFuncName,
           execFuncName,
           IMGUIExecFuncDataNodeAssetService.buildEmptyCustomData(),
-          zIndex,
+          execOrder,
           execFunc,
           engineState,
         ) :
@@ -71,7 +71,7 @@ let reducer = action =>
   | ChangeExecFunc(execFunc) => (
       state => ReasonReact.Update({...state, execFunc})
     )
-  | ChangeZIndex(zIndex) => (state => ReasonReact.Update({...state, zIndex}))
+  | ChangeExecOrder(execOrder) => (state => ReasonReact.Update({...state, execOrder}))
   | ChangeExecFuncName(newExecFuncName) => (
       state => ReasonReact.Update({...state, execFuncName: newExecFuncName})
     )
@@ -110,17 +110,17 @@ let render =
     />
     <IntInput
       key={DomHelper.getRandomKey()}
-      label="ZIndex"
+      label="ExecOrder"
       title={
         LanguageUtils.getInspectorLanguageDataByType(
-          "imguiExecFuncData-zIndex",
+          "imguiExecFuncData-execOrder",
           languageType,
         )
       }
-      defaultValue={state.zIndex |> string_of_int}
-      onChange={value => Method.changeZIndex(value, send)}
-      onBlur={value => Method.changeZIndex(value, send)}
-      onDragDrop={value => Method.changeZIndex(value, send)}
+      defaultValue={state.execOrder |> string_of_int}
+      onChange={value => Method.changeExecOrder(value, send)}
+      onBlur={value => Method.changeExecOrder(value, send)}
+      onDragDrop={value => Method.changeExecOrder(value, send)}
     />
     <div className="imguiExecFuncData-execFunc">
       <FileInput
@@ -146,7 +146,7 @@ let make =
       ~dispatchFunc,
       ~currentNodeId,
       ~name,
-      ~zIndex,
+      ~execOrder,
       ~execFunc,
       ~renameFunc,
       _children,
@@ -156,7 +156,7 @@ let make =
     execFuncName: name,
     originExecFuncName: name,
     execFunc,
-    zIndex,
+    execOrder,
   },
   reducer,
   render: self => render(currentNodeId, renameFunc, self),
