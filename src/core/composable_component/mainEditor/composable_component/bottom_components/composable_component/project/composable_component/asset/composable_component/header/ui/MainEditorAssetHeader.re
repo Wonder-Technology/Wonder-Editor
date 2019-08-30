@@ -9,10 +9,6 @@ type action =
   | BlurNav;
 
 module Method = {
-  let addIMGUIExecFuncData = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-
-
   let addFolder = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let removeAssetNode = AssetHeaderRemoveNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -26,6 +22,14 @@ module Method = {
   let addScriptAttribute = AssetHeaderAddScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let addCubemap = AssetHeaderAddCubemapEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addIMGUIExecFuncData = AssetHeaderAddIMGUIExecFuncDataEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addIMGUISkin = AssetHeaderAddIMGUISkinEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addIMGUICustomControl = AssetHeaderAddIMGUICustomControlEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addFnt = AssetHeaderAddFntEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorAssetHeader");
@@ -79,6 +83,34 @@ let _renderSelectNav =
       className="content-section"
       onClick={_e => Method.addCubemap((uiState, dispatchFunc), (), ())}>
       <div className="section-header"> {DomHelper.textEl("Cubemap")} </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={
+        _e => Method.addIMGUIExecFuncData((uiState, dispatchFunc), (), ())
+      }>
+      <div className="section-header">
+        {DomHelper.textEl("IMGUI Exec Func Data")}
+      </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={_e => Method.addIMGUISkin((uiState, dispatchFunc), (), ())}>
+      <div className="section-header"> {DomHelper.textEl("IMGUI Skin")} </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={
+        _e => Method.addIMGUICustomControl((uiState, dispatchFunc), (), ())
+      }>
+      <div className="section-header">
+        {DomHelper.textEl("IMGUI Custom Control")}
+      </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={_e => Method.addFnt((uiState, dispatchFunc), (), ())}>
+      <div className="section-header"> {DomHelper.textEl("Fnt")} </div>
     </div>
   </div>;
 
