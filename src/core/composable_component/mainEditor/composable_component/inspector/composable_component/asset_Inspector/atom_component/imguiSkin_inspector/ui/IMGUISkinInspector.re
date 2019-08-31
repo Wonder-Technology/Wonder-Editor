@@ -63,19 +63,11 @@ module Method = {
        }());
      |}; */
 
-  let _convertInputValueStrToAllCustomStyleData =
-      (inputValueStr: string): allCustomStyleData => [%raw
-    {|
+  let _convertInputValueStrToAllCustomStyleData: string => allCustomStyleData = [%raw
+    inputValueStr => {|
          return eval( inputValueStr);
          |}
   ];
-
-  /* let _convertAllCustomStyleDataToInputValueStr =
-         (allCustomStyleData): allCustomStyleData => [%raw
-       {|
-            return eval( inputValueStr);
-            |}
-     ]; */
 
   let submitAllCustomStyle = (sendFunc, allCustomStyleDataStr) =>
     sendFunc(ChangeAllCustomStyle(allCustomStyleDataStr));

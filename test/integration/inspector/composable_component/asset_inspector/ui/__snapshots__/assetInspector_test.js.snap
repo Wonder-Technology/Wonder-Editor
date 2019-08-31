@@ -80,6 +80,38 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="texture's type"
+        >
+          Texture Type
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="0"
+            >
+              basic_source
+            </option>
+            <option
+              value="1"
+            >
+              imgui_custom_image
+            </option>
+          </select>
+        </div>
+      </article>
+      <div
+        className="content-imgui-custom-image"
+      />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
           title="repetitive pattern in horizontal direction of texture"
         >
           WrapS
@@ -472,6 +504,38 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           />
         </div>
       </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="texture's type"
+        >
+          Texture Type
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="0"
+            >
+              basic_source
+            </option>
+            <option
+              value="1"
+            >
+              imgui_custom_image
+            </option>
+          </select>
+        </div>
+      </article>
+      <div
+        className="content-imgui-custom-image"
+      />
       <article
         className="inspector-item"
       >

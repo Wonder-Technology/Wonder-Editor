@@ -401,6 +401,13 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "texture-type-describe",
+    language: {
+      zh: {j|纹理的类型|j},
+      en: "texture's type",
+    },
+  },
+  {
     title: "texture-wraps-describe",
     language: {
       zh: {j|纹理水平方向的重复模式|j},
