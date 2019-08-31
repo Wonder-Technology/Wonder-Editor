@@ -6,14 +6,14 @@ let serializeValueWithFunction = Wonderjs.SerializeService.serializeValueWithFun
 
 let deserializeValueWithFunction = Wonderjs.SerializeService.deserializeValueWithFunction;
 
-let serializeHashMap = hashMap => [%raw
-  {|
+let serializeHashMap = [%raw
+  hashMap => {|
     return JSON.stringify(hashMap);
     |}
 ];
 
-let deserializeHashMap = hashMapStr => [%raw
-  {|
+let deserializeHashMap = [%raw
+  hashMapStr => {|
     return JSON.parse(hashMapStr);
     |}
 ];

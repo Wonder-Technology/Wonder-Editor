@@ -38,22 +38,25 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
           />
         </div>
       </div>
-      <div
-        className="content-field content-textarea"
+      <article
+        className="wonder-textAreaInput"
       >
         <div
-          className="field-title"
+          className="content-field content-textarea"
         >
-          relation
-        </div>
-        <div
-          className="field-content"
-        >
-          <textarea
-            className="input-component"
-            onChange={[Function]}
-            type="text"
-            value="
+          <div
+            className="field-title"
+          >
+            relation
+          </div>
+          <div
+            className="field-content"
+          >
+            <textarea
+              className="input-component"
+              onChange={[Function]}
+              type="text"
+              value="
     (function() {
         var dependencyRelation = {};
 
@@ -63,9 +66,10 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
         return dependencyRelation;
     }())
     "
-          />
+            />
+          </div>
         </div>
-      </div>
+      </article>
       <article
         className="wonder-selectTree"
       >

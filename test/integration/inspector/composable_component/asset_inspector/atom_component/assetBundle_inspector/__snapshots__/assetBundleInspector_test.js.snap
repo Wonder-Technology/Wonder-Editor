@@ -8,7 +8,7 @@ exports[`assetBundle inspector show type test type===RAB 1`] = `
     className="wonder-inspector-asset"
   >
     <article
-      className="inspector-asset-wdb"
+      className="inspector-asset-assetBundle"
     >
       <h1>
         AssetBundle
@@ -73,7 +73,7 @@ exports[`assetBundle inspector show type test type===WAB 1`] = `
     className="wonder-inspector-asset"
   >
     <article
-      className="inspector-asset-wdb"
+      className="inspector-asset-assetBundle"
     >
       <h1>
         AssetBundle
