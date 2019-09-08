@@ -26,7 +26,7 @@ let findAllCubemapNodes = editorState =>
     (),
   );
 
-let getTextureComponentsOfBasicSourceTypeTextureNode = editorState =>
+let findTextureComponentsOfBasicSourceTypeTextureNode = editorState =>
   editorState
   |> findAllCubemapNodes
   |> Js.Array.map(node => {

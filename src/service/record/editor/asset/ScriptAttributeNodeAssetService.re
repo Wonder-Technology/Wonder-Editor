@@ -33,7 +33,7 @@ let getAttribute = node => getNodeData(node).attribute;
 let getAttributeByData = (nodeData: scriptAttributeNodeData) =>
   nodeData.attribute;
 
-let isScriptAttributeNode = node =>
+let isNode = node =>
   switch (node) {
   | ScriptAttributeNode(_, _) => true
   | _ => false

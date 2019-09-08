@@ -142,7 +142,7 @@ let updateNodeName = (node, name, engineState) =>
         engineState,
         FntNodeAssetService.buildNodeByNodeData(
           ~nodeId,
-          ~nodeData=FntNodeNameAssetService.rename(~name, ~nodeData),
+          ~nodeData=FntNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~folderNodeFunc=

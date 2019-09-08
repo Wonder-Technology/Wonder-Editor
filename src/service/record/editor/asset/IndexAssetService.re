@@ -31,3 +31,17 @@ let generateCubemapTextureImageDataMapIndex = index => (
   index |> succ,
   index |> succ,
 );
+
+let getIMGUICustomImageTextureContentIndex = assetRecord =>
+  assetRecord.imguiCustomImageTextureContentIndex;
+
+let setIMGUICustomImageTextureContentIndex =
+    (imguiCustomImageTextureContentIndex, assetRecord) => {
+  ...assetRecord,
+  imguiCustomImageTextureContentIndex,
+};
+
+let generateIMGUICustomImageTextureContentIndex = index => (
+  index |> succ,
+  index |> succ,
+);

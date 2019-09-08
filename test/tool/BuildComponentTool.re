@@ -333,3 +333,24 @@ let buildScriptComponent =
       (),
     ) =>
   ReactTestRenderer.create(<MainEditorScript uiState dispatchFunc script />);
+
+/* let buildSelectTextureNode =
+     (
+       ~currentTextureComponent,
+       ~onDropFunc=_ => (),
+       ~removeTextureFunc=() => (),
+       ~findAllTextureNodesFunc=IMGUICustomImageTypeTextureNodeAssetEditorService.findAllIMGUICustomImageTypeTextureNodes,
+       ~label="select texture node",
+       ~isShowTextureGroup=false,
+       (),
+     ) =>
+   ReactTestRenderer.create(
+     <SelectTextureNode
+       label
+       currentTextureComponent
+       removeTextureFunc
+       onDropFunc
+       findAllTextureNodesFunc
+       isShowTextureGroup
+     />,
+   ); */

@@ -36,7 +36,7 @@ let buildNode =
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   TextureNode(nodeId, nodeData);
 
-let isTextureNode = node =>
+let isNode = node =>
   switch (node) {
   | TextureNode(_, _) => true
   | _ => false

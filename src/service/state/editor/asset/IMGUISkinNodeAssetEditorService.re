@@ -27,3 +27,22 @@ let isTreeIMGUISkinNodesHasTargetName = (name, editorState) =>
     name,
     TreeAssetEditorService.unsafeGetTree(editorState),
   );
+
+let getNodeName = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUISkinNodeAssetService.getNodeName;
+
+let getSingleSkinData = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUISkinNodeAssetService.getNodeData
+  |> IMGUISkinNodeAssetService.getSingleSkinData;
+
+let getButtonSkinData = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUISkinNodeAssetService.getNodeData
+  |> IMGUISkinNodeAssetService.getButtonSkinData;
+
+let getAllCustomStyleData = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUISkinNodeAssetService.getNodeData
+  |> IMGUISkinNodeAssetService.getAllCustomStyleData;

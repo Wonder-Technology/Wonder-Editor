@@ -33,3 +33,7 @@ let getCustomControlFunc = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
   |> IMGUICustomControlNodeAssetService.getNodeData
   |> IMGUICustomControlNodeAssetService.getCustomControlFunc;
+
+let getNodeName = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUICustomControlNodeAssetService.getNodeName;

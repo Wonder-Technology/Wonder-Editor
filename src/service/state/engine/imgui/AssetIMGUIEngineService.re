@@ -11,3 +11,17 @@ let unsafeGetSettedAssetFntName = AssetIMGUIAPI.unsafeGetSettedAssetFntName;
 let hasSettedAssetFntData = AssetIMGUIAPI.hasSettedAssetFntData;
 
 let setSettedAssetFntData = AssetIMGUIAPI.setSettedAssetFntData;
+
+let hasSettedAssetBitmapData = AssetIMGUIAPI.hasSettedAssetBitmapData;
+
+let setSettedAssetBitmapData = AssetIMGUIAPI.setSettedAssetBitmapData;
+
+let removeSettedAssetBitmapData = AssetIMGUIAPI.removeSettedAssetBitmapData;
+
+let hasSettedAssetCustomImageData = AssetIMGUIAPI.hasSettedAssetCustomImageData;
+
+let addSettedAssetCustomImageData = AssetIMGUIAPI.addSettedAssetCustomImageData;
+
+let removeSettedAssetCustomImageData = AssetIMGUIAPI.removeSettedAssetCustomImageData;
+
+let getSettedAssetCustomImageDataArr = AssetIMGUIAPI.getSettedAssetCustomImageDataArr;

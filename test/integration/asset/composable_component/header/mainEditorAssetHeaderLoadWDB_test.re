@@ -816,7 +816,7 @@ let _ =
                               diffuseMap2,
                               editorState,
                             ),
-                            TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+                            BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
                               editorState,
                             )
                             |> Js.Array.length,
@@ -892,7 +892,7 @@ let _ =
                      let engineState = StateEngineService.unsafeGetState();
 
                      CubemapTextureToolEngine.unsafeGetGlTexture(
-                       CubemapNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+                       CubemapNodeAssetEditorService.findTextureComponentsOfBasicSourceTypeTextureNode(
                          editorState,
                        )
                        |> ArrayService.unsafeGetFirst,
@@ -1386,7 +1386,7 @@ let _ =
                  let editorState = StateEditorService.getState();
 
                  (
-                   TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+                   BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
                      editorState,
                    )
                    |> Js.Array.length,

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->add imgui skin else add into specific treeNode test snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/imguiSkin.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New IMGUISkin
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add imgui skin if not select specific treeNode should add into root treeNode test snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/imguiSkin.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New IMGUISkin
+      </span>
+    </div>
+  </article>
+</article>
+`;

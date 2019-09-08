@@ -48,7 +48,7 @@ let buildNode = (~nodeId, ~textureComponent, ~imageDataIndex) =>
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   CubemapNode(nodeId, nodeData);
 
-let isCubemapNode = node =>
+let isNode = node =>
   switch (node) {
   | CubemapNode(_, _) => true
   | _ => false

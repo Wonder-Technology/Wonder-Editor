@@ -67,14 +67,14 @@ let message_language_array = [|
   {
     title: "asset-rename-scriptEventFunction",
     language: {
-      zh: {j|eventFunction脚本名称不能与其他eventFunction脚本名称重复 ！|j},
+      zh: {j|eventFunction名称不能与其他eventFunction名称重复 ！|j},
       en: "script event function's name shouldn't equal other ones' name",
     },
   },
   {
     title: "asset-rename-scriptAttribute",
     language: {
-      zh: {j|attribute脚本名称不能与其他attribute脚本名称重复 ！|j},
+      zh: {j|attribute名称不能与其他attribute名称重复 ！|j},
       en: "script attribute's name shouldn't equal other ones' name",
     },
   },
@@ -83,6 +83,34 @@ let message_language_array = [|
     language: {
       zh: {j|field名称不能与attribute的其他field名称重复 ！|j},
       en: "field's name shouldn't equal other ones' name of the same attribute",
+    },
+  },
+  {
+    title: "asset-rename-imguiExecFuncData",
+    language: {
+      zh: {j|imguiExecFuncData名称不能与其他imguiExecFuncData名称重复 ！|j},
+      en: "imguiExecFuncData's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-imguiCustomControl",
+    language: {
+      zh: {j|imguiCustomControl名称不能与其他imguiCustomControl名称重复 ！|j},
+      en: "imguiCustomControl's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-imguiSkin",
+    language: {
+      zh: {j|imguiSkin名称不能与其他imguiSkin名称重复 ！|j},
+      en: "imguiSkin's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-fnt",
+    language: {
+      zh: {j|fnt名称不能与其他fnt名称重复 ！|j},
+      en: "fnt's name shouldn't equal other ones' name",
     },
   },
   {
@@ -111,6 +139,13 @@ let message_language_array = [|
     language: {
       zh: {j|请添加ScriptAttribute资产|j},
       en: "please add script attribute asset",
+    },
+  },
+  {
+    title: "texture-inspector-customImageId-exist",
+    language: {
+      zh: {j|custom image id已经存在|j},
+      en: "custom image id already exist",
     },
   },
 |];

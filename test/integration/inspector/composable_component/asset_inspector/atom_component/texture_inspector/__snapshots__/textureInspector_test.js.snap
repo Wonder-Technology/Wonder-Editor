@@ -12,6 +12,246 @@ exports[`texture inspector prepare currentSelectSource test texture change wrap 
 />
 `;
 
+exports[`texture inspector prepare currentSelectSource test texture content test type is IMGUICustomImage show default texture content 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-texture-inspector"
+    >
+      <h1>
+        Texture
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="texture's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="loadImg"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="texture's type"
+        >
+          Texture Type
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="1"
+          >
+            <option
+              value="0"
+            >
+              basic_source
+            </option>
+            <option
+              value="1"
+            >
+              imgui_custom_image
+            </option>
+          </select>
+        </div>
+      </article>
+      <div
+        className="content-imgui-custom-image"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="imgui custom image's id"
+          >
+            Custom Image Id
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="i1"
+            />
+          </div>
+        </article>
+      </div>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="repetitive pattern in horizontal direction of texture"
+        >
+          WrapS
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="2"
+            >
+              Repeat
+            </option>
+            <option
+              value="1"
+            >
+              Mirrored_repeat
+            </option>
+            <option
+              value="0"
+            >
+              Clamp_to_edge
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="repetitive pattern in vertical direction of texture"
+        >
+          WrapT
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="2"
+            >
+              Repeat
+            </option>
+            <option
+              value="1"
+            >
+              Mirrored_repeat
+            </option>
+            <option
+              value="0"
+            >
+              Clamp_to_edge
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="defines how textures are sampled when a texel covers multiple pixels"
+        >
+          Mag Filter
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="1"
+          >
+            <option
+              value="0"
+            >
+              Nearest
+            </option>
+            <option
+              value="1"
+            >
+              Linear
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
+        >
+          Min Filter
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="0"
+            >
+              Nearest
+            </option>
+            <option
+              value="1"
+            >
+              Linear
+            </option>
+            <option
+              value="2"
+            >
+              Nearest_mipmap_nearest
+            </option>
+            <option
+              value="3"
+            >
+              Linear_mipmap_nearest
+            </option>
+            <option
+              value="4"
+            >
+              Nearest_mipmap_linear
+            </option>
+            <option
+              value="5"
+            >
+              Linear_mipmap_linear
+            </option>
+          </select>
+        </div>
+      </article>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`texture inspector prepare currentSelectSource test texture inspector->show default value test snapshot 1`] = `
 <article
   className="wonder-inspector-component"

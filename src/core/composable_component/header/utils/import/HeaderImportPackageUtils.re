@@ -183,7 +183,7 @@ let _checkTextures = (where, gameObjects) =>
             gameObjectTextures |> Js.Array.sortInPlace;
 
             let textureAssets =
-              TextureNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+              BasicSourceTypeTextureNodeAssetEditorService.findTextureComponentsOfBasicSourceTypeTextureNode(
                 StateEditorService.getState(),
               );
 

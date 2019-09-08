@@ -23,7 +23,38 @@ describe("disposeTree", () => {
 
   afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-  describe("test remove texture", () =>
+  describe("test remove texture", () => {
+    describe("test dispose texture content data", () =>
+      describe("if type is IMGUICustomImage", () =>
+        testPromise("remove texture content", () =>
+          MainEditorAssetUploadTool.loadOneTexture()
+          |> then_(uploadedTextureNodeId => {
+               TextureInspectorTool.changeType(
+                 ~nodeId=uploadedTextureNodeId,
+                 ~type_=NodeAssetType.IMGUICustomImage,
+                 (),
+               );
+
+               let textureContentIndex =
+                 IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetTextureContentIndex(
+                   uploadedTextureNodeId,
+                 )
+                 |> StateLogicService.getEditorState;
+
+               DisposeTreeAssetLogicService.disposeTree
+               |> StateLogicService.getAndSetState;
+
+               IMGUICustomImageTextureContentMapTool.hasContent(
+                 ~textureContentIndex,
+                 (),
+               )
+               |> expect == false
+               |> resolve;
+             })
+        )
+      )
+    );
+
     testPromise(
       {j|
         upload two textures with the same image i1;
@@ -67,8 +98,95 @@ describe("disposeTree", () => {
                 })
            )
       )
-    )
-  );
+    );
+
+    describe("test dispose imgui assets", () => {
+      describe("if type is IMGUICustomImage", () =>
+        describe("if the custom image data has set to engine", () => {
+          let _test = judgeFunc =>
+            MainEditorAssetUploadTool.loadOneTexture()
+            |> then_(uploadedTextureNodeId => {
+                 TextureInspectorTool.changeType(
+                   ~nodeId=uploadedTextureNodeId,
+                   ~type_=NodeAssetType.IMGUICustomImage,
+                   (),
+                 );
+
+                 let customImageId = "i1";
+
+                 TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
+                   ~nodeId=uploadedTextureNodeId,
+                   ~customImageId,
+                   (),
+                 )
+                 |> StateLogicService.setState;
+
+                 AssetIMGUITool.addSettedAssetCustomImageData(
+                   AssetIMGUITool.buildFakeCustomImageData(
+                     ~imageId=customImageId,
+                     (),
+                   ),
+                 )
+                 |> StateLogicService.getAndSetEngineState;
+
+                 DisposeTreeAssetLogicService.disposeTree
+                 |> StateLogicService.getAndSetState;
+
+                 judgeFunc(customImageId);
+               });
+
+          testPromise("remove it", () =>
+            _test(customImageId =>
+              AssetIMGUIEngineService.hasSettedAssetCustomImageData(
+                customImageId,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == false
+              |> resolve
+            )
+          );
+        })
+      );
+
+      describe("if type is BasicSource", () =>
+        describe("if the texture has set to engine as imgui font-> bitmap", () => {
+          let _test = judgeFunc => {
+            let bitmapName = "bitmap.png";
+
+            MainEditorAssetUploadTool.loadOneTexture(~imgName=bitmapName, ())
+            |> then_(uploadedTextureNodeId => {
+                 TextureInspectorTool.changeType(
+                   ~nodeId=uploadedTextureNodeId,
+                   ~type_=NodeAssetType.IMGUICustomImage,
+                   (),
+                 );
+
+                 AssetIMGUITool.setSettedAssetBitmapData(
+                   ~name=bitmapName |> FileNameService.getBaseName,
+                   (),
+                 )
+                 |> StateEngineService.setState
+                 |> ignore;
+
+                 DisposeTreeAssetLogicService.disposeTree
+                 |> StateLogicService.getAndSetState;
+
+                 judgeFunc(bitmapName);
+               });
+          };
+
+          testPromise("remove it", () =>
+            _test(bitmapName =>
+              AssetIMGUIEngineService.hasSettedAssetBitmapData(bitmapName)
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == false
+              |> resolve
+            )
+          );
+        })
+      );
+    });
+  });
 
   describe("test remove material", () => {
     beforeEach(() => {

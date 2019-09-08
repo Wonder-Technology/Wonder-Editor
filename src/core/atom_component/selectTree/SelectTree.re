@@ -2,7 +2,7 @@ open SelectTreeType;
 
 module Method = {
   let _hasChildren = node =>
-    FolderNodeSelectTreeService.isFolderNode(node) ?
+    FolderNodeSelectTreeService.isNode(node) ?
       FolderNodeSelectTreeService.getChildren(node) |> Js.Array.length > 0 :
       false;
 

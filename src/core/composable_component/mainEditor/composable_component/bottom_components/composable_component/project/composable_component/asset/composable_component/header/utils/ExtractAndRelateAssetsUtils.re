@@ -372,7 +372,7 @@ module Extract = {
       );
 
     let textureAssetDataMap =
-      TextureNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+      BasicSourceTypeTextureNodeAssetEditorService.findTextureComponentsOfBasicSourceTypeTextureNode(
         editorState,
       )
       |> ImmutableSparseMapType.arrayToImmutableSparseMap
@@ -417,7 +417,7 @@ module Extract = {
         );
 
       switch (
-        CubemapNodeAssetEditorService.getTextureComponentsOfBasicSourceTypeTextureNode(
+        CubemapNodeAssetEditorService.findTextureComponentsOfBasicSourceTypeTextureNode(
           editorState,
         )
         |> Js.Array.find(cubemapAssetTextureComponent =>

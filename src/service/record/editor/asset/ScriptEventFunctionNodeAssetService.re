@@ -29,7 +29,7 @@ let getNodeName = node => getNodeData(node).name;
 let getNodeNameByData = (nodeData: scriptEventFunctionNodeData) =>
   nodeData.name;
 
-let isScriptEventFunctionNode = node =>
+let isNode = node =>
   switch (node) {
   | ScriptEventFunctionNode(_, _) => true
   | _ => false

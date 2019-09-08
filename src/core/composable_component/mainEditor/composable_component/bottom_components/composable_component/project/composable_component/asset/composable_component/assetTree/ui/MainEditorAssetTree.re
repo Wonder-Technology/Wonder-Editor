@@ -56,7 +56,7 @@ module Method = {
 
   let _doesFolderNodeHasNotFolderChildren = folderNode =>
     FolderNodeAssetService.getChildrenNodes(folderNode)
-    |> Js.Array.filter(FolderNodeAssetService.isFolderNode)
+    |> Js.Array.filter(FolderNodeAssetService.isNode)
     |> Js.Array.length > 0;
 
   let rec _build =
@@ -107,7 +107,7 @@ module Method = {
                (selectedFolderNodeIdInAssetTree, currentNodeId),
                FolderNodeAssetService.getChildrenNodes(folderNode)
                |> Js.Array.filter(node =>
-                    FolderNodeAssetService.isFolderNode(node)
+                    FolderNodeAssetService.isNode(node)
                   ),
                (uiState, dispatchFunc, dragImg),
                (onSelectFunc, onDropFunc),

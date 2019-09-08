@@ -57,7 +57,9 @@ module Method = {
   };
 
   let _buildImageDataObjectURLIfNoBase64 = editorState =>
-    TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
+    BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+      editorState,
+    )
     |> Js.Array.map(textureNode =>
          TextureNodeAssetService.getNodeData(textureNode).imageDataIndex
        )
@@ -79,44 +81,59 @@ module Method = {
   let sortAssetTreeChildrenNode = (assetTreeChildrenNodeArr, engineState) => {
     let folderAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(node => node |> FolderNodeAssetService.isFolderNode);
+      |> Js.Array.filter(node => node |> FolderNodeAssetService.isNode);
 
     let wdbAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(node => node |> WDBNodeAssetService.isWDBNode);
+      |> Js.Array.filter(node => node |> WDBNodeAssetService.isNode);
 
     let materialAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(node =>
-           node |> MaterialNodeAssetService.isMaterialNode
-         );
+      |> Js.Array.filter(node => node |> MaterialNodeAssetService.isNode);
 
     let scriptEventFunctionAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node =>
-           node
-           |> ScriptEventFunctionNodeAssetService.isScriptEventFunctionNode
+           node |> ScriptEventFunctionNodeAssetService.isNode
          );
 
     let scriptAttributeAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node =>
-           node |> ScriptAttributeNodeAssetService.isScriptAttributeNode
+           node |> ScriptAttributeNodeAssetService.isNode
          );
 
     let textureAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
+      |> Js.Array.filter(node => node |> TextureNodeAssetService.isNode);
 
     let cubemapAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(node => node |> CubemapNodeAssetService.isCubemapNode);
+      |> Js.Array.filter(node => node |> CubemapNodeAssetService.isNode);
 
     let assetBundleAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
+      |> Js.Array.filter(node => node |> AssetBundleNodeAssetService.isNode);
+
+    let imguiExecFuncDataAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
       |> Js.Array.filter(node =>
-           node |> AssetBundleNodeAssetService.isAssetBundleNode
+           node |> IMGUIExecFuncDataNodeAssetService.isNode
          );
+
+    let imguiCustomControlAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> IMGUICustomControlNodeAssetService.isNode
+         );
+
+    let imguiSkinAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node => node |> IMGUISkinNodeAssetService.isNode);
+
+    let fntAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node => node |> FntNodeAssetService.isNode);
 
     ArrayService.fastMutableConcatArrays([|
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
@@ -127,6 +144,13 @@ module Method = {
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
       _sortByName(cubemapAssetTreeChildrenNodeArr, engineState),
       _sortByName(assetBundleAssetTreeChildrenNodeArr, engineState),
+      _sortByName(imguiExecFuncDataAssetTreeChildrenNodeArr, engineState),
+      _sortByName(
+        imguiCustomControlAssetTreeChildrenNodeArr,
+        engineState,
+      ),
+      _sortByName(imguiSkinAssetTreeChildrenNodeArr, engineState),
+      _sortByName(fntAssetTreeChildrenNodeArr, engineState),
     |]);
   };
 

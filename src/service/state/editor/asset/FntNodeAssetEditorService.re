@@ -21,3 +21,12 @@ let findAllFnts = editorState =>
     ~predFntNodeFunc=node => true,
     (),
   );
+
+let getNodeName = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> FntNodeAssetService.getNodeName;
+
+let getFntContent = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> FntNodeAssetService.getNodeData
+  |> FntNodeAssetService.getFntContent;

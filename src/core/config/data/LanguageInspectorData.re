@@ -408,6 +408,13 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "texture-content-imguiCustomImage-id-describe",
+    language: {
+      zh: {j|imgui自定义图片的id|j},
+      en: "imgui custom image's id",
+    },
+  },
+  {
     title: "texture-wraps-describe",
     language: {
       zh: {j|纹理水平方向的重复模式|j},
@@ -545,6 +552,62 @@ let inspector_language_array = [|
     language: {
       zh: {j|IMGUI皮肤的名字|j},
       en: "imgui skin's name",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-buttonColor-describe",
+    language: {
+      zh: {j|按钮颜色|j},
+      en: "button color",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-hoverButtonColor-describe",
+    language: {
+      zh: {j|按钮hover颜色|j},
+      en: "hover button color",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-clickButtonColor-describe",
+    language: {
+      zh: {j|按钮click颜色|j},
+      en: "click button color",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-buttonImage-describe",
+    language: {
+      zh: {j|按钮图片|j},
+      en: "button image",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-hoverButtonImage-describe",
+    language: {
+      zh: {j|按钮hover图片|j},
+      en: "hover button image",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-clickButtonImage-describe",
+    language: {
+      zh: {j|按钮click图片|j},
+      en: "click button image",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-fontAlign-describe",
+    language: {
+      zh: {j|文字对齐|j},
+      en: "font align",
+    },
+  },
+  {
+    title: "imguiSkinData-buttonSkinData-fontColor-describe",
+    language: {
+      zh: {j|文字颜色|j},
+      en: "font color",
     },
   },
   {

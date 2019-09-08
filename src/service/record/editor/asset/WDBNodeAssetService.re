@@ -21,7 +21,7 @@ let getNodeData = node =>
     )
   };
 
-let isWDBNode = node =>
+let isNode = node =>
   switch (node) {
   | WDBNode(_, _) => true
   | _ => false

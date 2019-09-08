@@ -56,28 +56,23 @@ let _findAllTextureNodes = editorState =>
     (),
   );
 
-let _findAllTextureNodesByType = (isTypeFunc, editorState) =>
+let findAllTextureNodesByType = (isTypeFunc, editorState) =>
   _findAllTextureNodes(editorState)
   |> Js.Array.filter(node => isTypeFunc(node));
 
-let findAllBasicSourceTypeTextureNodes = editorState =>
-  _findAllTextureNodesByType(
-    TextureNodeAssetService.isBasicSourceType,
-    editorState,
-  );
-
-let findAllIMGUICustomImageTypeTextureNodes = editorState =>
-  _findAllTextureNodesByType(
-    TextureNodeAssetService.isIMGUICustomImageType,
-    editorState,
-  );
-
-let getTextureComponentsOfBasicSourceTypeTextureNode = editorState =>
-  editorState
-  |> findAllBasicSourceTypeTextureNodes
+let getTextureComponents = nodes =>
+  nodes
   |> Js.Array.map(node => {
        let {textureComponent}: NodeAssetType.textureNodeData =
          TextureNodeAssetService.getNodeData(node);
 
        textureComponent;
      });
+
+let getType = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> TextureNodeAssetService.getType;
+
+let getImageDataIndex = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> TextureNodeAssetService.getImageDataIndex;

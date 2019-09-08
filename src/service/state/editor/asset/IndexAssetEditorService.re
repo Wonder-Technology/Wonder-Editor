@@ -48,3 +48,23 @@ let generateCubemapTextureImageDataMapIndex = editorState => {
 
   (setCubemapTextureImageDataMapIndex(newIndex, editorState), index);
 };
+
+let getIMGUICustomImageTextureContentIndex = editorState =>
+  editorState.assetRecord
+  |> IndexAssetService.getIMGUICustomImageTextureContentIndex;
+
+let setIMGUICustomImageTextureContentIndex = (index, editorState) => {
+  ...editorState,
+  assetRecord:
+    editorState.assetRecord
+    |> IndexAssetService.setIMGUICustomImageTextureContentIndex(index),
+};
+
+let generateIMGUICustomImageTextureContentIndex = editorState => {
+  let (newIndex, index) =
+    IndexAssetService.generateIMGUICustomImageTextureContentIndex(
+      getIMGUICustomImageTextureContentIndex(editorState),
+    );
+
+  (setIMGUICustomImageTextureContentIndex(newIndex, editorState), index);
+};

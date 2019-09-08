@@ -1,19 +1,16 @@
 type state = {
   execFunc: Wonderjs.ExecIMGUIType.execFunc,
   execOrder: int,
-  execFuncName: string,
-  originExecFuncName: string,
+  originExecFuncDataName: string,
 };
 
 type action =
   | ChangeExecFunc(Wonderjs.ExecIMGUIType.execFunc)
   | ChangeExecOrder(int)
-  | ChangeExecFuncName(string)
   | Submit(string);
 
 module Method = {
-  let changeExecFuncName = (name, sendFunc) =>
-    sendFunc(ChangeExecFuncName(name));
+  let changeExecFuncDataName = (newName, renameFunc) => renameFunc(newName);
 
   let convertExecFuncToStr = func =>
     func |> SerializeService.serializeFunction;
@@ -23,34 +20,40 @@ module Method = {
       ChangeExecFunc(execFuncStr |> SerializeService.deserializeFunction),
     );
 
-  let changeExecOrder = (execOrder, sendFunc) => sendFunc(ChangeExecOrder(execOrder));
+  let changeExecOrder = (execOrder, sendFunc) =>
+    sendFunc(ChangeExecOrder(execOrder));
 
-  /* TODO test:
-           originExecFuncName,
-           execFuncName,
-     */
   let submit =
-      (
+      (nodeId, {execFunc, execOrder, originExecFuncDataName}, sendFunc) => {
+    let editorState = StateEditorService.getState();
+
+    let execFuncDataName =
+      IMGUIExecFuncDataNodeAssetEditorService.getNodeName(
         nodeId,
-        {execFunc, execOrder, execFuncName, originExecFuncName},
-        sendFunc,
-      ) => {
-    IMGUIExecFuncDataNodeAssetEditorService.setNodeData(
-      nodeId,
-      IMGUIExecFuncDataNodeAssetService.buildNodeData(
-        ~name=execFuncName,
-        ~execFunc,
-        ~execOrder,
-      ),
-    )
-    |> StateLogicService.getAndSetEditorState;
+        editorState,
+      );
+
+    editorState
+    |> IMGUIExecFuncDataNodeAssetEditorService.setNodeData(
+         nodeId,
+         IMGUIExecFuncDataNodeAssetService.buildNodeData(
+           ~name=execFuncDataName,
+           ~execFunc,
+           ~execOrder,
+         ),
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     let engineState = StateEngineService.unsafeGetState();
     let engineState =
-      ExecIMGUIEngineService.hasExecFuncData(originExecFuncName, engineState) ?
+      ExecIMGUIEngineService.hasExecFuncData(
+        originExecFuncDataName,
+        engineState,
+      ) ?
         ExecIMGUIEngineService.updateExecFuncData(
-          originExecFuncName,
-          execFuncName,
+          originExecFuncDataName,
+          execFuncDataName,
           IMGUIExecFuncDataNodeAssetService.buildEmptyCustomData(),
           execOrder,
           execFunc,
@@ -60,7 +63,7 @@ module Method = {
 
     StateEngineService.setState(engineState) |> ignore;
 
-    sendFunc(Submit(execFuncName));
+    sendFunc(Submit(execFuncDataName));
   };
 };
 
@@ -71,12 +74,11 @@ let reducer = action =>
   | ChangeExecFunc(execFunc) => (
       state => ReasonReact.Update({...state, execFunc})
     )
-  | ChangeExecOrder(execOrder) => (state => ReasonReact.Update({...state, execOrder}))
-  | ChangeExecFuncName(newExecFuncName) => (
-      state => ReasonReact.Update({...state, execFuncName: newExecFuncName})
+  | ChangeExecOrder(execOrder) => (
+      state => ReasonReact.Update({...state, execOrder})
     )
-  | Submit(originExecFuncName) => (
-      state => ReasonReact.Update({...state, originExecFuncName})
+  | Submit(originExecFuncDataName) => (
+      state => ReasonReact.Update({...state, originExecFuncDataName})
     )
   };
 
@@ -98,14 +100,8 @@ let render =
           languageType,
         )
       }
-      defaultValue={state.execFuncName}
-      onBlur={
-        value => {
-          renameFunc(value);
-
-          Method.changeExecFuncName(value, send);
-        }
-      }
+      defaultValue={state.originExecFuncDataName}
+      onBlur={value => Method.changeExecFuncDataName(value, renameFunc)}
       canBeNull=false
     />
     <IntInput
@@ -152,12 +148,7 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    execFuncName: name,
-    originExecFuncName: name,
-    execFunc,
-    execOrder,
-  },
+  initialState: () => {originExecFuncDataName: name, execFunc, execOrder},
   reducer,
   render: self => render(currentNodeId, renameFunc, self),
 };

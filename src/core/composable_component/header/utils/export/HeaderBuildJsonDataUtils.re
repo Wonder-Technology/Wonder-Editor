@@ -275,7 +275,7 @@ let _buildImageData = editorState => {
 
 let _buildTextureData =
     (basicSourceTextureImageIndexMap, (editorState, engineState)) =>
-  TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
+  BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. (textureIndexMap, textureArr), node) => {
          let {textureComponent, imageDataIndex}: NodeAssetType.textureNodeData =

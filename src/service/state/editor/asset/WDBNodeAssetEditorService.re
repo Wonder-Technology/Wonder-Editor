@@ -37,7 +37,7 @@ let isWDBAssetFile = () => {
     && StateEditorService.getState()
     |> OperateTreeAssetEditorService.findNodeById(nodeId)
     |> OptionService.eitherWithNoData(
-         node => WDBNodeAssetService.isWDBNode(node),
+         node => WDBNodeAssetService.isNode(node),
          () => false,
        )
   | _ => false

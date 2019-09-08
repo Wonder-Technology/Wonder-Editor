@@ -1,6 +1,6 @@
 type color = WonderImgui.SkinType.color;
 
-type imageId = WonderImgui.SkinType.imageId;
+type imageId = WonderImgui.ExtendType.customImageId;
 
 type align = WonderImgui.FontType.align;
 
@@ -64,7 +64,7 @@ module Method = {
     sendFunc(ChangeFontColor(color));
 
   let findAllIMGUICustomImageTypeTextureNodes = editorState =>
-    TextureNodeAssetEditorService.findAllIMGUICustomImageTypeTextureNodes(
+    IMGUICustomImageTypeTextureNodeAssetEditorService.findAllIMGUICustomImageTypeTextureNodes(
       editorState,
     );
 
@@ -99,7 +99,7 @@ module Method = {
 
     sendFunc(
       ChangeButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
           textureNodeId,
           editorState,
         )
@@ -114,7 +114,7 @@ module Method = {
 
     sendFunc(
       ChangeHoverButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
           textureNodeId,
           editorState,
         )
@@ -129,7 +129,7 @@ module Method = {
 
     sendFunc(
       ChangeClickButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
           textureNodeId,
           editorState,
         )
@@ -138,6 +138,19 @@ module Method = {
     )
     |> ignore;
   };
+
+  let getCurrentTextureComponent = (imageIdNullable, editorState) =>
+    imageIdNullable
+    |> Js.Nullable.toOption
+    |> Js.Option.map((. imageId) =>
+         IMGUICustomImageTypeTextureNodeAssetEditorService.findTextureComponentByCustomImageId(
+           IMGUICustomImageTypeTextureNodeAssetEditorService.findAllIMGUICustomImageTypeTextureNodes(
+             editorState,
+           ),
+           imageId,
+           editorState,
+         )
+       );
 };
 
 let component = ReasonReact.reducerComponent("IMGUISkinButtonInspector");
@@ -183,199 +196,185 @@ let render =
     <h2> {DomHelper.textEl("Button")} </h2>
     <hr />
     <div className="imguiSkinButton-skin">
-      /* <FileInput
-           inputValue={
-             Method.convertSkinToStr(
-               IMGUISkinDataNodeAssetEditorService.getSkin(nodeId)
-               |> StateLogicService.getEditorState,
-             )
-           }
-           onSubmit={value => Method.changeSkin(textureNodeId, value, send)}
-           isShowInput=true
-         /> */
-
-        <PickColorComponent
-          label="Button Color"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-buttonColor-describe",
-              languageType,
+      <PickColorComponent
+        label="Button Color"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-buttonColor-describe",
+            languageType,
+          )
+        }
+        getColorFunc={() => state.buttonColor |> Color.getHexString}
+        changeColorFunc={
+          value =>
+            Method.changeButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          getColorFunc={state.buttonColor |> Color.getHexString}
-          changeColorFunc={
-            value =>
-              Method.changeButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-          closeColorPickFunc={
-            value =>
-              Method.changeButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-        />
-        <PickColorComponent
-          label="Hover Button Color"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-hoverButtonColor-describe",
-              languageType,
+        }
+        closeColorPickFunc={
+          value =>
+            Method.changeButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          getColorFunc={state.hoverButtonColor |> Color.getHexString}
-          changeColorFunc={
-            value =>
-              Method.changeHoverButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-          closeColorPickFunc={
-            value =>
-              Method.changeHoverButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-        />
-        <PickColorComponent
-          label="Click Button Color"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-clickButtonColor-describe",
-              languageType,
+        }
+      />
+      <PickColorComponent
+        label="Hover Button Color"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-hoverButtonColor-describe",
+            languageType,
+          )
+        }
+        getColorFunc={() => state.hoverButtonColor |> Color.getHexString}
+        changeColorFunc={
+          value =>
+            Method.changeHoverButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          getColorFunc={state.clickButtonColor |> Color.getHexString}
-          changeColorFunc={
-            value =>
-              Method.changeClickButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-          closeColorPickFunc={
-            value =>
-              Method.changeClickButtonColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-        />
-        <SelectTextureNode
-          label="Button Image"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-buttonImage-describe",
-              languageType,
+        }
+        closeColorPickFunc={
+          value =>
+            Method.changeHoverButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          currentTextureComponent=None
-          removeTextureFunc={
-            () => Method.changeButtonImage(Js.Nullable.null, send)
-          }
-          findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
-          onDropFunc={
-            textureNodeId =>
-              Method.changeButtonImageByNodeId(textureNodeId, send)
-              |> StateLogicService.getEditorState
-          }
-          isShowTextureGroup=false
-        />
-        <SelectTextureNode
-          label="Hover Button Image"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-hoverButtonImage-describe",
-              languageType,
+        }
+      />
+      <PickColorComponent
+        label="Click Button Color"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-clickButtonColor-describe",
+            languageType,
+          )
+        }
+        getColorFunc={() => state.clickButtonColor |> Color.getHexString}
+        changeColorFunc={
+          value =>
+            Method.changeClickButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          currentTextureComponent=None
-          removeTextureFunc={
-            () => Method.changeHoverButtonImage(Js.Nullable.null, send)
-          }
-          findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
-          onDropFunc={
-            textureNodeId =>
-              Method.changeHoverButtonImageByNodeId(textureNodeId, send)
-              |> StateLogicService.getEditorState
-          }
-          isShowTextureGroup=false
-        />
-        <SelectTextureNode
-          label="Click Button Image"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-clickButtonImage-describe",
-              languageType,
+        }
+        closeColorPickFunc={
+          value =>
+            Method.changeClickButtonColor(
+              value |> Color.convert16HexToRGBArr,
+              send,
             )
-          }
-          currentTextureComponent=None
-          removeTextureFunc={
-            () => Method.changeClickButtonImage(Js.Nullable.null, send)
-          }
-          findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
-          onDropFunc={
-            textureNodeId =>
-              Method.changeClickButtonImageByNodeId(textureNodeId, send)
-              |> StateLogicService.getEditorState
-          }
-          isShowTextureGroup=false
-        />
-        <IntInput
-          key={DomHelper.getRandomKey()}
-          label="Font Align"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-fontAlign-describe",
-              languageType,
-            )
-          }
-          defaultValue={
-            state.fontAlign |> convertFontAlignToInt |> string_of_int
-          }
-          onChange={
-            value =>
-              Method.changeFontAlign(value |> convertIntToFontAlign, send)
-          }
-          onBlur={
-            value =>
-              Method.changeFontAlign(value |> convertIntToFontAlign, send)
-          }
-          onDragDrop={
-            value =>
-              Method.changeFontAlign(value |> convertIntToFontAlign, send)
-          }
-        />
-        <PickColorComponent
-          label="Font Color"
-          title={
-            LanguageUtils.getInspectorLanguageDataByType(
-              "imguiSkinData-buttonSkinData-fontColor-describe",
-              languageType,
-            )
-          }
-          getColorFunc={state.fontColor |> Color.getHexString}
-          changeColorFunc={
-            value =>
-              Method.changeFontColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-          closeColorPickFunc={
-            value =>
-              Method.changeFontColor(
-                value |> Color.convert16HexToRGBArr,
-                send,
-              )
-          }
-        />
-      </div>
+        }
+      />
+      <SelectTextureNode
+        label="Button Image"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-buttonImage-describe",
+            languageType,
+          )
+        }
+        currentTextureComponent={
+          Method.getCurrentTextureComponent(state.buttonImage)
+          |> StateLogicService.getEditorState
+        }
+        removeTextureFunc={
+          () => Method.changeButtonImage(Js.Nullable.null, send)
+        }
+        findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
+        onDropFunc={
+          textureNodeId =>
+            Method.changeButtonImageByNodeId(textureNodeId, send)
+            |> StateLogicService.getEditorState
+        }
+        isShowTextureGroup=false
+      />
+      <SelectTextureNode
+        label="Hover Button Image"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-hoverButtonImage-describe",
+            languageType,
+          )
+        }
+        currentTextureComponent=None
+        removeTextureFunc={
+          () => Method.changeHoverButtonImage(Js.Nullable.null, send)
+        }
+        findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
+        onDropFunc={
+          textureNodeId =>
+            Method.changeHoverButtonImageByNodeId(textureNodeId, send)
+            |> StateLogicService.getEditorState
+        }
+        isShowTextureGroup=false
+      />
+      <SelectTextureNode
+        label="Click Button Image"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-clickButtonImage-describe",
+            languageType,
+          )
+        }
+        currentTextureComponent=None
+        removeTextureFunc={
+          () => Method.changeClickButtonImage(Js.Nullable.null, send)
+        }
+        findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
+        onDropFunc={
+          textureNodeId =>
+            Method.changeClickButtonImageByNodeId(textureNodeId, send)
+            |> StateLogicService.getEditorState
+        }
+        isShowTextureGroup=false
+      />
+      <IntInput
+        key={DomHelper.getRandomKey()}
+        label="Font Align"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-fontAlign-describe",
+            languageType,
+          )
+        }
+        defaultValue={
+          state.fontAlign |> convertFontAlignToInt |> string_of_int
+        }
+        onChange={
+          value =>
+            Method.changeFontAlign(value |> convertIntToFontAlign, send)
+        }
+        onBlur={
+          value =>
+            Method.changeFontAlign(value |> convertIntToFontAlign, send)
+        }
+        onDragDrop={
+          value =>
+            Method.changeFontAlign(value |> convertIntToFontAlign, send)
+        }
+      />
+      <PickColorComponent
+        label="Font Color"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "imguiSkinData-buttonSkinData-fontColor-describe",
+            languageType,
+          )
+        }
+        getColorFunc={() => state.fontColor |> Color.getHexString}
+        changeColorFunc={
+          value =>
+            Method.changeFontColor(value |> Color.convert16HexToRGBArr, send)
+        }
+        closeColorPickFunc={
+          value =>
+            Method.changeFontColor(value |> Color.convert16HexToRGBArr, send)
+        }
+      />
+    </div>
     <button onClick={_e => submitFunc(state |> convertStateToButtonSkinData)}>
       {DomHelper.textEl("submit all")}
     </button>

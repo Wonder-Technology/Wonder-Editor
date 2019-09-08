@@ -24,7 +24,7 @@ let buildNode = (~nodeId, ~name, ~isSelect, ~children=[||], ()) =>
    | _ => _fatalShouldBeFolderNode()
    }; */
 
-let isFolderNode = node =>
+let isNode = node =>
   switch (node) {
   | FolderNode(_, _, _) => true
   | _ => false
@@ -89,7 +89,7 @@ let setIsSelect = (isSelect, nodeData): folderNodeData => {
         NodeAssetService.isNodeEqualById(~sourceNode=childNode, ~targetNode)
       );
 
- let isFolderNode = node =>
+ let isNode = node =>
    switch (node) {
    | FolderNode(_, _, _) => true
    | _ => false

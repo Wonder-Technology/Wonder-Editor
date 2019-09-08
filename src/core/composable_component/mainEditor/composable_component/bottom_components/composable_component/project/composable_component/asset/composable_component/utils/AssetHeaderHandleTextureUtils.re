@@ -29,20 +29,16 @@ let _handleImage =
             editorState,
           );
 
-        let editorState =
-          TextureNodeAssetEditorService.addTextureNodeToAssetTree(
-            selectedFolderNodeInAssetTree,
-            TextureNodeAssetService.buildNode(
-              ~nodeId=textureNodeId,
-              ~type_=NodeAssetType.BasicSource,
-              ~textureContentIndex=None,
-              ~textureComponent,
-              ~imageDataIndex,
-            ),
-            editorState,
-          );
-
-        resolve(. (editorState, engineState));
+        resolve(. (
+          (
+            textureNodeId,
+            imageDataIndex,
+            NodeAssetType.BasicSource,
+            None,
+            textureComponent,
+          ),
+          (editorState, engineState),
+        ));
       },
     )
   );
@@ -75,5 +71,33 @@ let handleTextureType =
     ),
     (assetNodeId, selectedFolderNodeInAssetTree, textureComponent),
     (editorState, engineState),
-  );
+  )
+  |> then_(
+       (
+         (
+           (
+             textureNodeId,
+             imageDataIndex,
+             type_,
+             textureContentIndex,
+             textureComponent,
+           ),
+           (editorState, engineState),
+         ),
+       ) => {
+       let editorState =
+         TextureNodeAssetEditorService.addTextureNodeToAssetTree(
+           selectedFolderNodeInAssetTree,
+           TextureNodeAssetService.buildNode(
+             ~nodeId=textureNodeId,
+             ~type_,
+             ~textureContentIndex,
+             ~textureComponent,
+             ~imageDataIndex,
+           ),
+           editorState,
+         );
+
+       resolve((editorState, engineState));
+     });
 };

@@ -104,7 +104,7 @@ let getImporteMaterialAssetLightMaterialComponents = () =>
 
 
 let getImportedTextureAssetNodes = () =>
-  TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes
+  BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes
   |> StateLogicService.getEditorState;
 
 let getImportedTextureAssetTextureComponents = () =>

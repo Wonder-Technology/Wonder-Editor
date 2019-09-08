@@ -38,3 +38,7 @@ let getExecFunc = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
   |> IMGUIExecFuncDataNodeAssetService.getNodeData
   |> IMGUIExecFuncDataNodeAssetService.getExecFunc;
+
+let getNodeName = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> IMGUIExecFuncDataNodeAssetService.getNodeName;

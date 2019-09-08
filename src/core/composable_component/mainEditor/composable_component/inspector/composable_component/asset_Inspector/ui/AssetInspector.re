@@ -205,17 +205,15 @@ module Method = {
       ((uiState, dispatchFunc), state, currentNodeId, nodeData) => {
     let name = state.inputValue;
 
-    let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
-      ExtendIMGUIEngineService.unsafeGetSkinData(name)
-      |> StateLogicService.getEngineStateToGetData;
-
     <IMGUISkinInspector
       uiState
       dispatchFunc
       currentNodeId
       name
-      buttonSkinData
-      allCustomStyleData
+      buttonSkinData={IMGUISkinNodeAssetService.getButtonSkinData(nodeData)}
+      allCustomStyleData={
+        IMGUISkinNodeAssetService.getAllCustomStyleData(nodeData)
+      }
       renameFunc={
         renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
       }

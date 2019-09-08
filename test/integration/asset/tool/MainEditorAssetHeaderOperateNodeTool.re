@@ -133,3 +133,43 @@ let addCubemap =
       (),
     ) =>
   MainEditorAssetHeader.Method.addCubemap((uiState, dispatchFunc), (), ());
+
+let addIMGUIExecFuncData =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addIMGUIExecFuncData(
+    (uiState, dispatchFunc),
+    (),
+    (),
+  );
+
+let addIMGUICustomControl =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addIMGUICustomControl(
+    (uiState, dispatchFunc),
+    (),
+    (),
+  );
+
+let addIMGUISkin =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addIMGUISkin((uiState, dispatchFunc), (), ());
+
+let addFnt =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addFnt((uiState, dispatchFunc), (), ());
