@@ -91,11 +91,18 @@ let getMagFilterOptions = TextureFilterUtils.getMagFilterOptions;
 
 let getMinFilterOptions = TextureFilterUtils.getMinFilterOptions;
 
-let changeType = (~nodeId, ~type_, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+let changeType =
+    (
+      ~nodeId,
+      ~type_,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
   TextureInspector.Method.changeTextureType(
-    dispatchFunc,
-    nodeId,
-    type_ |> NodeAssetType.convertTextureTypeToInt,
+    (uiState, dispatchFunc),
+    (),
+    (nodeId, type_ |> NodeAssetType.convertTextureTypeToInt),
   );
 
 module IMGUICustomImageType = {
@@ -107,14 +114,15 @@ module IMGUICustomImageType = {
                              )
                              |> StateLogicService.getEditorState,
         ~customImageId,
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
         ~editorState=StateEditorService.getState(),
         ~engineState=StateEngineService.unsafeGetState(),
         (),
       ) =>
     TextureInspector.Method._setCustomImageId(
-      nodeId,
-      textureContentIndex,
-      customImageId,
-      (editorState, engineState),
+      (uiState, dispatchFunc),
+      (),
+      (nodeId, textureContentIndex, customImageId),
     );
 };

@@ -99,7 +99,7 @@ module Method = {
 
     sendFunc(
       ChangeButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
           textureNodeId,
           editorState,
         )
@@ -114,7 +114,7 @@ module Method = {
 
     sendFunc(
       ChangeHoverButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
           textureNodeId,
           editorState,
         )
@@ -129,7 +129,7 @@ module Method = {
 
     sendFunc(
       ChangeClickButtonImage(
-        IMGUICustomImageTypeTextureNodeAssetEditorService.getId(
+        IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetId(
           textureNodeId,
           editorState,
         )

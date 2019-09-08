@@ -70,8 +70,7 @@ let _ =
                  |> StateLogicService.getEditorState,
                ~customImageId,
                (),
-             )
-             |> StateLogicService.setState;
+             );
 
              IMGUISkinInspectorTool.setNodeData(
                ~nodeId=addedSkinNodeId,

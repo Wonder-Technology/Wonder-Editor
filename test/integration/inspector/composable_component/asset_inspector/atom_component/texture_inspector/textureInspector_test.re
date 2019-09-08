@@ -177,8 +177,7 @@ let _ =
                        ~nodeId=uploadedTextureNodeId,
                        ~customImageId,
                        (),
-                     )
-                     |> StateLogicService.setState;
+                     );
 
                      AssetIMGUITool.addSettedAssetCustomImageData(
                        AssetIMGUITool.buildFakeCustomImageData(
@@ -395,8 +394,7 @@ let _ =
                    ~nodeId=uploadedTextureNodeId,
                    ~customImageId,
                    (),
-                 )
-                 |> StateLogicService.setState;
+                 );
 
                  MainEditorAssetChildrenNodeTool.selectTextureNode(
                    ~nodeId=uploadedTextureNodeId,
@@ -435,15 +433,13 @@ let _ =
                      ~nodeId=uploadedTextureNodeId,
                      ~customImageId,
                      (),
-                   )
-                   |> StateLogicService.setState;
+                   );
 
                    TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
                      ~nodeId=uploadedTextureNodeId,
                      ~customImageId,
                      (),
-                   )
-                   |> StateLogicService.setState;
+                   );
 
                    warn |> expect |> toCalledOnce |> resolve;
                  });
@@ -469,8 +465,7 @@ let _ =
                        ~nodeId=uploadedTextureNodeId,
                        ~customImageId=customImageId1,
                        (),
-                     )
-                     |> StateLogicService.setState;
+                     );
 
                      AssetIMGUITool.addSettedAssetCustomImageData(
                        AssetIMGUITool.buildFakeCustomImageData(
@@ -484,8 +479,7 @@ let _ =
                        ~nodeId=uploadedTextureNodeId,
                        ~customImageId=customImageId2,
                        (),
-                     )
-                     |> StateLogicService.setState;
+                     );
 
                      judgeFunc(
                        uploadedTextureNodeId,
