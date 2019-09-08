@@ -389,7 +389,7 @@ module Method = {
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
-                   imgSrc="./public/img/text.png"
+                   imgSrc="./public/img/fnt.png"
                    nodeId
                    fileName
                    widget
