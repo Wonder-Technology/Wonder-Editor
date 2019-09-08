@@ -18,6 +18,114 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test change type", () => {
+      let _prepareAndExec = () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+
+        let type_ = NodeAssetType.IMGUICustomImage;
+        let nodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+            assetTreeData,
+          );
+        let oldValue =
+          TextureNodeAssetEditorService.getType(nodeId)
+          |> StateLogicService.getEditorState;
+
+        MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
+
+        TextureInspectorTool.changeType(~nodeId, ~type_, ());
+
+        (nodeId, oldValue, type_);
+      };
+
+      describe("test undo operate", () =>
+        test("should undo wrapS", () => {
+          let (nodeId, oldValue, newValue) = _prepareAndExec();
+
+          RedoUndoTool.undoHistoryState();
+
+          TextureNodeAssetEditorService.getType(nodeId)
+          |> StateLogicService.getEditorState
+          |> expect == oldValue;
+        })
+      );
+
+      describe("test redo operate", () =>
+        test("should redo wrapS", () => {
+          let (nodeId, oldValue, newValue) = _prepareAndExec();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
+
+          TextureNodeAssetEditorService.getType(nodeId)
+          |> StateLogicService.getEditorState
+          |> expect == newValue;
+        })
+      );
+    });
+
+    describe("test texture content", () =>
+      describe("test type is IMGUICustomImage", () =>
+        describe("test set id", () => {
+          let _prepareAndExec = () => {
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
+            MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
+
+            TextureInspectorTool.changeType(
+              ~nodeId,
+              ~type_=NodeAssetType.IMGUICustomImage,
+              (),
+            );
+
+            let oldValue =
+              IMGUICustomImageTypeTextureNodeAssetEditorService.getId(nodeId)
+              |> StateLogicService.getEditorState;
+            let id = "aaa";
+
+            TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
+              ~nodeId,
+              ~customImageId=id,
+              (),
+            );
+
+            (nodeId, oldValue, Some(id));
+          };
+
+          describe("test undo operate", () =>
+            test("should undo wrapS", () => {
+              let (nodeId, oldValue, newValue) = _prepareAndExec();
+
+              RedoUndoTool.undoHistoryState();
+
+              IMGUICustomImageTypeTextureNodeAssetEditorService.getId(nodeId)
+              |> StateLogicService.getEditorState
+              |> expect == oldValue;
+            })
+          );
+
+          describe("test redo operate", () =>
+            test("should redo wrapS", () => {
+              let (nodeId, oldValue, newValue) = _prepareAndExec();
+
+              RedoUndoTool.undoHistoryState();
+              RedoUndoTool.redoHistoryState();
+
+              IMGUICustomImageTypeTextureNodeAssetEditorService.getId(nodeId)
+              |> StateLogicService.getEditorState
+              |> expect == newValue;
+            })
+          );
+        })
+      )
+    );
+
     describe("test change wrapS", () => {
       let _prepareAndExec = () => {
         let assetTreeData =

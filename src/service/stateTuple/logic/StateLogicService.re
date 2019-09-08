@@ -76,6 +76,11 @@ let getAndSetEditorState = handleFunc =>
   |> StateEditorService.setState
   |> ignore;
 
+let getState = () => (
+  StateEditorService.getState(),
+  StateEngineService.unsafeGetState(),
+);
+
 let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), StateEngineService.unsafeGetState())
   |> handleFunc;

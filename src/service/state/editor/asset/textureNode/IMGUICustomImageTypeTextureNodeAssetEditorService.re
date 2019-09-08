@@ -7,6 +7,15 @@ let unsafeGetTextureContentIndex = (nodeId, editorState) =>
   |> TextureNodeAssetService.unsafeGetTextureContentIndex;
 
 let getId = (nodeId, editorState) =>
+  getTextureContentIndex(nodeId, editorState)
+  |> Js.Option.map((. textureContentIndex) =>
+       IMGUICustomImageTextureContentMapAssetEditorService.getId(
+         textureContentIndex,
+         editorState,
+       )
+     );
+
+let unsafeGetId = (nodeId, editorState) =>
   IMGUICustomImageTextureContentMapAssetEditorService.getId(
     unsafeGetTextureContentIndex(nodeId, editorState),
     editorState,

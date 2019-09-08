@@ -118,8 +118,7 @@ describe("disposeTree", () => {
                    ~nodeId=uploadedTextureNodeId,
                    ~customImageId,
                    (),
-                 )
-                 |> StateLogicService.setState;
+                 );
 
                  AssetIMGUITool.addSettedAssetCustomImageData(
                    AssetIMGUITool.buildFakeCustomImageData(
