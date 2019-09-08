@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`imgui customControl inspector test show value test show default value 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-imguiCustomControl-inspector"
+    >
+      <h1>
+        IMGUI Custom Control
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="imgui custom control's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="New IMGUICustomControl"
+          />
+        </div>
+      </article>
+      <div
+        className="imguiCustomControl-customControl"
+      >
+        <article
+          className="wonder-file-input"
+        >
+          <textarea
+            className="input-component file-input"
+            onChange={[Function]}
+            type="text"
+            value="function (param, param$1, param$2, imguiRecord) {
+    return (
+      /* tuple */
+      [imguiRecord, null]
+    );
+  }"
+          />
+          <button
+            onClick={[Function]}
+          >
+            submit
+          </button>
+        </article>
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        submit all
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`imgui customControl inspector test show value test show specific value 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-imguiCustomControl-inspector"
+    >
+      <h1>
+        IMGUI Custom Control
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="imgui custom control's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="aaa"
+          />
+        </div>
+      </article>
+      <div
+        className="imguiCustomControl-customControl"
+      >
+        <article
+          className="wonder-file-input"
+        >
+          <textarea
+            className="input-component file-input"
+            onChange={[Function]}
+            type="text"
+            value="function (customControlFuncData, showData, apiJsObj, record){
+    var box = apiJsObj.box;
+
+    return [record, null];
+ }"
+          />
+          <button
+            onClick={[Function]}
+          >
+            submit
+          </button>
+        </article>
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        submit all
+      </button>
+    </article>
+  </article>
+</article>
+`;

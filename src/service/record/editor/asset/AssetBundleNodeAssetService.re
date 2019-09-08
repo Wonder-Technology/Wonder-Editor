@@ -39,7 +39,7 @@ let buildNodeByNodeData = (~nodeId, ~nodeData) =>
 
 let rename = (~name, ~nodeData): assetBundleNodeData => {...nodeData, name};
 
-let isAssetBundleNode = node =>
+let isNode = node =>
   switch (node) {
   | AssetBundleNode(_, _) => true
   | _ => false

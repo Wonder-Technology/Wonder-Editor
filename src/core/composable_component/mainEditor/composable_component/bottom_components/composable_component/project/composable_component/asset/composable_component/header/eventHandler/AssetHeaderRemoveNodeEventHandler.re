@@ -59,7 +59,7 @@ module CustomEventHandler = {
 
   let rec _removeNode =
           (node, (editorState, engineState, inspectorEngineStateOpt)) =>
-    FolderNodeAssetService.isFolderNode(node) ?
+    FolderNodeAssetService.isNode(node) ?
       FolderNodeAssetService.getChildrenNodes(node)
       |> WonderCommonlib.ArrayService.reduceOneParam(
            (. (editorState, engineState, inspectorEngineStateOpt), childNode) =>

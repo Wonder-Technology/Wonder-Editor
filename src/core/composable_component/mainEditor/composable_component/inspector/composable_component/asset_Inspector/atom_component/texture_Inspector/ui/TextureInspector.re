@@ -120,29 +120,179 @@ module Method = {
     _getTextureNode(nodeId, editorState) |> TextureNodeAssetService.getType;
   };
 
+  let _updateEngineData = (node, editorState, engineState) =>
+    engineState
+    |> IMGUIAssetLogicService.removeSettedAssets(
+         (
+           TextureNodeAssetService.getType(node),
+           TextureNodeAssetService.getTextureContentIndex(node),
+           TextureNodeAssetService.getTextureComponent(node),
+         ),
+         editorState,
+         StateLogicService.renderEngineStateAndReturnEngineState,
+       );
+
+  let _removeOldTextureContent = (nodeId, editorState) =>
+    TextureContentTextureNodeAssetEditorService.removeTextureContent(
+      IMGUICustomImageTypeTextureNodeAssetEditorService.getTextureContentIndex(
+        nodeId,
+        editorState,
+      ),
+      editorState,
+    );
+
+  let _updateEditorData = (nodeId, newType, editorState) =>
+    switch (newType) {
+    | NodeAssetType.BasicSource =>
+      let nodeData =
+        TextureNodeAssetEditorService.unsafeGetNodeData(nodeId, editorState);
+
+      editorState
+      |> _removeOldTextureContent(nodeId)
+      |> TextureNodeAssetEditorService.setNodeData(
+           nodeId,
+           {...nodeData, type_: newType, textureContentIndex: None},
+         );
+    | NodeAssetType.IMGUICustomImage =>
+      let (editorState, newTextureContentIndex) =
+        IndexAssetEditorService.generateIMGUICustomImageTextureContentIndex(
+          editorState,
+        );
+
+      let nodeData =
+        TextureNodeAssetEditorService.unsafeGetNodeData(nodeId, editorState);
+
+      editorState
+      |> _removeOldTextureContent(nodeId)
+      |> TextureNodeAssetEditorService.setNodeData(
+           nodeId,
+           {
+             ...nodeData,
+             type_: newType,
+             textureContentIndex: Some(newTextureContentIndex),
+           },
+         )
+      |> IMGUICustomImageTextureContentMapAssetEditorService.setContent(
+           newTextureContentIndex,
+           IMGUICustomImageTextureContentMapAssetEditorService.generateEmptyContent(),
+         );
+    };
+
   /* TODO add to redo/undo */
   let changeTextureType = (dispatchFunc, nodeId, value) => {
     let editorState = StateEditorService.getState();
 
-    let editorState =
-      TextureNodeAssetEditorService.setNodeData(
-        nodeId,
-        {
-          ...
-            TextureNodeAssetEditorService.unsafeGetNodeData(
-              nodeId,
-              editorState,
-            ),
-          type_: value |> NodeAssetType.convertIntToTextureType,
-        },
-        editorState,
-      );
+    let node =
+      OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState);
 
-    editorState |> StateEditorService.setState |> ignore;
+    _updateEngineData(node, editorState)
+    |> StateLogicService.getAndSetEngineState;
+
+    editorState
+    |> _updateEditorData(
+         nodeId,
+         value |> NodeAssetType.convertIntToTextureType,
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;
   };
+
+  let _getCustomImageId = (textureContentIndex, editorState) =>
+    IMGUICustomImageTextureContentMapAssetEditorService.getId(
+      textureContentIndex,
+      editorState,
+    );
+
+  let _updateEngineDataByCustomImageId =
+      (nodeId, oldCustomImageId, newCustomImageId, editorState, engineState) =>
+    AssetIMGUIEngineService.hasSettedAssetCustomImageData(
+      oldCustomImageId,
+      engineState,
+    ) ?
+      {
+        let imageData =
+          BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+            TextureNodeAssetEditorService.getImageDataIndex(
+              nodeId,
+              editorState,
+            ),
+            editorState,
+          );
+
+        AssetIMGUIEngineService.removeSettedAssetCustomImageData(
+          oldCustomImageId,
+          engineState,
+        )
+        |> AssetIMGUIEngineService.addSettedAssetCustomImageData((
+             imageData
+             |> ImageDataAssetService.getUint8Array(_, () =>
+                  WonderLog.Log.fatal(
+                    WonderLog.Log.buildFatalMessage(
+                      ~title="_updateEngineDataByCustomImageId",
+                      ~description=
+                        {j|image should has uint8Array or base64 data|j},
+                      ~reason="",
+                      ~solution={j||j},
+                      ~params={j||j},
+                    ),
+                  )
+                )
+             |> Js.Typed_array.Uint8Array.buffer,
+             newCustomImageId,
+             ImageDataAssetService.getMimeType(imageData),
+           ))
+        |> StateLogicService.renderEngineStateAndReturnEngineState;
+      } :
+      engineState;
+
+  let _setCustomImageId =
+      (
+        nodeId,
+        textureContentIndex,
+        newCustomImageId,
+        (editorState, engineState),
+      ) =>
+    IMGUICustomImageTypeTextureNodeAssetEditorService.hasId(
+      newCustomImageId,
+      editorState,
+    ) ?
+      {
+        ConsoleUtils.warn(
+          LanguageUtils.getMessageLanguageDataByType(
+            "texture-inspector-customImageId-exist",
+            LanguageEditorService.unsafeGetType(editorState),
+          ),
+          editorState,
+        )
+        |> ignore;
+
+        (editorState, engineState);
+      } :
+      {
+        let engineState =
+          _updateEngineDataByCustomImageId(
+            nodeId,
+            editorState
+            |> IMGUICustomImageTextureContentMapAssetEditorService.getId(
+                 textureContentIndex,
+               ),
+            newCustomImageId,
+            editorState,
+            engineState,
+          );
+
+        let editorState =
+          editorState
+          |> IMGUICustomImageTextureContentMapAssetEditorService.setId(
+               textureContentIndex,
+               newCustomImageId,
+             );
+
+        (editorState, engineState);
+      };
 
   let renderTextureContent = (nodeId, languageType) => {
     let editorState = StateEditorService.getState();
@@ -152,32 +302,24 @@ module Method = {
     <div className="content-imgui-custom-image">
       {
         switch (node |> TextureNodeAssetService.getType) {
-        | NodeAssetType.BasicSource => <> </>
+        | NodeAssetType.BasicSource => ReasonReact.null
         | NodeAssetType.IMGUICustomImage =>
           let textureContentIndex =
             TextureNodeAssetService.unsafeGetTextureContentIndex(node);
 
           <StringInput
-            label="Id"
+            label="Custom Image Id"
             title={
               LanguageUtils.getInspectorLanguageDataByType(
                 "texture-content-imguiCustomImage-id-describe",
                 languageType,
               )
             }
-            defaultValue={
-              IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
-                textureContentIndex,
-                editorState,
-              )
-            }
+            defaultValue={_getCustomImageId(textureContentIndex, editorState)}
             onBlur=(
               value =>
-                IMGUICustomImageTextureContentMapAssetEditorService.setId(
-                  textureContentIndex,
-                  value,
-                )
-                |> StateLogicService.getAndSetEditorState
+                _setCustomImageId(nodeId, textureContentIndex, value)
+                |> StateLogicService.getAndSetState
             )
             canBeNull=false
           />;

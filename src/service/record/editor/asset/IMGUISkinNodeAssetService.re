@@ -42,3 +42,11 @@ let isNode = node =>
 let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = ({name}: NodeAssetType.imguiSkinNodeData) => name;
+
+let getSingleSkinData = ({singleSkinData}: NodeAssetType.imguiSkinNodeData) => singleSkinData;
+
+let getButtonSkinData = nodeData =>
+  getSingleSkinData(nodeData).buttonSkinData;
+
+let getAllCustomStyleData = nodeData =>
+  getSingleSkinData(nodeData).allCustomStyleData;

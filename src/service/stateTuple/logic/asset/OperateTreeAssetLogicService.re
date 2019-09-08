@@ -69,7 +69,7 @@ let _canFindOne =
   |> List.length > 0;
 
 let _isSourceNodeBeOneOfAllParentsOfTargetNode = (sourceNode, targetNode) =>
-  FolderNodeAssetService.isFolderNode(sourceNode) ?
+  FolderNodeAssetService.isNode(sourceNode) ?
     {
       let _nodeFunc = node =>
         NodeAssetService.isNodeEqualById(~sourceNode=node, ~targetNode);
@@ -89,7 +89,7 @@ let _isSourceNodeBeOneOfAllParentsOfTargetNode = (sourceNode, targetNode) =>
     false;
 
 let _isTargetNodeBeSourceNodeParent = (sourceNode, targetNode) =>
-  FolderNodeAssetService.isFolderNode(targetNode) ?
+  FolderNodeAssetService.isNode(targetNode) ?
     _includeTargetChild(
       targetNode,
       sourceNode,
@@ -111,7 +111,7 @@ let checkNodeRelation =
       editorState,
     );
 
-  !FolderNodeAssetService.isFolderNode(targetNode) ?
+  !FolderNodeAssetService.isNode(targetNode) ?
     Fail("target node should be folder"->Some) :
     NodeAssetService.isNodeEqualById(~sourceNode, ~targetNode) ?
       Fail("source and target node shouldn't be the same"->Some) :

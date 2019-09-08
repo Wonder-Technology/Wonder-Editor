@@ -1,6 +1,6 @@
 module Method = {
   let findAllBasicSourceTypeTextureNodes = editorState =>
-    TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+    BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
       editorState,
     );
 };

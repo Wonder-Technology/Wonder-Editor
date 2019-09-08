@@ -1,17 +1,14 @@
 type state = {
   customControlFunc: Wonderjs.ExtendIMGUIType.customControlFunc,
-  customControlName: string,
   originCustomControlName: string,
 };
 
 type action =
   | ChangeCustomControlFunc(Wonderjs.ExtendIMGUIType.customControlFunc)
-  | ChangeCustomControlName(string)
   | Submit(string);
 
 module Method = {
-  let changeCustomControlName = (name, send) =>
-    send(ChangeCustomControlName(name));
+  let changeCustomControlName = (newName, renameFunc) => renameFunc(newName);
 
   let convertCustomControlFuncToStr = func =>
     func |> SerializeService.serializeFunction;
@@ -23,20 +20,25 @@ module Method = {
       ),
     );
 
-  let submit =
-      (
+  let submit = (nodeId, {customControlFunc, originCustomControlName}, send) => {
+    let editorState = StateEditorService.getState();
+
+    let customControlName =
+      IMGUICustomControlNodeAssetEditorService.getNodeName(
         nodeId,
-        {customControlFunc, customControlName, originCustomControlName},
-        send,
-      ) => {
-    IMGUICustomControlNodeAssetEditorService.setNodeData(
-      nodeId,
-      IMGUICustomControlNodeAssetService.buildNodeData(
-        ~name=customControlName,
-        ~customControlFunc,
-      ),
-    )
-    |> StateLogicService.getAndSetEditorState;
+        editorState,
+      );
+
+    editorState
+    |> IMGUICustomControlNodeAssetEditorService.setNodeData(
+         nodeId,
+         IMGUICustomControlNodeAssetService.buildNodeData(
+           ~name=customControlName,
+           ~customControlFunc,
+         ),
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     let engineState = StateEngineService.unsafeGetState();
     let engineState =
@@ -65,13 +67,6 @@ let reducer = action =>
   | ChangeCustomControlFunc(customControlFunc) => (
       state => ReasonReact.Update({...state, customControlFunc})
     )
-  | ChangeCustomControlName(newCustomControlName) => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          customControlName: newCustomControlName,
-        })
-    )
   | Submit(originCustomControlName) => (
       state => ReasonReact.Update({...state, originCustomControlName})
     )
@@ -95,14 +90,8 @@ let render =
           languageType,
         )
       }
-      defaultValue={state.customControlName}
-      onBlur={
-        value => {
-          renameFunc(value);
-
-          Method.changeCustomControlName(value, send);
-        }
-      }
+      defaultValue={state.originCustomControlName}
+      onBlur={value => Method.changeCustomControlName(value, renameFunc)}
       canBeNull=false
     />
     <div className="imguiCustomControl-customControl">
@@ -138,11 +127,7 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    customControlName: name,
-    originCustomControlName: name,
-    customControlFunc,
-  },
+  initialState: () => {originCustomControlName: name, customControlFunc},
   reducer,
   render: self => render(currentNodeId, renameFunc, self),
 };

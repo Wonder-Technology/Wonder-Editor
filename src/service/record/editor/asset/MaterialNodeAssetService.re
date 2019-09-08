@@ -21,7 +21,7 @@ let buildNode = (~nodeId, ~type_, ~materialComponent, ~snapshotImageDataIndex) =
 let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   MaterialNode(nodeId, nodeData);
 
-let isMaterialNode = node =>
+let isNode = node =>
   switch (node) {
   | MaterialNode(_, _) => true
   | _ => false

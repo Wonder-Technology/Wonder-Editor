@@ -2,7 +2,7 @@
 
 let hasRootNode = tree =>
   tree
-  |> FolderNodeSelectTreeService .isFolderNode;
+  |> FolderNodeSelectTreeService .isNode;
   /* &&
   FolderNodeAssetService.getNodeNameByData(
     FolderNodeAssetService.getNodeData(tree),

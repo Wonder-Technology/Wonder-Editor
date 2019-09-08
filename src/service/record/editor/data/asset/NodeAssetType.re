@@ -25,7 +25,9 @@ type wdbNodeData = {
 
 type textureContentIndex = int;
 
-type imguiCustomImageTextureContent = {id: WonderImgui.IMGUIType.id};
+type imguiCustomImageTextureContent = {
+  id: WonderImgui.ExtendType.customImageId,
+};
 
 type imguiCustomImageTextureContentMap =
   WonderCommonlib.ImmutableSparseMapService.t(imguiCustomImageTextureContent);

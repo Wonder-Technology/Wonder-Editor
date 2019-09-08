@@ -24,9 +24,19 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   |> WonderCommonlib.ArrayService.flatten
   |> ArrayService.exclude(wdbGameObjects);
 
+let _disposeTextureContentData = (type_, textureContentIndexOpt, editorState) =>
+  switch (type_) {
+  | NodeAssetType.BasicSource => editorState
+  | NodeAssetType.IMGUICustomImage =>
+    TextureContentTextureNodeAssetEditorService.removeTextureContent(
+      textureContentIndexOpt,
+      editorState,
+    )
+  };
+
 let _disposeTextureNodeEditorDataBeforeRemoveNode =
     (
-      {imageDataIndex, textureComponent}: NodeAssetType.textureNodeData,
+      {imageDataIndex, textureComponent, type_, textureContentIndex}: NodeAssetType.textureNodeData,
       engineState,
       editorState,
     ) => {
@@ -42,6 +52,7 @@ let _disposeTextureNodeEditorDataBeforeRemoveNode =
          );
 
   editorState
+  |> _disposeTextureContentData(type_, textureContentIndex)
   |> SourceTextureCacheInspectorCanvasLogicService.removeCache(
        textureComponent,
        engineState,
@@ -74,34 +85,6 @@ let _disposeWDBNodeEditorDataBeforeRemoveNode =
      );
 };
 
-let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
-  NodeAssetService.handleNode2(
-    ~node,
-    ~textureNodeFunc=
-      (_, nodeData) =>
-        _disposeTextureNodeEditorDataBeforeRemoveNode(
-          nodeData,
-          engineState,
-          editorState,
-        ),
-    ~cubemapNodeFunc=
-      (_, nodeData) =>
-        _disposeCubemapNodeEditorDataBeforeRemoveNode(nodeData, editorState),
-    ~materialNodeFunc=
-      (_, nodeData) =>
-        _disposeMaterialNodeEditorDataBeforeRemoveNode(nodeData, editorState),
-    ~scriptEventFunctionNodeFunc=(_, _) => editorState,
-    ~scriptAttributeNodeFunc=(_, _) => editorState,
-    ~wdbNodeFunc=
-      (_, nodeData) =>
-        _disposeWDBNodeEditorDataBeforeRemoveNode(
-          nodeData,
-          (editorState, engineState),
-        ),
-    ~assetBundleNodeFunc=(_, _) => editorState,
-    ~folderNodeFunc=(_, _, _) => editorState,
-  );
-
 let _disposeTextureFromAllLightMaterials = (textureComponent, engineState) =>
   LightMaterialEngineService.getAllLightMaterials(engineState)
   |> Js.Array.filter(lightMaterial =>
@@ -124,27 +107,20 @@ let _disposeTextureFromAllLightMaterials = (textureComponent, engineState) =>
        false,
      );
 
-let _disposeGeometryAssets = (wdbGameObjects, (editorState, engineState)) =>
-  GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
-    wdbGameObjects,
-    (editorState, engineState),
-  )
-  |> GeometryEngineService.batchDisposeGeometry(_, engineState);
-
-let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
-  wdbGameObjects
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineState, gameObject) =>
-         GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
-           gameObject,
-           engineState,
-         ),
-       engineState,
-     );
-
 let _disposeTextureNodeEngineData =
-    ({textureComponent}: NodeAssetType.textureNodeData, engineState) =>
-  engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
+    (
+      {textureComponent, textureContentIndex, type_}: NodeAssetType.textureNodeData,
+      editorState,
+      engineState,
+    ) =>
+  engineState
+  |> _disposeTextureFromAllLightMaterials(textureComponent)
+  |> IMGUIAssetLogicService.removeSettedAssets(
+       (type_, textureContentIndex, textureComponent),
+       editorState,
+       engineState =>
+       engineState
+     );
 
 let _disposeCubemapFromSceneSkybox = (textureComponent, engineState) =>
   switch (SceneEngineService.getCubemapTexture(engineState)) {
@@ -176,6 +152,24 @@ let _disposeMaterialNodeEngineData =
   );
 };
 
+let _disposeGeometryAssets = (wdbGameObjects, (editorState, engineState)) =>
+  GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
+    wdbGameObjects,
+    (editorState, engineState),
+  )
+  |> GeometryEngineService.batchDisposeGeometry(_, engineState);
+
+let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
+  wdbGameObjects
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, gameObject) =>
+         GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
+           gameObject,
+           engineState,
+         ),
+       engineState,
+     );
+
 let _disposeWDBNodeEngineData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
@@ -201,93 +195,145 @@ let _removeScriptAttributeFromScriptComponents =
     ({name}: NodeAssetType.scriptAttributeNodeData, engineState) =>
   ScriptEngineService.removeAttributeInAllScriptComponents(name, engineState);
 
-let _disposeNodeEngineData = (node, editorState, engineState) =>
+let _disposeNodeEditorAndEngineDataBeforeRemoveNode =
+    (node, (editorState, engineState)) =>
   NodeAssetService.handleNode2(
     ~node,
     ~textureNodeFunc=
-      (_, nodeData) => _disposeTextureNodeEngineData(nodeData, engineState),
+      (_, nodeData) => {
+        let engineState =
+          _disposeTextureNodeEngineData(nodeData, editorState, engineState);
+
+        let editorState =
+          _disposeTextureNodeEditorDataBeforeRemoveNode(
+            nodeData,
+            engineState,
+            editorState,
+          );
+
+        (editorState, engineState);
+      },
     ~cubemapNodeFunc=
-      (_, nodeData) => _disposeCubemapNodeEngineData(nodeData, engineState),
+      (_, nodeData) => (
+        _disposeCubemapNodeEditorDataBeforeRemoveNode(nodeData, editorState),
+        _disposeCubemapNodeEngineData(nodeData, engineState),
+      ),
     ~materialNodeFunc=
-      (_, nodeData) =>
-        _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
+      (_, nodeData) => {
+        let engineState =
+          _disposeMaterialNodeEngineData(
+            nodeData,
+            (editorState, engineState),
+          );
+
+        let editorState =
+          _disposeMaterialNodeEditorDataBeforeRemoveNode(
+            nodeData,
+            editorState,
+          );
+
+        (editorState, engineState);
+      },
     ~scriptEventFunctionNodeFunc=
-      (_, nodeData) =>
+      (_, nodeData) => (
+        editorState,
         _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
+      ),
     ~scriptAttributeNodeFunc=
-      (_, nodeData) =>
+      (_, nodeData) => (
+        editorState,
         _removeScriptAttributeFromScriptComponents(nodeData, engineState),
+      ),
     ~wdbNodeFunc=
-      (_, nodeData) =>
-        _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),
-    ~assetBundleNodeFunc=(_, nodeData) => engineState,
-    ~folderNodeFunc=(_, _, _) => engineState,
+      (_, nodeData) => {
+        let editorState =
+          _disposeWDBNodeEditorDataBeforeRemoveNode(
+            nodeData,
+            (editorState, engineState),
+          );
+
+        let engineState =
+          _disposeWDBNodeEngineData(nodeData, (editorState, engineState));
+
+        (editorState, engineState);
+      },
+    ~assetBundleNodeFunc=(_, _) => (editorState, engineState),
+    ~folderNodeFunc=(_, _, _) => (editorState, engineState),
   );
 
 let disposeNode = (node, (editorState, engineState)) => {
-  let editorState =
-    editorState
-    |> _disposeNodeEditorDataBeforeRemoveNode(node, engineState)
-    |> OperateTreeAssetEditorService.removeNode(node);
+  let (editorState, engineState) =
+    (editorState, engineState)
+    |> _disposeNodeEditorAndEngineDataBeforeRemoveNode(node);
 
-  let engineState = engineState |> _disposeNodeEngineData(node, editorState);
+  let editorState =
+    editorState |> OperateTreeAssetEditorService.removeNode(node);
 
   (editorState, engineState);
 };
 
-let _disposeTreeEditorData = (engineState, editorState) =>
+let _disposeTreeEditorAndEngineData = (editorState, engineState) =>
   IterateTreeAssetService.fold(
-    ~acc=editorState,
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~wdbNodeFunc=
-      (editorState, _, nodeData) =>
-        _disposeWDBNodeEditorDataBeforeRemoveNode(
-          nodeData,
-          (editorState, engineState),
-        ),
-    ~scriptEventFunctionNodeFunc=(editorState, _, nodeData) => editorState,
-    ~scriptAttributeNodeFunc=(editorState, _, nodeData) => editorState,
-    ~assetBundleNodeFunc=(editorState, _, nodeData) => editorState,
-    ~folderNodeFunc=(editorState, _, _, _) => editorState,
-    (),
-  );
-
-let _disposeTreeEngineData = (editorState, engineState) =>
-  IterateTreeAssetService.fold(
-    ~acc=engineState,
+    ~acc=(editorState, engineState),
     ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
     ~textureNodeFunc=
-      (engineState, _, nodeData) =>
-        _disposeTextureNodeEngineData(nodeData, engineState),
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
+        _disposeTextureNodeEngineData(nodeData, editorState, engineState),
+      ),
     ~cubemapNodeFunc=
-      (engineState, _, nodeData) =>
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
         _disposeCubemapNodeEngineData(nodeData, engineState),
+      ),
     ~materialNodeFunc=
-      (engineState, _, nodeData) =>
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
-    ~scriptEventFunctionNodeFunc=
-      (engineState, _, nodeData) =>
-        _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
-    ~scriptAttributeNodeFunc=
-      (engineState, _, nodeData) =>
-        _removeScriptAttributeFromScriptComponents(nodeData, engineState),
+      ),
     ~wdbNodeFunc=
-      (engineState, _, nodeData) =>
-        _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),
-    ~assetBundleNodeFunc=(engineState, _, nodeData) => engineState,
-    ~folderNodeFunc=(engineState, _, _, _) => engineState,
+      ((editorState, engineState), _, nodeData) => {
+        let editorState =
+          _disposeWDBNodeEditorDataBeforeRemoveNode(
+            nodeData,
+            (editorState, engineState),
+          );
+
+        let engineState =
+          _disposeWDBNodeEngineData(nodeData, (editorState, engineState));
+
+        (editorState, engineState);
+      },
+    ~scriptEventFunctionNodeFunc=
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
+        _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
+      ),
+    ~scriptAttributeNodeFunc=
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
+        _removeScriptAttributeFromScriptComponents(nodeData, engineState),
+      ),
+    ~assetBundleNodeFunc=
+      ((editorState, engineState), _, nodeData) => (
+        editorState,
+        engineState,
+      ),
+    ~folderNodeFunc=
+      ((editorState, engineState), _, _, _) => (editorState, engineState),
     (),
   );
 
 let disposeTree = ((editorState, engineState)) => {
-  let editorState = _disposeTreeEditorData(engineState, editorState);
-  let engineState = _disposeTreeEngineData(editorState, engineState);
+  let (editorState, engineState) =
+    _disposeTreeEditorAndEngineData(editorState, engineState);
 
   (
     editorState
     |> SourceTextureCacheInspectorCanvasEditorService.clearCache
     |> TreeAssetEditorService.clearTree
     |> BasicSourceTextureImageDataMapAssetEditorService.clearMap
+    |> IMGUICustomImageTextureContentMapAssetEditorService.clearMap
     |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
     |> CurrentNodeIdAssetEditorService.clearCurrentNodeId,
     engineState,

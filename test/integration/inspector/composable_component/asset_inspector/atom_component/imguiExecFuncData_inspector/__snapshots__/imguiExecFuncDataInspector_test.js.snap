@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`imgui exec func data inspector test show value test show default value 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-imguiExecFuncData-inspector"
+    >
+      <h1>
+        IMGUI Exec Func Data
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="imgui exec func data's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="New IMGUIExecFuncData"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-int-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title="exec order"
+        >
+          ExecOrder
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component int-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <div
+        className="imguiExecFuncData-execFunc"
+      >
+        <article
+          className="wonder-file-input"
+        >
+          <textarea
+            className="input-component file-input"
+            onChange={[Function]}
+            type="text"
+            value="function (param, param$1, state) {
+    return state;
+  }"
+          />
+          <button
+            onClick={[Function]}
+          >
+            submit
+          </button>
+        </article>
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        submit all
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`imgui exec func data inspector test show value test show specific value 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-imguiExecFuncData-inspector"
+    >
+      <h1>
+        IMGUI Exec Func Data
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="imgui exec func data's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="aaa"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-int-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title="exec order"
+        >
+          ExecOrder
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component int-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <div
+        className="imguiExecFuncData-execFunc"
+      >
+        <article
+          className="wonder-file-input"
+        >
+          <textarea
+            className="input-component file-input"
+            onChange={[Function]}
+            type="text"
+            value="function (customData, imguiAPIJsObj, state){
+    var box = imguiAPIJsObj.box;
+
+    return state;
+ }"
+          />
+          <button
+            onClick={[Function]}
+          >
+            submit
+          </button>
+        </article>
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        submit all
+      </button>
+    </article>
+  </article>
+</article>
+`;

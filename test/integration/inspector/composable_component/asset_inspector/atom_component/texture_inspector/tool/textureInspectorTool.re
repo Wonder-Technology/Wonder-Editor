@@ -7,8 +7,7 @@ let getWrapRepeatType = () =>
   Wonderjs.TextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
 
 let getWrapMirroredRepeatType = () =>
-  Wonderjs.TextureType.Mirrored_repeat
-  |> TextureTypeUtils.convertWrapToInt;
+  Wonderjs.TextureType.Mirrored_repeat |> TextureTypeUtils.convertWrapToInt;
 
 let getFilterLinearMipmapLinearType = () =>
   Wonderjs.TextureType.Linear_mipmap_linear
@@ -91,3 +90,31 @@ let changeMinFilter =
 let getMagFilterOptions = TextureFilterUtils.getMagFilterOptions;
 
 let getMinFilterOptions = TextureFilterUtils.getMinFilterOptions;
+
+let changeType = (~nodeId, ~type_, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  TextureInspector.Method.changeTextureType(
+    dispatchFunc,
+    nodeId,
+    type_ |> NodeAssetType.convertTextureTypeToInt,
+  );
+
+module IMGUICustomImageType = {
+  let setCustomImageId =
+      (
+        ~nodeId,
+        ~textureContentIndex=IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetTextureContentIndex(
+                               nodeId,
+                             )
+                             |> StateLogicService.getEditorState,
+        ~customImageId,
+        ~editorState=StateEditorService.getState(),
+        ~engineState=StateEngineService.unsafeGetState(),
+        (),
+      ) =>
+    TextureInspector.Method._setCustomImageId(
+      nodeId,
+      textureContentIndex,
+      customImageId,
+      (editorState, engineState),
+    );
+};

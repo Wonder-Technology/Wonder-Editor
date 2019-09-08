@@ -187,7 +187,8 @@ let _ =
           MainEditorAssetTool.buildFakeFileReader();
         });
 
-        testPromise("should redraw m1,m2 snapshot to basicSourceTextureImageDataMap", () => {
+        testPromise(
+          "should redraw m1,m2 snapshot to basicSourceTextureImageDataMap", () => {
           let (
             addedMaterialNodeId,
             newMaterialComponent,
@@ -309,6 +310,44 @@ let _ =
         });
       },
     );
+
+    describe("test dispose texture content data", () => {
+      beforeEach(() => {
+        MainEditorAssetTool.buildFakeImage();
+        MainEditorAssetTool.buildFakeFileReader();
+      });
+
+      describe("if type is IMGUICustomImage", () =>
+        testPromise("remove texture content", () =>
+          MainEditorAssetUploadTool.loadOneTexture()
+          |> then_(uploadedTextureNodeId => {
+               TextureInspectorTool.changeType(
+                 ~nodeId=uploadedTextureNodeId,
+                 ~type_=NodeAssetType.IMGUICustomImage,
+                 (),
+               );
+
+               let textureContentIndex =
+                 IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetTextureContentIndex(
+                   uploadedTextureNodeId,
+                 )
+                 |> StateLogicService.getEditorState;
+
+               MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                 ~textureNodeId=uploadedTextureNodeId,
+                 (),
+               );
+
+               IMGUICustomImageTextureContentMapTool.hasContent(
+                 ~textureContentIndex,
+                 (),
+               )
+               |> expect == false
+               |> resolve;
+             })
+        )
+      );
+    });
 
     describe("should remove it from engineState", () => {
       describe(
@@ -447,6 +486,101 @@ let _ =
                |> expect == false
                |> resolve;
              })
+        );
+      });
+
+      describe("test dispose imgui assets", () => {
+        describe("if type is IMGUICustomImage", () =>
+          describe("if the custom image data has set to engine", () => {
+            let _test = judgeFunc =>
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> then_(uploadedTextureNodeId => {
+                   TextureInspectorTool.changeType(
+                     ~nodeId=uploadedTextureNodeId,
+                     ~type_=NodeAssetType.IMGUICustomImage,
+                     (),
+                   );
+
+                   let customImageId = "i1";
+
+                   TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
+                     ~nodeId=uploadedTextureNodeId,
+                     ~customImageId,
+                     (),
+                   )
+                   |> StateLogicService.setState;
+
+                   AssetIMGUITool.addSettedAssetCustomImageData(
+                     AssetIMGUITool.buildFakeCustomImageData(
+                       ~imageId=customImageId,
+                       (),
+                     ),
+                   )
+                   |> StateLogicService.getAndSetEngineState;
+
+                   MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                     ~textureNodeId=uploadedTextureNodeId,
+                     (),
+                   );
+
+                   judgeFunc(customImageId);
+                 });
+
+            testPromise("remove it", () =>
+              _test(customImageId =>
+                AssetIMGUIEngineService.hasSettedAssetCustomImageData(
+                  customImageId,
+                )
+                |> StateLogicService.getEngineStateToGetData
+                |> expect == false
+                |> resolve
+              )
+            );
+          })
+        );
+
+        describe("if type is BasicSource", () =>
+          describe(
+            "if the texture has set to engine as imgui font-> bitmap", () => {
+            let _test = judgeFunc => {
+              let bitmapName = "bitmap.png";
+
+              MainEditorAssetUploadTool.loadOneTexture(
+                ~imgName=bitmapName,
+                (),
+              )
+              |> then_(uploadedTextureNodeId => {
+                   TextureInspectorTool.changeType(
+                     ~nodeId=uploadedTextureNodeId,
+                     ~type_=NodeAssetType.IMGUICustomImage,
+                     (),
+                   );
+
+                   AssetIMGUITool.setSettedAssetBitmapData(
+                     ~name=bitmapName |> FileNameService.getBaseName,
+                     (),
+                   )
+                   |> StateEngineService.setState
+                   |> ignore;
+
+                   MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                     ~textureNodeId=uploadedTextureNodeId,
+                     (),
+                   );
+
+                   judgeFunc(bitmapName);
+                 });
+            };
+
+            testPromise("remove it", () =>
+              _test(bitmapName =>
+                AssetIMGUIEngineService.hasSettedAssetBitmapData(bitmapName)
+                |> StateLogicService.getEngineStateToGetData
+                |> expect == false
+                |> resolve
+              )
+            );
+          })
         );
       });
     });

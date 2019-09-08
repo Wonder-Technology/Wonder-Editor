@@ -12,6 +12,7 @@ type assetRecord = {
   nodeIndex: int,
   basicSourceTextureImageDataMapIndex: int,
   cubemapTextureImageDataMapIndex: int,
+  imguiCustomImageTextureContentIndex: int,
   tree: option(tree),
   currentNodeId: option(nodeId),
   selectedFolderNodeIdInAssetTree: option(nodeId),

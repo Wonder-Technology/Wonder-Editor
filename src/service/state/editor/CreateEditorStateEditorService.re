@@ -19,6 +19,7 @@ let create = () => {
     nodeIndex: 0,
     basicSourceTextureImageDataMapIndex: 0,
     cubemapTextureImageDataMapIndex: 0,
+    imguiCustomImageTextureContentIndex: 0,
     tree: None,
     currentNodeId: None,
     selectedFolderNodeIdInAssetTree: None,
@@ -27,7 +28,7 @@ let create = () => {
     cubemapTextureImageDataMap:
       WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     imguiCustomImageTextureContentMap:
-      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      IMGUICustomImageTextureContentMapAssetEditorService.createMap(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),

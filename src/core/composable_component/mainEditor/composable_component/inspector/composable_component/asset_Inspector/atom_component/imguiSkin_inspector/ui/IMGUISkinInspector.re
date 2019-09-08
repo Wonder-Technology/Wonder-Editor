@@ -7,18 +7,16 @@ type allCustomStyleData = WonderImgui.SkinType.allCustomStyleData;
 type state = {
   buttonSkinData,
   allCustomStyleDataStr: textAreaInputValue,
-  skinName: string,
   originSkinName: string,
 };
 
 type action =
-  | ChangeSkinName(string)
   | ChangeButtonSkin(buttonSkinData)
   | ChangeAllCustomStyle(textAreaInputValue)
   | Submit(string);
 
 module Method = {
-  let changeSkinName = (name, sendFunc) => sendFunc(ChangeSkinName(name));
+  let changeSkinName = (newName, renameFunc) => renameFunc(newName);
 
   let submitButtonSkin = (sendFunc, buttonSkinData) =>
     sendFunc(ChangeButtonSkin(buttonSkinData));
@@ -36,18 +34,6 @@ module Method = {
        |j} */
     allCustomStyleData |> SerializeService.serializeHashMap;
 
-  let buildDefaultAllCustomStyleDataInputValue = () =>
-    buildAllCustomStyleDataInputValue(
-      WonderCommonlib.ImmutableHashMapService.createEmpty()
-      |> WonderCommonlib.ImmutableHashMapService.set(
-           "firstSingleCustomStyleData",
-           WonderCommonlib.ImmutableHashMapService.createEmpty()
-           |> WonderCommonlib.ImmutableHashMapService.set(
-                "color",
-                [|1., 0.5, 0.|],
-              ),
-         ),
-    );
   /* {|
        (function() {
            var allCustomStyleData = {};
@@ -63,11 +49,14 @@ module Method = {
        }());
      |}; */
 
-  let _convertInputValueStrToAllCustomStyleData: string => allCustomStyleData = [%raw
-    inputValueStr => {|
-         return eval( inputValueStr);
-         |}
-  ];
+  /* let _convertInputValueStrToAllCustomStyleData: string => allCustomStyleData = [%raw
+       inputValueStr => {|
+            return eval( inputValueStr);
+            |}
+     ]; */
+
+  let _convertInputValueStrToAllCustomStyleData = allCustomStyleDataStr =>
+    allCustomStyleDataStr |> SerializeService.deserializeHashMap;
 
   let submitAllCustomStyle = (sendFunc, allCustomStyleDataStr) =>
     sendFunc(ChangeAllCustomStyle(allCustomStyleDataStr));
@@ -75,21 +64,28 @@ module Method = {
   let submit =
       (
         nodeId,
-        {buttonSkinData, allCustomStyleDataStr, skinName, originSkinName},
+        {buttonSkinData, allCustomStyleDataStr, originSkinName},
         sendFunc,
       ) => {
     let allCustomStyleData =
       _convertInputValueStrToAllCustomStyleData(allCustomStyleDataStr);
 
-    IMGUISkinNodeAssetEditorService.setNodeData(
-      nodeId,
-      IMGUISkinNodeAssetService.buildNodeData(
-        ~name=skinName,
-        ~buttonSkinData,
-        ~allCustomStyleData,
-      ),
-    )
-    |> StateLogicService.getAndSetEditorState;
+    let editorState = StateEditorService.getState();
+
+    let skinName =
+      IMGUISkinNodeAssetEditorService.getNodeName(nodeId, editorState);
+
+    editorState
+    |> IMGUISkinNodeAssetEditorService.setNodeData(
+         nodeId,
+         IMGUISkinNodeAssetService.buildNodeData(
+           ~name=skinName,
+           ~buttonSkinData,
+           ~allCustomStyleData,
+         ),
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     let engineState = StateEngineService.unsafeGetState();
     let engineState =
@@ -119,9 +115,6 @@ let reducer = action =>
   | ChangeAllCustomStyle(allCustomStyleDataStr) => (
       state => ReasonReact.Update({...state, allCustomStyleDataStr})
     )
-  | ChangeSkinName(newSkinName) => (
-      state => ReasonReact.Update({...state, skinName: newSkinName})
-    )
   | Submit(originSkinName) => (
       state => ReasonReact.Update({...state, originSkinName})
     )
@@ -143,15 +136,8 @@ let render =
           languageType,
         )
       }
-      defaultValue={state.skinName}
-      onBlur={
-        value => {
-          renameFunc(value);
-
-          /* TODO fix: not has name in state! get name in editorState when need??? */
-          Method.changeSkinName(value, send);
-        }
-      }
+      defaultValue={state.originSkinName}
+      onBlur={value => Method.changeSkinName(value, renameFunc)}
       canBeNull=false
     />
     <IMGUISkinButtonInspector
@@ -161,7 +147,7 @@ let render =
     />
     <TextAreaInput
       label="AllCustomStyleData"
-      defaultInputValue={Method.buildDefaultAllCustomStyleDataInputValue()}
+      defaultInputValue={state.allCustomStyleDataStr}
       changeInputValueFunc={Method.submitAllCustomStyle(send)}
     />
     <button onClick={_e => Method.submit(nodeId, state, send)}>
@@ -176,7 +162,6 @@ let make =
       ~dispatchFunc,
       ~currentNodeId,
       ~name,
-      /* ~skin, */
       ~buttonSkinData,
       ~allCustomStyleData,
       ~renameFunc,
@@ -184,10 +169,6 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    /* let {buttonSkinData, allCustomStyleData}: WonderImgui.SkinType.singleSkinData =
-       ExtendIMGUIEngineService.unsafeGetSkinData(name)
-       |> StateLogicService.getEngineStateToGetData; */
-    skinName: name,
     originSkinName: name,
     buttonSkinData,
     allCustomStyleDataStr:

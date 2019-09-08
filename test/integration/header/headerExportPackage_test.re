@@ -103,7 +103,7 @@ let _ =
 
                let editorState = StateEditorService.getState();
 
-               TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
+               BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(editorState)
                |> Js.Array.filter(node => {
                     let {uint8Array}: ImageDataType.imageData =
                       BasicSourceTextureImageDataMapTool.getDataByTextureNode(

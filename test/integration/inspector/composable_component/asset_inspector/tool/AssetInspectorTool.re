@@ -86,6 +86,46 @@ module Rename = {
       ) =>
     renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
+  let renameAssetIMGUIExecFuncDataNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
+  let renameAssetIMGUICustomControlNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
+  let renameAssetIMGUISkinNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
+  let renameAssetFntNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
   let isFolderNameDisabled = nodeId =>
     NodeAssetService.isIdEqual(
       MainEditorAssetTreeTool.getRootNodeId(StateEditorService.getState()),

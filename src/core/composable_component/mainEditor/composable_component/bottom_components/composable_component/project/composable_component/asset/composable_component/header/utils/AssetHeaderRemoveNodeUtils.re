@@ -3,7 +3,7 @@ open Js.Promise;
 open NodeAssetType;
 
 let getUseTextureMaterialArray = (currentNode, engineState) =>
-  TextureNodeAssetService.isTextureNode(currentNode) ?
+  TextureNodeAssetService.isNode(currentNode) ?
     {
       let {textureComponent}: NodeAssetType.textureNodeData =
         TextureNodeAssetService.getNodeData(currentNode);

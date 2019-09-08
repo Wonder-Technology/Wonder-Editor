@@ -7,7 +7,7 @@ let getNewName = () => "New IMGUICustomControl";
 let isTreeIMGUICustomControlNodesHasTargetName = (name, tree) =>
   IterateTreeAssetService.find(
     ~tree,
-    ~predIMGUISkinNodeFunc=
+    ~predIMGUICustomControlNodeFunc=
       node => IMGUICustomControlNodeAssetService.getNodeName(node) === name,
     (),
   )

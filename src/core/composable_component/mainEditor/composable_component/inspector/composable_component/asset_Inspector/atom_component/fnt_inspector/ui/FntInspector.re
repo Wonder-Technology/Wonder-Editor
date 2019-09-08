@@ -1,11 +1,9 @@
 type state = {
   fntContent: string,
-  fntName: string,
   originFntName: string,
 };
 
 type action =
-  | ChangeFntName(string)
   | ChangeFntContent(string)
   | Submit(string);
 
@@ -15,12 +13,18 @@ module Method = {
   let changeFntContent = (sendFunc, fntContent) =>
     sendFunc(ChangeFntContent(fntContent));
 
-  let submit = (nodeId, {fntContent, fntName, originFntName}, sendFunc) => {
-    FntNodeAssetEditorService.setNodeData(
-      nodeId,
-      FntNodeAssetService.buildNodeData(~name=fntName, ~fntContent),
-    )
-    |> StateLogicService.getAndSetEditorState;
+  let submit = (nodeId, {fntContent, originFntName}, sendFunc) => {
+    let editorState = StateEditorService.getState();
+
+    let fntName = FntNodeAssetEditorService.getNodeName(nodeId, editorState);
+
+    editorState
+    |> FntNodeAssetEditorService.setNodeData(
+         nodeId,
+         FntNodeAssetService.buildNodeData(~name=fntName, ~fntContent),
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     let engineState = StateEngineService.unsafeGetState();
     let engineState =
@@ -48,9 +52,6 @@ let reducer = action =>
   | ChangeFntContent(fntContent) => (
       state => ReasonReact.Update({...state, fntContent})
     )
-  | ChangeFntName(newFntName) => (
-      state => ReasonReact.Update({...state, fntName: newFntName})
-    )
   | Submit(originFntName) => (
       state => ReasonReact.Update({...state, originFntName})
     )
@@ -72,7 +73,7 @@ let render =
           languageType,
         )
       }
-      defaultValue={state.fntName}
+      defaultValue={state.originFntName}
       onBlur={value => Method.changeFntName(value, renameFunc)}
       canBeNull=false
     />
@@ -89,7 +90,7 @@ let render =
 
 let make = (~currentNodeId, ~name, ~fntContent, ~renameFunc, _children) => {
   ...component,
-  initialState: () => {fntName: name, originFntName: name, fntContent},
+  initialState: () => {originFntName: name, fntContent},
   reducer,
   render: self => render(currentNodeId, renameFunc, self),
 };

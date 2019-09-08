@@ -11,6 +11,14 @@ let setMap = (map, editorState) => {
   },
 };
 
+let createMap = () => WonderCommonlib.ImmutableSparseMapService.createEmpty();
+
+let clearMap = editorState => setMap(createMap(), editorState);
+
+let generateEmptyContent = (): NodeAssetType.imguiCustomImageTextureContent => {
+  id: "Default Id",
+};
+
 let getContent = (index, editorState) =>
   getMap(editorState) |> WonderCommonlib.ImmutableSparseMapService.get(index);
 
@@ -22,8 +30,16 @@ let setContent = (index, textureContent, editorState) =>
   |> WonderCommonlib.ImmutableSparseMapService.set(index, textureContent)
   |> setMap(_, editorState);
 
-let unsafeGetId = (index, editorState) =>
-  unsafeGetContent(index, editorState).id;
+let removeContent = (index, editorState) =>
+  getMap(editorState)
+  |> WonderCommonlib.ImmutableSparseMapService.deleteVal(index)
+  |> setMap(_, editorState);
+
+let getId = (index, editorState) => unsafeGetContent(index, editorState).id;
 
 let setId = (index, id, editorState) =>
-  setContent(index, {id: id}, editorState);
+  setContent(
+    index,
+    {id: id}: NodeAssetType.imguiCustomImageTextureContent,
+    editorState,
+  );

@@ -26,7 +26,7 @@ let getNodeData = folderNode =>
   | _ => _fatalShouldBeFolderNode()
   };
 
-let isFolderNode = node =>
+let isNode = node =>
   switch (node) {
   | FolderNode(_, _, _) => true
   | _ => false
@@ -84,7 +84,7 @@ let findChild = (folderNode, targetNode) =>
        NodeAssetService.isNodeEqualById(~sourceNode=childNode, ~targetNode)
      );
 
-let isFolderNode = node =>
+let isNode = node =>
   switch (node) {
   | FolderNode(_, _, _) => true
   | _ => false

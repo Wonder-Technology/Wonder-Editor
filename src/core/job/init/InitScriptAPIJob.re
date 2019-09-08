@@ -102,7 +102,7 @@ module AssetBundle = {
       let nextFolderNode =
         FolderNodeAssetService.getChildrenNodes(folderNode)
         |> Js.Array.find(childNode =>
-             FolderNodeAssetService.isFolderNode(childNode)
+             FolderNodeAssetService.isNode(childNode)
              && FolderNodeAssetService.getNodeNameByData(
                   FolderNodeAssetService.getNodeData(childNode),
                 )
@@ -153,7 +153,7 @@ module AssetBundle = {
 
           FolderNodeAssetService.getChildrenNodes(folderNode)
           |> Js.Array.find(childNode =>
-               AssetBundleNodeAssetService.isAssetBundleNode(childNode)
+               AssetBundleNodeAssetService.isNode(childNode)
                && AssetBundleNodeAssetService.getNodeNameByData(
                     AssetBundleNodeAssetService.getNodeData(childNode),
                   )

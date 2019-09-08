@@ -143,7 +143,7 @@ module Method = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    /* TextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
+    /* BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes(
          editorState,
        ) */
     findAllTextureNodesFunc(editorState)

@@ -13,3 +13,5 @@ let getUint8Array =
     | None => buildDefaultMaterialSnapshotUint8ArrayFunc()
     }
   };
+
+let getMimeType = ({mimeType}: ImageDataType.imageData) => mimeType;
