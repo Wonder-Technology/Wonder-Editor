@@ -74,6 +74,33 @@ exports[`MainEditorAssetChildrenNode test asset tree node->isShowChildren render
 </article>
 `;
 
+exports[`MainEditorAssetChildrenNode test set current node test snapshot click fnt asset to be current node 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/fnt.png"
+      />
+    </div>
+    <div
+      className="item-text item-active"
+    >
+      <span>
+        New Fnt
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetChildrenNode test show order 
         order should be:
         1)for different type_:folder,wdb,material,texture;

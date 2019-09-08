@@ -13,6 +13,7 @@ open Js.Promise;
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -34,8 +35,8 @@ let _ =
       |> ignore;
     });
 
-    describe("test set current node", () =>
-      test("click texture file to be current node", () => {
+    describe("test set current node", () => {
+      test("click texture asset to be current node", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
@@ -56,8 +57,26 @@ let _ =
         == MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
              assetTreeData,
            );
-      })
-    );
+      });
+
+      describe("test snapshot", () =>
+        test("click fnt asset to be current node", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addFnt();
+
+          MainEditorAssetChildrenNodeTool.selectFntNode(
+            ~nodeId=addedNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetChildrenNode()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+    });
     /*
       Jest.useFakeTimers will cause testPromise timeout(use Jest.useRealTimers not work)!!!
 
