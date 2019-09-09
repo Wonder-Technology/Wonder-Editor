@@ -27,8 +27,6 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FileInput");
 
-/* todo should check user key in text to be invalid */
-
 let reducer = (onSubmitFunc, action) =>
   switch (action) {
   | ShowInput => (

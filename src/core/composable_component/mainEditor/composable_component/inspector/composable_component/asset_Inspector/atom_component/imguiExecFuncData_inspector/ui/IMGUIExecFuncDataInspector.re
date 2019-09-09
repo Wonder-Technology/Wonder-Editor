@@ -119,15 +119,15 @@ let render =
       onDragDrop={value => Method.changeExecOrder(value, send)}
     />
     <div className="imguiExecFuncData-execFunc">
-      <FileInput
-        inputValue={
+      <TextAreaInput
+        label="Func"
+        defaultInputValue={
           Method.convertExecFuncToStr(
             IMGUIExecFuncDataNodeAssetEditorService.getExecFunc(nodeId)
             |> StateLogicService.getEditorState,
           )
         }
-        onSubmit={value => Method.changeExecFunc(nodeId, value, send)}
-        isShowInput=true
+        onBlurFunc={value => Method.changeExecFunc(nodeId, value, send)}
       />
     </div>
     <button onClick={_e => Method.submit(nodeId, state, send)}>

@@ -63,21 +63,30 @@ exports[`imgui exec func data inspector test show value test show default value 
         className="imguiExecFuncData-execFunc"
       >
         <article
-          className="wonder-file-input"
+          className="wonder-textAreaInput"
         >
-          <textarea
-            className="input-component file-input"
-            onChange={[Function]}
-            type="text"
-            value="function (param, param$1, state) {
+          <div
+            className="content-field content-textarea"
+          >
+            <div
+              className="field-title"
+            >
+              Func
+            </div>
+            <div
+              className="field-content"
+            >
+              <textarea
+                className="input-component"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="function (param, param$1, state) {
     return state;
   }"
-          />
-          <button
-            onClick={[Function]}
-          >
-            submit
-          </button>
+              />
+            </div>
+          </div>
         </article>
       </div>
       <button
@@ -153,23 +162,32 @@ exports[`imgui exec func data inspector test show value test show specific value
         className="imguiExecFuncData-execFunc"
       >
         <article
-          className="wonder-file-input"
+          className="wonder-textAreaInput"
         >
-          <textarea
-            className="input-component file-input"
-            onChange={[Function]}
-            type="text"
-            value="function (customData, imguiAPIJsObj, state){
+          <div
+            className="content-field content-textarea"
+          >
+            <div
+              className="field-title"
+            >
+              Func
+            </div>
+            <div
+              className="field-content"
+            >
+              <textarea
+                className="input-component"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="function (customData, imguiAPIJsObj, state){
     var box = imguiAPIJsObj.box;
 
     return state;
  }"
-          />
-          <button
-            onClick={[Function]}
-          >
-            submit
-          </button>
+              />
+            </div>
+          </div>
         </article>
       </div>
       <button
