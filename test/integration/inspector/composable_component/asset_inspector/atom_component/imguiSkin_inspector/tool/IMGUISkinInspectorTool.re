@@ -47,7 +47,7 @@ let createAllCustomStyleData1 = () =>
 let setNodeData =
     (
       ~nodeId,
-      ~name,
+      ~name="",
       ~buttonSkinData=ExtendIMGUIEngineService.createButtonSkinData(
                         [|0., 0., 0.|],
                         [|0., 0., 0.|],

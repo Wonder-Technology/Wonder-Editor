@@ -24,14 +24,34 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   |> WonderCommonlib.ArrayService.flatten
   |> ArrayService.exclude(wdbGameObjects);
 
+let _disposeRelatedSkinData = (textureContentIndexOpt, editorState) =>
+  switch (textureContentIndexOpt) {
+  | Some(textureContentIndex) =>
+    switch (
+      IMGUICustomImageTypeTextureNodeAssetEditorService.getIdByTextureContentIndex(
+        textureContentIndex,
+        editorState,
+      )
+    ) {
+    | None => editorState
+    | Some(id) =>
+      IMGUICustomImageTypeTextureNodeAssetEditorService.removeRelatedSkinDataByCustomImageId(
+        id,
+        editorState,
+      )
+    }
+  | _ => editorState
+  };
+
 let _disposeTextureContentData = (type_, textureContentIndexOpt, editorState) =>
   switch (type_) {
   | NodeAssetType.BasicSource => editorState
   | NodeAssetType.IMGUICustomImage =>
-    TextureContentTextureNodeAssetEditorService.removeTextureContent(
-      textureContentIndexOpt,
-      editorState,
-    )
+    editorState
+    |> _disposeRelatedSkinData(textureContentIndexOpt)
+    |> TextureContentTextureNodeAssetEditorService.removeTextureContent(
+         textureContentIndexOpt,
+       )
   };
 
 let _disposeTextureNodeEditorDataBeforeRemoveNode =

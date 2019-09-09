@@ -148,10 +148,11 @@ module Method = {
       ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value,
     );
 
-  let _changeDependencyRelation = event =>
-    ChangeDependencyRelation(
-      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value,
-    );
+  let _changeDependencyRelation = value =>
+    /* ChangeDependencyRelation(
+         ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value,
+       ); */
+    ChangeDependencyRelation(value);
 
   let _renderNameInput = ((state, send)) =>
     <div className="content-field">
@@ -170,7 +171,7 @@ module Method = {
     <TextAreaInput
       label="relation"
       defaultInputValue={state.dependencyRelationInputValue}
-      changeInputValueFunc={e => send(_changeDependencyRelation(e))}
+      onBlurFunc={value => send(ChangeDependencyRelation(value))}
     />;
 
   let renderGenerateAllABModal =

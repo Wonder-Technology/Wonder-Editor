@@ -3,7 +3,7 @@ open ColorType;
 open Color;
 
 type state = {
-  colorHex: string,
+  colorHex,
   isShowColorPick: bool,
 };
 
@@ -32,7 +32,7 @@ let _renderColorPick =
     <div className="color-pick-item">
       <ReactColor.Sketch
         color={state.colorHex}
-        onChange={(value, e) => changeColorFunc(value)}
+        onChange={(value: colorPickJsObjType, e) => changeColorFunc(value)}
       />
     </div>
     <div className="color-pick-bg" onClick={_e => send(HideColorPick)} />

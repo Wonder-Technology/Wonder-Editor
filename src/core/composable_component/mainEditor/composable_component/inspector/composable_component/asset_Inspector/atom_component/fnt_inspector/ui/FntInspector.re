@@ -80,7 +80,7 @@ let render =
     <TextAreaInput
       label="Fnt Content"
       defaultInputValue={state.fntContent}
-      changeInputValueFunc={Method.changeFntContent(send)}
+      onBlurFunc={Method.changeFntContent(send)}
     />
     <button onClick={_e => Method.submit(nodeId, state, send)}>
       {DomHelper.textEl("submit")}

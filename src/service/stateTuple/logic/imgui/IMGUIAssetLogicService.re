@@ -8,7 +8,7 @@ let removeSettedAssets =
   switch (type_) {
   | NodeAssetType.IMGUICustomImage =>
     let id =
-      IMGUICustomImageTextureContentMapAssetEditorService.getId(
+      IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
         textureContentIndexOpt |> OptionService.unsafeGet,
         editorState,
       );

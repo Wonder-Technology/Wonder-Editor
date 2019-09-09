@@ -22,6 +22,13 @@ let findAllIMGUISkins = editorState =>
     (),
   );
 
+let changeSkinData = (changeSkinDataFunc, editorState) =>
+  IterateTreeAssetEditorService.map(
+    ~editorState,
+    ~imguiSkinNodeFunc=(_, nodeData) => changeSkinDataFunc(nodeData),
+    (),
+  );
+
 let isTreeIMGUISkinNodesHasTargetName = (name, editorState) =>
   IMGUISkinNodeNameAssetService.isTreeIMGUISkinNodesHasTargetName(
     name,

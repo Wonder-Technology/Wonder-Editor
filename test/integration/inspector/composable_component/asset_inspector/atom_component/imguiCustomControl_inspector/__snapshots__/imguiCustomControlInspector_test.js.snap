@@ -39,24 +39,33 @@ exports[`imgui customControl inspector test show value test show default value 1
         className="imguiCustomControl-customControl"
       >
         <article
-          className="wonder-file-input"
+          className="wonder-textAreaInput"
         >
-          <textarea
-            className="input-component file-input"
-            onChange={[Function]}
-            type="text"
-            value="function (param, param$1, param$2, imguiRecord) {
+          <div
+            className="content-field content-textarea"
+          >
+            <div
+              className="field-title"
+            >
+              Func
+            </div>
+            <div
+              className="field-content"
+            >
+              <textarea
+                className="input-component"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="function (param, param$1, param$2, imguiRecord) {
     return (
       /* tuple */
       [imguiRecord, null]
     );
   }"
-          />
-          <button
-            onClick={[Function]}
-          >
-            submit
-          </button>
+              />
+            </div>
+          </div>
         </article>
       </div>
       <button
@@ -108,23 +117,32 @@ exports[`imgui customControl inspector test show value test show specific value 
         className="imguiCustomControl-customControl"
       >
         <article
-          className="wonder-file-input"
+          className="wonder-textAreaInput"
         >
-          <textarea
-            className="input-component file-input"
-            onChange={[Function]}
-            type="text"
-            value="function (customControlFuncData, showData, apiJsObj, record){
+          <div
+            className="content-field content-textarea"
+          >
+            <div
+              className="field-title"
+            >
+              Func
+            </div>
+            <div
+              className="field-content"
+            >
+              <textarea
+                className="input-component"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="function (customControlFuncData, showData, apiJsObj, record){
     var box = apiJsObj.box;
 
     return [record, null];
  }"
-          />
-          <button
-            onClick={[Function]}
-          >
-            submit
-          </button>
+              />
+            </div>
+          </div>
         </article>
       </div>
       <button

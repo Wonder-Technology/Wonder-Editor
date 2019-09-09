@@ -122,8 +122,8 @@ module Method = {
 
   let changeTextureType = InspectorChangeTextureTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let _getCustomImageId = (textureContentIndex, editorState) =>
-    IMGUICustomImageTextureContentMapAssetEditorService.getId(
+  let _unsafeGetCustomImageId = (textureContentIndex, editorState) =>
+    IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
       textureContentIndex,
       editorState,
     );
@@ -151,7 +151,9 @@ module Method = {
                 languageType,
               )
             }
-            defaultValue={_getCustomImageId(textureContentIndex, editorState)}
+            defaultValue={
+              _unsafeGetCustomImageId(textureContentIndex, editorState)
+            }
             onBlur=(
               value =>
                 _setCustomImageId(

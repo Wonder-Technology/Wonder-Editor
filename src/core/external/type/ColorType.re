@@ -1,3 +1,5 @@
+type colorHex = string;
+
 type colorPickRgbType = {
   r: int,
   g: int,
@@ -5,18 +7,18 @@ type colorPickRgbType = {
 };
 
 type colorPickType = {
-  hex: string,
+  hex: colorHex,
   rgb: colorPickRgbType,
 };
 
 type colorPickJsObjType = {
   .
-  hex: string,
-  rgb: {
+  "hex": colorHex,
+  "rgb": {
     .
-    r: int,
-    g: int,
-    b: int,
+    "r": int,
+    "g": int,
+    "b": int,
   },
 };
 
@@ -25,6 +27,7 @@ let convertColorObjToColorPickRgbType = rgbObj => {
   g: rgbObj##g,
   b: rgbObj##b,
 };
+
 let convertColorObjToColorPickType = colorObj => {
   hex: colorObj##hex,
   rgb: convertColorObjToColorPickRgbType(colorObj##rgb),

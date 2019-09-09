@@ -35,7 +35,14 @@ let removeContent = (index, editorState) =>
   |> WonderCommonlib.ImmutableSparseMapService.deleteVal(index)
   |> setMap(_, editorState);
 
-let getId = (index, editorState) => unsafeGetContent(index, editorState).id;
+let getId = (index, editorState) =>
+  getContent(index, editorState)
+  |> Js.Option.map((. content: NodeAssetType.imguiCustomImageTextureContent) =>
+       content.id
+     );
+
+let unsafeGetId = (index, editorState) =>
+  getId(index, editorState) |> OptionService.unsafeGet;
 
 let setId = (index, id, editorState) =>
   setContent(

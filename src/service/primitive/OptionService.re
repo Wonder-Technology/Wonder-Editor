@@ -1,10 +1,8 @@
-open Wonderjs;
+let unsafeGet = Wonderjs.OptionService.unsafeGet;
 
-let unsafeGet = OptionService.unsafeGet;
+let unsafeGetJsonSerializedValue = Wonderjs.OptionService.unsafeGetJsonSerializedValue;
 
-let unsafeGetJsonSerializedValue = OptionService.unsafeGetJsonSerializedValue;
-
-let isJsonSerializedValueNone = OptionService.isJsonSerializedValueNone;
+let isJsonSerializedValueNone = Wonderjs.OptionService.isJsonSerializedValueNone;
 
 let join = x =>
   switch (x) {
@@ -35,3 +33,7 @@ let handleSomeAndIgnore = (func, x) =>
   | None => ()
   | Some(x) => func(x) |> ignore
   };
+
+let none = () => None;
+
+let bind = (switchFunc, x) => eitherWithNoData(switchFunc, none, x);

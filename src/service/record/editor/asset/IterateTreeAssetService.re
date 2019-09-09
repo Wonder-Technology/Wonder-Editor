@@ -54,10 +54,10 @@ let rec cata =
                                           ~nodeData,
                                         ),
           ~fntNodeFunc=(nodeId, nodeData) =>
-                          FntNodeAssetService.buildNodeByNodeData(
-                            ~nodeId,
-                            ~nodeData,
-                          ),
+                         FntNodeAssetService.buildNodeByNodeData(
+                           ~nodeId,
+                           ~nodeData,
+                         ),
           ~folderNodeFunc=(nodeId, nodeData, children) =>
                             FolderNodeAssetService.buildNodeByNodeData(
                               ~nodeId,
@@ -682,7 +682,10 @@ let findOne =
 let rec map =
         (
           ~tree,
-          ~folderNodeFunc,
+          ~folderNodeFunc=(_, nodeData) => (
+                            UIStateAssetType.NotChange,
+                            nodeData,
+                          ),
           ~textureNodeFunc=(_, nodeData) => nodeData,
           ~cubemapNodeFunc=(_, nodeData) => nodeData,
           ~materialNodeFunc=(_, nodeData) => nodeData,

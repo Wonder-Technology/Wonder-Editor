@@ -529,7 +529,7 @@ let _ =
                       uploadedTextureNodeId,
                       (oldCustomImageId, newCustomImageId),
                     ) =>
-                    IMGUICustomImageTextureContentMapAssetEditorService.getId(
+                    IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
                       IMGUICustomImageTypeTextureNodeAssetEditorService.unsafeGetTextureContentIndex(
                         uploadedTextureNodeId,
                       )
