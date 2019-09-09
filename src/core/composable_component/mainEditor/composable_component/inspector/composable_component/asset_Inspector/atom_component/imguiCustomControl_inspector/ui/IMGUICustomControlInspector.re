@@ -95,8 +95,9 @@ let render =
       canBeNull=false
     />
     <div className="imguiCustomControl-customControl">
-      <FileInput
-        inputValue={
+      <TextAreaInput
+        label="Func"
+        defaultInputValue={
           Method.convertCustomControlFuncToStr(
             IMGUICustomControlNodeAssetEditorService.getCustomControlFunc(
               nodeId,
@@ -104,10 +105,9 @@ let render =
             |> StateLogicService.getEditorState,
           )
         }
-        onSubmit={
+        onBlurFunc={
           value => Method.changeCustomControlFunc(nodeId, value, send)
         }
-        isShowInput=true
       />
     </div>
     <button onClick={_e => Method.submit(nodeId, state, send)}>

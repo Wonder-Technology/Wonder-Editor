@@ -80,7 +80,7 @@ module CustomEventHandler = {
             _updateEngineDataByCustomImageId(
               nodeId,
               editorState
-              |> IMGUICustomImageTextureContentMapAssetEditorService.getId(
+              |> IMGUICustomImageTextureContentMapAssetEditorService.unsafeGetId(
                    textureContentIndex,
                  ),
               newCustomImageId,

@@ -1,12 +1,8 @@
-type color = WonderImgui.SkinType.color;
+type color = IMGUIType.color;
 
-type imageId = WonderImgui.ExtendType.customImageId;
+type imageId = IMGUIType.imageId;
 
-type align = WonderImgui.FontType.align;
-
-external convertFontAlignToInt: align => int = "%identity";
-
-external convertIntToFontAlign: int => align = "%identity";
+type align = IMGUIType.align;
 
 type state = {
   buttonColor: color,
@@ -150,7 +146,23 @@ module Method = {
            imageId,
            editorState,
          )
+         |> OptionService.unsafeGet
        );
+
+  let getFontAlignOptions = (): array(SelectType.optionItem) => [|
+    {
+      key: WonderImgui.FontType.Left |> IMGUIType.convertFontAlignToInt,
+      value: "left",
+    },
+    {
+      key: WonderImgui.FontType.Center |> IMGUIType.convertFontAlignToInt,
+      value: "center",
+    },
+    {
+      key: WonderImgui.FontType.Right |> IMGUIType.convertFontAlignToInt,
+      value: "right",
+    },
+  |];
 };
 
 let component = ReasonReact.reducerComponent("IMGUISkinButtonInspector");
@@ -198,6 +210,7 @@ let render =
     <div className="imguiSkinButton-skin">
       <PickColorComponent
         label="Button Color"
+        key={DomHelper.getRandomKey()}
         title={
           LanguageUtils.getInspectorLanguageDataByType(
             "imguiSkinData-buttonSkinData-buttonColor-describe",
@@ -208,7 +221,7 @@ let render =
         changeColorFunc={
           value =>
             Method.changeButtonColor(
-              value |> Color.convert16HexToRGBArr,
+              value |> Color.convertColorObjToRGBArr,
               send,
             )
         }
@@ -221,6 +234,7 @@ let render =
         }
       />
       <PickColorComponent
+        key={DomHelper.getRandomKey()}
         label="Hover Button Color"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -232,7 +246,7 @@ let render =
         changeColorFunc={
           value =>
             Method.changeHoverButtonColor(
-              value |> Color.convert16HexToRGBArr,
+              value |> Color.convertColorObjToRGBArr,
               send,
             )
         }
@@ -245,6 +259,7 @@ let render =
         }
       />
       <PickColorComponent
+        key={DomHelper.getRandomKey()}
         label="Click Button Color"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -256,7 +271,7 @@ let render =
         changeColorFunc={
           value =>
             Method.changeClickButtonColor(
-              value |> Color.convert16HexToRGBArr,
+              value |> Color.convertColorObjToRGBArr,
               send,
             )
         }
@@ -269,6 +284,7 @@ let render =
         }
       />
       <SelectTextureNode
+        key={DomHelper.getRandomKey()}
         label="Button Image"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -292,6 +308,7 @@ let render =
         isShowTextureGroup=false
       />
       <SelectTextureNode
+        key={DomHelper.getRandomKey()}
         label="Hover Button Image"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -299,7 +316,10 @@ let render =
             languageType,
           )
         }
-        currentTextureComponent=None
+        currentTextureComponent={
+          Method.getCurrentTextureComponent(state.hoverButtonImage)
+          |> StateLogicService.getEditorState
+        }
         removeTextureFunc={
           () => Method.changeHoverButtonImage(Js.Nullable.null, send)
         }
@@ -312,6 +332,7 @@ let render =
         isShowTextureGroup=false
       />
       <SelectTextureNode
+        key={DomHelper.getRandomKey()}
         label="Click Button Image"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -319,7 +340,10 @@ let render =
             languageType,
           )
         }
-        currentTextureComponent=None
+        currentTextureComponent={
+          Method.getCurrentTextureComponent(state.clickButtonImage)
+          |> StateLogicService.getEditorState
+        }
         removeTextureFunc={
           () => Method.changeClickButtonImage(Js.Nullable.null, send)
         }
@@ -331,7 +355,7 @@ let render =
         }
         isShowTextureGroup=false
       />
-      <IntInput
+      <Select
         key={DomHelper.getRandomKey()}
         label="Font Align"
         title={
@@ -340,23 +364,18 @@ let render =
             languageType,
           )
         }
-        defaultValue={
-          state.fontAlign |> convertFontAlignToInt |> string_of_int
-        }
+        options={Method.getFontAlignOptions()}
+        selectedKey={state.fontAlign |> IMGUIType.convertFontAlignToInt}
         onChange={
           value =>
-            Method.changeFontAlign(value |> convertIntToFontAlign, send)
-        }
-        onBlur={
-          value =>
-            Method.changeFontAlign(value |> convertIntToFontAlign, send)
-        }
-        onDragDrop={
-          value =>
-            Method.changeFontAlign(value |> convertIntToFontAlign, send)
+            Method.changeFontAlign(
+              value |> IMGUIType.convertIntToFontAlign,
+              send,
+            )
         }
       />
       <PickColorComponent
+        key={DomHelper.getRandomKey()}
         label="Font Color"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
@@ -367,7 +386,10 @@ let render =
         getColorFunc={() => state.fontColor |> Color.getHexString}
         changeColorFunc={
           value =>
-            Method.changeFontColor(value |> Color.convert16HexToRGBArr, send)
+            Method.changeFontColor(
+              value |> Color.convertColorObjToRGBArr,
+              send,
+            )
         }
         closeColorPickFunc={
           value =>
@@ -383,19 +405,7 @@ let render =
 
 let make = (~currentNodeId, ~buttonSkinData, ~submitFunc, _children) => {
   ...component,
-  initialState: () =>
-    /* let {
-         buttonColor,
-         hoverButtonColor,
-         clickButtonColor,
-         buttonImage,
-         hoverButtonImage,
-         clickButtonImage,
-         fontAlign,
-         fontColor,
-
-       } = buttonSkinData; */
-    buttonSkinData |> convertButtonSkinDataToState,
+  initialState: () => buttonSkinData |> convertButtonSkinDataToState,
   reducer,
   render: self => render(currentNodeId, submitFunc, self),
 };

@@ -1,8 +1,8 @@
-type buttonSkinData = WonderImgui.SkinType.buttonSkinData;
+type buttonSkinData = IMGUIType.buttonSkinData;
 
 type textAreaInputValue = string;
 
-type allCustomStyleData = WonderImgui.SkinType.allCustomStyleData;
+type allCustomStyleData = IMGUIType.allCustomStyleData;
 
 type state = {
   buttonSkinData,
@@ -148,7 +148,7 @@ let render =
     <TextAreaInput
       label="AllCustomStyleData"
       defaultInputValue={state.allCustomStyleDataStr}
-      changeInputValueFunc={Method.submitAllCustomStyle(send)}
+      onBlurFunc={Method.submitAllCustomStyle(send)}
     />
     <button onClick={_e => Method.submit(nodeId, state, send)}>
       {DomHelper.textEl("submit all")}

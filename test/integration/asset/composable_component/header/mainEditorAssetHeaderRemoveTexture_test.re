@@ -317,7 +317,7 @@ let _ =
         MainEditorAssetTool.buildFakeFileReader();
       });
 
-      describe("if type is IMGUICustomImage", () =>
+      describe("if type is IMGUICustomImage", () => {
         testPromise("remove texture content", () =>
           MainEditorAssetUploadTool.loadOneTexture()
           |> then_(uploadedTextureNodeId => {
@@ -345,8 +345,169 @@ let _ =
                |> expect == false
                |> resolve;
              })
-        )
-      );
+        );
+
+        describe("remove related skin data", () =>
+          describe("remove related button skin data", () =>
+            describe("remove by custom image id", () => {
+              let _test = judgeFunc => {
+                let addedSkinNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+                MainEditorAssetHeaderOperateNodeTool.addIMGUISkin();
+                let addedSkinNodeId2 = MainEditorAssetIdTool.getNewAssetId();
+                MainEditorAssetHeaderOperateNodeTool.addIMGUISkin();
+
+                MainEditorAssetUploadTool.loadOneTexture()
+                |> then_(uploadedTextureNodeId1 => {
+                     TextureInspectorTool.changeType(
+                       ~nodeId=uploadedTextureNodeId1,
+                       ~type_=NodeAssetType.IMGUICustomImage,
+                       (),
+                     );
+
+                     let customImageId1 = "i1";
+
+                     TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
+                       ~nodeId=uploadedTextureNodeId1,
+                       ~customImageId=customImageId1,
+                       (),
+                     );
+
+                     MainEditorAssetUploadTool.loadOneTexture()
+                     |> then_(uploadedTextureNodeId2 => {
+                          TextureInspectorTool.changeType(
+                            ~nodeId=uploadedTextureNodeId2,
+                            ~type_=NodeAssetType.IMGUICustomImage,
+                            (),
+                          );
+
+                          let customImageId2 = "i2";
+
+                          TextureInspectorTool.IMGUICustomImageType.setCustomImageId(
+                            ~nodeId=uploadedTextureNodeId2,
+                            ~customImageId=customImageId2,
+                            (),
+                          );
+
+                          IMGUISkinInspectorTool.setNodeData(
+                            ~nodeId=addedSkinNodeId1,
+                            ~buttonSkinData=
+                              IMGUISkinInspectorTool.createButtonSkinData(
+                                ~buttonImage=
+                                  Js.Nullable.return(customImageId1),
+                                ~clickButtonImage=
+                                  Js.Nullable.return(customImageId2),
+                                (),
+                              ),
+                            (),
+                          )
+                          |> StateEditorService.setState
+                          |> ignore;
+                          IMGUISkinInspectorTool.setNodeData(
+                            ~nodeId=addedSkinNodeId2,
+                            ~buttonSkinData=
+                              IMGUISkinInspectorTool.createButtonSkinData(
+                                ~buttonImage=
+                                  Js.Nullable.return(customImageId2),
+                                ~hoverButtonImage=
+                                  Js.Nullable.return(customImageId1),
+                                (),
+                              ),
+                            (),
+                          )
+                          |> StateEditorService.setState
+                          |> ignore;
+
+                          MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                            ~textureNodeId=uploadedTextureNodeId1,
+                            (),
+                          );
+
+                          judgeFunc(
+                            (addedSkinNodeId1, addedSkinNodeId2),
+                            (customImageId1, customImageId2),
+                          );
+                        });
+                   });
+              };
+
+              testPromise("remove from editor data", () =>
+                _test(
+                  (
+                    (addedSkinNodeId1, addedSkinNodeId2),
+                    (customImageId1, customImageId2),
+                  ) =>
+                  (
+                    (
+                      (
+                        IMGUISkinNodeAssetEditorService.getButtonSkinData(
+                          addedSkinNodeId1,
+                        )
+                        |> StateLogicService.getEditorState
+                      ).
+                        buttonImage,
+                      (
+                        IMGUISkinNodeAssetEditorService.getButtonSkinData(
+                          addedSkinNodeId1,
+                        )
+                        |> StateLogicService.getEditorState
+                      ).
+                        clickButtonImage,
+                    ),
+                    (
+                      (
+                        IMGUISkinNodeAssetEditorService.getButtonSkinData(
+                          addedSkinNodeId2,
+                        )
+                        |> StateLogicService.getEditorState
+                      ).
+                        buttonImage,
+                      (
+                        IMGUISkinNodeAssetEditorService.getButtonSkinData(
+                          addedSkinNodeId2,
+                        )
+                        |> StateLogicService.getEditorState
+                      ).
+                        clickButtonImage,
+                    ),
+                  )
+                  |> expect
+                  == (
+                       (
+                         Js.Nullable.undefined,
+                         Js.Nullable.return(customImageId2),
+                       ),
+                       (
+                         Js.Nullable.return(customImageId2),
+                         Js.Nullable.undefined,
+                       ),
+                     )
+                  |> resolve
+                )
+              );
+              testPromise(
+                "should update imgui skin inspector->button skin data", () =>
+                _test(
+                  (
+                    (addedSkinNodeId1, addedSkinNodeId2),
+                    (customImageId1, customImageId2),
+                  ) => {
+                  MainEditorAssetChildrenNodeTool.selectIMGUISkinNode(
+                    ~nodeId=addedSkinNodeId1,
+                    (),
+                  );
+
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig(),
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
+                  |> resolve;
+                })
+              );
+            })
+          )
+        );
+      });
     });
 
     describe("should remove it from engineState", () => {

@@ -250,13 +250,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item wonder-int-input"
+            className="inspector-item"
           >
             <div
-              className="item-header component-label"
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              onMouseUp={[Function]}
+              className="item-header"
               title="font align"
             >
               Font Align
@@ -264,13 +261,26 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             <div
               className="item-content"
             >
-              <input
-                className="input-component int-input"
-                onBlur={[Function]}
+              <select
                 onChange={[Function]}
-                type="text"
                 value="1"
-              />
+              >
+                <option
+                  value="0"
+                >
+                  left
+                </option>
+                <option
+                  value="1"
+                >
+                  center
+                </option>
+                <option
+                  value="2"
+                >
+                  right
+                </option>
+              </select>
             </div>
           </article>
           <article
@@ -327,6 +337,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
           >
             <textarea
               className="input-component"
+              onBlur={[Function]}
               onChange={[Function]}
               type="text"
               value="{}"
@@ -597,13 +608,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item wonder-int-input"
+            className="inspector-item"
           >
             <div
-              className="item-header component-label"
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              onMouseUp={[Function]}
+              className="item-header"
               title="font align"
             >
               Font Align
@@ -611,13 +619,26 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             <div
               className="item-content"
             >
-              <input
-                className="input-component int-input"
-                onBlur={[Function]}
+              <select
                 onChange={[Function]}
-                type="text"
                 value="2"
-              />
+              >
+                <option
+                  value="0"
+                >
+                  left
+                </option>
+                <option
+                  value="1"
+                >
+                  center
+                </option>
+                <option
+                  value="2"
+                >
+                  right
+                </option>
+              </select>
             </div>
           </article>
           <article
@@ -674,6 +695,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
           >
             <textarea
               className="input-component"
+              onBlur={[Function]}
               onChange={[Function]}
               type="text"
               value="{\\"s1\\":{\\"c1\\":1}}"

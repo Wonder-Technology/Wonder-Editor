@@ -94,3 +94,360 @@ exports[`MainEditorAssetHeader->remove texture select texture;
   />
 </article>
 `;
+
+exports[`MainEditorAssetHeader->remove texture test dispose texture content data if type is IMGUICustomImage remove related skin data remove related button skin data remove by custom image id should update imgui skin inspector->button skin data 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-asset"
+  >
+    <article
+      className="wonder-imguiSkin-inspector"
+    >
+      <h1>
+        IMGUI Skin
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="imgui skin's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </article>
+      <article
+        className="wonder-imguiSkinButton-inspector"
+      >
+        <h2>
+          Button
+        </h2>
+        <hr />
+        <div
+          className="imguiSkinButton-skin"
+        >
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="button color"
+            >
+              Button Color
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="hover button color"
+            >
+              Hover Button Color
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="click button color"
+            >
+              Click Button Color
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+          <article
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="button image"
+            >
+              Button Image
+            </div>
+            <div
+              className="item-content item-texture"
+            >
+              <div
+                className="texture-img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="texture-remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
+          <article
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="hover button image"
+            >
+              Hover Button Image
+            </div>
+            <div
+              className="item-content item-texture"
+            >
+              <div
+                className="texture-img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="texture-remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
+          <article
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="click button image"
+            >
+              Click Button Image
+            </div>
+            <div
+              className="item-content item-texture"
+            >
+              <div
+                className="texture-img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+                <img
+                  src="newImgBase64"
+                />
+              </div>
+              <button
+                className="texture-remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
+          <article
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="font align"
+            >
+              Font Align
+            </div>
+            <div
+              className="item-content"
+            >
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  left
+                </option>
+                <option
+                  value="1"
+                >
+                  center
+                </option>
+                <option
+                  value="2"
+                >
+                  right
+                </option>
+              </select>
+            </div>
+          </article>
+          <article
+            className="color-pick"
+          >
+            <div
+              className="item-header"
+              title="font color"
+            >
+              Font Color
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+        <button
+          onClick={[Function]}
+        >
+          submit all
+        </button>
+      </article>
+      <article
+        className="wonder-textAreaInput"
+      >
+        <div
+          className="content-field content-textarea"
+        >
+          <div
+            className="field-title"
+          >
+            AllCustomStyleData
+          </div>
+          <div
+            className="field-content"
+          >
+            <textarea
+              className="input-component"
+              onChange={[Function]}
+              type="text"
+              value="{}"
+            />
+          </div>
+        </div>
+      </article>
+      <button
+        onClick={[Function]}
+      >
+        submit all
+      </button>
+    </article>
+  </article>
+</article>
+`;
