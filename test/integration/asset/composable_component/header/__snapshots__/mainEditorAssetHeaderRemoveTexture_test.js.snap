@@ -435,6 +435,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
           >
             <textarea
               className="input-component"
+              onBlur={[Function]}
               onChange={[Function]}
               type="text"
               value="{}"
