@@ -7,15 +7,6 @@ open Color;
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  /* let buildOperateExtensionComponent = () =>
-     <div className="header-item">
-       <div className="component-item">
-         <FileInput
-           buttonText="show Input"
-           onSubmit=(value => addExtension(value))
-         />
-       </div>
-     </div>; */
   let changeLanguage = languageType =>
     switch (languageType) {
     | EN =>
