@@ -210,8 +210,8 @@ let _ =
         )
         |> expect
         == {
-             defaultCubeGeometryComponent: 1,
-             defaultSphereGeometryComponent: 2,
+             defaultCubeGeometryComponent: Some(1),
+             defaultSphereGeometryComponent: Some(2),
            }
       )
     );

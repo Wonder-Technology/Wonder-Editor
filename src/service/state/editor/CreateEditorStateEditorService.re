@@ -30,8 +30,8 @@ let create = () => {
     imguiCustomImageTextureContentMap:
       IMGUICustomImageTextureContentMapAssetEditorService.createMap(),
     geometryData: {
-      defaultCubeGeometryComponent: (-1),
-      defaultSphereGeometryComponent: (-1),
+      defaultCubeGeometryComponent: None,
+      defaultSphereGeometryComponent: None,
     },
     materialData: {
       defaultBasicMaterialData: None,
