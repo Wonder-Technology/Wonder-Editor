@@ -13,12 +13,18 @@ let setGeometryData = (geometryData, editorState) => {
 let unsafeGetDefaultCubeGeometryComponent = editorState =>
   editorState
   |> getGeometryData
-  |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+  |> (
+    ({defaultCubeGeometryComponent}) =>
+      defaultCubeGeometryComponent |> OptionService.unsafeGet
+  );
 
 let unsafeGetDefaultSphereGeometryComponent = editorState =>
   editorState
   |> getGeometryData
-  |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);
+  |> (
+    ({defaultSphereGeometryComponent}) =>
+      defaultSphereGeometryComponent |> OptionService.unsafeGet
+  );
 
 let unsafeGetDefaultGeometryComponents = editorState => [|
   unsafeGetDefaultCubeGeometryComponent(editorState),

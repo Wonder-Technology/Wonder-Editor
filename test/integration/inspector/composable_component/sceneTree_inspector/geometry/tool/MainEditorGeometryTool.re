@@ -8,13 +8,19 @@ let getDefaultCubeGeometryComponent =
     (~editorState=StateEditorService.getState(), ()) =>
   editorState
   |> GeometryDataAssetEditorService.getGeometryData
-  |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+  |> (
+    ({defaultCubeGeometryComponent}) =>
+      defaultCubeGeometryComponent |> OptionService.unsafeGet
+  );
 
 let getDefaultSphereGeometryComponent =
     (~editorState=StateEditorService.getState(), ()) =>
   editorState
   |> GeometryDataAssetEditorService.getGeometryData
-  |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);
+  |> (
+    ({defaultSphereGeometryComponent}) =>
+      defaultSphereGeometryComponent |> OptionService.unsafeGet
+  );
 
 let changeGeometry =
     (
