@@ -54,6 +54,7 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
           >
             <textarea
               className="input-component"
+              onBlur={[Function]}
               onChange={[Function]}
               type="text"
               value="
