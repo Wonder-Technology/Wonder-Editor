@@ -203,7 +203,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -212,10 +212,10 @@ exports[`material inspector test rename material if type is lightMaterial, renam
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -232,7 +232,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove

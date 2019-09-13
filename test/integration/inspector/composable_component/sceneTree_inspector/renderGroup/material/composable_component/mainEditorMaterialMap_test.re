@@ -191,8 +191,8 @@ let _ =
             MainEditorMaterialMapTool.renderTextureGroup(
               {
                 style: ReactDOMRe.Style.make(~opacity="1", ()),
-                isShowTextureGroup: true,
-                currentTextureComponent: Some(textureComponent),
+                isShowAssetGroup: true,
+                currentAssetDataOpt: Some(textureComponent),
               },
               (() => ()) |> Obj.magic,
               BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes,

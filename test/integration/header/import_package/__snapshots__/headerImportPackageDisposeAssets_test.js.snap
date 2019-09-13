@@ -152,7 +152,7 @@ exports[`header import package->dispose assets dispose material assets
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -161,10 +161,10 @@ exports[`header import package->dispose assets dispose material assets
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -184,7 +184,7 @@ exports[`header import package->dispose assets dispose material assets
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove

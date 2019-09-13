@@ -539,7 +539,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -548,10 +548,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -571,7 +571,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -1240,7 +1240,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -1249,10 +1249,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -1269,7 +1269,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -1938,7 +1938,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -1947,10 +1947,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -1970,7 +1970,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -2639,7 +2639,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -2648,10 +2648,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -2668,7 +2668,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -3337,7 +3337,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -3346,10 +3346,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -3366,7 +3366,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove

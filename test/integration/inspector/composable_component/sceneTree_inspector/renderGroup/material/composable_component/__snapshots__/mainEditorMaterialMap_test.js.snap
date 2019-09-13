@@ -602,7 +602,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -611,10 +611,10 @@ exports[`test MainEditorMaterialMap load asset wdb;
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -634,7 +634,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -766,7 +766,7 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
         sort texture assets by firstname alphabetically
          1`] = `
 <article
-  className="inspector-item"
+  className="selectAssetNode-item"
 >
   <div
     className="item-header"
@@ -775,10 +775,10 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
     Diffuse map
   </div>
   <div
-    className="item-content item-texture"
+    className="item-content"
   >
     <div
-      className="texture-img"
+      className="img"
       onClick={[Function]}
       style={
         Object {
@@ -795,7 +795,7 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
       />
     </div>
     <button
-      className="texture-remove"
+      className="remove"
       onClick={[Function]}
     >
       Remove

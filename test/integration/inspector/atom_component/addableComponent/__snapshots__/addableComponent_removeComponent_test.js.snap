@@ -539,7 +539,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -548,10 +548,10 @@ exports[`AddableComponent remove component test remove box gameObject component 
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -568,7 +568,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -3013,7 +3013,7 @@ exports[`AddableComponent remove component test remove script component test sna
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -3022,10 +3022,10 @@ exports[`AddableComponent remove component test remove script component test sna
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -3042,7 +3042,7 @@ exports[`AddableComponent remove component test remove script component test sna
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove

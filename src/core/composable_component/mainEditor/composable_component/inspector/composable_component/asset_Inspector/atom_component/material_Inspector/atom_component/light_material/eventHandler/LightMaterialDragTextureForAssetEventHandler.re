@@ -4,7 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
   type prepareTuple = (Wonderjs.MaterialType.material, int);
-  type dataTuple = int;
+  type dataTuple = TreeAssetType.tree;
   type return = unit;
 
   let _handleSetMap = (materialComponent, textureComponent, engineState) =>
@@ -36,12 +36,12 @@ module CustomEventHandler = {
       (
         (uiState, dispatchFunc),
         (materialComponent, currentNodeId),
-        draggedNodeId,
+        draggedNode,
       ) => {
     MaterialDragTextureEventHandlerUtils.handleSelfLogic(
       (uiState, dispatchFunc),
       materialComponent,
-      draggedNodeId,
+      NodeAssetService.getNodeId(~node=draggedNode),
       _handleSetMap,
     );
 

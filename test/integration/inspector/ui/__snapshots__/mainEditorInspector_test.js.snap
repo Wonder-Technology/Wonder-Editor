@@ -757,7 +757,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -766,10 +766,10 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -786,7 +786,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove

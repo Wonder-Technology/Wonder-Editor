@@ -301,8 +301,11 @@ let render =
         }
         findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
         onDropFunc={
-          textureNodeId =>
-            Method.changeButtonImageByNodeId(textureNodeId, send)
+          textureNode =>
+            Method.changeButtonImageByNodeId(
+              NodeAssetService.getNodeId(~node=textureNode),
+              send,
+            )
             |> StateLogicService.getEditorState
         }
         isShowTextureGroup=false
@@ -325,8 +328,11 @@ let render =
         }
         findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
         onDropFunc={
-          textureNodeId =>
-            Method.changeHoverButtonImageByNodeId(textureNodeId, send)
+          textureNode =>
+            Method.changeHoverButtonImageByNodeId(
+              NodeAssetService.getNodeId(~node=textureNode),
+              send,
+            )
             |> StateLogicService.getEditorState
         }
         isShowTextureGroup=false
@@ -349,8 +355,11 @@ let render =
         }
         findAllTextureNodesFunc=Method.findAllIMGUICustomImageTypeTextureNodes
         onDropFunc={
-          textureNodeId =>
-            Method.changeClickButtonImageByNodeId(textureNodeId, send)
+          textureNode =>
+            Method.changeClickButtonImageByNodeId(
+              NodeAssetService.getNodeId(~node=textureNode),
+              send,
+            )
             |> StateLogicService.getEditorState
         }
         isShowTextureGroup=false

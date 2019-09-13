@@ -155,7 +155,7 @@ exports[`MainEditorMaterial test select material group->show order
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -164,10 +164,10 @@ exports[`MainEditorMaterial test select material group->show order
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -184,7 +184,7 @@ exports[`MainEditorMaterial test select material group->show order
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove
@@ -330,7 +330,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -339,10 +339,10 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -359,7 +359,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove

@@ -116,7 +116,13 @@ let dragAssetTextureToMap =
   MainEditorLightMaterialForAsset.Method.dragToSetLightMaterialTexture(
     (uiState, dispatchFunc),
     (material, currentNodeId),
-    textureNodeId,
+    TextureNodeAssetService.buildNode(
+      ~nodeId=textureNodeId,
+      ~textureContentIndex=None,
+      ~type_=NodeAssetType.BasicSource,
+      ~textureComponent=-1,
+      ~imageDataIndex=-1,
+    ),
   );
 
 let dragAssetTextureToMapNotCreateImgCanvasSnapshot =
@@ -157,7 +163,9 @@ let judgeImgCanvasSnapshotIsStoreInImageDataMap =
     |> MaterialNodeAssetService.getNodeData;
 
   editorState
-  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(snapshotImageDataIndex)
+  |> BasicSourceTextureImageDataMapAssetEditorService.unsafeGetData(
+       snapshotImageDataIndex,
+     )
   |> (
     ({base64}) =>
       base64 |> OptionService.unsafeGet |> expect == imgCanvasFakeBase64Str
