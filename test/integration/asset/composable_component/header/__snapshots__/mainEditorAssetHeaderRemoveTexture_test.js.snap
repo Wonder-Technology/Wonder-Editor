@@ -234,7 +234,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -243,10 +243,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -263,7 +263,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -271,7 +271,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -280,10 +280,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Hover Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -300,7 +300,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -308,7 +308,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -317,10 +317,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Click Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -340,7 +340,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove

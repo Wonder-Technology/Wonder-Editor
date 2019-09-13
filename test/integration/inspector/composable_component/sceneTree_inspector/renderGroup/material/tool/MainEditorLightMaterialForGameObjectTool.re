@@ -67,7 +67,12 @@ module Drag = {
     MainEditorLightMaterialForGameObject.Method.dragToSetLightMaterialTexture(
       (uiState, dispatchFunc),
       material,
-      textureNodeId,
-      /* DragEventUtils.handleDragEnd(event); */
+      TextureNodeAssetService.buildNode(
+        ~nodeId=textureNodeId,
+        ~textureContentIndex=None,
+        ~type_=NodeAssetType.BasicSource,
+        ~textureComponent=-1,
+        ~imageDataIndex=-1,
+      ),
     );
 };

@@ -75,26 +75,43 @@ exports[`Header Setting->Scene test Scene test ambient light test change color s
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -163,26 +180,43 @@ exports[`Header Setting->Scene test Scene test skybox test has no cubemap ui->mo
       <div
         className="setting-scene-skybox"
       >
-        <div
-          className="item-header"
-          title="set scene skybox->cubemap"
-        >
-          Skybox Cubemap
-        </div>
-        <div
-          className="item-content"
+        <article
+          className="selectAssetNode-item"
         >
           <div
-            className="cubemap-img"
-            onClick={[Function]}
-          />
-          <button
-            className="cubemap-remove"
-            onClick={[Function]}
+            className="item-header"
+            title="set scene skybox->cubemap"
           >
-            Remove
-          </button>
-        </div>
+            Skybox Cubemap
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="img"
+              onClick={[Function]}
+              style={
+                Object {
+                  "opacity": "1",
+                }
+              }
+            >
+              <div
+                className="img-dragBg"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+            </div>
+            <button
+              className="remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -253,80 +287,97 @@ exports[`Header Setting->Scene test Scene test skybox test select cubemap group 
       <div
         className="setting-scene-skybox"
       >
-        <div
-          className="item-header"
-          title="set scene skybox->cubemap"
-        >
-          Skybox Cubemap
-        </div>
-        <div
-          className="item-content"
+        <article
+          className="selectAssetNode-item"
         >
           <div
-            className="cubemap-img"
-            onClick={[Function]}
-          />
-          <button
-            className="cubemap-remove"
-            onClick={[Function]}
+            className="item-header"
+            title="set scene skybox->cubemap"
           >
-            Remove
-          </button>
-        </div>
-      </div>
-    </div>
-    <div
-      className="select-component-content"
-    >
-      <div
-        className="select-component-item"
-      >
-        <div
-          className="select-item-header"
-        >
-          Cubemap
-        </div>
-        <div
-          className="select-item-imgBody"
-        >
-          <div
-            className="imgBody-content"
-          >
-            <div
-              className="select-item-imgContent"
-              onClick={[Function]}
-            >
-              <img
-                className="imgContent-img"
-                src="./public/img/cubemap.png"
-              />
-              <div
-                className="imgContent-text"
-              >
-                ACubemap
-              </div>
-            </div>
-            <div
-              className="select-item-imgContent"
-              onClick={[Function]}
-            >
-              <img
-                className="imgContent-img"
-                src="./public/img/cubemap.png"
-              />
-              <div
-                className="imgContent-text"
-              >
-                BCubemap
-              </div>
-            </div>
+            Skybox Cubemap
           </div>
-        </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="img"
+              onClick={[Function]}
+              style={
+                Object {
+                  "opacity": "1",
+                }
+              }
+            >
+              <div
+                className="img-dragBg"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+            </div>
+            <button
+              className="remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+          <div
+            className="select-component-content"
+          >
+            <div
+              className="select-component-item"
+            >
+              <div
+                className="select-item-header"
+              >
+                Cubemap
+              </div>
+              <div
+                className="select-item-imgBody"
+              >
+                <div
+                  className="imgBody-content"
+                >
+                  <div
+                    className="select-item-imgContent"
+                    onClick={[Function]}
+                  >
+                    <img
+                      className="imgContent-img"
+                      src="./public/img/cubemap.png"
+                    />
+                    <div
+                      className="imgContent-text"
+                    >
+                      ACubemap
+                    </div>
+                  </div>
+                  <div
+                    className="select-item-imgContent"
+                    onClick={[Function]}
+                  >
+                    <img
+                      className="imgContent-img"
+                      src="./public/img/cubemap.png"
+                    />
+                    <div
+                      className="imgContent-text"
+                    >
+                      BCubemap
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="select-component-bg"
+              onClick={[Function]}
+            />
+          </div>
+        </article>
       </div>
-      <div
-        className="select-component-bg"
-        onClick={[Function]}
-      />
     </div>
   </div>
 </article>
@@ -393,33 +444,49 @@ exports[`Header Setting->Scene test Scene test skybox test select cubemap ui->mo
       <div
         className="setting-scene-skybox"
       >
-        <div
-          className="item-header"
-          title="set scene skybox->cubemap"
-        >
-          Skybox Cubemap
-        </div>
-        <div
-          className="item-content"
+        <article
+          className="selectAssetNode-item"
         >
           <div
-            className="cubemap-img"
-            onClick={[Function]}
+            className="item-header"
+            title="set scene skybox->cubemap"
           >
-            <img
-              src="./public/img/cubemap.png"
-            />
+            Skybox Cubemap
           </div>
-          <span>
-            New Cubemap
-          </span>
-          <button
-            className="cubemap-remove"
-            onClick={[Function]}
+          <div
+            className="item-content"
           >
-            Remove
-          </button>
-        </div>
+            <div
+              className="img"
+              onClick={[Function]}
+              style={
+                Object {
+                  "opacity": "1",
+                }
+              }
+            >
+              <div
+                className="img-dragBg"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+              <img
+                src="./public/img/cubemap.png"
+              />
+            </div>
+            <span>
+              New Cubemap
+            </span>
+            <button
+              className="remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -501,26 +568,43 @@ exports[`Header Setting->Scene test Scene test ui->scene modal snapshot 1`] = `
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>

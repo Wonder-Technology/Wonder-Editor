@@ -751,7 +751,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -760,10 +760,10 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -780,7 +780,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove
@@ -1595,7 +1595,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="selectAssetNode-item"
                     >
                       <div
                         className="item-header"
@@ -1604,10 +1604,10 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content item-texture"
+                        className="item-content"
                       >
                         <div
-                          className="texture-img"
+                          className="img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -1624,7 +1624,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                           />
                         </div>
                         <button
-                          className="texture-remove"
+                          className="remove"
                           onClick={[Function]}
                         >
                           Remove

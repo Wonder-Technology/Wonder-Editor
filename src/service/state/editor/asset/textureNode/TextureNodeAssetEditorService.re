@@ -73,6 +73,10 @@ let getType = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
   |> TextureNodeAssetService.getType;
 
+let getTextureComponent = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> TextureNodeAssetService.getTextureComponent;
+
 let getImageDataIndex = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
   |> TextureNodeAssetService.getImageDataIndex;

@@ -75,26 +75,43 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -177,26 +194,43 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -279,26 +313,43 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -381,26 +432,43 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -483,26 +551,43 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         <div
           className="setting-scene-skybox"
         >
-          <div
-            className="item-header"
-            title="set scene skybox->cubemap"
-          >
-            Skybox Cubemap
-          </div>
-          <div
-            className="item-content"
+          <article
+            className="selectAssetNode-item"
           >
             <div
-              className="cubemap-img"
-              onClick={[Function]}
-            />
-            <button
-              className="cubemap-remove"
-              onClick={[Function]}
+              className="item-header"
+              title="set scene skybox->cubemap"
             >
-              Remove
-            </button>
-          </div>
+              Skybox Cubemap
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="img"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              >
+                <div
+                  className="img-dragBg"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                />
+              </div>
+              <button
+                className="remove"
+                onClick={[Function]}
+              >
+                Remove
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </div>

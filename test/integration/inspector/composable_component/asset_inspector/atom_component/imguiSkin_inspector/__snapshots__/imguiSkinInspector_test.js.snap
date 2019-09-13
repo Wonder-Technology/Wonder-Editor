@@ -139,7 +139,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -148,10 +148,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -168,7 +168,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -176,7 +176,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -185,10 +185,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Hover Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -205,7 +205,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -213,7 +213,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -222,10 +222,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Click Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -242,7 +242,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -494,7 +494,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -503,10 +503,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -526,7 +526,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -534,7 +534,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -543,10 +543,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Hover Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -563,7 +563,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove
@@ -571,7 +571,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="selectAssetNode-item"
           >
             <div
               className="item-header"
@@ -580,10 +580,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Click Button Image
             </div>
             <div
-              className="item-content item-texture"
+              className="item-content"
             >
               <div
-                className="texture-img"
+                className="img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -600,7 +600,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
                 />
               </div>
               <button
-                className="texture-remove"
+                className="remove"
                 onClick={[Function]}
               >
                 Remove

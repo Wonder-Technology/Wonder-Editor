@@ -153,7 +153,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -162,10 +162,10 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -182,7 +182,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove
@@ -366,7 +366,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="selectAssetNode-item"
         >
           <div
             className="item-header"
@@ -375,10 +375,10 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
             Diffuse Map
           </div>
           <div
-            className="item-content item-texture"
+            className="item-content"
           >
             <div
-              className="texture-img"
+              className="img"
               onClick={[Function]}
               style={
                 Object {
@@ -395,7 +395,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
               />
             </div>
             <button
-              className="texture-remove"
+              className="remove"
               onClick={[Function]}
             >
               Remove
