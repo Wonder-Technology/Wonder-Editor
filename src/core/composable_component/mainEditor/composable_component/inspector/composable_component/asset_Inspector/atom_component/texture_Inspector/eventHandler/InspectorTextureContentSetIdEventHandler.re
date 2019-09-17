@@ -29,20 +29,7 @@ module CustomEventHandler = {
           engineState,
         )
         |> AssetIMGUIEngineService.addSettedAssetCustomImageData((
-             imageData
-             |> ImageDataAssetService.getUint8Array(_, () =>
-                  WonderLog.Log.fatal(
-                    WonderLog.Log.buildFatalMessage(
-                      ~title="_updateEngineDataByCustomImageId",
-                      ~description=
-                        {j|image should has uint8Array or base64 data|j},
-                      ~reason="",
-                      ~solution={j||j},
-                      ~params={j||j},
-                    ),
-                  )
-                )
-             |> Js.Typed_array.Uint8Array.buffer,
+             imageData |> ImageDataAssetService.getArrayBuffer,
              newCustomImageId,
              ImageDataAssetService.getMimeType(imageData),
            ))

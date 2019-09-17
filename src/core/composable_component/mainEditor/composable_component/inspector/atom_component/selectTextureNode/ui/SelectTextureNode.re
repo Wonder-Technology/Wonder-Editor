@@ -2,34 +2,43 @@ let component = ReasonReact.statelessComponent("SelectTextureNode");
 
 let render =
     (
-      (label, title, currentAssetDataOpt, isShowTextureGroup),
+      (
+        label,
+        title,
+        assetGroupHeader,
+        currentAssetDataOpt,
+        isShowTextureGroup,
+      ),
       (removeTextureFunc, onDropFunc, findAllTextureNodesFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
-  <SelectAssetNode
+  <SelectAssetByImage
     label
-    assetGroupHeader="Texture"
+    assetGroupHeader
     title
-    currentAssetDataOpt
+    currentAssetDataOpt={
+      currentAssetDataOpt
+      |> Js.Option.map((. currentAssetData) =>
+           currentAssetData |> SelectAssetByImage.convertIntToAssetDataType
+         )
+    }
     removeAssetFunc=removeTextureFunc
-    findAllAssetNodesFunc=findAllTextureNodesFunc
+    findAllAssetRelatedDataFunc=findAllTextureNodesFunc
     onDropFunc
     getCurrentAssetDataFromNodeFunc={
-      node => TextureNodeAssetService.getTextureComponent(node)
+      node =>
+        TextureNodeAssetService.getTextureComponent(node)
+        |> SelectAssetByImage.convertIntToAssetDataType
     }
-    getAssetImageSrcFromEngineFunc={
-      (currentTextureComponent, engineState) => {
-        let source =
-          BasicSourceTextureEngineService.unsafeGetSource(
-            currentTextureComponent,
-            engineState,
-          );
-
-        ImageType.convertImageElementToSrcImageElements(source)##src;
-      }
+    getCurrentAssetImageSrcFunc={
+      (currentTextureComponent, (_, engineState)) =>
+        SelectAssetNodeUtils.getImageSrc(
+          currentTextureComponent |> SelectAssetByImage.convertAssetDataTypeToInt,
+          engineState,
+        )
     }
-    getAssetImageSrcFromEditorFunc={
-      (node, editorState) =>
+    getAssetGroupSingleAssetImageSrcFunc={
+      (node, (editorState, engineState)) =>
         ImageDataMapUtils.getImgSrc(
           TextureNodeAssetService.getImageDataIndex(node),
           editorState,
@@ -38,14 +47,8 @@ let render =
     isCurrentAssetFunc={
       (currentTextureComponent, node) =>
         currentTextureComponent
+        |> SelectAssetByImage.convertAssetDataTypeToInt
         === TextureNodeAssetService.getTextureComponent(node)
-    }
-    getAssetNodeNameByNodeFunc={
-      (node, engineState) =>
-        NodeNameAssetLogicService.getTextureNodeName(
-          ~texture=TextureNodeAssetService.getTextureComponent(node),
-          ~engineState,
-        )
     }
     renderAssetNameFunc={(_, _) => ReasonReact.null}
     isShowAssetGroup=isShowTextureGroup
@@ -60,12 +63,19 @@ let make =
       ~findAllTextureNodesFunc,
       ~isShowTextureGroup,
       ~title,
+      ~assetGroupHeader="Texture",
       _children,
     ) => {
   ...component,
   render: self =>
     render(
-      (label, title, currentTextureComponent, isShowTextureGroup),
+      (
+        label,
+        title,
+        assetGroupHeader,
+        currentTextureComponent,
+        isShowTextureGroup,
+      ),
       (removeTextureFunc, onDropFunc, findAllTextureNodesFunc),
       self,
     ),

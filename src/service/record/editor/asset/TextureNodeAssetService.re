@@ -6,6 +6,7 @@ let getNodeName =
     ({textureComponent}: NodeAssetType.textureNodeData, getTextureNameFunc) =>
   getTextureNameFunc(~texture=textureComponent);
 
+
 let buildNodeData =
     (~type_, ~textureContentIndex, ~textureComponent, ~imageDataIndex)
     : textureNodeData => {

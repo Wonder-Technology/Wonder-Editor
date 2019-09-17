@@ -1,10 +1,18 @@
 module Method = {
   let showAssets =
-      ((getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc), sendFunc) =>
-    getAllAssetsFunc()
+      (
+        (
+          findAllAssetRelatedDataFunc,
+          isCurrentAssetFunc,
+          changeAssetFunc,
+          getTextFunc,
+        ),
+        sendFunc,
+      ) =>
+    findAllAssetRelatedDataFunc()
     |> Js.Array.map(item => {
          let className =
-           isAssetFunc(item) ?
+           isCurrentAssetFunc(item) ?
              "select-item-content select-item-active" : "select-item-content";
 
          <div
@@ -22,7 +30,12 @@ let render =
     (
       headerText,
       (clickHideGroupButtonFunc, sendFunc),
-      (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
+      (
+        findAllAssetRelatedDataFunc,
+        isCurrentAssetFunc,
+        changeAssetFunc,
+        getTextFunc,
+      ),
     ) =>
   <div className="select-component-content">
     <div className="select-component-item">
@@ -33,7 +46,12 @@ let render =
         {
           ReasonReact.array(
             Method.showAssets(
-              (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
+              (
+                findAllAssetRelatedDataFunc,
+                isCurrentAssetFunc,
+                changeAssetFunc,
+                getTextFunc,
+              ),
               sendFunc,
             ),
           )
@@ -51,8 +69,8 @@ let make =
       ~headerText,
       ~clickHideGroupButtonFunc,
       ~sendFunc,
-      ~getAllAssetsFunc,
-      ~isAssetFunc,
+      ~findAllAssetRelatedDataFunc,
+      ~isCurrentAssetFunc,
       ~changeAssetFunc,
       ~getTextFunc,
       _children,
@@ -62,6 +80,11 @@ let make =
     render(
       headerText,
       (clickHideGroupButtonFunc, sendFunc),
-      (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
+      (
+        findAllAssetRelatedDataFunc,
+        isCurrentAssetFunc,
+        changeAssetFunc,
+        getTextFunc,
+      ),
     ),
 };

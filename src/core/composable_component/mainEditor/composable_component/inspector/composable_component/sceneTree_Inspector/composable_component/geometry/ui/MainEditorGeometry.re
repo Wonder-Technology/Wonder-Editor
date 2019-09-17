@@ -1,19 +1,5 @@
-type state = {
-  isShowGeometryGroup: bool,
-  currentGeometry: int,
-};
-
-type action =
-  | ChangeGeometry(int)
-  | ShowGeometryGroup
-  | HideGeometryGroup;
-
 module Method = {
   let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-  /* let _isValidGeometry = (geometry, engineState) =>
-     GeometryEngineService.unsafeGetGeometryVertices(geometry, engineState)
-     |> Js.Typed_array.Float32Array.length > 0; */
 
   let _isGameObjectLightMaterialComponentHasMap = (gameObject, engineState) => {
     let material =
@@ -80,89 +66,95 @@ module Method = {
       _getAllGeometryAssetsAndDefaultGeometrys(editorState, engineState);
 };
 
-let component = ReasonReact.reducerComponent("MainEditorGeometry");
-
-let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
-  switch (action) {
-  | ChangeGeometry(targetGeometry) =>
-    let sourceGeometry = state.currentGeometry;
-
-    sourceGeometry === targetGeometry ?
-      ReasonReact.NoUpdate :
-      ReasonReactUtils.updateWithSideEffects(
-        {...state, currentGeometry: targetGeometry}, _state =>
-        Method.changeGeometry(
-          reduxTuple,
-          currentSceneTreeNode,
-          (sourceGeometry, targetGeometry),
-        )
-      );
-  | ShowGeometryGroup =>
-    ReasonReact.Update({...state, isShowGeometryGroup: true})
-  | HideGeometryGroup =>
-    ReasonReact.Update({...state, isShowGeometryGroup: false})
-  };
+let component = ReasonReact.statelessComponent("MainEditorGeometry");
 
 let render =
     (
       (uiState, dispatchFunc),
-      currentSceneTreeNode,
-      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+      (currentSceneTreeNode, geometryComponent, isShowGeometryGroup),
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
-    <SelectAssetGroupBar
-      headerText="Geometry"
-      headerTitle={
+    <SelectAssetByText
+      label="Geometry"
+      assetGroupHeader="Geometry"
+      isShowAssetGroup=isShowGeometryGroup
+      title={
         LanguageUtils.getInspectorLanguageDataByType(
           "geometry-geometry-describe",
           languageType,
         )
       }
-      assetText={
-        MainEditorGeometryUtils.getName(state.currentGeometry)
-        |> StateLogicService.getEngineStateToGetData
+      currentAssetDataOpt=
+        (geometryComponent |> SelectAssetByText.convertIntToAssetDataType)
+        ->Some
+      getCurrentAssetDataFromAssetRelatedDataFunc={
+        assetRelatedData =>
+          assetRelatedData
+          |> SelectAssetByText.convertAssetRelatedDataTypeToInt
+          |> SelectAssetByText.convertIntToAssetDataType
       }
-      selectAssetFunc={send => send(ShowGeometryGroup)}
-      sendFunc=send
+      getAssetTextFunc={
+        (currentAssetDataOpt, engineState) =>
+          switch (currentAssetDataOpt) {
+          | None => ""
+          | Some(currentAssetData) =>
+            MainEditorGeometryUtils.getName(
+              currentAssetData |> SelectAssetByText.convertAssetDataTypeToInt,
+              engineState,
+            )
+          }
+      }
+      isCurrentAssetFunc={
+        (currentAssetData, assetRelatedData) =>
+          currentAssetData
+          |> SelectAssetByText.convertAssetDataTypeToInt
+          === (
+                assetRelatedData
+                |> SelectAssetByText.convertAssetRelatedDataTypeToInt
+              )
+      }
+      findAllAssetRelatedDataFunc={
+        () => {
+          let editorState = StateEditorService.getState();
+          let engineState = StateEngineService.unsafeGetState();
+
+          Method.getAllShowGeometrys(
+            currentSceneTreeNode,
+            (editorState, engineState),
+          )
+          |> Js.Array.map(geometryComponent =>
+               geometryComponent
+               |> SelectAssetByText.convertIntToAssetRelatedDataType
+             );
+        }
+      }
+      changeAssetFunc={
+        (sourceAssetDataOpt, assetRelatedData) =>
+          Method.changeGeometry(
+            (UIStateService.getState(), dispatchFunc),
+            currentSceneTreeNode,
+            (
+              sourceAssetDataOpt
+              |> OptionService.unsafeGet
+              |> SelectAssetByText.convertAssetDataTypeToInt,
+              assetRelatedData
+              |> SelectAssetByText.convertAssetRelatedDataTypeToInt,
+            ),
+          )
+      }
+      getTextFunc={
+        assetRelatedData =>
+          MainEditorGeometryUtils.getName(
+            assetRelatedData
+            |> SelectAssetByText.convertAssetRelatedDataTypeToInt,
+          )
+          |> StateLogicService.getEngineStateToGetData
+      }
+      removeAssetFuncOpt=None
     />
-    {
-      state.isShowGeometryGroup ?
-        <SelectAssetGroupWidget
-          headerText="Geometry"
-          sendFunc=send
-          clickHideGroupButtonFunc={send => send(HideGeometryGroup)}
-          getAllAssetsFunc={
-            () => {
-              let editorState = StateEditorService.getState();
-              let engineState = StateEngineService.unsafeGetState();
-
-              Method.getAllShowGeometrys(
-                currentSceneTreeNode,
-                (editorState, engineState),
-              );
-            }
-          }
-          isAssetFunc={
-            geometry => {
-              let currentGeometry = state.currentGeometry;
-
-              geometry === currentGeometry;
-            }
-          }
-          changeAssetFunc={
-            (geometry, send) => send(ChangeGeometry(geometry))
-          }
-          getTextFunc={
-            geometry =>
-              MainEditorGeometryUtils.getName(geometry)
-              |> StateLogicService.getEngineStateToGetData
-          }
-        /> :
-        ReasonReact.null
-    }
   </article>;
 };
 
@@ -176,11 +168,9 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    isShowGeometryGroup,
-    currentGeometry: geometryComponent,
-  },
-  reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
-  render: self =>
-    render((uiState, dispatchFunc), currentSceneTreeNode, self),
+  render: _ =>
+    render(
+      (uiState, dispatchFunc),
+      (currentSceneTreeNode, geometryComponent, isShowGeometryGroup),
+    ),
 };

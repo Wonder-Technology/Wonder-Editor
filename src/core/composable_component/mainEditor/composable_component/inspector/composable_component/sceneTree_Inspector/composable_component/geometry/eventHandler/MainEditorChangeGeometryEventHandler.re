@@ -1,7 +1,10 @@
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = int;
-  type dataTuple = (int, int);
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
+  type dataTuple = (
+    Wonderjs.GeometryType.geometry,
+    Wonderjs.GeometryType.geometry,
+  );
   type return = unit;
 
   let handleSelfLogic =

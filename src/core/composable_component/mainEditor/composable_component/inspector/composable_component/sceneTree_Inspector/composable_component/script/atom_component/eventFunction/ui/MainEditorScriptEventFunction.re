@@ -275,14 +275,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForAdd)
           }
-          getAllAssetsFunc={
+          findAllAssetRelatedDataFunc={
             () =>
               Method.getAllScriptEventFunctions(
                 state.lastScriptEventFunctionNodeIdForAdd,
                 state.unUsedScriptEventFunctionNodeIds,
               )
           }
-          isAssetFunc={
+          isCurrentAssetFunc={
             scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForAdd;
@@ -330,14 +330,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForChange)
           }
-          getAllAssetsFunc={
+          findAllAssetRelatedDataFunc={
             () =>
               Method.getAllScriptEventFunctions(
                 state.lastScriptEventFunctionNodeIdForChange,
                 state.unUsedScriptEventFunctionNodeIds,
               )
           }
-          isAssetFunc={
+          isCurrentAssetFunc={
             scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForChange;

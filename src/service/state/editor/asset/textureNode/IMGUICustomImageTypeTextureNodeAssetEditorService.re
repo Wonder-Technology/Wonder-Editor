@@ -1,6 +1,10 @@
+let _getTextureContentIndexByNode = node =>
+  node |> TextureNodeAssetService.getTextureContentIndex;
+
 let getTextureContentIndex = (nodeId, editorState) =>
-  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
-  |> TextureNodeAssetService.getTextureContentIndex;
+  _getTextureContentIndexByNode(
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+  );
 
 let unsafeGetTextureContentIndex = (nodeId, editorState) =>
   OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
@@ -27,6 +31,15 @@ let getId = (nodeId, editorState) =>
 
 let unsafeGetId = (nodeId, editorState) =>
   getId(nodeId, editorState) |> OptionService.unsafeGet;
+
+let getIdByNode = (node, editorState) =>
+  _getTextureContentIndexByNode(node)
+  |> OptionService.bind(textureContentIndex =>
+       IMGUICustomImageTextureContentMapAssetEditorService.getId(
+         textureContentIndex,
+         editorState,
+       )
+     );
 
 let findAllIMGUICustomImageTypeTextureNodes = editorState =>
   TextureNodeAssetEditorService.findAllTextureNodesByType(
