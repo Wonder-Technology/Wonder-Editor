@@ -14,4 +14,19 @@ let getUint8Array =
     }
   };
 
+let getArrayBuffer = imageData =>
+  imageData
+  |> getUint8Array(_, () =>
+       WonderLog.Log.fatal(
+         WonderLog.Log.buildFatalMessage(
+           ~title="getArrayBuffer",
+           ~description={j|image should has uint8Array or base64 data|j},
+           ~reason="",
+           ~solution={j||j},
+           ~params={j||j},
+         ),
+       )
+     )
+  |> Js.Typed_array.Uint8Array.buffer;
+
 let getMimeType = ({mimeType}: ImageDataType.imageData) => mimeType;

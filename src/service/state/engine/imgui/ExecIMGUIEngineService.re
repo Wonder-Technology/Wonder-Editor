@@ -10,6 +10,8 @@ let hasExecFuncData = ExecIMGUIAPI.hasExecFuncData;
 
 let addExecFuncData = ExecIMGUIAPI.addExecFuncData;
 
+let getExecFuncDataArr = ExecIMGUIAPI.getExecFuncDataArr;
+
 let removeExecFuncData = ExecIMGUIAPI.removeExecFuncData;
 
 let updateExecFuncData =

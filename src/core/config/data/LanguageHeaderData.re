@@ -121,6 +121,41 @@ let header_language_array = [|
     },
   },
   {
+    title: "setting-imgui-asset-fnt",
+    language: {
+      zh: {j|Fnt|j},
+      en: "Fnt",
+    },
+  },
+  {
+    title: "setting-imgui-asset-fnt-describe",
+    language: {
+      zh: {j|通过名称设置Fnt|j},
+      en: "set fnt by name",
+    },
+  },
+  {
+    title: "setting-imgui-asset-customImage-describe",
+    language: {
+      zh: {j|通过Id设置CustomImage|j},
+      en: "set custom image by id",
+    },
+  },
+  {
+    title: "setting-imgui-asset-bitmap",
+    language: {
+      zh: {j|Bitmap|j},
+      en: "Bitmap",
+    },
+  },
+  {
+    title: "setting-imgui-asset-bitmap-describe",
+    language: {
+      zh: {j|通过名称设置Bitmap|j},
+      en: "set bitmap by name",
+    },
+  },
+  {
     title: "header-help",
     language: {
       zh: {j|帮助|j},

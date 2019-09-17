@@ -51,7 +51,8 @@ module Method = {
         {
           DomHelper.textEl(
             NodeNameAssetLogicService.getCubemapNodeName(
-              ~texture=cubemapTexture,
+              ~texture=
+                cubemapTexture |> SelectAssetByImage.convertAssetDataTypeToInt,
               ~engineState,
             ),
           )
@@ -87,7 +88,7 @@ module Method = {
 
   let _renderSkybox =
       (isShowCubemapGroup, languageType, sendFunc, dispatchFunc) =>
-    <SelectAssetNode
+    <SelectAssetByImage
       label={
         LanguageUtils.getHeaderLanguageDataByType(
           "setting-scene-skybox-cubemap",
@@ -104,11 +105,14 @@ module Method = {
       currentAssetDataOpt={
         SceneEngineService.getCubemapTexture
         |> StateLogicService.getEngineStateToGetData
+        |> Js.Option.map((. currentAssetData) =>
+             currentAssetData |> SelectAssetByImage.convertIntToAssetDataType
+           )
       }
       removeAssetFunc={
         removeCubemap((UIStateService.getState(), dispatchFunc), ())
       }
-      findAllAssetNodesFunc=CubemapNodeAssetEditorService.findAllCubemapNodes
+      findAllAssetRelatedDataFunc=CubemapNodeAssetEditorService.findAllCubemapNodes
       onDropFunc={
         node =>
           setCubemapTextureToSceneSkybox(
@@ -117,24 +121,21 @@ module Method = {
           )
       }
       getCurrentAssetDataFromNodeFunc={
-        node => CubemapNodeAssetService.getTextureComponent(node)
+        node =>
+          CubemapNodeAssetService.getTextureComponent(node)
+          |> SelectAssetByImage.convertIntToAssetDataType
       }
-      getAssetImageSrcFromEngineFunc={
-        (cubemapTexture, engineState) => "./public/img/cubemap.png"
+      getCurrentAssetImageSrcFunc={
+        (cubemapTexture, _) => "./public/img/cubemap.png"
       }
-      getAssetImageSrcFromEditorFunc={
-        (node, editorState) => "./public/img/cubemap.png"
+      getAssetGroupSingleAssetImageSrcFunc={
+        (node, _) => "./public/img/cubemap.png"
       }
       isCurrentAssetFunc={
         (cubemapTexture, node) =>
-          cubemapTexture === CubemapNodeAssetService.getTextureComponent(node)
-      }
-      getAssetNodeNameByNodeFunc={
-        (node, engineState) =>
-          NodeNameAssetLogicService.getCubemapNodeName(
-            ~texture=CubemapNodeAssetService.getTextureComponent(node),
-            ~engineState,
-          )
+          cubemapTexture
+          |> SelectAssetByImage.convertAssetDataTypeToInt
+          === CubemapNodeAssetService.getTextureComponent(node)
       }
       renderAssetNameFunc=_showCubemapTextureName
       isShowAssetGroup=isShowCubemapGroup
@@ -156,6 +157,13 @@ module Method = {
           )
         }
       </div>
+      <SettingIMGUI
+        uiState
+        dispatchFunc
+        isShowFntGroup=false
+        isShowBitmapGroup=false
+        isShowCustomImageGroup=false
+      />
     </div>;
 };
 

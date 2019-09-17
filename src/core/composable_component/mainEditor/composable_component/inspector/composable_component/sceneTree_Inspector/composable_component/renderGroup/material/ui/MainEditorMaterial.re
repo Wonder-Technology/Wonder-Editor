@@ -1,18 +1,3 @@
-type state = {
-  materialType: MaterialDataAssetType.materialType,
-  isShowMaterialGroup: bool,
-  currentMaterial: int,
-};
-
-type action =
-  | ChangeMaterialType(int)
-  | ChangeMaterial(
-      option(NodeAssetType.nodeId),
-      (int, MaterialDataAssetType.materialType),
-    )
-  | ShowMaterialGroup
-  | HideMaterialGroup;
-
 module Method = {
   let changeMaterialType = MainEditorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
@@ -76,7 +61,7 @@ module Method = {
          |> NumberType.convertFloatToInt
        );
 
-  let _getAllMaterialAssetData = (editorState, engineState) =>
+  let getAllMaterialAssetData = (editorState, engineState) =>
     NodeAssetType.(
       ArrayService.fastConcat(
         MaterialNodeAssetEditorService.findAllMaterialNodes(editorState)
@@ -112,146 +97,133 @@ module Method = {
       StateEditorService.getState(),
     ) ?
       <div className="material-shade" /> : ReasonReact.null;
-
-  let handleChangeMaterial =
-      (
-        reduxTuple,
-        currentSceneTreeNode,
-        (materialNodeId, (targetMaterial, targetMaterialType)),
-        state,
-      ) => {
-    let sourceMaterial = state.currentMaterial;
-    let sourceMaterialType = state.materialType;
-
-    (sourceMaterial, sourceMaterialType)
-    == (targetMaterial, targetMaterialType) ?
-      ReasonReact.NoUpdate :
-      ReasonReactUtils.updateWithSideEffects(
-        {
-          ...state,
-          currentMaterial: targetMaterial,
-          materialType: targetMaterialType,
-        },
-        _state =>
-        changeMaterial(
-          reduxTuple,
-          currentSceneTreeNode,
-          (
-            materialNodeId,
-            (sourceMaterial, targetMaterial),
-            (state.materialType, targetMaterialType),
-          ),
-        )
-      );
-  };
 };
 
-let component = ReasonReact.reducerComponent("MainEditorMaterial");
-
-let reducer =
-    (
-      (uiState, dispatchFunc) as reduxTuple,
-      currentSceneTreeNode,
-      action,
-      state,
-    ) =>
-  switch (action) {
-  | ChangeMaterialType(value) =>
-    let sourceMaterialType = state.materialType;
-    let targetMaterialType =
-      value |> MainEditorMaterialType.convertIntToMaterialType;
-
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, materialType: targetMaterialType}, state =>
-      Method.changeMaterialType(
-        reduxTuple,
-        (),
-        (sourceMaterialType, targetMaterialType),
-      )
-    );
-  | ChangeMaterial(materialNodeId, (targetMaterial, targetMaterialType)) =>
-    Method.handleChangeMaterial(
-      reduxTuple,
-      currentSceneTreeNode,
-      (materialNodeId, (targetMaterial, targetMaterialType)),
-      state,
-    )
-  | ShowMaterialGroup =>
-    ReasonReact.Update({...state, isShowMaterialGroup: true})
-  | HideMaterialGroup =>
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, isShowMaterialGroup: false}, _state =>
-      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-      |> ignore
-    )
-  };
+let component = ReasonReact.statelessComponent("MainEditorMaterial");
 
 let render =
     (
       (uiState, dispatchFunc),
-      currentSceneTreeNode,
+      (currentSceneTreeNode, isShowMaterialGroup),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
+  let materialType =
+    MainEditorMaterialUtils.getMaterialTypeByGameObject(currentSceneTreeNode)
+    |> StateLogicService.getEngineStateToGetData;
+
+  let material =
+    MainEditorMaterialUtils.getMaterialComponentByType(
+      currentSceneTreeNode,
+      materialType,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
   <article key="MainEditorMaterial" className="wonder-inspector-material">
-    <SelectAssetGroupBar
-      headerText="Material"
-      headerTitle={
+    <SelectAssetByText
+      label="Material"
+      assetGroupHeader="Material"
+      isShowAssetGroup=isShowMaterialGroup
+      title={
         LanguageUtils.getInspectorLanguageDataByType(
           "material-material-describe",
           languageType,
         )
       }
-      assetText={
-        NodeNameAssetLogicService.getMaterialNodeName(
-          ~material=state.currentMaterial,
-          ~type_=state.materialType,
-          ~engineState=StateEngineService.unsafeGetState(),
+      currentAssetDataOpt=
+        (
+          (material, materialType)
+          |> SelectAssetByText.convertMaterialAssetDataToAssetDataType
         )
+        ->Some
+      getCurrentAssetDataFromAssetRelatedDataFunc={
+        assetRelatedData => {
+          let (_, (material, materialType)) =
+            assetRelatedData
+            |> SelectAssetByText.convertAssetRelatedDataTypeToMaterialAssetRelatedData;
+
+          (material, materialType)
+          |> SelectAssetByText.convertMaterialAssetDataToAssetDataType;
+        }
       }
-      selectAssetFunc={send => send(ShowMaterialGroup)}
-      sendFunc=send
+      getAssetTextFunc={
+        (currentAssetDataOpt, engineState) =>
+          switch (currentAssetDataOpt) {
+          | None => ""
+          | Some(currentAssetData) =>
+            let (material, materialType) =
+              currentAssetData
+              |> SelectAssetByText.convertAssetDataTypeToMaterialAssetData;
+
+            NodeNameAssetLogicService.getMaterialNodeName(
+              ~material,
+              ~type_=materialType,
+              ~engineState,
+            );
+          }
+      }
+      isCurrentAssetFunc={
+        (currentAssetData, assetRelatedData) => {
+          let (_, (material, materialType)) =
+            assetRelatedData
+            |> SelectAssetByText.convertAssetRelatedDataTypeToMaterialAssetRelatedData;
+
+          currentAssetData
+          |> SelectAssetByText.convertAssetDataTypeToMaterialAssetData
+          == (material, materialType);
+        }
+      }
+      findAllAssetRelatedDataFunc={
+        () => {
+          let engineState = StateEngineService.unsafeGetState();
+          let editorState = StateEditorService.getState();
+
+          Method.getAllMaterialAssetData(editorState, engineState)
+          |> Js.Array.map(materialRelatedData =>
+               materialRelatedData
+               |> SelectAssetByText.convertMaterialAssetRelatedDataToAssetRelatedDataType
+             );
+        }
+      }
+      changeAssetFunc={
+        (sourceAssetDataOpt, assetRelatedData) => {
+          let (materialNodeId, (targetMaterial, targetMaterialType)) =
+            assetRelatedData
+            |> SelectAssetByText.convertAssetRelatedDataTypeToMaterialAssetRelatedData;
+
+          let (sourceMaterial, sourceMaterialType) =
+            sourceAssetDataOpt
+            |> OptionService.unsafeGet
+            |> SelectAssetByText.convertAssetDataTypeToMaterialAssetData;
+
+          Method.changeMaterial(
+            (UIStateService.getState(), dispatchFunc),
+            currentSceneTreeNode,
+            (
+              materialNodeId,
+              (sourceMaterial, targetMaterial),
+              (sourceMaterialType, targetMaterialType),
+            ),
+          );
+        }
+      }
+      getTextFunc={
+        assetRelatedData => {
+          let (_, (material, materialType)) =
+            assetRelatedData
+            |> SelectAssetByText.convertAssetRelatedDataTypeToMaterialAssetRelatedData;
+
+          NodeNameAssetLogicService.getMaterialNodeName(
+            ~material,
+            ~type_=materialType,
+            ~engineState=StateEngineService.unsafeGetState(),
+          );
+        }
+      }
+      removeAssetFuncOpt=None
     />
-    {
-      state.isShowMaterialGroup ?
-        <SelectAssetGroupWidget
-          headerText="Material"
-          sendFunc=send
-          clickHideGroupButtonFunc={send => send(HideMaterialGroup)}
-          getAllAssetsFunc={
-            () => {
-              let engineState = StateEngineService.unsafeGetState();
-              let editorState = StateEditorService.getState();
-
-              Method._getAllMaterialAssetData(editorState, engineState);
-            }
-          }
-          isAssetFunc={
-            ((materialNodeId, (material, materialType))) => {
-              let currentMaterial = state.currentMaterial;
-              let currentMaterialType = state.materialType;
-
-              (material, materialType)
-              == (currentMaterial, currentMaterialType);
-            }
-          }
-          changeAssetFunc={
-            ((materialNodeId, (material, materialType)), send) =>
-              send(ChangeMaterial(materialNodeId, (material, materialType)))
-          }
-          getTextFunc={
-            ((materialNodeId, (material, materialType))) =>
-              NodeNameAssetLogicService.getMaterialNodeName(
-                ~material,
-                ~type_=materialType,
-                ~engineState=StateEngineService.unsafeGetState(),
-              )
-          }
-        /> :
-        ReasonReact.null
-    }
     <div className="material-value">
       <Select
         label="Type"
@@ -263,14 +235,24 @@ let render =
         }
         options={MainEditorMaterialUtils.getMaterialOptions()}
         selectedKey={
-          state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
+          materialType |> MainEditorMaterialType.convertMaterialTypeToInt
         }
-        onChange={value => send(ChangeMaterialType(value))}
+        onChange={
+          value =>
+            Method.changeMaterialType(
+              (UIStateService.getState(), dispatchFunc),
+              (),
+              (
+                materialType,
+                value |> MainEditorMaterialType.convertIntToMaterialType,
+              ),
+            )
+        }
       />
-      <div className="">
+      <div>
         {
           MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
-            state.materialType,
+            materialType,
             (
               Method.renderBasicMaterial((uiState, dispatchFunc)),
               Method.renderLightMaterial((uiState, dispatchFunc)),
@@ -278,7 +260,7 @@ let render =
           )
         }
       </div>
-      {Method.buildShadeComponent(state.currentMaterial, state.materialType)}
+      {Method.buildShadeComponent(material, materialType)}
     </div>
   </article>;
 };
@@ -292,25 +274,10 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    let materialType =
-      MainEditorMaterialUtils.getMaterialTypeByGameObject(
-        currentSceneTreeNode,
-      )
-      |> StateLogicService.getEngineStateToGetData;
-
-    {
-      materialType,
-      isShowMaterialGroup,
-      currentMaterial:
-        MainEditorMaterialUtils.getMaterialComponentByType(
-          currentSceneTreeNode,
-          materialType,
-        )
-        |> StateLogicService.getEngineStateToGetData,
-    };
-  },
-  reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
   render: self =>
-    render((uiState, dispatchFunc), currentSceneTreeNode, self),
+    render(
+      (uiState, dispatchFunc),
+      (currentSceneTreeNode, isShowMaterialGroup),
+      self,
+    ),
 };

@@ -1,10 +1,18 @@
-open NodeAssetType;
+type assetData;
 
 type state = {
   style: ReactDOMRe.Style.t,
   isShowAssetGroup: bool,
-  currentAssetDataOpt: option(int),
+  currentAssetDataOpt: option(assetData),
 };
+
+external convertAssetDataTypeToInt: assetData => int = "%identity";
+
+external convertIntToAssetDataType: int => assetData = "%identity";
+
+external convertAssetDataTypeToString: assetData => string = "%identity";
+
+external convertStringToAssetDataType: string => assetData = "%identity";
 
 type action =
   | Nothing
@@ -12,7 +20,8 @@ type action =
   | DragLeave
   | SetAssetToEngine(TreeAssetType.tree)
   | ShowAssetGroup
-  | HideAssetGroup;
+  | HideAssetGroup
+  | RemoveAsset;
 
 module Method = {
   let isWidget = startWidget =>
@@ -65,27 +74,25 @@ module Method = {
       DragLeave;
   };
 
-  let showAssetImage = (currentAssetDataOpt, getAssetImageSrcFromEngineFunc) =>
+  let showAssetImage = (currentAssetDataOpt, getCurrentAssetImageSrcFunc) =>
     switch (currentAssetDataOpt) {
     | None => ReasonReact.null
     | Some(currentAssetData) =>
       <img
         src={
-          getAssetImageSrcFromEngineFunc(
-            currentAssetData,
-            StateEngineService.unsafeGetState(),
-          )
+          getCurrentAssetImageSrcFunc(currentAssetData)
+          |> StateLogicService.getStateToGetData
         }
       />
     };
 
-  let _sortByName = (getAssetNodeNameByNodeFunc, engineState, allAssetNodes) =>
+  let _sortByName = (engineState, allAssetNodes) =>
     allAssetNodes
     |> Js.Array.sortInPlaceWith((node1, node2) =>
          Js.String.localeCompare(
-           getAssetNodeNameByNodeFunc(node2, engineState)
+           NodeNameAssetLogicService.getNodeName(node2, engineState)
            |> Js.String.charAt(0),
-           getAssetNodeNameByNodeFunc(node1, engineState)
+           NodeNameAssetLogicService.getNodeName(node1, engineState)
            |> Js.String.charAt(0),
          )
          |> NumberType.convertFloatToInt
@@ -94,8 +101,7 @@ module Method = {
   let _buildAssetUIComponent =
       (
         (node, className),
-        getAssetImageSrcFromEditorFunc,
-        getAssetNodeNameByNodeFunc,
+        getAssetGroupSingleAssetImageSrcFunc,
         sendFunc,
         (editorState, engineState),
       ) =>
@@ -104,11 +110,20 @@ module Method = {
       key={DomHelper.getRandomKey()}
       onClick={_e => sendFunc(SetAssetToEngine(node))}>
       <img
-        src={getAssetImageSrcFromEditorFunc(node, editorState)}
+        src={
+          getAssetGroupSingleAssetImageSrcFunc(
+            node,
+            (editorState, engineState),
+          )
+        }
         className="imgContent-img"
       />
       <div className="imgContent-text">
-        {DomHelper.textEl(getAssetNodeNameByNodeFunc(node, engineState))}
+        {
+          DomHelper.textEl(
+            NodeNameAssetLogicService.getNodeName(node, engineState),
+          )
+        }
       </div>
     </div>;
 
@@ -116,23 +131,21 @@ module Method = {
       (
         state,
         isCurrentAssetFunc,
-        getAssetImageSrcFromEditorFunc,
-        getAssetNodeNameByNodeFunc,
+        getAssetGroupSingleAssetImageSrcFunc,
         sendFunc,
-        findAllAssetNodesFunc,
+        findAllAssetRelatedDataFunc,
       ) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    findAllAssetNodesFunc(editorState)
-    |> _sortByName(getAssetNodeNameByNodeFunc, engineState)
+    findAllAssetRelatedDataFunc(editorState)
+    |> _sortByName(engineState)
     |> Js.Array.map(node =>
          switch (state.currentAssetDataOpt) {
          | None =>
            _buildAssetUIComponent(
              (node, "select-item-imgContent"),
-             getAssetImageSrcFromEditorFunc,
-             getAssetNodeNameByNodeFunc,
+             getAssetGroupSingleAssetImageSrcFunc,
              sendFunc,
              (editorState, engineState),
            )
@@ -144,8 +157,7 @@ module Method = {
 
            _buildAssetUIComponent(
              (node, className),
-             getAssetImageSrcFromEditorFunc,
-             getAssetNodeNameByNodeFunc,
+             getAssetGroupSingleAssetImageSrcFunc,
              sendFunc,
              (editorState, engineState),
            );
@@ -154,7 +166,7 @@ module Method = {
   };
 };
 
-let component = ReasonReact.reducerComponent("SelectAssetNode");
+let component = ReasonReact.reducerComponent("SelectAssetByImage");
 
 let _handleSetAssetToEngine =
     (node, getCurrentAssetDataFromNodeFunc, onDropFunc, state) =>
@@ -207,12 +219,13 @@ let reducer = (getCurrentAssetDataFromNodeFunc, onDropFunc, action, state) =>
   | Nothing => ReasonReact.NoUpdate
   | ShowAssetGroup => ReasonReact.Update({...state, isShowAssetGroup: true})
   | HideAssetGroup => ReasonReact.Update({...state, isShowAssetGroup: false})
+  | RemoveAsset => ReasonReact.Update({...state, currentAssetDataOpt: None})
   };
 
 let _renderDragableImage =
     (
       {state, send}: ReasonReact.self('a, 'b, 'c),
-      getAssetImageSrcFromEngineFunc,
+      getCurrentAssetImageSrcFunc,
     ) =>
   <div
     className="img" onClick={_e => send(ShowAssetGroup)} style={state.style}>
@@ -241,7 +254,7 @@ let _renderDragableImage =
     {
       Method.showAssetImage(
         state.currentAssetDataOpt,
-        getAssetImageSrcFromEngineFunc,
+        getCurrentAssetImageSrcFunc,
       )
     }
   </div>;
@@ -251,10 +264,9 @@ let _renderAssetGroup =
       assetGroupHeader,
       state,
       isCurrentAssetFunc,
-      getAssetImageSrcFromEditorFunc,
-      getAssetNodeNameByNodeFunc,
+      getAssetGroupSingleAssetImageSrcFunc,
       sendFunc,
-      findAllAssetNodesFunc,
+      findAllAssetRelatedDataFunc,
     ) =>
   <div className="select-component-content">
     <div className="select-component-item">
@@ -268,10 +280,9 @@ let _renderAssetGroup =
               Method.showAssets(
                 state,
                 isCurrentAssetFunc,
-                getAssetImageSrcFromEditorFunc,
-                getAssetNodeNameByNodeFunc,
+                getAssetGroupSingleAssetImageSrcFunc,
                 sendFunc,
-                findAllAssetNodesFunc,
+                findAllAssetRelatedDataFunc,
               ),
             )
           }
@@ -288,28 +299,35 @@ let render =
     (
       (label, title, assetGroupHeader),
       (
-        getAssetImageSrcFromEngineFunc,
-        getAssetImageSrcFromEditorFunc,
+        getCurrentAssetImageSrcFunc,
+        getAssetGroupSingleAssetImageSrcFunc,
         isCurrentAssetFunc,
-        getAssetNodeNameByNodeFunc,
         renderAssetNameFunc,
         removeAssetFunc,
-        findAllAssetNodesFunc,
+        findAllAssetRelatedDataFunc,
       ),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article className="selectAssetNode-item">
+  <article className="selectAssetByImage-item">
     <div className="item-header" title> {DomHelper.textEl(label)} </div>
     <div className="item-content">
-      {_renderDragableImage(self, getAssetImageSrcFromEngineFunc)}
+      {_renderDragableImage(self, getCurrentAssetImageSrcFunc)}
       {
         renderAssetNameFunc(state.currentAssetDataOpt)
         |> StateLogicService.getEngineStateToGetData
       }
-      <button className="remove" onClick={e => removeAssetFunc()}>
+      <button
+        className="remove"
+        onClick={
+          e => {
+            removeAssetFunc();
+
+            send(RemoveAsset);
+          }
+        }>
         {DomHelper.textEl("Remove")}
       </button>
     </div>
@@ -319,10 +337,9 @@ let render =
           assetGroupHeader,
           state,
           isCurrentAssetFunc,
-          getAssetImageSrcFromEditorFunc,
-          getAssetNodeNameByNodeFunc,
+          getAssetGroupSingleAssetImageSrcFunc,
           send,
-          findAllAssetNodesFunc,
+          findAllAssetRelatedDataFunc,
         ) :
         ReasonReact.null
     }
@@ -336,13 +353,12 @@ let make =
       ~currentAssetDataOpt,
       ~getCurrentAssetDataFromNodeFunc,
       ~onDropFunc,
-      ~getAssetImageSrcFromEngineFunc,
-      ~getAssetImageSrcFromEditorFunc,
+      ~getCurrentAssetImageSrcFunc,
+      ~getAssetGroupSingleAssetImageSrcFunc,
       ~isCurrentAssetFunc,
-      ~getAssetNodeNameByNodeFunc,
       ~renderAssetNameFunc,
       ~removeAssetFunc,
-      ~findAllAssetNodesFunc,
+      ~findAllAssetRelatedDataFunc,
       ~isShowAssetGroup,
       ~title,
       _children,
@@ -358,13 +374,12 @@ let make =
     render(
       (label, title, assetGroupHeader),
       (
-        getAssetImageSrcFromEngineFunc,
-        getAssetImageSrcFromEditorFunc,
+        getCurrentAssetImageSrcFunc,
+        getAssetGroupSingleAssetImageSrcFunc,
         isCurrentAssetFunc,
-        getAssetNodeNameByNodeFunc,
         renderAssetNameFunc,
         removeAssetFunc,
-        findAllAssetNodesFunc,
+        findAllAssetRelatedDataFunc,
       ),
       self,
     ),

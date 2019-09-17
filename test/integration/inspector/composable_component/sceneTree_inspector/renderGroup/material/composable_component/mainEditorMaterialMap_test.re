@@ -192,7 +192,11 @@ let _ =
               {
                 style: ReactDOMRe.Style.make(~opacity="1", ()),
                 isShowAssetGroup: true,
-                currentAssetDataOpt: Some(textureComponent),
+                currentAssetDataOpt:
+                  Some(
+                    textureComponent
+                    |> SelectAssetByImage.convertIntToAssetDataType,
+                  ),
               },
               (() => ()) |> Obj.magic,
               BasicSourceTypeTextureNodeAssetEditorService.findAllBasicSourceTypeTextureNodes,

@@ -14,6 +14,10 @@ let setSettedAssetFntData = AssetIMGUIAPI.setSettedAssetFntData;
 
 let removeSettedAssetFntData = AssetIMGUIAPI.removeSettedAssetFntData;
 
+let getSettedAssetBitmapName = AssetIMGUIAPI.getSettedAssetBitmapName;
+
+let unsafeGetSettedAssetBitmapName = AssetIMGUIAPI.unsafeGetSettedAssetBitmapName;
+
 let hasSettedAssetBitmapData = AssetIMGUIAPI.hasSettedAssetBitmapData;
 
 let setSettedAssetBitmapData = AssetIMGUIAPI.setSettedAssetBitmapData;
