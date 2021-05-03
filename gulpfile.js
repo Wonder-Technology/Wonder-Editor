@@ -83,11 +83,20 @@ gulp.task("compressCss", function () {
 });
 
 gulp.task("watchSass", function () {
-    gulp.watch("public/sass/**/*.scss", ["sass"]);
+    gulp.watch("public/sass/**/*.scss",
+        gulp.series("sass", function (done) {
+            done();
+        }));
 });
 
-gulp.task("build", gulpSync.sync(["sass", "webpack:dev"]));
+gulp.task("build", gulp.series("sass", "webpack:dev", function (done) {
+    done();
+}));
 
-gulp.task("buildProd", gulpSync.sync(["sass", "webpack:prod", "compressCss"]));
+gulp.task("buildProd", gulp.series("sass", "webpack:prod", "compressCss", function (done) {
+    done();
+}));
 
-gulp.task("watch", gulpSync.sync(["webpack:dev", "watchProject"]));
+// gulp.task("watch", gulp.series("webpack:dev", "watchProject", function (done) {
+//     done();
+// }));
