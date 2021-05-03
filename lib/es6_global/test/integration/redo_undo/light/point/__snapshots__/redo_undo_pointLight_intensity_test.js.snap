@@ -1,0 +1,761 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-point-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="10.1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Constant
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Linear
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.07"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Quadratic
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.017"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Range
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="65"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+<article
+  className="wonder-point-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="12.12"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Constant
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Linear
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.07"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Quadratic
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.017"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Range
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="65"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
+<article
+  className="wonder-point-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="12.12"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Constant
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Linear
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.07"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Quadratic
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.017"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Range
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="65"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-point-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="10.1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Constant
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Linear
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.07"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Quadratic
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.017"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Range
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="65"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+<article
+  className="wonder-point-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Constant
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Linear
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.07"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Quadratic
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0.017"
+      />
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-float-input"
+  >
+    <div
+      className="item-header component-label"
+      onMouseDown={[Function]}
+      onMouseMove={[Function]}
+      onMouseUp={[Function]}
+    >
+      Range
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="65"
+      />
+    </div>
+  </article>
+</article>
+`;
