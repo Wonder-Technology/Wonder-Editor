@@ -35,7 +35,7 @@
     "wonder-bs-sinon"
   ],
   "package-specs": [
-    "es6-global"
+    "commonjs"
   ],
   "refmt": 3,
   "warnings": {

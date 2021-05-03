@@ -1,12 +1,10 @@
 var fs = require('fs')
 var gulp = require("gulp");
-var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
 var concat = require('gulp-concat'),
     cssnano = require('gulp-cssnano');
-
 
 var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
     if (err) {
@@ -82,12 +80,15 @@ gulp.task("compressCss", function () {
 });
 
 gulp.task("watchSass", function () {
-    gulp.watch("public/sass/**/*.scss", ["sass"]);
+    gulp.watch("public/sass/**/*.scss", gulp.series("sass", function (cb) {
+        cb();
+    }));
 });
 
-gulp.task("build", gulpSync.sync(["sass", "webpack:dev"]));
+gulp.task("build", gulp.series("sass", "webpack:dev", function (cb) {
+    cb();
+}));
 
-gulp.task("buildProd", gulpSync.sync(["sass", "webpack:prod", "compressCss"]));
-
-// TODO fix bug
-gulp.task("watch", gulpSync.sync(["webpack:dev", "watchProject"]));
+gulp.task("buildProd", gulp.series("sass", "webpack:dev", "compressCss", function (cb) {
+    cb();
+}));

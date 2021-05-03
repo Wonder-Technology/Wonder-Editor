@@ -3,7 +3,7 @@ type hotkeysHandler;
 [@bs.module "wonder-hotkey/dist/hotkeys"]
 external hotkeys :
   (string, (ReactEventRe.Keyboard.t, hotkeysHandler) => unit) => unit =
-  "default";
+  "hotkeysConstruct";
 
 [@bs.module "wonder-hotkey/dist/hotkeys"]
 external removeHandlers : unit => unit = "";
