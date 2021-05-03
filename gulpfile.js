@@ -5,8 +5,7 @@ var path = require("path");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
 var concat = require('gulp-concat'),
-    cssnano = require('gulp-cssnano'),
-    autoprefixer = require('gulp-autoprefixer');
+    cssnano = require('gulp-cssnano');
 
 
 var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
@@ -90,4 +89,5 @@ gulp.task("build", gulpSync.sync(["sass", "webpack:dev"]));
 
 gulp.task("buildProd", gulpSync.sync(["sass", "webpack:prod", "compressCss"]));
 
+// TODO fix bug
 gulp.task("watch", gulpSync.sync(["webpack:dev", "watchProject"]));
