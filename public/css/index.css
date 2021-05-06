@@ -4524,3 +4524,6 @@ html, body {
     height: 100%;
     background: rgba(10, 10, 10, 0.4);
     z-index: 100; }
+
+.wonder-asset-header .asset-header-item .item-content {
+  overflow: auto; }

@@ -228,7 +228,7 @@ let _renderDragableImage =
       getCurrentAssetImageSrcFunc,
     ) =>
   <div
-    className="img" onClick={_e => send(ShowAssetGroup)} style={state.style}>
+    className="texture-img" onClick={_e => send(ShowAssetGroup)} style={state.style}>
     <div
       className="img-dragBg"
       onDragEnter={
@@ -311,9 +311,9 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article className="selectAssetByImage-item">
+  <article className="selectAssetByImage-item inspector-item">
     <div className="item-header" title> {DomHelper.textEl(label)} </div>
-    <div className="item-content">
+    <div className="item-content item-texture">
       {_renderDragableImage(self, getCurrentAssetImageSrcFunc)}
       {
         renderAssetNameFunc(state.currentAssetDataOpt)
