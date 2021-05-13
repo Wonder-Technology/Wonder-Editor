@@ -66,13 +66,13 @@
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3",
     "reason-react": "^0.5.0",
-    "wonder-bs-json": "^0.0.1",
+    "wonder-bs-json": "^0.0.3",
     "wonder-bs-jszip": "0.0.2",
     "wonder-bs-most": "^0.0.3",
     "wonder-commonlib": "^0.2.32",
     "wonder-hotkey2": "^0.0.1",
     "wonder-log": "^0.2.11",
-    "wonder.js": "1.2.0-alpha.21"
+    "wonder.js": "1.2.0-alpha.22"
   },
   "resolutions": {
     "wonder-log": "^0.2.11",
