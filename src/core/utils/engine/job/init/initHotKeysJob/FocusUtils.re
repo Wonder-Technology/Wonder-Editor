@@ -127,6 +127,8 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
        );
      });
 
+let _limitDistance = distance => Js.Math.max_float(distance, 0.2);
+
 let _calcCenterAndDistance = (targetGameObject, radiusRatio, engineState) =>
   switch (
     _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState)
@@ -147,7 +149,12 @@ let _calcCenterAndDistance = (targetGameObject, radiusRatio, engineState) =>
 
     let center = AABBShapeUtils.getCenter(aabb);
 
-    (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center) *. radiusRatio);
+    (
+      center,
+      AABBShapeUtils.calcRadiusOfAABB(aabb, center)
+      *. radiusRatio
+      |> _limitDistance,
+    );
   };
 
 let setCameraFocusTargetGameObject =

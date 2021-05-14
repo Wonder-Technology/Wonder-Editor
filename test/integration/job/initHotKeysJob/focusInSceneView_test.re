@@ -53,6 +53,50 @@ let _ =
           engineState |> StateEngineService.setState |> ignore;
         };
 
+        describe("limit distance to 0.2 at min", () => {
+          let _unsafeGetEditCameraFlyCameraController =
+              ((editorState, engineState)) =>
+            (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+            ->(
+                GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+                  engineState,
+                )
+              );
+
+          beforeEach(() => {
+            MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+
+            MainUtils._handleEngineState
+            |> StateLogicService.getAndSetEngineState;
+          });
+
+          test("test", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            MainEditorSceneTool.getFirstCube(engineState)
+            |> GameObjectTool.setCurrentSceneTreeNode;
+            let firstChild = MainEditorSceneTool.getFirstCube(engineState);
+            let engineState =
+              engineState
+              |> TransformGameObjectEngineService.setLocalScale(
+                   firstChild,
+                   (0.001, 0.001, 0.001),
+                 );
+            engineState |> StateEngineService.setState |> ignore;
+
+            triggerFocusHotKeyEvent();
+
+            let cameraController =
+              _unsafeGetEditCameraFlyCameraController
+              |> StateLogicService.getStateToGetData;
+            FlyCameraEngineService.unsafeGetFlyCameraControllerMoveSpeed(
+              cameraController,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> FloatTool.truncateFloatValue
+            |> expect == 0.002;
+          });
+        });
+
         describe("test editCamera has flyCameraController", () => {
           beforeEach(() => {
             MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
@@ -78,16 +122,6 @@ let _ =
               use aabb's center and radius calc flyCamera transform position
             |},
               () => {
-                let _getEditCameraTransformPosition =
-                    ((editorState, engineState)) =>
-                  editorState
-                  |> SceneViewEditorService.unsafeGetEditCamera
-                  |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-                       _,
-                       engineState,
-                     )
-                  |> TransformEngineService.getLocalPosition(_, engineState);
-
                 let _getEditCameraTransformLocalEulerAngles =
                     ((editorState, engineState)) =>
                   editorState
