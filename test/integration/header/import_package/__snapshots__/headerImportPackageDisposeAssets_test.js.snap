@@ -11,77 +11,81 @@ exports[`header import package->dispose assets dispose material assets
 <article
   className="wonder-inspector-material"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="material in use which is default or material asset"
-    >
-      Material
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Texture
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="material in use which is default or material asset"
       >
         Material
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Texture
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Basic-Material
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Light-Material
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Texture
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Material
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Texture
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Basic-Material
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Light-Material
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
   <div
     className="material-value"
   >
@@ -114,9 +118,7 @@ exports[`header import package->dispose assets dispose material assets
         </select>
       </div>
     </article>
-    <div
-      className=""
-    >
+    <div>
       <article
         className="wonder-light-material"
       >
@@ -152,7 +154,7 @@ exports[`header import package->dispose assets dispose material assets
           </div>
         </article>
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -161,10 +163,10 @@ exports[`header import package->dispose assets dispose material assets
             Diffuse Map
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -233,76 +235,80 @@ exports[`header import package->dispose assets dispose wdb assets dispose geomet
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Mesh
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
       >
         Geometry
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Mesh
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Sphere
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Mesh
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Geometry
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Mesh
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
 </article>
 `;

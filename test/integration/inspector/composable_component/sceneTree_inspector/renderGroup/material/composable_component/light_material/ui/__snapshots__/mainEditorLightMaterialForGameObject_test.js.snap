@@ -437,38 +437,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Wonder-Default-Light-Material
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Wonder-Default-Light-Material
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -501,9 +505,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -539,7 +541,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -548,10 +550,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -645,38 +647,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Wonder-Default-Cube
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -1138,38 +1144,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Wonder-Default-Light-Material
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Wonder-Default-Light-Material
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -1202,9 +1212,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -1240,7 +1248,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -1249,10 +1257,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -1343,38 +1351,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Wonder-Default-Cube
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -1836,38 +1848,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Wonder-Default-Light-Material
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Wonder-Default-Light-Material
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -1900,9 +1916,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -1938,7 +1952,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -1947,10 +1961,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -2044,38 +2058,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Wonder-Default-Cube
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -2537,38 +2555,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Wonder-Default-Light-Material
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Wonder-Default-Light-Material
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -2601,9 +2623,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -2639,7 +2659,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -2648,10 +2668,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -2742,38 +2762,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Wonder-Default-Cube
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -3235,38 +3259,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Wonder-Default-Light-Material
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Wonder-Default-Light-Material
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -3299,9 +3327,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -3337,7 +3363,7 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -3346,10 +3372,10 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -3440,38 +3466,42 @@ exports[`MainEditorLightMaterialForGameObject component test set currentSceneTre
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Wonder-Default-Cube
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article

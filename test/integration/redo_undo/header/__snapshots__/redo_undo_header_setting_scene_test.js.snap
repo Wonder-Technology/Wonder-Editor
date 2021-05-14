@@ -62,7 +62,7 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -71,10 +71,10 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -99,6 +99,115 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>
@@ -166,7 +275,7 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -175,10 +284,10 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -203,6 +312,115 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>
@@ -270,7 +488,7 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -279,10 +497,10 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -313,6 +531,115 @@ exports[`redo_undo: header->setting->scene test skybox test remove skybox->cubem
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>
@@ -380,7 +707,7 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -389,10 +716,10 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -423,6 +750,115 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>
@@ -490,7 +926,7 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -499,10 +935,10 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -533,6 +969,115 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>
@@ -600,7 +1145,7 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
         className="setting-scene-skybox"
       >
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -609,10 +1154,10 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
             Skybox Cubemap
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -637,6 +1182,115 @@ exports[`redo_undo: header->setting->scene test skybox test set skybox->cubemap 
           </div>
         </article>
       </div>
+      <article
+        className="setting-imgui"
+      >
+        <div
+          className="item"
+        >
+          <div
+            className="item-header"
+          >
+            <h1>
+              IMGUI Setting
+            </h1>
+            <hr />
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="setting-imgui-asset"
+            >
+              <h2>
+                Asset
+              </h2>
+              <hr />
+              <article
+                className="selectAssetByText-item"
+              >
+                <div
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="set fnt by name"
+                  >
+                    Fnt
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <div
+                      className="inspector-select"
+                    >
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
+                      <img
+                        onClick={[Function]}
+                        src="./public/img/close.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article
+                className="selectAssetByImage-item inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="set bitmap by name"
+                >
+                  Bitmap
+                </div>
+                <div
+                  className="item-content item-texture"
+                >
+                  <div
+                    className="texture-img"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  >
+                    <div
+                      className="img-dragBg"
+                      onDragEnter={[Function]}
+                      onDragLeave={[Function]}
+                      onDragOver={[Function]}
+                      onDrop={[Function]}
+                    />
+                  </div>
+                  <button
+                    className="remove"
+                    onClick={[Function]}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </article>
+              <h3>
+                Custom Image
+              </h3>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </article>

@@ -8,95 +8,99 @@ exports[`MainEditorGeometry component test select geometry group->show order
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
       >
         Geometry
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Cesium_Milk_Truck_0
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Cesium_Milk_Truck_1
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Cesium_Milk_Truck_2
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wheels
-        </div>
-        <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Sphere
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Geometry
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Cesium_Milk_Truck_0
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Cesium_Milk_Truck_1
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Cesium_Milk_Truck_2
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wheels
+          </div>
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
 </article>
 `;
 
@@ -104,38 +108,42 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </article>
 `;
 
@@ -143,71 +151,75 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
       >
         Geometry
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Sphere
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Geometry
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
 </article>
 `;
 
@@ -215,77 +227,81 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
       >
         Geometry
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          geometryNoTexCoord
-        </div>
-        <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Sphere
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Geometry
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            geometryNoTexCoord
+          </div>
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
 </article>
 `;
 
@@ -293,76 +309,80 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
       >
         Geometry
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Mesh
-        </div>
-        <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-item-content"
-          onClick={[Function]}
-        >
-          Wonder-Default-Sphere
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Geometry
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Mesh
+          </div>
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
 </article>
 `;

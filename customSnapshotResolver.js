@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
     resolveSnapshotPath: (testPath, snapshotExtension) => {
-        var testPath = testPath.replace("lib/es6_global/", "");
+        var testPath = testPath.replace("lib/js/", "");
 
         return path.join(
             path.join(path.dirname(testPath), '__snapshots__'),
@@ -10,7 +10,7 @@ module.exports = {
         )
     },
     resolveTestPath: (snapshotFilePath, snapshotExtension) => {
-        var snapshotFilePath = snapshotFilePath.replace("Wonder-Editor/test", "Wonder-Editor/lib/es6_global/test");
+        var snapshotFilePath = snapshotFilePath.replace("Wonder-Editor/test", "Wonder-Editor/lib/js/test");
 
         return path.resolve(
             path.dirname(snapshotFilePath),
@@ -18,5 +18,5 @@ module.exports = {
             path.basename(snapshotFilePath, snapshotExtension),
         )
     },
-    testPathForConsistencyCheck: "/Users/y/Github/Wonder-Editor/lib/es6_global/test/unit/atom_component/fileInput/FileInput_test.js"
+    testPathForConsistencyCheck: "/Users/y/Github/Wonder-Editor/lib/js/test/unit/atom_component/fileInput/FileInput_test.js"
 };

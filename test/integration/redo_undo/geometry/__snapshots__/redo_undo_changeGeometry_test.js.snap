@@ -4,38 +4,42 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Sphere
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </article>
 `;
 
@@ -43,38 +47,42 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Sphere
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Sphere
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </article>
 `;
 
@@ -82,37 +90,41 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
 <article
   className="wonder-inspector-geometry"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="geometry in use which is default or model's geometry"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="geometry in use which is default or model's geometry"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Cube
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </article>
 `;

@@ -234,7 +234,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -243,10 +243,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -271,7 +271,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -280,10 +280,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Hover Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -308,7 +308,7 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -317,10 +317,10 @@ exports[`MainEditorAssetHeader->remove texture test dispose texture content data
               Click Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {

@@ -8942,10 +8942,10 @@ wonder-bs-jest@0.2.23, wonder-bs-jest@0.3.0:
   dependencies:
     jest "24.3.1"
 
-wonder-bs-json@0.0.1, wonder-bs-json@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.nlark.com/wonder-bs-json/download/wonder-bs-json-0.0.1.tgz#e780dcfc5699642dd6a47f50ba50f074974faa80"
-  integrity sha1-54Dc/FaZZC3WpH9QulDwdJdPqoA=
+wonder-bs-json@0.0.3, wonder-bs-json@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/wonder-bs-json/-/wonder-bs-json-0.0.3.tgz#929e6ee1ce0854af3f76ff13fc805cf5ae521644"
+  integrity sha512-iKOrBtt4MQcOtGZlTnkuDwGhMNOgm7WcvbK9FR1rmwyIX66wKQ1j34hiBUf8rtc9AjDxKa44rNSJ0KVx4HPr9g==
 
 wonder-bs-jszip@0.0.2:
   version "0.0.2"
@@ -9010,13 +9010,13 @@ wonder-webgl@0.0.11, wonder-webgl@^0.0.11:
   dependencies:
     wonder-log "^0.2.11"
 
-wonder.js@1.2.0-alpha.20:
-  version "1.2.0-alpha.20"
-  resolved "https://registry.nlark.com/wonder.js/download/wonder.js-1.2.0-alpha.20.tgz#3377c8d477072a3c820dc56b3cb824060be1de01"
-  integrity sha1-M3fI1HcHKjyCDcVrPLgkBgvh3gE=
+wonder.js@1.2.0-alpha.22:
+  version "1.2.0-alpha.22"
+  resolved "https://registry.npmjs.org/wonder.js/-/wonder.js-1.2.0-alpha.22.tgz#df88d22e43c7713eb4d1ac78d018ec8528f7b54e"
+  integrity sha512-PJ5UnILrLZ78FAz7jH6bUQSSgANeNj2CllECPtPNLjorayvlAo6ilvo+8sBq11lsLSK7zU/Wv+l27fgTeLuoMA==
   dependencies:
     bs-fetch "0.3.0"
-    wonder-bs-json "0.0.1"
+    wonder-bs-json "0.0.3"
     wonder-bs-most "0.0.3"
     wonder-commonlib "0.2.32"
     wonder-imgui "0.0.44"

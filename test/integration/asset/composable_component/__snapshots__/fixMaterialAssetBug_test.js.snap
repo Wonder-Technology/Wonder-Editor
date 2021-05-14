@@ -104,7 +104,7 @@ exports[`fix material asset bug fix bug
           </div>
         </article>
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -113,10 +113,10 @@ exports[`fix material asset bug fix bug
             Diffuse Map
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -494,7 +494,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           </div>
         </article>
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -503,10 +503,10 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             Diffuse Map
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {

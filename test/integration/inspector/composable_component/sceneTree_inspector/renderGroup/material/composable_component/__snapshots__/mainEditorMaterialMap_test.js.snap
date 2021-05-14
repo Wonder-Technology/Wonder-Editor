@@ -500,38 +500,42 @@ exports[`test MainEditorMaterialMap load asset wdb;
             <article
               className="wonder-inspector-material"
             >
-              <div
-                className="inspector-item"
+              <article
+                className="selectAssetByText-item"
               >
                 <div
-                  className="item-header"
-                  title="material in use which is default or material asset"
-                >
-                  Material
-                </div>
-                <div
-                  className="item-content"
+                  className="inspector-item"
                 >
                   <div
-                    className="inspector-select"
+                    className="item-header"
+                    title="material in use which is default or material asset"
+                  >
+                    Material
+                  </div>
+                  <div
+                    className="item-content"
                   >
                     <div
-                      className="select-name"
-                      onClick={[Function]}
+                      className="inspector-select"
                     >
-                      Texture
-                    </div>
-                    <div
-                      className="select-img"
-                      onClick={[Function]}
-                    >
-                      <img
-                        src="./public/img/select.png"
-                      />
+                      <div
+                        className="select-name"
+                        onClick={[Function]}
+                      >
+                        Texture
+                      </div>
+                      <div
+                        className="select-img"
+                        onClick={[Function]}
+                      >
+                        <img
+                          src="./public/img/select.png"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
               <div
                 className="material-value"
               >
@@ -564,9 +568,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                     </select>
                   </div>
                 </article>
-                <div
-                  className=""
-                >
+                <div>
                   <article
                     className="wonder-light-material"
                   >
@@ -602,7 +604,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                       </div>
                     </article>
                     <article
-                      className="selectAssetNode-item"
+                      className="selectAssetByImage-item inspector-item"
                     >
                       <div
                         className="item-header"
@@ -611,10 +613,10 @@ exports[`test MainEditorMaterialMap load asset wdb;
                         Diffuse Map
                       </div>
                       <div
-                        className="item-content"
+                        className="item-content item-texture"
                       >
                         <div
-                          className="img"
+                          className="texture-img"
                           onClick={[Function]}
                           style={
                             Object {
@@ -705,38 +707,42 @@ exports[`test MainEditorMaterialMap load asset wdb;
       <article
         className="wonder-inspector-geometry"
       >
-        <div
-          className="inspector-item"
+        <article
+          className="selectAssetByText-item"
         >
           <div
-            className="item-header"
-            title="geometry in use which is default or model's geometry"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
+            className="inspector-item"
           >
             <div
-              className="inspector-select"
+              className="item-header"
+              title="geometry in use which is default or model's geometry"
+            >
+              Geometry
+            </div>
+            <div
+              className="item-content"
             >
               <div
-                className="select-name"
-                onClick={[Function]}
+                className="inspector-select"
               >
-                Mesh
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  Mesh
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -766,7 +772,7 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
         sort texture assets by firstname alphabetically
          1`] = `
 <article
-  className="selectAssetNode-item"
+  className="selectAssetByImage-item inspector-item"
 >
   <div
     className="item-header"
@@ -775,10 +781,10 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
     Diffuse map
   </div>
   <div
-    className="item-content"
+    className="item-content item-texture"
   >
     <div
-      className="img"
+      className="texture-img"
       onClick={[Function]}
       style={
         Object {

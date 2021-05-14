@@ -18,71 +18,75 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
 <article
   className="wonder-inspector-material"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="material in use which is default or material asset"
-    >
-      Material
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Light-Material
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="material in use which is default or material asset"
       >
         Material
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Basic-Material
-        </div>
-        <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
-        >
-          Wonder-Default-Light-Material
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Light-Material
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Material
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Basic-Material
+          </div>
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Light-Material
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
   <div
     className="material-value"
   >
@@ -115,9 +119,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
         </select>
       </div>
     </article>
-    <div
-      className=""
-    >
+    <div>
       <article
         className="wonder-light-material"
       >
@@ -153,7 +155,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
           </div>
         </article>
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -162,10 +164,10 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
             Diffuse Map
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {
@@ -231,71 +233,75 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
 <article
   className="wonder-inspector-material"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="selectAssetByText-item"
   >
     <div
-      className="item-header"
-      title="material in use which is default or material asset"
-    >
-      Material
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-          onClick={[Function]}
-        >
-          Wonder-Default-Light-Material
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="select-item-header"
+        className="item-header"
+        title="material in use which is default or material asset"
       >
         Material
       </div>
       <div
-        className="select-item-body"
+        className="item-content"
       >
         <div
-          className="select-item-content"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          Wonder-Default-Basic-Material
-        </div>
-        <div
-          className="select-item-content select-item-active"
-          onClick={[Function]}
-        >
-          Wonder-Default-Light-Material
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            Wonder-Default-Light-Material
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="select-item-header"
+        >
+          Material
+        </div>
+        <div
+          className="select-item-body"
+        >
+          <div
+            className="select-item-content"
+            onClick={[Function]}
+          >
+            Wonder-Default-Basic-Material
+          </div>
+          <div
+            className="select-item-content select-item-active"
+            onClick={[Function]}
+          >
+            Wonder-Default-Light-Material
+          </div>
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </article>
   <div
     className="material-value"
   >
@@ -328,9 +334,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
         </select>
       </div>
     </article>
-    <div
-      className=""
-    >
+    <div>
       <article
         className="wonder-light-material"
       >
@@ -366,7 +370,7 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
           </div>
         </article>
         <article
-          className="selectAssetNode-item"
+          className="selectAssetByImage-item inspector-item"
         >
           <div
             className="item-header"
@@ -375,10 +379,10 @@ exports[`MainEditorAssetHeader->remove material else, replace material's gameObj
             Diffuse Map
           </div>
           <div
-            className="item-content"
+            className="item-content item-texture"
           >
             <div
-              className="img"
+              className="texture-img"
               onClick={[Function]}
               style={
                 Object {

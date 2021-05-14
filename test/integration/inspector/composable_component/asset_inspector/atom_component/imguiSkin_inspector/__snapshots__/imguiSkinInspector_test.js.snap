@@ -139,7 +139,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -148,10 +148,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -176,7 +176,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -185,10 +185,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Hover Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -213,7 +213,7 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -222,10 +222,10 @@ exports[`imgui skin inspector test show value test show default value 1`] = `
               Click Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -494,7 +494,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -503,10 +503,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -534,7 +534,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -543,10 +543,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Hover Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {
@@ -571,7 +571,7 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
             </div>
           </article>
           <article
-            className="selectAssetNode-item"
+            className="selectAssetByImage-item inspector-item"
           >
             <div
               className="item-header"
@@ -580,10 +580,10 @@ exports[`imgui skin inspector test show value test show specific value 1`] = `
               Click Button Image
             </div>
             <div
-              className="item-content"
+              className="item-content item-texture"
             >
               <div
-                className="img"
+                className="texture-img"
                 onClick={[Function]}
                 style={
                   Object {

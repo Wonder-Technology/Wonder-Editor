@@ -36,7 +36,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
     </div>
   </article>
   <article
-    className="selectAssetNode-item"
+    className="selectAssetByImage-item inspector-item"
   >
     <div
       className="item-header"
@@ -45,10 +45,10 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       Diffuse Map
     </div>
     <div
-      className="item-content"
+      className="item-content item-texture"
     >
       <div
-        className="img"
+        className="texture-img"
         onClick={[Function]}
         style={
           Object {
@@ -135,7 +135,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
     </div>
   </article>
   <article
-    className="selectAssetNode-item"
+    className="selectAssetByImage-item inspector-item"
   >
     <div
       className="item-header"
@@ -144,10 +144,10 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       Diffuse Map
     </div>
     <div
-      className="item-content"
+      className="item-content item-texture"
     >
       <div
-        className="img"
+        className="texture-img"
         onClick={[Function]}
         style={
           Object {
@@ -234,7 +234,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
     </div>
   </article>
   <article
-    className="selectAssetNode-item"
+    className="selectAssetByImage-item inspector-item"
   >
     <div
       className="item-header"
@@ -243,10 +243,10 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       Diffuse Map
     </div>
     <div
-      className="item-content"
+      className="item-content item-texture"
     >
       <div
-        className="img"
+        className="texture-img"
         onClick={[Function]}
         style={
           Object {
@@ -333,7 +333,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
     </div>
   </article>
   <article
-    className="selectAssetNode-item"
+    className="selectAssetByImage-item inspector-item"
   >
     <div
       className="item-header"
@@ -342,10 +342,10 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       Diffuse Map
     </div>
     <div
-      className="item-content"
+      className="item-content item-texture"
     >
       <div
-        className="img"
+        className="texture-img"
         onClick={[Function]}
         style={
           Object {
@@ -432,7 +432,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
     </div>
   </article>
   <article
-    className="selectAssetNode-item"
+    className="selectAssetByImage-item inspector-item"
   >
     <div
       className="item-header"
@@ -441,10 +441,10 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       Diffuse Map
     </div>
     <div
-      className="item-content"
+      className="item-content item-texture"
     >
       <div
-        className="img"
+        className="texture-img"
         onClick={[Function]}
         style={
           Object {
