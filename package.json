@@ -72,7 +72,7 @@
     "wonder-commonlib": "^0.2.32",
     "wonder-hotkey2": "^0.0.1",
     "wonder-log": "^0.2.11",
-    "wonder.js": "1.2.0-alpha.23"
+    "wonder.js": "1.2.0-alpha.24"
   },
   "resolutions": {
     "wonder-log": "^0.2.11",

@@ -450,5 +450,51 @@ let _ =
           |> expect == true;
         });
       });
+
+      describe(
+        "test dispose gameObject with FlyCameraController component", () =>
+        test("shouldn't cause update_camera job error", () => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               },
+            {
+                "name": "update_camera"
+            }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
+          );
+          MainEditorInspectorAddComponentTool.addFlyCameraControllerComponent();
+          ConsoleTool.notShowMessage();
+          let error =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "error",
+            );
+
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+          error |> expect |> not_ |> toCalled;
+        })
+      );
     });
   });
