@@ -8,11 +8,11 @@
 [![GitHub Release Date](https://img.shields.io/github/release-date/Wonder-Technology/Wonder-Editor.svg)](https://github.com/Wonder-Technology/Wonder-Editor/releases) 
 
 
-[![editor](https://www.wonder-3d.com/img/editor.jpg) ](https://editor.wonder-3d.com) 
+[![editor](https://www.wonder-3d.com/img/editor.jpg) ](https://meta3d-4g18u7z10c8427f9-1302358347.tcloudbaseapp.com/wonder-editor/index.html) 
 
 
 
-Wonder-Editor is a [PWA online web 3D editor](https://editor.wonder-3d.com) which use [Wonder.js](https://github.com/Wonder-Technology/Wonder.js) engine.
+Wonder-Editor is a [PWA online web 3D editor](https://meta3d-4g18u7z10c8427f9-1302358347.tcloudbaseapp.com/wonder-editor/index.html) which use [Wonder.js](https://github.com/Wonder-Technology/Wonder.js) engine.
 
 
 
@@ -47,7 +47,7 @@ Wonder-Editor is a [PWA online web 3D editor](https://editor.wonder-3d.com) whic
 
 # Usage
 
-- [Online Editor](https://editor.wonder-3d.com/)
+- [Online Editor](https://meta3d-4g18u7z10c8427f9-1302358347.tcloudbaseapp.com/wonder-editor/index.html/)
 
 
 ## Support Environment
