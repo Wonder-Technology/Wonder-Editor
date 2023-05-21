@@ -12,7 +12,7 @@
 
 
 
-Wonder-Editor is a [PWA online web 3D editor](https://meta3d-4g18u7z10c8427f9-1302358347.tcloudbaseapp.com/wonder-editor/index.html) which use [Wonder.js](https://github.com/Wonder-Technology/Wonder.js) engine.
+Wonder-Editor is a [PWA online web 3D editor](https://yyc-git.github.io/wonder/index.html) which use [Wonder.js](https://github.com/Wonder-Technology/Wonder.js) engine.
 
 
 
@@ -47,7 +47,7 @@ Wonder-Editor is a [PWA online web 3D editor](https://meta3d-4g18u7z10c8427f9-13
 
 # Usage
 
-- [Online Editor](https://meta3d-4g18u7z10c8427f9-1302358347.tcloudbaseapp.com/wonder-editor/index.html)
+- [Online Editor](https://yyc-git.github.io/wonder/index.html)
 
 
 ## Support Environment
